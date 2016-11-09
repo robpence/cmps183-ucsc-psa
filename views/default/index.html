@@ -36,17 +36,17 @@
           <ul class="nav navbar-nav"><li class="web2py-menu-first"><a href="/lol/default/index">Home</a></li>
               <li v-if="'{{=auth.user_id}}' > 0" class="dropdown" data-w2pmenulevel="l0"><a href="#" class="dropdown-toggle" data-toggle="dropdown">Create Event</a>
                   <ul class="dropdown-menu">
-                      <li><a v-on:click="show()">Urgent</a></li>
-                      <li><a v-on:click="show()">Event</a></li>
-                      <li><a v-on:click="show()">Closed</a></li>
+                      <li><a v-on:click="show()" class="menu_links">Urgent</a></li>
+                      <li><a v-on:click="show()" class="menu_links">Event</a></li>
+                      <li><a v-on:click="show()" class="menu_links">Closed</a></li>
                   </ul>
               </li>
               <li class="dropdown" data-w2pmenulevel="l0">
                   <a href="#" class="dropdown-toggle" data-toggle="dropdown">Filter</a>
                   <ul class="dropdown-menu">
-                    <li><a v-on:click="show()">Show only urgent</a></li>
-                    <li><a v-on:click="show()">Show only event</a></li>
-                    <li><a v-on:click="show()">Show only Closed</a></li>
+                    <li><a v-on:click="show()" class="menu_links">Show only urgent</a></li>
+                    <li><a v-on:click="show()" class="menu_links">Show only event</a></li>
+                    <li><a v-on:click="show()" class="menu_links">Show only Closed</a></li>
               </ul>
               </li>
           </ul>

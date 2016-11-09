@@ -33,6 +33,10 @@ padding: 0;
 width: 150px;
 }
 
+a.menu_links {
+    cursor: pointer;
+}
+
 /*Footer */
 .footer {
     position:fixed;
