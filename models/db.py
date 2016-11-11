@@ -90,6 +90,11 @@ plugins = PluginManager()
 # -------------------------------------------------------------------------
 # create all tables needed by auth if not custom tables
 # -------------------------------------------------------------------------
+
+auth.settings.extra_fields['auth_user']=[
+    Field('score', 'integer', readable = False, writable=False),
+    Field('nickname')
+]
 auth.define_tables(username=False, signature=False)
 
 # -------------------------------------------------------------------------

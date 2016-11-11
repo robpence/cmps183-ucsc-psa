@@ -53,3 +53,21 @@ CREATE TABLE auth_cas(
     renew CHAR(1)
 );
 success!
+timestamp: 2016-11-11T14:54:53.505000
+CREATE TABLE Announcements(
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    author CHAR(512),
+    description CHAR(512),
+    gps DOUBLE,
+    category CHAR(512),
+    score INTEGER,
+    solved CHAR(1),
+    edited_on CHAR(512),
+    created_on CHAR(512)
+);
+success!
+timestamp: 2016-11-11T14:58:34.660000
+ALTER TABLE auth_user ADD score INTEGER;
+timestamp: 2016-11-11T14:58:34.815000
+ALTER TABLE auth_user ADD nickname CHAR(512);
+success!
