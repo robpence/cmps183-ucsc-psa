@@ -10,7 +10,7 @@ var app = function() {
     self.show = function() {
 
         alert('Use Vue.js Javascript function here');
-    }
+    };
 
     // Complete as needed.
     self.vue = new Vue({
@@ -18,10 +18,10 @@ var app = function() {
         delimiters: ['${', '}'],
         unsafeDelimiters: ['!{', '}'],
         data: {
-        logged_in: false,
+        logged_in: false
         },
         methods: {
-            show: self.show,
+            show: self.show
         }
 
     });
