@@ -6,11 +6,7 @@ var app = function() {
     var self = {};
 
     Vue.config.silent = false; // show all warnings
-
-    self.show = function() {
-
-        alert('Use Vue.js Javascript function here');
-    };
+    
 
     // Complete as needed.
     self.vue = new Vue({
@@ -21,7 +17,7 @@ var app = function() {
         logged_in: false
         },
         methods: {
-            show: self.show
+         urgent_cursor: self.urgent_cursor,
         }
 
     });

@@ -2,8 +2,6 @@
  * Created by diesel on 11/11/16.
  */
 
-
-
 var map = L.map('mapid').setView([36.991, -122.060], 15);
 
 L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
