@@ -2,10 +2,7 @@
  * Created by diesel on 11/11/16.
  */
 
-
-var map = L.map('mapid').setView([36.991, -122.060], 15);
-
-
+    
 var map_var = "hello from ourmap.js!";
 
 
