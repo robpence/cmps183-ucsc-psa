@@ -2,13 +2,17 @@
  * Created by diesel on 11/11/16.
  */
 
-    
+
 var map_var = "hello from ourmap.js!";
+
+
+var initial_map_position = [36.991, -122.060];
+var Crown_position = [];
 
 
 var New_Map = function () {
 
-    var map = L.map('mapid').setView([36.991, -122.060], 15);
+    var map = L.map('mapid').setView(initial_map_position, 15);
 
     L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
         attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'

@@ -1,0 +1,43 @@
+/*Layout of map displayed on screen */
+#mapid {
+  height: 560px;
+  position: relative;
+  margin: auto;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  width:800px;
+  height:850px;
+}
+
+/* position of log in menu */
+.main-container {
+  position: relative;
+  margin: auto;
+  top: 0;
+  right: 0;
+  bottom: 20px;
+  left: 0;
+  width:800px;
+  height:850px;
+}
+
+/*Side menu layout */
+.vertical_menu {
+  position:fixed;
+  top:0;
+  left: 0;
+  margin: 0;
+  padding: 0;
+  width: 150px;
+}
+
+a.menu_links {
+    cursor: pointer;
+}
+
+/*Footer */
+.footer {
+    position:fixed;
+}

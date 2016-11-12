@@ -1,0 +1,48 @@
+/*Layout of map displayed on screen */
+/* line 2, ../sass/_main.scss */
+#mapid {
+  height: 560px;
+  position: relative;
+  margin: auto;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  width: 800px;
+  height: 850px;
+}
+
+/* position of log in menu */
+/* line 15, ../sass/_main.scss */
+.main-container {
+  position: relative;
+  margin: auto;
+  top: 0;
+  right: 0;
+  bottom: 20px;
+  left: 0;
+  width: 800px;
+  height: 850px;
+}
+
+/*Side menu layout */
+/* line 27, ../sass/_main.scss */
+.vertical_menu {
+  position: fixed;
+  top: 0;
+  left: 0;
+  margin: 0;
+  padding: 0;
+  width: 150px;
+}
+
+/* line 36, ../sass/_main.scss */
+a.menu_links {
+  cursor: pointer;
+}
+
+/*Footer */
+/* line 41, ../sass/_main.scss */
+.footer {
+  position: fixed;
+}
