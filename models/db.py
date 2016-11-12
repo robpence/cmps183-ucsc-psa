@@ -90,7 +90,23 @@ plugins = PluginManager()
 # -------------------------------------------------------------------------
 # create all tables needed by auth if not custom tables
 # -------------------------------------------------------------------------
+
+
+"""
+    Our custom auth user stuff
+"""
+
+auth.settings.extra_fields['auth_user']=[
+    Field('score', 'integer', readable = False, writable=False),
+    Field('nickname')
+]
+"""   ***********************************************    """
+
+
 auth.define_tables(username=False, signature=False)
+
+
+
 
 # -------------------------------------------------------------------------
 # configure email
@@ -130,3 +146,16 @@ auth.settings.reset_password_requires_verification = True
 # after defining tables, uncomment below to enable auditing
 # -------------------------------------------------------------------------
 # auth.enable_record_versioning(db)
+
+
+######################
+# Logging
+import logging, sys
+FORMAT = "%(asctime)s %(levelname)s %(process)s %(thread)s %(funcName)s():%(lineno)d %(message)s"
+logging.basicConfig(stream=sys.stderr)
+logger = logging.getLogger(request.application)
+logger.setLevel(logging.INFO)
+
+# Let's log the request.
+logger.info("====> Request: %r %r %r %r" % (request.env.request_method, request.env.path_info, request.args, request.vars))
+
