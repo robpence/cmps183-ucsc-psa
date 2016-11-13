@@ -79,6 +79,50 @@ var app = function() {
         );
     };
 
+    /*
+    self.view_stevenson = function() {
+        set_coordinates(stevenson_college);
+    }
+    */
+
+    self.change_view = function(location) {
+
+        switch (location) {
+            case "kresge":
+                set_coordinates(kresge_college);
+                break;
+            case "merrill":
+                set_coordinates(merrill_college);
+                break;
+            case "rachael_carson":
+                set_coordinates(college_8);
+                break;
+
+            case "college_9":
+                set_coordinates(college_9);
+                break;
+            case "college_10":
+                set_coordinates(college_10);
+                break;
+            case "crown":
+                set_coordinates(crown_college);
+                break;
+            case "porter":
+                set_coordinates(porter_college);
+                break;
+            case "cowell":
+                set_coordinates(cowell_college);
+                break;
+
+            case "stevenson":
+                set_coordinates(stevenson_college);
+                break;
+            default:
+                set_coordinates(kresge_college);
+                break;
+        }
+    }
+
 
     self.campus_map = New_Map();
 
@@ -94,10 +138,7 @@ var app = function() {
         },
 
         methods: {
-
-         urgent_cursor: self.urgent_cursor,
-
-            show: self.show,
+            change_view:self.change_view,
             set_announcement: self.set_announcement
 
         }
