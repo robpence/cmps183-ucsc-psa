@@ -97,7 +97,9 @@ var app = function() {
             case "rachael_carson":
                 set_coordinates(college_8);
                 break;
-
+            case "oakes":
+                set_coordinates(oakes_college);
+                break;
             case "college_9":
                 set_coordinates(college_9);
                 break;

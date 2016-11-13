@@ -14,6 +14,7 @@ var college_9 = [37.001969, -122.057908];
 var college_10 = [37.001575, -122.058938];
 var porter_college = [36.994357, -122.065471];
 var college_8 = [36.991049, -122.064856];
+var oakes_college = [36.989364, -122.063981];
 
 var New_Map = function () {
 
