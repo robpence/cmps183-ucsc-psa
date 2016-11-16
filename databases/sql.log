@@ -53,3 +53,8 @@ CREATE TABLE auth_cas(
     renew CHAR(1)
 );
 success!
+timestamp: 2016-11-15T20:05:26.631000
+ALTER TABLE auth_user ADD score INTEGER;
+timestamp: 2016-11-15T20:05:26.748000
+ALTER TABLE auth_user ADD nickname CHAR(512);
+success!

@@ -28,10 +28,20 @@ var Event_Announcement = function(){
 
 
 var Shut_Down_Announcement = function(){
+    /*
     var circle = Announcement_Circle();
     circle.color = "red";
     circle.fillColor = "#f03";
-    return circle;
+    */
+
+    var redMarker = L.AwesomeMarkers.icon({
+    icon: 'coffee',
+    markerColor: 'red'
+    });
+
+    var shut_down_marker = L.marker([51.5, -0.09],{icon:redMarker});
+    console.log(shut_down_marker);
+    return shut_down_marker;
 };
 
 
@@ -71,10 +81,16 @@ var app = function() {
 
     Vue.config.silent = false; // show all warnings
     
-
-
+    /*
     self.set_announcement = function (new_announcemnt){
         self.campus_map.set_circle(
+            Announcement(new_announcemnt)
+        );
+    };
+    */
+
+    self.set_announcement = function (new_announcemnt){
+        self.campus_map.set_marker(
             Announcement(new_announcemnt)
         );
     };
@@ -125,6 +141,10 @@ var app = function() {
         }
     }
 
+    self.set_marker = function () {
+
+
+    }
 
     self.campus_map = New_Map();
 
@@ -141,7 +161,8 @@ var app = function() {
 
         methods: {
             change_view:self.change_view,
-            set_announcement: self.set_announcement
+            set_announcement: self.set_announcement,
+            set_marker:self.set_marker
 
         }
 

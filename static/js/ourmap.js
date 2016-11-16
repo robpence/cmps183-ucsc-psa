@@ -2,7 +2,7 @@
  * Created by diesel on 11/11/16.
  */
 
-    
+
 var map_var = "hello from ourmap.js!";
 var central_campus = [36.991, -122.060];
 var kresge_college = [36.999207, -122.064339];
@@ -28,34 +28,48 @@ var New_Map = function () {
 
     var self = {};
     self.map = map;
-    self.circle = null;
+    //self.circle = null;
+    self.marker = null;
 
     set_coordinates = function(coordinates){
         self.map.setView(coordinates, 17, {animation: true});
     }
 
+    /*
     self.set_circle = function(circle){
         self.circle = circle
     };
+    */
 
+     self.set_marker = function(marker){
+        self.marker = marker;
+        console.log(self.marker);
+    };
 
+    self.add_marker = function (e) {
+        L.marker(e.latlng, self.marker).addTo(self.map);
+    };
+
+    /*
     self.draw_circle = function (e) {
         L.circle(e.latlng, self.circle).addTo(self.map);
 
     };
-
+    */
 
     self.map.on('click', function(e) {
-        if (self.circle != null) {
-            self.draw_circle(e);
-            self.circle = null;
+        if (self.marker != null) {
+            //self.draw_circle(e);
+            self.add_marker(e);
+            //self.circle = null;
+            self.marker = null;
         }
     });
 
 
-    //        L.marker([36.991, -122.060]).addTo(map)
-    //            .bindPopup('A pretty CSS3 popup.<br> Easily customizable.')
-    //            .openPopup();
+    //L.marker([36.991, -122.060]).addTo(map)
+    //.bindPopup('A pretty CSS3 popup.<br> Easily customizable.')
+    //.openPopup();
 
     /*
 
