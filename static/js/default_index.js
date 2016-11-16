@@ -1,29 +1,30 @@
 // This is the js for the default/index.html view.
 
 
-var Announcement_Circle = function (){
-    var self = {};
-    self.radius =  100;
-    self.fillOpacity = 0.5;
-    self.color = null;
-    self.fillColor = null;
-    return self;
-};
-
-
 var Urgent_Announcement = function(){
+    /*
     var circle = Announcement_Circle();
     circle.color = "orange";
     circle.fillColor = "#d67800";
-    return circle;
+    */
+    var blueMarker = L.AwesomeMarkers.icon({
+    markerColor: 'blue'
+    });
+    return blueMarker;
 };
 
 
 var Event_Announcement = function(){
+    /*
     var circle = Announcement_Circle();
     circle.color = "blue";
     circle.fillColor = "#4466f";
-    return circle;
+    */
+    var greenMarker = L.AwesomeMarkers.icon({
+    markerColor: 'green'
+    });
+
+    return greenMarker;
 };
 
 
@@ -33,15 +34,12 @@ var Shut_Down_Announcement = function(){
     circle.color = "red";
     circle.fillColor = "#f03";
     */
-
     var redMarker = L.AwesomeMarkers.icon({
-    icon: 'coffee',
+    icon:'coffee',
     markerColor: 'red'
     });
 
-    var shut_down_marker = L.marker([51.5, -0.09],{icon:redMarker});
-    console.log(shut_down_marker);
-    return shut_down_marker;
+    return redMarker;
 };
 
 
@@ -66,7 +64,6 @@ var Announcement = function (announcement_type){
             self = Urgent_Announcement();
             break;
     }
-
 
     return self;
 };

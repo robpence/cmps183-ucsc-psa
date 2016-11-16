@@ -43,11 +43,12 @@ var New_Map = function () {
 
      self.set_marker = function(marker){
         self.marker = marker;
-        console.log(self.marker);
+         alert(self.marker);
     };
 
+
     self.add_marker = function (e) {
-        L.marker(e.latlng, self.marker).addTo(self.map);
+        L.marker(e.latlng, {icon:self.marker}).addTo(self.map);
     };
 
     /*
