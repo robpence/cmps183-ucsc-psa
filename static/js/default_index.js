@@ -63,6 +63,12 @@ var Announcement = function (announcement_type){
 
 
 
+var _announcement_form = {
+            description: null
+};
+
+
+
 var app = function() {
 
     var self = {};
@@ -90,7 +96,8 @@ var app = function() {
 
         data: {
             logged_in: false,
-            isCreatingAnnouncement: false
+            isCreatingAnnouncement: false,
+            announcement_form: _announcement_form
         },
 
         methods: {
