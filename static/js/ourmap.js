@@ -43,12 +43,14 @@ var New_Map = function () {
 
      self.set_marker = function(marker){
         self.marker = marker;
-         alert(self.marker);
     };
 
 
     self.add_marker = function (e) {
-        L.marker(e.latlng, {icon:self.marker}).addTo(self.map);
+         var redMarker = L.AwesomeMarkers.icon({
+        markerColor: 'red'
+        });
+        L.marker(e.latlng, {icon:redMarker}).addTo(self.map);
     };
 
     /*

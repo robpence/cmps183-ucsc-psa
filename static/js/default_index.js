@@ -34,9 +34,9 @@ var Shut_Down_Announcement = function(){
     circle.color = "red";
     circle.fillColor = "#f03";
     */
-    var redMarker = L.AwesomeMarkers.icon({
 
-    //markerColor: 'red'
+    var redMarker = L.AwesomeMarkers.icon({
+    markerColor: 'red'
     });
 
     return redMarker;
