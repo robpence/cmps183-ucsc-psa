@@ -47,10 +47,7 @@ var New_Map = function () {
 
 
     self.add_marker = function (e) {
-         var redMarker = L.AwesomeMarkers.icon({
-        markerColor: 'red'
-        });
-        L.marker(e.latlng, {icon:redMarker}).addTo(self.map);
+        L.marker(e.latlng, {icon:self.marker}).addTo(self.map);
     };
 
     /*
