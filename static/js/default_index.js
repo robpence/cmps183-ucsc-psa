@@ -79,6 +79,13 @@ var app = function() {
     
 
 
+    self.add_announcement = function () {
+        // The submit button to add a post has been pressed.
+        console.log("add an announcement");
+        $.web2py.enableElement($("#add_post_submit"));
+    };
+
+
     self.set_announcement = function (new_announcemnt){
         self.campus_map.set_circle(
             Announcement(new_announcemnt)
@@ -105,8 +112,8 @@ var app = function() {
          urgent_cursor: self.urgent_cursor,
 
             show: self.show,
-            set_announcement: self.set_announcement
-
+            set_announcement: self.set_announcement,
+            add_announcement: self.add_announcement
         }
 
     });
