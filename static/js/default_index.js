@@ -2,26 +2,22 @@
 
 
 var Urgent_Announcement = function(){
-    /*
-    var circle = Announcement_Circle();
-    circle.color = "orange";
-    circle.fillColor = "#d67800";
-    */
-    var blueMarker = L.AwesomeMarkers.icon({
-    markerColor: 'blue'
+
+    var orangeMarker = L.AwesomeMarkers.icon({
+    icon:'glyphicon glyphicon-exclamation-sign',
+    markerColor: 'orange',
+    spin:'true',
     });
-    return blueMarker;
+    return orangeMarker;
 };
 
 
 var Event_Announcement = function(){
-    /*
-    var circle = Announcement_Circle();
-    circle.color = "blue";
-    circle.fillColor = "#4466f";
-    */
+
     var greenMarker = L.AwesomeMarkers.icon({
-    markerColor: 'green'
+    icon:'glyphicon glyphicon-user',
+    markerColor: 'green',
+    spin:'true'
     });
 
     return greenMarker;
@@ -29,14 +25,10 @@ var Event_Announcement = function(){
 
 
 var Shut_Down_Announcement = function(){
-    /*
-    var circle = Announcement_Circle();
-    circle.color = "red";
-    circle.fillColor = "#f03";
-    */
-
     var redMarker = L.AwesomeMarkers.icon({
-    markerColor: 'red'
+    icon:'glyphicon glyphicon-remove',
+    markerColor: 'red',
+    spin:'true'
     });
 
     return redMarker;
@@ -77,14 +69,6 @@ var app = function() {
     self.undfined_announcement = null;
 
     Vue.config.silent = false; // show all warnings
-    
-    /*
-    self.set_announcement = function (new_announcemnt){
-        self.campus_map.set_circle(
-            Announcement(new_announcemnt)
-        );
-    };
-    */
 
     self.set_announcement = function (new_announcemnt){
         self.campus_map.set_marker(
@@ -92,11 +76,6 @@ var app = function() {
         );
     };
 
-    /*
-    self.view_stevenson = function() {
-        set_coordinates(stevenson_college);
-    }
-    */
 
     self.change_view = function(location) {
 
@@ -138,11 +117,6 @@ var app = function() {
         }
     }
 
-    self.set_marker = function () {
-
-
-    }
-
     self.campus_map = New_Map();
 
     // Complete as needed.
@@ -159,8 +133,6 @@ var app = function() {
         methods: {
             change_view:self.change_view,
             set_announcement: self.set_announcement,
-            set_marker:self.set_marker
-
         }
 
     });

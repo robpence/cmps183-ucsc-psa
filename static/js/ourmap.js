@@ -35,13 +35,7 @@ var New_Map = function () {
         self.map.setView(coordinates, 17, {animation: true});
     }
 
-    /*
-    self.set_circle = function(circle){
-        self.circle = circle
-    };
-    */
-
-     self.set_marker = function(marker){
+    self.set_marker = function(marker){
         self.marker = marker;
     };
 
@@ -49,13 +43,6 @@ var New_Map = function () {
     self.add_marker = function (e) {
         L.marker(e.latlng, {icon:self.marker}).addTo(self.map);
     };
-
-    /*
-    self.draw_circle = function (e) {
-        L.circle(e.latlng, self.circle).addTo(self.map);
-
-    };
-    */
 
     self.map.on('click', function(e) {
         if (self.marker != null) {
