@@ -10,7 +10,7 @@ var app = function() {
     self.show = function() {
 
         alert('Use Vue.js Javascript function here');
-    }
+    };
 
     // Complete as needed.
     self.vue = new Vue({

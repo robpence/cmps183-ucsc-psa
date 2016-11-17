@@ -2,25 +2,15 @@
 
 {{block head}}
 <script src="{{=URL('static', 'js/vue.js')}}"></script>
-<script>
+<script src="{{=URL('static', 'js/main_map.js')}}"></script>
 
-</script>
 {{end}}
 
 <script src="https://unpkg.com/leaflet@1.0.1/dist/leaflet.js"></script>
-<div id="mapid" ></div>
+<div id="mapid" >
+    <script src="{{=URL('static', 'js/main_map.js')}}"></script>
+</div>
 
-<script>
-        var map = L.map('mapid').setView([36.991, -122.060], 15);
-
-        L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
-            attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
-        }).addTo(map);
-
-//        L.marker([36.991, -122.060]).addTo(map)
-//            .bindPopup('A pretty CSS3 popup.<br> Easily customizable.')
-//            .openPopup();
-</script>
 <!-------------- Dynamic Navigation Bar --------------------->
 <div class="main_content">
     <div id="vue-div" class="display:none">
