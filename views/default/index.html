@@ -7,8 +7,11 @@
 {{end}}
 
 <script src="https://unpkg.com/leaflet@1.0.1/dist/leaflet.js"></script>
+
+<div class="main_div">
 <div id="mapid" >
     <script src="{{=URL('static', 'js/main_map.js')}}"></script>
+    {{ include "default/modals.html" }}
 </div>
 
 <!-------------- Dynamic Navigation Bar --------------------->
@@ -44,6 +47,7 @@
       </div>
     </nav>
     </div>
+</div>
 </div>
 
 <script src="{{=URL('static', 'js/default_index.js')}}">

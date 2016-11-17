@@ -5,29 +5,55 @@
 map = L.map('mapid').setView([36.991, -122.060], 15);
 
 L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
-            attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
+    attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
 }).addTo(map);
 
-popup = L.popup();
+map.on('click', create_announcement);
 
-function onMapClick(e) {
+L.marker([36.991, -122.060]).addTo(map)
+    .bindPopup('This is the center of Campus. <button> Hello </button>');
+
+//This will prompt the user with a modal or something to create a announcement
+function create_announcement(e){
+    console.log("create_announcement was called");
+    var popup = L.popup();
+
     popup
         .setLatLng(e.latlng)
-        //.setContent("You clicked the map at " + e.latlng.toString())
-        .setContent('<p> Would you like to create a event?</p>')
+        .setContent('<a data-toggle="modal" href="#CreatePositionModal" class="btn btn-primary">Create Announcement</a>')
         .openOn(map);
 
-    console.log(e.latlng.toString());
-    console.log(e.latlng.lat.toString());
-    console.log(e.latlng.lng.toString());
+
+    //create_announcement_submit(e);
+}
+
+//this will be called by a button probably
+function create_announcement_submit(e){
+    console.log("create_annoucement_submit was called");
+    create_marker(e);
+}
+
+//this will actually create the announcement
+function create_marker(e) {
+    console.log("createMarker was called");
+
+    //console.log(e.latlng.toString());
+    //console.log(e.latlng.lat.toString());
+    //console.log(e.latlng.lng.toString());
+
     lat = e.latlng.lat;
     lng = e.latlng.lng;
+    var announcement_title = "The announcement_title";
 
-    L.marker([lat, lng]).addTo(map)
+    L.marker([lat, lng], {
+        title: announcement_title,  //when user hovers over marker display title
+        riseOnHover: true   //rise to the front when hovered over
+    }).addTo(map)
         .bindPopup('The coordinates are: ' + e.latlng);
 }
 
-map.on('click', onMapClick);
-
-L.marker([36.991, -122.060]).addTo(map)
-    .bindPopup('A pretty CSS3 popup.<br> Easily customizable.<button> Hello </button>');
+//this re-sizes the window automattically. the 100 and 200 have to change to other variables.
+$(window).on("resize", function() {
+    $("#mapid").height($(window).height() * 0.87).width($(window).width() * 0.80);
+    map.invalidateSize();
+}).trigger("resize");

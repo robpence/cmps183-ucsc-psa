@@ -1,14 +1,13 @@
 /*Layout of map displayed on screen */
 #mapid {
     /* height: 560px; */
-    position: absolute;
-    margin: auto;
-    top: 0;
-    right: 0;
-    bottom: 0;
-    left: 0;
-    width:800px;
-    height:850px;
+    /*position: absolute;
+    margin: auto;*/
+    top: 10px;
+    right: 10px;
+    bottom: 10px;
+    left: 10px;
+
 }
 
 /* position of log in menu */
@@ -19,8 +18,8 @@
     right: 0;
     bottom: 20;
     left: 0;
-    width:800px;
-    height:850px;
+    width:1000px;
+    height:500px;
 }
 
 /*Side menu layout */
