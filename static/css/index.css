@@ -1,8 +1,6 @@
 /*Layout of map displayed on screen */
 #mapid {
     /* height: 560px; */
-    position: absolute;
-    margin: auto;
     top: 0;
     right: 0;
     bottom: 0;

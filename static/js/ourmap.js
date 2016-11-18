@@ -33,7 +33,7 @@ var New_Map = function () {
 
     set_coordinates = function(coordinates){
         self.map.setView(coordinates, 17, {animation: true});
-    }
+    };
 
     self.set_marker = function(marker){
         self.marker = marker;
