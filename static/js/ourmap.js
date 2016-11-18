@@ -10,7 +10,7 @@ var initial_map_position = [36.991, -122.060];
 var Crown_position = [];
 
 
-var New_Map = function () {
+var New_Map = function (onClick) {
 
     var map = L.map('mapid').setView(initial_map_position, 15);
 
@@ -24,6 +24,8 @@ var New_Map = function () {
     var self = {};
     self.map = map;
     self.circle = null;
+    self.lat = 0;
+    self.lng = 0;
 
     self.set_circle = function(circle){
         self.circle = circle
@@ -31,7 +33,10 @@ var New_Map = function () {
 
 
     self.draw_circle = function (e) {
+        self.lat = e.latlng.lat;
+        self.lng = e.latlng.lng;
         L.circle(e.latlng, self.circle).addTo(self.map);
+
 
     };
 
@@ -40,6 +45,7 @@ var New_Map = function () {
         if (self.circle != null) {
             self.draw_circle(e);
             self.circle = null;
+            onClick();
         }
     });
 

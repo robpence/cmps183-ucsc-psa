@@ -17,8 +17,10 @@ def get_user_email():
 
 db.define_table('Announcements',
                 Field('author'),
+                Field('name'),
                 Field('description'),
-                Field('gps', 'float'),
+                Field('latitude', 'float'),
+                Field('longitude', 'float'),
                 Field('category'),
                 Field('score', 'integer'),
                 Field('solved', 'boolean'),

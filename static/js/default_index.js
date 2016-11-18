@@ -64,7 +64,9 @@ var Announcement = function (announcement_type){
 
 
 var _announcement_form = {
-            description: null
+    description: null,
+    name: null,
+    active: false
 };
 
 
@@ -75,6 +77,13 @@ var app = function() {
 
     self.undfined_announcement = null;
 
+    function clear_announcement_form (){
+        self.vue.announcement_form.description = null;
+        self.vue.announcement_form.description = null;
+        self.toggle_add_announcement();
+    }
+
+
     Vue.config.silent = false; // show all warnings
     
 
@@ -82,7 +91,27 @@ var app = function() {
     self.add_announcement = function () {
         // The submit button to add a post has been pressed.
         console.log("add an announcement");
-        $.web2py.enableElement($("#add_post_submit"));
+
+
+        // The submit button to add a post has been added.
+        console.log('map=', self.campus_map.location);
+        $.post(add_announcement_url,
+            {
+                name: self.vue.announcement_form.name,
+                latitude: self.campus_map.lat,
+                longitude: self.campus_map.lng
+            },
+            function (data) {
+                //$.web2py.enableElement($("#add_announcement_submit"));
+                //self.vue.posts.unshift(data.post);
+                clear_announcement_form();
+            });
+
+    };
+
+
+    self.map_click = function(){
+        self.toggle_add_announcement();
     };
 
 
@@ -90,10 +119,17 @@ var app = function() {
         self.campus_map.set_circle(
             Announcement(new_announcemnt)
         );
+        // show the form
+        //self.vue.announcement_form.active = true;
+
+    };
+
+    self.toggle_add_announcement = function (){
+        self.vue.announcement_form.active = !self.vue.announcement_form.active;
     };
 
 
-    self.campus_map = New_Map();
+    self.campus_map = New_Map(self.map_click);
 
     // Complete as needed.
     self.vue = new Vue({
@@ -109,11 +145,10 @@ var app = function() {
 
         methods: {
 
-         urgent_cursor: self.urgent_cursor,
-
-            show: self.show,
+            urgent_cursor: self.urgent_cursor,
             set_announcement: self.set_announcement,
-            add_announcement: self.add_announcement
+            add_announcement: self.add_announcement,
+            toggle_add_announcement: self.toggle_add_announcement
         }
 
     });
