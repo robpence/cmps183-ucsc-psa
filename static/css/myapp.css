@@ -58,7 +58,7 @@ a.menu_links {
 .new_announcement_wrapper {
   float: left;
   position: relative;
-  margin: 0 0 0 0;
+  margin: 10px 10px 10px 10px;
   padding: 0 40px 0 40px;
   width: 30%;
   border-color: #444;

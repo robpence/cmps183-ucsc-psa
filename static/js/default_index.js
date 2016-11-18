@@ -119,11 +119,11 @@ var app = function() {
     });
 
     console.log("map_var:", map_var);
-
+    $("#vue-div").show();
     return self;
 };
 
-$("#vue-div").show();
+
 var APP = null;
 
 // This will make everything accessible from the js console;
