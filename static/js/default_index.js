@@ -1,37 +1,37 @@
 // This is the js for the default/index.html view.
 
 
-var Announcement_Circle = function (){
-    var self = {};
-    self.radius =  100;
-    self.fillOpacity = 0.5;
-    self.color = null;
-    self.fillColor = null;
-    return self;
-};
-
-
 var Urgent_Announcement = function(){
-    var circle = Announcement_Circle();
-    circle.color = "orange";
-    circle.fillColor = "#d67800";
-    return circle;
+
+    var orangeMarker = L.AwesomeMarkers.icon({
+    icon:'glyphicon glyphicon-exclamation-sign',
+    markerColor: 'orange',
+    spin:'true',
+    });
+    return orangeMarker;
 };
 
 
 var Event_Announcement = function(){
-    var circle = Announcement_Circle();
-    circle.color = "blue";
-    circle.fillColor = "#4466f";
-    return circle;
+
+    var greenMarker = L.AwesomeMarkers.icon({
+    icon:'glyphicon glyphicon-user',
+    markerColor: 'green',
+    spin:'true'
+    });
+
+    return greenMarker;
 };
 
 
 var Shut_Down_Announcement = function(){
-    var circle = Announcement_Circle();
-    circle.color = "red";
-    circle.fillColor = "#f03";
-    return circle;
+    var redMarker = L.AwesomeMarkers.icon({
+    icon:'glyphicon glyphicon-remove',
+    markerColor: 'red',
+    spin:'true'
+    });
+
+    return redMarker;
 };
 
 
@@ -57,7 +57,6 @@ var Announcement = function (announcement_type){
             break;
     }
 
-
     return self;
 };
 
@@ -70,15 +69,53 @@ var app = function() {
     self.undfined_announcement = null;
 
     Vue.config.silent = false; // show all warnings
-    
-
 
     self.set_announcement = function (new_announcemnt){
-        self.campus_map.set_circle(
+        self.campus_map.set_marker(
             Announcement(new_announcemnt)
         );
     };
 
+
+    self.change_view = function(location) {
+
+        switch (location) {
+            case "kresge":
+                set_coordinates(kresge_college);
+                break;
+            case "merrill":
+                set_coordinates(merrill_college);
+                break;
+            case "rachael_carson":
+                set_coordinates(college_8);
+                break;
+            case "oakes":
+                set_coordinates(oakes_college);
+                break;
+            case "college_9":
+                set_coordinates(college_9);
+                break;
+            case "college_10":
+                set_coordinates(college_10);
+                break;
+            case "crown":
+                set_coordinates(crown_college);
+                break;
+            case "porter":
+                set_coordinates(porter_college);
+                break;
+            case "cowell":
+                set_coordinates(cowell_college);
+                break;
+
+            case "stevenson":
+                set_coordinates(stevenson_college);
+                break;
+            default:
+                set_coordinates(kresge_college);
+                break;
+        }
+    }
 
     self.campus_map = New_Map();
 
@@ -94,12 +131,8 @@ var app = function() {
         },
 
         methods: {
-
-         urgent_cursor: self.urgent_cursor,
-
-            show: self.show,
-            set_announcement: self.set_announcement
-
+            change_view:self.change_view,
+            set_announcement: self.set_announcement,
         }
 
     });
