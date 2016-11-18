@@ -1,3 +1,6 @@
+__author__ = 'diesel'
+
+
 # Define your tables below (or better in another model file) for example
 #
 # >>> db.define_table('mytable', Field('myfield', 'string'))
