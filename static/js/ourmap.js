@@ -23,7 +23,7 @@ var New_Map = function (onClick) {
 
     var self = {};
     self.map = map;
-    self.circle = null;
+    //self.circle = null;
     self.lat = 0;
     self.lng = 0;
 
@@ -33,20 +33,18 @@ var New_Map = function (onClick) {
 
 
     self.draw_circle = function (e) {
-        self.lat = e.latlng.lat;
-        self.lng = e.latlng.lng;
-        L.circle(e.latlng, self.circle).addTo(self.map);
-
-
+        //self.lat = e.latlng.lat;
+        //self.lng = e.latlng.lng;
+        if (!self.circle.drawn) {
+            L.circle(e.latlng, self.circle).addTo(self.map);
+            self.circle.drawn = true;
+        }
     };
 
 
     self.map.on('click', function(e) {
-        if (self.circle != null) {
-            self.draw_circle(e);
-            self.circle = null;
-            onClick();
-        }
+        self.draw_circle(e);
+        onClick(e.latlng.lat, e.latlng.lng);
     });
 
 

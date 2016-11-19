@@ -5,7 +5,7 @@
 <script>
 
 
-    //var posts_url = "{{=URL('api', 'get_posts', user_signature=True)}}";
+    var get_announcements_url = "{{=URL('api', 'get_announcements')}}";
     var add_announcement_url = "{{=URL('api', 'add_announcement', user_signature=True)}}";
     //var del_post_url = "{{=URL('api', 'del_post', user_signature=True)}}";
     //var edit_post_url = "{{=URL('api', 'edit_post', user_signature=True)}}";
@@ -17,6 +17,7 @@
 <script src="https://unpkg.com/leaflet@1.0.1/dist/leaflet.js"></script>
 
 <script src="{{=URL('static', 'js/ourmap.js')}}"></script>
+<script src="{{=URL('static', 'js/announcement.js')}}"></script>
 
 
 <!-------------- Dynamic Navigation Bar --------------------->
@@ -48,14 +49,14 @@
 
                   <ul class="dropdown-menu">
                       <li>
-                          <a v-on:click="set_announcement('urgent')" id="set_announcement_urgent" class="menu_links">
+                          <a v-on:click="set_next_announcement('urgent')" id="set_announcement_urgent" class="menu_links">
                             Urgent
                           </a>
                       </li>
-                      <li><a v-on:click="set_announcement('event')" id="set_announcement_event" class="menu_links">
+                      <li><a v-on:click="set_next_announcement('event')" id="set_announcement_event" class="menu_links">
                           Event
                       </a></li>
-                      <li><a v-on:click="set_announcement('shut_down')" id="set_announcement_shut_down" class="menu_links">
+                      <li><a v-on:click="set_next_announcement('shutdown')" id="set_announcement_shutdown" class="menu_links">
                           Shut Down
                       </a></li>
                   </ul>
@@ -66,7 +67,7 @@
                   <ul class="dropdown-menu">
                     <li><a v-on:click="show()" class="menu_links">Show only Urgent</a></li>
                     <li><a v-on:click="show()" class="menu_links">Show only Event</a></li>
-                    <li><a v-on:click="show()" class="menu_links">Show only Shut Down</a></li>
+                    <li><a v-on:click="show()" class="menu_links">Show only Shutdown</a></li>
                   </ul>
               </li>
               <li class="dropdown" data-w2pmenulevel="l0">
@@ -118,7 +119,7 @@
                 <input class="btn btn-primary" id="add_announcement_submit" type="submit" value="Submit" />
             </div>
 
-             <button  class="btn btn-warning btn-sm" v-on:click="toggle_add_announcement()">
+             <button  class="btn btn-warning btn-sm" >
                 Cancel
             </button>
         </div>

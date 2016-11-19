@@ -16,14 +16,14 @@ def get_user_email():
     return auth.user.email if auth.user else None
 
 db.define_table('Announcements',
-                Field('author'),
+                Field('author', default=auth.user.email),
                 Field('name'),
                 Field('description'),
                 Field('latitude', 'float'),
                 Field('longitude', 'float'),
                 Field('category'),
                 Field('score', 'integer'),
-                Field('solved', 'boolean'),
+                Field('solved', 'boolean', default=False),
                 Field('edited_on', default=datetime.datetime.utcnow()),
                 Field('created_on', default=datetime.datetime.utcnow()),
                 )

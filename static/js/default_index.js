@@ -1,65 +1,6 @@
 // This is the js for the default/index.html view.
 
 
-var Announcement_Circle = function (){
-    var self = {};
-    self.radius =  100;
-    self.fillOpacity = 0.5;
-    self.color = null;
-    self.fillColor = null;
-    return self;
-};
-
-
-var Urgent_Announcement = function(){
-    var circle = Announcement_Circle();
-    circle.color = "orange";
-    circle.fillColor = "#d67800";
-    return circle;
-};
-
-
-var Event_Announcement = function(){
-    var circle = Announcement_Circle();
-    circle.color = "blue";
-    circle.fillColor = "#4466f";
-    return circle;
-};
-
-
-var Shut_Down_Announcement = function(){
-    var circle = Announcement_Circle();
-    circle.color = "red";
-    circle.fillColor = "#f03";
-    return circle;
-};
-
-
-
-var Announcement = function (announcement_type){
-    var self = null;
-
-    switch (announcement_type){
-        case "urgent":
-            self = Urgent_Announcement();
-            break;
-
-        case "event":
-            self = Event_Announcement();
-            break;
-
-        case "shut_down":
-            self = Shut_Down_Announcement();
-            break;
-
-        default:
-            self = Urgent_Announcement();
-            break;
-    }
-
-
-    return self;
-};
 
 
 
@@ -75,34 +16,43 @@ var app = function() {
 
     var self = {};
 
-    self.undfined_announcement = null;
 
-    function clear_announcement_form (){
+    function clear_announcement_form() {
         self.vue.announcement_form.description = null;
-        self.vue.announcement_form.description = null;
+        self.vue.announcement_form.name = null;
         self.toggle_add_announcement();
     }
 
 
     Vue.config.silent = false; // show all warnings
     
-
+    self.get_announcements = function() {
+        $.getJSON(get_announcements_url,
+            function (data) {
+                //console.log(data.posts[0]);
+                self.vue.all_announcements = data.announcements;
+                self.vue.has_more = data.has_more;
+                self.vue.logged_in = data.logged_in;
+                console.log('anns.length=', self.vue.all_announcements.length);
+                console.log('data=', data);
+        })
+    };
 
     self.add_announcement = function () {
         // The submit button to add a post has been pressed.
-        console.log("add an announcement");
-
+        console.log("add an announcement=", self.next_announcement);
 
         // The submit button to add a post has been added.
-        console.log('map=', self.campus_map.location);
         $.post(add_announcement_url,
             {
                 name: self.vue.announcement_form.name,
-                latitude: self.campus_map.lat,
-                longitude: self.campus_map.lng
+                description: self.vue.announcement_form.description,
+                 latitude: self.next_announcement.lat,
+                longitude: self.next_announcement.lng,
+                category: self.next_announcement.category
             },
             function (data) {
-                //$.web2py.enableElement($("#add_announcement_submit"));
+                $.web2py.enableElement($("#add_announcement_submit"));
                 //self.vue.posts.unshift(data.post);
                 clear_announcement_form();
             });
@@ -110,15 +60,55 @@ var app = function() {
     };
 
 
-    self.map_click = function(){
+    self.populate_map = function (){
+        $.getJSON(get_announcements_url,
+            function (data) {
+                //console.log(data.posts[0]);
+                self.vue.all_announcements = data.announcements;
+                self.vue.has_more = data.has_more;
+                self.vue.logged_in = data.logged_in;
+                console.log('anns.length=', self.vue.all_announcements.length);
+                console.log('data=', data);
+
+                var a = self.vue.all_announcements;
+                console.log('a[0]=',a[0]);
+                for(var i=0; i < a.length; i++){
+                    var ann = self.vue.all_announcements[i];
+                    self.vue.all_announcements[i] = Announcement_from_db(ann);
+                    self.campus_map.set_circle(
+                        self.vue.all_announcements[i]
+                    );
+                    self.campus_map.draw_circle(
+                        self.vue.all_announcements[i]
+                    );
+                }
+            });
+
+        /*
+        self.get_announcements();
+        console.log('ans[0]=', self.vue.all_announcements[0])
+        var a = self.vue.all_announcements;
+        console.log('a.length=', self.vue.all_announcements.length);
+
+        for(var i=0; i < a.length; i++){
+            console.log('a[i]=',a);
+        }
+        */
+    };
+
+    self.map_click = function(lat, lng){
+        self.next_announcement.lat = lat;
+        self.next_announcement.lng = lng;
         self.toggle_add_announcement();
     };
 
 
-    self.set_announcement = function (new_announcemnt){
+    self.set_next_announcement = function (new_announcemnt){
+        self.next_announcement = Announcement(new_announcemnt);
         self.campus_map.set_circle(
-            Announcement(new_announcemnt)
+            self.next_announcement.me_copy()
         );
+        console.log('next_announcement=', self.next_announcement);
         // show the form
         //self.vue.announcement_form.active = true;
 
@@ -140,18 +130,20 @@ var app = function() {
         data: {
             logged_in: false,
             isCreatingAnnouncement: false,
-            announcement_form: _announcement_form
+            announcement_form: _announcement_form,
+            all_announcements: []
         },
 
         methods: {
-
             urgent_cursor: self.urgent_cursor,
-            set_announcement: self.set_announcement,
+            set_next_announcement: self.set_next_announcement,
             add_announcement: self.add_announcement,
             toggle_add_announcement: self.toggle_add_announcement
         }
 
     });
+
+    self.populate_map();
 
     console.log("map_var:", map_var);
     $("#vue-div").show();
