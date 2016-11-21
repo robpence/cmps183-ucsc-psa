@@ -57,7 +57,11 @@ var New_Map = function (onClick) {
     self.add_marker = function (e) {
         if (!self.marker.drawn) {
             //self.draw_circle(e);
-            L.marker(e.latlng, {icon:self.marker}).addTo(self.map);
+            if (self.marker.latlng == null){
+                self.marker.latlng = e.latlng;
+            }
+
+            L.marker(self.marker.latlng, {icon:self.marker}).addTo(self.map);
             //self.circle = null;
             self.marker.drawn = true;
         }

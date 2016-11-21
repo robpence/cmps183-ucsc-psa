@@ -51,7 +51,7 @@ def add_announcement():
     )
     ann = db.Announcements(ann_id)
 
-    logger.info("ann= %r" % (ann))
+    logger.info("api:add_announcement ==> ann= %r" % (ann))
 
 
     return response.json(dict(announcement=ann))

@@ -5,7 +5,7 @@
 
 
 var Announcement_from_db = function (ann){
-    console.log('Announcement_from_db');
+    console.log('Announcement_from_db', ann);
     var Announcement_Icon = function (){
         var self = {};
 
@@ -19,7 +19,6 @@ var Announcement_from_db = function (ann){
         return self;
     };
 
-
     var Urgent_Announcement = function(){
         var icon = Announcement_Icon();
         icon.icon ='glyphicon glyphicon-exclamation-sign';
@@ -32,9 +31,9 @@ var Announcement_from_db = function (ann){
     var Event_Announcement = function(){
         var icon = Announcement_Icon();
         icon.icon ='glyphicon glyphicon-user';
-        icon.markerColor = 'treen';
-        icon.category = 'even';
-        return icon;
+        icon.markerColor = 'green';
+        icon.category = 'event';
+        return L.AwesomeMarkers.icon(icon);
     };
 
 
@@ -43,7 +42,7 @@ var Announcement_from_db = function (ann){
         icon.icon ='glyphicon glyphicon-remove';
         icon.markerColor = 'red';
         icon.category = 'shutdown';
-        return icon;
+        return L.AwesomeMarkers.icon(icon);
     };
 
 
@@ -62,13 +61,18 @@ var Announcement_from_db = function (ann){
 
         case "shutdown":
             self = Shutdown_Announcement();
+            self.category = 'shutdown';
             break;
 
         default:
             self = Urgent_Announcement();
             break;
     }
-
+    self.drawn = false;
+    self.latlng = {
+        'lat': ann.latitude,
+        'lng': ann.longitude
+    };
 
     return self;
 };
@@ -76,6 +80,7 @@ var Announcement_from_db = function (ann){
 
 var Announcement = function (announcement_type){
 
+    console.log("Announcement: ann_type = ", announcement_type);
     var Announcement_Icon = function (){
         var self = {};
 
@@ -102,9 +107,9 @@ var Announcement = function (announcement_type){
     var Event_Announcement = function(){
         var icon = Announcement_Icon();
         icon.icon ='glyphicon glyphicon-user';
-        icon.markerColor = 'treen';
-        icon.category = 'even';
-        return icon;
+        icon.markerColor = 'green';
+        icon.category = 'event';
+        return L.AwesomeMarkers.icon(icon);
     };
 
 
@@ -113,7 +118,7 @@ var Announcement = function (announcement_type){
         icon.icon ='glyphicon glyphicon-remove';
         icon.markerColor = 'red';
         icon.category = 'shutdown';
-        return icon;
+        return L.AwesomeMarkers.icon(icon);
     };
 
 
@@ -133,6 +138,7 @@ var Announcement = function (announcement_type){
 
         case "shutdown":
             self = Shutdown_Announcement();
+            self.category = 'shutdown';
             break;
 
         default:
@@ -140,19 +146,6 @@ var Announcement = function (announcement_type){
             break;
     }
 
-
-    self.me_copy = function(){
-        return {
-        'radius' : self.radius,
-        'fillOpacity': self.fillOpacity,
-        'drawn': self.drawn,
-        'color': self.color,
-        'fillColor': self.fillColor,
-        'category': self.category
-        };
-    };
-
-
-
+    self.drawn = false;
     return self;
 };
