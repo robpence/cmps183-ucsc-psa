@@ -1,72 +1,5 @@
 // This is the js for the default/index.html view.
 
-/*
-var Urgent_Announcement = function(){
-
-    var orangeMarker = L.AwesomeMarkers.icon({
-    icon:'glyphicon glyphicon-exclamation-sign',
-    markerColor: 'orange',
-    spin:'true',
-    shadowSize: [0, 0]
-    });
-    return orangeMarker;
-};
-
-
-var Event_Announcement = function(){
-
-    var greenMarker = L.AwesomeMarkers.icon({
-    icon:'glyphicon glyphicon-user',
-    markerColor: 'green',
-    spin:'true',
-    shadowSize: [0, 0]
-    });
-
-    return greenMarker;
-};
-
-
-var Shut_Down_Announcement = function(){
-    var redMarker = L.AwesomeMarkers.icon({
-    icon:'glyphicon glyphicon-remove',
-    markerColor: 'red',
-    spin:'true',
-    shadowSize: [0, 0]
-    });
-
-    return redMarker;
-};
-
-
-
-var Announcement = function (announcement_type){
-    var self = null;
-
-    switch (announcement_type){
-        case "urgent":
-            self = Urgent_Announcement();
-            break;
-
-        case "event":
-            self = Event_Announcement();
-            break;
-
-        case "shut_down":
-            self = Shut_Down_Announcement();
-            break;
-
-        default:
-            self = Urgent_Announcement();
-            break;
-    }
-
-    return self;
-
-};
-*/
-
-
-
 
 var _announcement_form = {
     description: null,
@@ -93,7 +26,7 @@ var app = function() {
     self.get_announcements = function() {
         $.getJSON(get_announcements_url,
             function (data) {
-                //console.log(data.posts[0]);
+                console.log(data.posts[0]);
                 self.vue.all_announcements = data.announcements;
                 self.vue.has_more = data.has_more;
                 self.vue.logged_in = data.logged_in;
@@ -127,7 +60,7 @@ var app = function() {
     self.populate_map = function (){
         $.getJSON(get_announcements_url,
             function (data) {
-                //console.log(data.posts[0]);
+                console.log('callback: populate_map');
                 self.vue.all_announcements = data.announcements;
                 self.vue.has_more = data.has_more;
                 self.vue.logged_in = data.logged_in;
@@ -138,11 +71,14 @@ var app = function() {
                 console.log('a[0]=',a[0]);
                 for(var i=0; i < a.length; i++){
                     var ann = self.vue.all_announcements[i];
+
                     self.vue.all_announcements[i] = Announcement_from_db(ann);
-                    self.campus_map.set_circle(
+
+                    self.campus_map.set_marker(
                         self.vue.all_announcements[i]
                     );
-                    self.campus_map.draw_circle(
+
+                    self.campus_map.add_marker(
                         self.vue.all_announcements[i]
                     );
                 }
@@ -169,8 +105,8 @@ var app = function() {
 
     self.set_next_announcement = function (new_announcemnt){
         self.next_announcement = Announcement(new_announcemnt);
-        self.campus_map.set_circle(
-            self.next_announcement.me_copy()
+        self.campus_map.set_marker(
+            self.next_announcement
         );
         console.log('next_announcement=', self.next_announcement);
         // show the form

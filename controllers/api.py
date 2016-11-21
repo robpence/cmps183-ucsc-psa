@@ -20,6 +20,8 @@ def get_announcements():
 
         a = _setup_announcement(r)
         anns.append(a)
+        logger.info("====> api:get_announcements(): a = %r" % a )
+
 
     #logged_in = auth.user_id is not None
     logger.info("====> api:get_announcements(): len-anns = %r" % len(anns) )

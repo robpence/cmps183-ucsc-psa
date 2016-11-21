@@ -43,26 +43,32 @@ var New_Map = function (onClick) {
     //self.circle = null;
     self.lat = 0;
     self.lng = 0;
+    self.marker = null;
 
-    self.set_circle = function(circle){
-        self.circle = circle
+    set_coordinates = function(coordinates){
+        self.map.setView(coordinates, 17, {animation: true});
+    };
+
+    self.set_marker = function(marker){
+        self.marker = marker;
     };
 
 
-    self.draw_circle = function (e) {
-        //self.lat = e.latlng.lat;
-        //self.lng = e.latlng.lng;
-        if (!self.circle.drawn) {
-            L.circle(e.latlng, self.circle).addTo(self.map);
-            self.circle.drawn = true;
+    self.add_marker = function (e) {
+        if (!self.marker.drawn) {
+            //self.draw_circle(e);
+            L.marker(e.latlng, {icon:self.marker}).addTo(self.map);
+            //self.circle = null;
+            self.marker.drawn = true;
         }
-    };
 
+    };
 
     self.map.on('click', function(e) {
-        self.draw_circle(e);
+        self.add_marker(e);
         onClick(e.latlng.lat, e.latlng.lng);
     });
+
 
     self.map.on('drag', function() {
         self.map.panInsideBounds(bounds, { animate: false });

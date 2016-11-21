@@ -3,16 +3,15 @@
  */
 
 
-var Announcement_from_db = function (ann){
 
-    var Announcement_Circle = function (){
+var Announcement_from_db = function (ann){
+    console.log('Announcement_from_db');
+    var Announcement_Icon = function (){
         var self = {};
-        self.radius =  100;
-        self.fillOpacity = 0.5;
+
         self.drawn = false;
-        self.color = null;
-        self.fillColor = null;
-        self.category = null;
+        self.spin = true;
+        self.shadowSize= [0, 0];
         self.latlng = {
             'lat': ann.latitude,
             'lng': ann.longitude
@@ -22,36 +21,35 @@ var Announcement_from_db = function (ann){
 
 
     var Urgent_Announcement = function(){
-        var circle = Announcement_Circle();
-        circle.color = "orange";
-        circle.fillColor = "#d67800";
-        circle.category = 'urgent';
-        return circle;
+        var icon = Announcement_Icon();
+        icon.icon ='glyphicon glyphicon-exclamation-sign';
+        icon.markerColor = 'orange';
+        icon.category = 'urgent';
+        return L.AwesomeMarkers.icon(icon);
     };
 
 
     var Event_Announcement = function(){
-        var circle = Announcement_Circle();
-        circle.color = "blue";
-        circle.fillColor = "#4466f";
-        circle.category = 'event';
-        return circle;
+        var icon = Announcement_Icon();
+        icon.icon ='glyphicon glyphicon-user';
+        icon.markerColor = 'treen';
+        icon.category = 'even';
+        return icon;
     };
 
 
     var Shutdown_Announcement = function(){
-        var circle = Announcement_Circle();
-        circle.color = "red";
-        circle.fillColor = "#f03";
-        circle.category = 'shutdown';
-        return circle;
+        var icon = Announcement_Icon();
+        icon.icon ='glyphicon glyphicon-remove';
+        icon.markerColor = 'red';
+        icon.category = 'shutdown';
+        return icon;
     };
-
 
 
     var self = null;
 
-
+    //console.log('ann.category=', ann.category);
 
     switch (ann.category){
         case "urgent":
@@ -72,33 +70,18 @@ var Announcement_from_db = function (ann){
     }
 
 
-    self.me_copy = function(){
-        return {
-        'radius' : self.radius,
-        'fillOpacity': self.fillOpacity,
-        'drawn': self.drawn,
-        'color': self.color,
-        'fillColor': self.fillColor,
-        'category': self.category
-        };
-    };
-
-
-
     return self;
 };
 
 
 var Announcement = function (announcement_type){
 
-    var Announcement_Circle = function (){
+    var Announcement_Icon = function (){
         var self = {};
-        self.radius =  100;
-        self.fillOpacity = 0.5;
+
         self.drawn = false;
-        self.color = null;
-        self.fillColor = null;
-        self.category = null;
+        self.spin = true;
+        self.shadowSize= [0, 0];
         self.latlng = {
             'lat': null,
             'lng': null
@@ -108,29 +91,29 @@ var Announcement = function (announcement_type){
 
 
     var Urgent_Announcement = function(){
-        var circle = Announcement_Circle();
-        circle.color = "orange";
-        circle.fillColor = "#d67800";
-        circle.category = 'urgent';
-        return circle;
+        var icon = Announcement_Icon();
+        icon.icon ='glyphicon glyphicon-exclamation-sign';
+        icon.markerColor = 'orange';
+        icon.category = 'urgent';
+        return L.AwesomeMarkers.icon(icon);
     };
 
 
     var Event_Announcement = function(){
-        var circle = Announcement_Circle();
-        circle.color = "blue";
-        circle.fillColor = "#4466f";
-        circle.category = 'event';
-        return circle;
+        var icon = Announcement_Icon();
+        icon.icon ='glyphicon glyphicon-user';
+        icon.markerColor = 'treen';
+        icon.category = 'even';
+        return icon;
     };
 
 
     var Shutdown_Announcement = function(){
-        var circle = Announcement_Circle();
-        circle.color = "red";
-        circle.fillColor = "#f03";
-        circle.category = 'shutdown';
-        return circle;
+        var icon = Announcement_Icon();
+        icon.icon ='glyphicon glyphicon-remove';
+        icon.markerColor = 'red';
+        icon.category = 'shutdown';
+        return icon;
     };
 
 
