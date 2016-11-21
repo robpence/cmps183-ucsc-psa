@@ -2,16 +2,15 @@
 
 {{block head}}
 <script src="{{=URL('static', 'js/vue.js')}}"></script>
+
 <script>
 
 
     var get_announcements_url = "{{=URL('api', 'get_announcements')}}";
     var add_announcement_url = "{{=URL('api', 'add_announcement', user_signature=True)}}";
-    //var del_post_url = "{{=URL('api', 'del_post', user_signature=True)}}";
-    //var edit_post_url = "{{=URL('api', 'edit_post', user_signature=True)}}";
-
 
 </script>
+
 {{end}}
 
 <script src="https://unpkg.com/leaflet@1.0.1/dist/leaflet.js"></script>
@@ -19,8 +18,7 @@
 <script src="{{=URL('static', 'js/ourmap.js')}}"></script>
 <script src="{{=URL('static', 'js/announcement.js')}}"></script>
 
-<div onmouseover="mOver(this)"
-id="mapid" ></div>
+<div onmouseover="mOver(this)" id="mapid" ></div>
 
 <script>
 function mOver(obj) {
@@ -162,11 +160,6 @@ function mOver(obj) {
     </div> <!-- end vue-div -->
 
             <!-- here is the campus map     -->
-    <div class="map_content" >
-
-       <div id="mapid" ></div>
-
-    </div>
 
 
 </div> <!-- end main-content -->
