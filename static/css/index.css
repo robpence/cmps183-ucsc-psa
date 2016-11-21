@@ -21,11 +21,22 @@
     height:850px;*/
 }
 
+
 /*Side menu layout */
 .vertical_menu {
 position:fixed;
 top:0px;
 left: 0px;
+margin: 0px;
+padding: 0px;
+width: 150px;
+height: 100%;
+}
+
+.right_menu {
+position:fixed;
+top:0px;
+right: 0px;
 margin: 0px;
 padding: 0px;
 width: 150px;

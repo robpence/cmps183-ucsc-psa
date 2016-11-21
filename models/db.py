@@ -103,7 +103,7 @@ auth.settings.extra_fields['auth_user']=[
 """   ***********************************************    """
 
 
-auth.define_tables(username=False, signature=False)
+auth.define_tables(username=False, signature=False, migrate=False)
 
 
 
