@@ -19,16 +19,35 @@
 <script src="{{=URL('static', 'js/ourmap.js')}}"></script>
 <script src="{{=URL('static', 'js/announcement.js')}}"></script>
 
-
-
-
-<div onmouseover="mOver(this)" id="mapid" ></div>
+<div onmouseover="mOver(this)"
+id="mapid" ></div>
 
 <script>
 function mOver(obj) {
     obj.style.cursor = "crosshair"
 }
 </script>
+
+<script src="{{=URL('static', 'js/ourmap.js')}}"></script>
+
+<script src="{{=URL('static', 'js/leaflet.awesome-markers.js')}}"></script>
+
+<div id="mapid" >
+    <script>
+        //this re-sizes the window automattically. Just change the numbers after height and width.
+        //If you want to reserve part of the screen for a menu, like the vertical menu we have on the left,
+        //You have to change the padding in the css file.
+    $(window).on("resize", function() {
+        $("#mapid").height($(window).height() * 1.00).width($(window).width() * 0.88);
+        //New_Map.map.invalidateSize();
+    }).trigger("resize");
+    </script>
+</div>
+
+<script src="{{=URL('static', 'js/ourmap.js')}}"></script>
+<!-- <script src="js/leaflet.awesome-markers.js"></script>--->
+
+
 
 <!-------------- Dynamic Navigation Bar --------------------->
 <div class="main_content">
@@ -83,15 +102,16 @@ function mOver(obj) {
               <li class="dropdown" data-w2pmenulevel="l0">
                   <a href="#" class="dropdown-toggle" data-toggle="dropdown">View</a>
                   <ul class="dropdown-menu">
-                    <li><a v-on:click="show()" class="menu_links">Crown</a></li>
-                    <li><a v-on:click="show()" class="menu_links">Merrill</a></li>
-                    <li><a v-on:click="show()" class="menu_links">Rachael Carson</a></li>
-                    <li><a v-on:click="show()" class="menu_links">College 9</a></li>
-                    <li><a v-on:click="show()" class="menu_links">College 10</a></li>
-                    <li><a v-on:click="show()" class="menu_links">Porter</a></li>
-                    <li><a v-on:click="show()" class="menu_links">Kresge</a></li>
-                    <li><a v-on:click="show()" class="menu_links">Cowell</a></li>
-                    <li><a v-on:click="show()" class="menu_links">Stevenson</a></li>
+                    <li><a v-on:click="change_view('crown')" class="menu_links">Crown</a></li>
+                    <li><a v-on:click="change_view('merrill')" class="menu_links">Merrill</a></li>
+                    <li><a v-on:click="change_view('rachael_carson')" class="menu_links">Rachael Carson</a></li>
+                    <li><a v-on:click="change_view('college_9')" class="menu_links">College 9</a></li>
+                    <li><a v-on:click="change_view('college_10')"class="menu_links">College 10</a></li>
+                    <li><a v-on:click="change_view('porter')"class="menu_links">Porter</a></li>
+                    <li><a v-on:click="change_view('kresge')" class="menu_links">Kresge</a></li>
+                    <li><a v-on:click="change_view('cowell')" class="menu_links">Cowell</a></li>
+                    <li><a v-on:click="change_view('stevenson')" class="menu_links">Stevenson</a></li>
+                    <li><a v-on:click="change_view('oakes')" class="menu_links">Oakes</a></li>
                   </ul>
               </li>
           </ul>

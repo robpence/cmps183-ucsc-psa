@@ -4,9 +4,9 @@
     top: 0;
     right: 0;
     bottom: 0;
-    left: 0;
-    width:800px;
-    height:850px;
+    left: 122px;
+    /*width:800px;
+    height:850px;*/
 }
 
 /* position of log in menu */
@@ -15,10 +15,10 @@
     margin: auto;
     top: 0;
     right: 0;
-    bottom: 20;
+    bottom: 0;
     left: 0;
-    width:800px;
-    height:850px;
+    /*width:800px;
+    height:850px;*/
 }
 
 /*Side menu layout */
@@ -26,9 +26,10 @@
 position:fixed;
 top:0px;
 left: 0px;
-margin: 0;
-padding: 0;
+margin: 0px;
+padding: 0px;
 width: 150px;
+height: 100%;
 }
 
 a.menu_links {

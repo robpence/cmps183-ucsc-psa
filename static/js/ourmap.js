@@ -1,10 +1,6 @@
-
 /**
  * Created by diesel on 11/11/16.
  */
-
-
-var map_var = "hello from ourmap.js!";
 
 
 var map_var = "hello from ourmap.js!";
@@ -19,11 +15,22 @@ var college_10 = [37.001575, -122.058938];
 var porter_college = [36.994357, -122.065471];
 var college_8 = [36.991049, -122.064856];
 var oakes_college = [36.989364, -122.063981];
+var bounds = [
+            //south west
+            [37.007606, -122.037206],
+            //north east
+            [36.971819, -122.081151]];
 
 var initial_map_position = [36.991, -122.060];
 var Crown_position = [];
 
+var New_Map = function () {
 
+    var map = L.map('mapid', {
+        maxZoom: 18,
+        minZoom: 14,
+        maxBounds: bounds
+    }).setView(central_campus, 15);
 var New_Map = function (onClick) {
 
     var map = L.map('mapid').setView(initial_map_position, 15);
@@ -31,8 +38,6 @@ var New_Map = function (onClick) {
     L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
         attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
     }).addTo(map);
-
-
 
 
     var self = {};
@@ -61,6 +66,10 @@ var New_Map = function (onClick) {
         onClick(e.latlng.lat, e.latlng.lng);
     });
 
+    self.map.on('drag', function() {
+        self.map.panInsideBounds(bounds, { animate: false });
+    });
+
 
     //        L.marker([36.991, -122.060]).addTo(map)
     //            .bindPopup('A pretty CSS3 popup.<br> Easily customizable.')
@@ -72,3 +81,4 @@ var New_Map = function (onClick) {
 
     return  self;
 };
+
