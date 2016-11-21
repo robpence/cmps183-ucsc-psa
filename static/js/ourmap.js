@@ -1,6 +1,10 @@
+
 /**
  * Created by diesel on 11/11/16.
  */
+
+
+var map_var = "hello from ourmap.js!";
 
 
 var map_var = "hello from ourmap.js!";
@@ -16,47 +20,51 @@ var porter_college = [36.994357, -122.065471];
 var college_8 = [36.991049, -122.064856];
 var oakes_college = [36.989364, -122.063981];
 
-var New_Map = function () {
+var initial_map_position = [36.991, -122.060];
+var Crown_position = [];
 
 
-    var map = L.map('mapid').setView(central_campus, 15);
+var New_Map = function (onClick) {
+
+    var map = L.map('mapid').setView(initial_map_position, 15);
 
     L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
         attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
     }).addTo(map);
 
 
+
+
     var self = {};
     self.map = map;
     //self.circle = null;
-    self.marker = null;
+    self.lat = 0;
+    self.lng = 0;
 
-    set_coordinates = function(coordinates){
-        self.map.setView(coordinates, 17, {animation: true});
-    };
-
-    self.set_marker = function(marker){
-        self.marker = marker;
+    self.set_circle = function(circle){
+        self.circle = circle
     };
 
 
-    self.add_marker = function (e) {
-        L.marker(e.latlng, {icon:self.marker}).addTo(self.map);
+    self.draw_circle = function (e) {
+        //self.lat = e.latlng.lat;
+        //self.lng = e.latlng.lng;
+        if (!self.circle.drawn) {
+            L.circle(e.latlng, self.circle).addTo(self.map);
+            self.circle.drawn = true;
+        }
     };
+
 
     self.map.on('click', function(e) {
-        if (self.marker != null) {
-            //self.draw_circle(e);
-            self.add_marker(e);
-            //self.circle = null;
-            self.marker = null;
-        }
+        self.draw_circle(e);
+        onClick(e.latlng.lat, e.latlng.lng);
     });
 
 
-    //L.marker([36.991, -122.060]).addTo(map)
-    //.bindPopup('A pretty CSS3 popup.<br> Easily customizable.')
-    //.openPopup();
+    //        L.marker([36.991, -122.060]).addTo(map)
+    //            .bindPopup('A pretty CSS3 popup.<br> Easily customizable.')
+    //            .openPopup();
 
     /*
 
@@ -64,4 +72,3 @@ var New_Map = function () {
 
     return  self;
 };
-

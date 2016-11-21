@@ -1,0 +1,111 @@
+
+
+/*Layout of map displayed on screen */
+
+
+
+.map_content {
+    padding: 10px;
+    float: left;
+    position: relative;
+    margin: 40px 40px 40px 40px;
+
+
+    #mapid {
+      //position: relative;
+      //margin: auto;
+      width:800px;
+      height:800px;
+
+      //height: 80%;
+      //width: 80%;
+    }
+
+  }
+
+.main_content {
+  display: block;
+  clear: both;
+
+    /*Side menu layout */
+  .vertical_menu {
+    /*
+    position:fixed;
+    top:0;
+    left: 0;
+    margin: 0;
+    padding: 0;
+    width: 150px;
+    */
+
+    float: left;
+    position: relative;
+    margin: 0 0 40px 0;
+    padding-right: 40px;
+    //width: 150px;
+    width: 10%;
+  }
+
+
+}
+
+
+/* position of log in menu
+.main-container {
+  position: relative;
+  margin: auto;
+  top: 0;
+  right: 0;
+  bottom: 20px;
+  left: 0;
+  width:800px;
+  height:850px;
+}
+ */
+
+
+
+
+a.menu_links {
+  padding-right:5px;
+  cursor: pointer;
+}
+
+/*Footer */
+.footer {
+    //position:fixed;
+}
+
+
+
+
+.form-group {
+//  border-color: $clrPostBorder;
+//  border-style: solid;
+//  border-width: 1px;
+//  background: $clrPostBackground;
+}
+
+.new_announcement_wrapper {
+    float: right;
+    position: relative;
+    margin: 10px 10px 10px 10px;
+    padding: 0 40px 0 40px;
+    //width: 150px;
+    width: 30%;
+
+    border-color: $clrPostBorder;
+    border-style: solid;
+    border-width: 1px;
+    background: $clrNavBorder;
+    // margin: 20px 0px 20px 0px;
+    // padding: 20px;
+    @include border-radius(16px);
+
+  .form-body{
+
+    .form-horizontal {
+      //width: 80%;
+    }
+  }
+}

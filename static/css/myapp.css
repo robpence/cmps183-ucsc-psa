@@ -1,0 +1,71 @@
+/*Layout of map displayed on screen */
+/* line 7, ../sass/_main.scss */
+.map_content {
+  padding: 10px;
+  float: left;
+  position: relative;
+  margin: 40px 40px 40px 40px;
+}
+/* line 14, ../sass/_main.scss */
+.map_content #mapid {
+  width: 800px;
+  height: 800px;
+}
+
+/* line 26, ../sass/_main.scss */
+.main_content {
+  display: block;
+  clear: both;
+  /*Side menu layout */
+}
+/* line 31, ../sass/_main.scss */
+.main_content .vertical_menu {
+  /*
+  position:fixed;
+  top:0;
+  left: 0;
+  margin: 0;
+  padding: 0;
+  width: 150px;
+  */
+  float: left;
+  position: relative;
+  margin: 0 0 40px 0;
+  padding-right: 40px;
+  width: 10%;
+}
+
+/* position of log in menu
+.main-container {
+  position: relative;
+  margin: auto;
+  top: 0;
+  right: 0;
+  bottom: 20px;
+  left: 0;
+  width:800px;
+  height:850px;
+}
+ */
+/* line 69, ../sass/_main.scss */
+a.menu_links {
+  padding-right: 5px;
+  cursor: pointer;
+}
+
+/*Footer */
+/* line 89, ../sass/_main.scss */
+.new_announcement_wrapper {
+  float: right;
+  position: relative;
+  margin: 10px 10px 10px 10px;
+  padding: 0 40px 0 40px;
+  width: 30%;
+  border-color: #444;
+  border-style: solid;
+  border-width: 1px;
+  background: #bbb;
+  -moz-border-radius: 16px;
+  -webkit-border-radius: 16px;
+  border-radius: 16px;
+}

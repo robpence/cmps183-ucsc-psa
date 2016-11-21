@@ -4,12 +4,25 @@
 <script src="{{=URL('static', 'js/vue.js')}}"></script>
 <script>
 
+
+    var get_announcements_url = "{{=URL('api', 'get_announcements')}}";
+    var add_announcement_url = "{{=URL('api', 'add_announcement', user_signature=True)}}";
+    //var del_post_url = "{{=URL('api', 'del_post', user_signature=True)}}";
+    //var edit_post_url = "{{=URL('api', 'edit_post', user_signature=True)}}";
+
+
 </script>
 {{end}}
-<script src="https://unpkg.com/leaflet@1.0.1/dist/leaflet.js"></script>
 
-<div onmouseover="mOver(this)"
-id="mapid" ></div>
+<script src="https://unpkg.com/leaflet@1.0.1/dist/leaflet.js"></script>
+<script src="{{=URL('static', 'js/leaflet.awesome-markers.js')}}"></script>
+<script src="{{=URL('static', 'js/ourmap.js')}}"></script>
+<script src="{{=URL('static', 'js/announcement.js')}}"></script>
+
+
+
+
+<div onmouseover="mOver(this)" id="mapid" ></div>
 
 <script>
 function mOver(obj) {
@@ -17,19 +30,14 @@ function mOver(obj) {
 }
 </script>
 
-<script src="{{=URL('static', 'js/ourmap.js')}}"></script>
-=======
-<script src="{{=URL('static', 'js/leaflet.awesome-markers.js')}}"></script>
-<div id="mapid" ></div>
-
-<script src="{{=URL('static', 'js/ourmap.js')}}"></script>
-<!-- <script src="js/leaflet.awesome-markers.js"></script>--->
-
-
-
 <!-------------- Dynamic Navigation Bar --------------------->
 <div class="main_content">
+
+
     <div id="vue-div" class="display:none">
+
+
+
      <nav class="vertical_menu navbar navbar-default" role="navigation">
       <div class="container-fluid">
         <div class="navbar-header navbar-brand"> Public Service Announcement </div>
@@ -44,47 +52,46 @@ function mOver(obj) {
             <ul class="nav navbar-nav">
                <!--- <li class="web2py-menu-first"><a href="/project/default/index">Home</a></li> --->
               <li v-if="'{{=auth.user_id}}' > 0" class="web2py-menu-first"><a href="/project/default/index">My Announcements</a></li>
-              <li v-if="'{{=auth.user_id}}' > 0" class="dropdown" data-w2pmenulevel="l0"><a href="#" class="dropdown-toggle" data-toggle="dropdown">Create Event</a>
+              <li v-if="'{{=auth.user_id}}' > 0" class="dropdown" data-w2pmenulevel="l0">
+                  <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                        Create Event
+                  </a>
+
                   <ul class="dropdown-menu">
-                      <li><a v-on:click="set_announcement('urgent')" id = "urgent" onmouseover="mOver(this) " class="menu_links">Urgent</a></li>
-                      <li><a v-on:click="set_announcement('event')" id = "event" onmouseover="mOver(this) "class="menu_links">Event</a></li>
-                      <li><a v-on:click="set_announcement('shut_down')" id = "shut_down" onmouseover="mOver(this)" class="menu_links">Shut Down</a></li>
+                      <li>
+                          <a v-on:click="set_next_announcement('urgent')" id="set_announcement_urgent" class="menu_links">
+                            Urgent
+                          </a>
+                      </li>
+                      <li><a v-on:click="set_next_announcement('event')" id="set_announcement_event" class="menu_links">
+                          Event
+                      </a></li>
+                      <li><a v-on:click="set_next_announcement('shutdown')" id="set_announcement_shutdown" class="menu_links">
+                          Shut Down
+                      </a></li>
                   </ul>
               </li>
-<!-- 			  <script>
-					function myFunction() {
-					document.getElementById("urgent").style.cursor = "crosshair";
-					}
-					function myFunction() {
-					document.getElementById("event").style.cursor = "crosshair";
-					}
-					function myFunction() {
-					document.getElementById("shut_down").style.cursor = "crosshair";
-					}
-				</script> -->
-			  <!--<li v-if="'{{=auth.user_id}}' > 0" class="web2py-menu-first"><a href="/project/default/index">My Announcements</a></li>-->
 
               <li class="dropdown" data-w2pmenulevel="l0">
                   <a href="#" class="dropdown-toggle" data-toggle="dropdown">Filter</a>
                   <ul class="dropdown-menu">
                     <li><a v-on:click="show()" class="menu_links">Show only Urgent</a></li>
                     <li><a v-on:click="show()" class="menu_links">Show only Event</a></li>
-                    <li><a v-on:click="show()" class="menu_links">Show only Shut Down</a></li>
+                    <li><a v-on:click="show()" class="menu_links">Show only Shutdown</a></li>
                   </ul>
               </li>
               <li class="dropdown" data-w2pmenulevel="l0">
                   <a href="#" class="dropdown-toggle" data-toggle="dropdown">View</a>
                   <ul class="dropdown-menu">
-                    <li><a v-on:click="change_view('crown')" class="menu_links">Crown</a></li>
-                    <li><a v-on:click="change_view('merrill')" class="menu_links">Merrill</a></li>
-                    <li><a v-on:click="change_view('rachael_carson')" class="menu_links">Rachael Carson</a></li>
-                    <li><a v-on:click="change_view('college_9')" class="menu_links">College 9</a></li>
-                    <li><a v-on:click="change_view('college_10')"class="menu_links">College 10</a></li>
-                    <li><a v-on:click="change_view('porter')"class="menu_links">Porter</a></li>
-                    <li><a v-on:click="change_view('kresge')" class="menu_links">Kresge</a></li>
-                    <li><a v-on:click="change_view('cowell')" class="menu_links">Cowell</a></li>
-                    <li><a v-on:click="change_view('stevenson')" class="menu_links">Stevenson</a></li>
-                    <li><a v-on:click="change_view('oakes')" class="menu_links">Oakes</a></li>
+                    <li><a v-on:click="show()" class="menu_links">Crown</a></li>
+                    <li><a v-on:click="show()" class="menu_links">Merrill</a></li>
+                    <li><a v-on:click="show()" class="menu_links">Rachael Carson</a></li>
+                    <li><a v-on:click="show()" class="menu_links">College 9</a></li>
+                    <li><a v-on:click="show()" class="menu_links">College 10</a></li>
+                    <li><a v-on:click="show()" class="menu_links">Porter</a></li>
+                    <li><a v-on:click="show()" class="menu_links">Kresge</a></li>
+                    <li><a v-on:click="show()" class="menu_links">Cowell</a></li>
+                    <li><a v-on:click="show()" class="menu_links">Stevenson</a></li>
                   </ul>
               </li>
           </ul>
@@ -92,9 +99,56 @@ function mOver(obj) {
 
         </div>
       </div>
-    </nav>
-    </div>
-</div>
+    </nav>  <!-- end vertical_menuj     -->
 
-<script src="{{=URL('static', 'js/default_index.js')}}">
-</script>
+
+
+
+    <div v-if="announcement_form.active" id="create_new_announcement" class="new_announcement_wrapper" >
+        <form action="#" v-on:submit.prevent="add_announcement" class="form-horizontal" enctype="multipart/form-data" method="post">
+
+        <h3>Announcement Name</h3>
+        <div class="form-group" id="no_table_name__row">
+            <div>
+                <input class="form-control string"  id="no_table_name"  v-model="announcement_form.name" placeholder="announcement name" type="text" />
+                <span class="help-block"></span>
+            </div>
+        </div>
+
+        <h3>Announcement Description</h3>
+        <div class="form-group" id="no_table_description__row">
+            <div>
+                <input class="form-control string" id="no_table_description" v-model="announcement_form.description" placeholder="description" type="text" />
+                <span class="help-block"></span>
+            </div>
+        </div>
+
+
+        <div class="form-group" id="submit_announcement_row">
+            <div>
+                <input class="btn btn-primary" id="add_announcement_submit" type="submit" value="Submit" />
+            </div>
+
+             <button  class="btn btn-warning btn-sm" >
+                Cancel
+            </button>
+        </div>
+
+        </form>
+   </div>
+
+
+
+    </div> <!-- end vue-div -->
+
+            <!-- here is the campus map     -->
+    <div class="map_content" >
+
+       <div id="mapid" ></div>
+
+    </div>
+
+
+</div> <!-- end main-content -->
+
+<script src="{{=URL('static', 'js/default_index.js')}}">    </script>
