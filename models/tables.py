@@ -16,7 +16,7 @@ def get_user_email():
     return auth.user.email if auth.user else None
 
 db.define_table('Announcements',
-                Field('author', default=auth.user.email),
+                Field('author', default=get_user_email()),
                 Field('name'),
                 Field('description'),
                 Field('latitude', 'float'),
