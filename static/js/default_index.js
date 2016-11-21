@@ -121,6 +121,23 @@ var app = function() {
 
     self.campus_map = New_Map(self.map_click);
 
+    self.my_announcements = function(){
+        $.getJSON(my_announcements_url, function(data){
+            self.vue.users_announcements = data.announcements;
+             alert(self.vue.users_announcements);
+        });
+
+        self.vue.view_my_announcements = true;
+
+    };
+
+    self.toggle_my_announcements = function(){
+
+        self.vue.view_my_announcements = false;
+
+
+    };
+
     // Complete as needed.
     self.vue = new Vue({
         el: "#vue-div",
@@ -131,14 +148,17 @@ var app = function() {
             logged_in: false,
             isCreatingAnnouncement: false,
             announcement_form: _announcement_form,
-            all_announcements: []
+            all_announcements: [],
+            users_announcements: [],
+            view_my_announcements: false,
         },
 
         methods: {
-            urgent_cursor: self.urgent_cursor,
             set_next_announcement: self.set_next_announcement,
             add_announcement: self.add_announcement,
-            toggle_add_announcement: self.toggle_add_announcement
+            toggle_add_announcement: self.toggle_add_announcement,
+            my_announcements: self.my_announcements,
+            toggle_my_announcements:self.toggle_my_announcements
         }
 
     });

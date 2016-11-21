@@ -53,3 +53,8 @@ def add_announcement():
 
 
     return response.json(dict(announcement=ann))
+
+def users_announcements():
+    announcements = db(db.Announcements.author == auth.user.email).select()
+    logger.info("user's annoucements = %r" % announcements)
+    return response.json(dict(announcements=announcements))

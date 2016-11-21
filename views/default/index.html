@@ -7,6 +7,7 @@
 
     var get_announcements_url = "{{=URL('api', 'get_announcements')}}";
     var add_announcement_url = "{{=URL('api', 'add_announcement', user_signature=True)}}";
+    var my_announcements_url = "{{=URL('api', 'users_announcements')}}";
     //var del_post_url = "{{=URL('api', 'del_post', user_signature=True)}}";
     //var edit_post_url = "{{=URL('api', 'edit_post', user_signature=True)}}";
 
@@ -26,8 +27,6 @@
 
     <div id="vue-div" class="display:none">
 
-
-
      <nav class="vertical_menu navbar navbar-default" role="navigation">
       <div class="container-fluid">
         <div class="navbar-header navbar-brand"> Public Service Announcement </div>
@@ -41,7 +40,7 @@
             <!--     Navbar Starts Here                       -->
             <ul class="nav navbar-nav">
                <!--- <li class="web2py-menu-first"><a href="/project/default/index">Home</a></li> --->
-              <li v-if="'{{=auth.user_id}}' > 0" class="web2py-menu-first"><a href="/project/default/index">My Announcements</a></li>
+              <li v-if="'{{=auth.user_id}}' > 0" class="web2py-menu-first"><a v-on:click="my_announcements()">My Announcements</a></li>
               <li v-if="'{{=auth.user_id}}' > 0" class="dropdown" data-w2pmenulevel="l0">
                   <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                         Create Event
@@ -86,7 +85,7 @@
               </li>
           </ul>
             <!--     Navbar Ends Here                       -->
-
+                ---->
         </div>
       </div>
     </nav>  <!-- end vertical_menuj     -->
@@ -125,20 +124,19 @@
         </div>
 
         </form>
-   </div>
+      </div>
+    </div>
+
+</div> <!-- end vue-div -->
+
+<!-- here is the campus map     -->
 
 
-
-    </div> <!-- end vue-div -->
-
-            <!-- here is the campus map     -->
-    <div class="map_content" >
+   <div class="map_content" >
 
        <div id="mapid" ></div>
 
-    </div>
-
-
+   </div>
 </div> <!-- end main-content -->
 
 <script src="{{=URL('static', 'js/default_index.js')}}">    </script>

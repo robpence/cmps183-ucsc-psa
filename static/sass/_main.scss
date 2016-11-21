@@ -64,7 +64,12 @@
  */
 
 
-
+#announcement_content{
+  border-style: solid;
+  border-color: red;
+  length:100px;
+  width:100px;
+}
 
 a.menu_links {
   padding-right:5px;
