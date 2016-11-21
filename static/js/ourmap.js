@@ -22,7 +22,9 @@ var bounds = [
             [36.971819, -122.081151]];
 
 
+
 var New_Map = function (onClick) {
+
 
     var map = L.map('mapid', {
         maxZoom: 18,

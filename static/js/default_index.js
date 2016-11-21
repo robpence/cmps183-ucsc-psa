@@ -1,6 +1,6 @@
 // This is the js for the default/index.html view.
 
-
+/*
 var Urgent_Announcement = function(){
 
     var orangeMarker = L.AwesomeMarkers.icon({
@@ -61,7 +61,9 @@ var Announcement = function (announcement_type){
     }
 
     return self;
+
 };
+*/
 
 
 
