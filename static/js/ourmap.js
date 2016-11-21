@@ -21,19 +21,15 @@ var bounds = [
             //north east
             [36.971819, -122.081151]];
 
-var initial_map_position = [36.991, -122.060];
-var Crown_position = [];
 
-var New_Map = function () {
+var New_Map = function (onClick) {
 
     var map = L.map('mapid', {
         maxZoom: 18,
         minZoom: 14,
         maxBounds: bounds
     }).setView(central_campus, 15);
-var New_Map = function (onClick) {
 
-    var map = L.map('mapid').setView(initial_map_position, 15);
 
     L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
         attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'

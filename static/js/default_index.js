@@ -62,7 +62,7 @@ var Announcement = function (announcement_type){
 
     return self;
 };
-*/
+
 
 
 
