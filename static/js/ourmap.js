@@ -15,11 +15,20 @@ var college_10 = [37.001575, -122.058938];
 var porter_college = [36.994357, -122.065471];
 var college_8 = [36.991049, -122.064856];
 var oakes_college = [36.989364, -122.063981];
+var bounds = [
+            //south west
+            [37.007606, -122.037206],
+            //north east
+            [36.971819, -122.081151]];
 
 var New_Map = function () {
 
 
-    var map = L.map('mapid').setView(central_campus, 15);
+    var map = L.map('mapid', {
+        maxZoom: 18,
+        minZoom: 14,
+        maxBounds: bounds
+    }).setView(central_campus, 15);
 
     L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
         attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
@@ -51,6 +60,10 @@ var New_Map = function () {
             //self.circle = null;
             self.marker = null;
         }
+    });
+
+    self.map.on('drag', function() {
+        self.map.panInsideBounds(bounds, { animate: false });
     });
 
 

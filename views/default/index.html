@@ -23,7 +23,9 @@ function mOver(obj) {
 
 <div id="mapid" >
     <script>
-        //this re-sizes the window automattically. the 100 and 200 have to change to other variables.
+        //this re-sizes the window automattically. Just change the numbers after height and width.
+        //If you want to reserve part of the screen for a menu, like the vertical menu we have on the left,
+        //You have to change the padding in the css file.
     $(window).on("resize", function() {
         $("#mapid").height($(window).height() * 0.87).width($(window).width() * 0.88);
         //New_Map.map.invalidateSize();
