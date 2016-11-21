@@ -20,19 +20,21 @@
 }
 /* line 31, ../sass/_main.scss */
 .main_content .vertical_menu {
-  /*
-  position:fixed;
-  top:0;
+  position: fixed;
+  top: 0;
   left: 0;
   margin: 0;
   padding: 0;
   width: 150px;
+  height: 100%;
+  /*
+      float: left;
+      position: relative;
+      margin: 0 0 40px 0;
+      padding-right: 40px;
+      //width: 150px;
+      width: 10%;
   */
-  float: left;
-  position: relative;
-  margin: 0 0 40px 0;
-  padding-right: 40px;
-  width: 10%;
 }
 
 /* position of log in menu
@@ -47,14 +49,14 @@
   height:850px;
 }
  */
-/* line 69, ../sass/_main.scss */
+/* line 71, ../sass/_main.scss */
 a.menu_links {
   padding-right: 5px;
   cursor: pointer;
 }
 
 /*Footer */
-/* line 89, ../sass/_main.scss */
+/* line 91, ../sass/_main.scss */
 .new_announcement_wrapper {
   float: right;
   position: relative;
