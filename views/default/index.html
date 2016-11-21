@@ -18,9 +18,18 @@ function mOver(obj) {
 </script>
 
 <script src="{{=URL('static', 'js/ourmap.js')}}"></script>
-=======
+
 <script src="{{=URL('static', 'js/leaflet.awesome-markers.js')}}"></script>
-<div id="mapid" ></div>
+
+<div id="mapid" >
+    <script>
+        //this re-sizes the window automattically. the 100 and 200 have to change to other variables.
+    $(window).on("resize", function() {
+        $("#mapid").height($(window).height() * 0.87).width($(window).width() * 0.88);
+        //New_Map.map.invalidateSize();
+    }).trigger("resize");
+    </script>
+</div>
 
 <script src="{{=URL('static', 'js/ourmap.js')}}"></script>
 <!-- <script src="js/leaflet.awesome-markers.js"></script>--->

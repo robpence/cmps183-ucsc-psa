@@ -7,6 +7,7 @@ var Urgent_Announcement = function(){
     icon:'glyphicon glyphicon-exclamation-sign',
     markerColor: 'orange',
     spin:'true',
+    shadowSize: [0, 0]
     });
     return orangeMarker;
 };
@@ -17,7 +18,8 @@ var Event_Announcement = function(){
     var greenMarker = L.AwesomeMarkers.icon({
     icon:'glyphicon glyphicon-user',
     markerColor: 'green',
-    spin:'true'
+    spin:'true',
+    shadowSize: [0, 0]
     });
 
     return greenMarker;
@@ -28,7 +30,8 @@ var Shut_Down_Announcement = function(){
     var redMarker = L.AwesomeMarkers.icon({
     icon:'glyphicon glyphicon-remove',
     markerColor: 'red',
-    spin:'true'
+    spin:'true',
+    shadowSize: [0, 0]
     });
 
     return redMarker;
