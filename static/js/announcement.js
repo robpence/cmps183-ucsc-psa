@@ -16,7 +16,7 @@ var Announcement_Icon = function (){
 };
 
 var Announcement_from_db = function (ann){
-    console.log('Announcement_from_db', ann);
+    //console.log('Announcement_from_db', ann);
 
      var self = null;
     /*
@@ -63,7 +63,8 @@ var Announcement_from_db = function (ann){
 
     var self = null;
     */
-    //console.log('ann.category=', ann.category);
+
+    console.log('ann.category=', ann.category);
 
     switch (ann.category){
         case "urgent":
@@ -116,20 +117,23 @@ var Announcement = function (announcement_type) {
     switch (announcement_type) {
         case "urgent":
             self = Urgent_Announcement();
+            self.category = 'urgent';
             break;
 
         case "event":
             self = Event_Announcement();
+            self.category = 'event';
             break;
 
         case "shutdown":
             self = Shutdown_Announcement();
             self.category = 'shutdown';
             break;
-
+        /*
         default:
             self = Urgent_Announcement();
             break;
+        */
     }
 
     self.drawn = false;

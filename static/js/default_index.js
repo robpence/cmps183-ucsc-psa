@@ -7,8 +7,6 @@ var _announcement_form = {
     active: false
 };
 
-
-
 var app = function() {
 
     var self = {};
@@ -22,7 +20,7 @@ var app = function() {
 
 
     Vue.config.silent = false; // show all warnings
-    
+    /*
     self.get_announcements = function() {
         $.getJSON(get_announcements_url,
             function (data) {
@@ -35,6 +33,7 @@ var app = function() {
                 console.log('data=', data);
         })
     };
+    */
 
     self.add_announcement = function () {
         // The submit button to add a post has been pressed.
@@ -43,6 +42,7 @@ var app = function() {
         // The submit button to add a post has been added.
 
         /* There is something wrong with this post request!!!!! */
+
         $.post(add_announcement_url,
             {
                 name: self.vue.announcement_form.name,
@@ -52,6 +52,8 @@ var app = function() {
                 category: self.next_announcement.category
             },
             function (data) {
+
+                self.vue.copy.push(data.announcement);
                 $.web2py.enableElement($("#add_announcement_submit"));
                 //self.vue.posts.unshift(data.post);
                 clear_announcement_form();
@@ -61,25 +63,45 @@ var app = function() {
 
 
     self.populate_map = function (){
+
         $.getJSON(get_announcements_url,
             function (data) {
-                console.log('callback: populate_map');
+                //console.log('callback: populate_map');
                 self.vue.all_announcements = data.announcements;
-                self.vue.has_more = data.has_more;
-                self.vue.logged_in = data.logged_in;
+                //self.vue.copy = data.announcements;
+                /*
                 console.log('anns.length=', self.vue.all_announcements.length);
                 console.log('data=', data);
-
+                */
                 var a = self.vue.all_announcements;
-                console.log('a[0]=',a[0]);
+                //console.log('a[0]=',a[0]);
+
                 for(var i=0; i < a.length; i++){
 
                     //could be here also???
 
                     var ann = self.vue.all_announcements[i];
 
-                    self.vue.all_announcements[i] = Announcement_from_db(ann);
+                    //str = JSON.stringify(self.vue.copy[i]);
 
+                    //console.log('copy' + str);
+                    /*
+                    str = JSON.stringify(ann);
+
+                    console.log('ann' + str);
+                    */
+                    str = JSON.stringify(ann);
+
+                    console.log('lol' + str);
+
+                    self.vue.all_announcements[i] = Announcement_from_db(ann);
+                    /*
+                    str = JSON.stringify(self.vue.all_announcements[i]);
+
+                    console.log('self.vue.all_announcements[i]' + str);
+
+                    alert(self.vue.all_announcements[i]);
+                    */
                     console.log(self.vue.all_announcements[i]);
                     self.campus_map.set_marker(
                         self.vue.all_announcements[i]
@@ -113,8 +135,9 @@ var app = function() {
 
     /*     Maybe its here???????? */
 
-    self.set_next_announcement = function (new_announcemnt){
-        self.next_announcement = Announcement(new_announcemnt);
+    self.set_next_announcement = function (new_announcement){
+
+        self.next_announcement = Announcement(new_announcement);
         self.campus_map.set_marker(
             self.next_announcement
         );
@@ -183,7 +206,7 @@ var app = function() {
             isCreatingAnnouncement: false,
             announcement_form: _announcement_form,
             all_announcements: [],
-            lol:[]
+            copy:[]
         },
 
         methods: {
