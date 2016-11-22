@@ -55,6 +55,14 @@ var app = function() {
                     self.vue.names.unshift(data.announcement.name);
                     self.vue.description.unshift(data.announcement.description);
                     self.vue.category.unshift(data.announcement.category);
+
+                    var coords = {
+                    lat: data.latitude,
+                    long: data.longitude,
+                    };
+
+                    self.vue.coordinates.unshift(coords);
+
                 $.web2py.enableElement($("#add_announcement_submit"));
                 //self.vue.posts.unshift(data.post);
                 clear_announcement_form();
@@ -80,22 +88,30 @@ var app = function() {
 
                     var ann = self.vue.all_announcements[i];
 
-                    /* Some of the categories are Null */
+                    /* Used for the history bar */
+
                     self.vue.names.push(ann.name);
                     self.vue.description.push(ann.description);
                     self.vue.category.push(ann.category);
+
+                    var coords = {
+                    lat: ann.latitude,
+                    long: ann.longitude,
+                    active: false
+                    };
+
+                    self.vue.coordinates.push(coords);
 
                     str = JSON.stringify(ann);
 
                     console.log('ann' + str);
 
                     /* something funny is happening here, is data being lost? */
-
                     self.vue.all_announcements[i] = Announcement_from_db(ann);
 
                     str = JSON.stringify(self.vue.all_announcements[i]);
 
-                    console.log('solution maybe' + str);
+                    console.log('self.vue.all_announcements[i]' + str);
 
                     console.log(self.vue.all_announcements[i]);
                     self.campus_map.set_marker(
@@ -187,6 +203,9 @@ var app = function() {
         }
     };
 
+    self.view_announcement = function(coordinates) {
+        view_coordinates_of_announcement(coordinates.lat,coordinates.long);
+    }
 
     self.campus_map = New_Map(self.map_click);
 
@@ -204,12 +223,15 @@ var app = function() {
             names: [],
             description: [],
             category: [],
+            coordinates: []
         },
 
         methods: {
             set_next_announcement: self.set_next_announcement,
             add_announcement: self.add_announcement,
-            toggle_add_announcement: self.toggle_add_announcement
+            toggle_add_announcement: self.toggle_add_announcement,
+            change_view: self.change_view,
+            view_announcement: self.view_announcement
         }
 
     });

@@ -163,10 +163,12 @@ function mOver(obj) {
    </div>
 
           <div class="history">
-               <div class="ann" v-for="(name,index) in names">
-                  ${names[index]} <br>
-                  ${description[index]} <br>
-                  ${category[index]}
+               <div class="ann" v-for="(name,index) in names" v-on:click="view_announcement(coordinates[index])">
+                 Title: ${names[index]} <br>
+                 Description: ${description[index]} <br>
+                 Category: ${category[index]}
+                 <i class="fa fa-thumbs-up" aria-hidden="true"></i>
+                 <i class="fa fa-thumbs-down" aria-hidden="true"></i>
                </div>
           </div>
     </div> <!-- end vue-div -->
