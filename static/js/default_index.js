@@ -176,7 +176,6 @@ var app = function() {
         },
 
         methods: {
-            urgent_cursor: self.urgent_cursor,
             set_next_announcement: self.set_next_announcement,
             add_announcement: self.add_announcement,
             toggle_add_announcement: self.toggle_add_announcement

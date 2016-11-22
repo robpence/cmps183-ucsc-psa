@@ -1,24 +1,27 @@
 /*Layout of map displayed on screen */
-/* line 7, ../sass/_main.scss */
+/*
 .map_content {
-  padding: 10px;
-  float: left;
-  position: relative;
-  margin: 40px 40px 40px 40px;
-}
-/* line 14, ../sass/_main.scss */
-.map_content #mapid {
-  width: 800px;
-  height: 800px;
-}
+    position: relative;
+    margin: 40px 40px 40px 40px;
 
-/* line 26, ../sass/_main.scss */
+
+    #mapid {
+      //position: relative;
+      //margin: auto;
+      width:800px;
+      height:800px;
+
+      //height: 80%;
+      //width: 80%;
+    }
+
+  }
+*/
+/* line 23, ../sass/_main.scss */
 .main_content {
-  display: block;
-  clear: both;
   /*Side menu layout */
 }
-/* line 31, ../sass/_main.scss */
+/* line 25, ../sass/_main.scss */
 .main_content .vertical_menu {
   position: fixed;
   top: 0;
@@ -27,17 +30,42 @@
   padding: 0;
   width: 150px;
   height: 100%;
-  /*
-      float: left;
-      position: relative;
-      margin: 0 0 40px 0;
-      padding-right: 40px;
-      //width: 150px;
-      width: 10%;
-  */
+}
+/* line 36, ../sass/_main.scss */
+.main_content .right_menu {
+  position: fixed;
+  top: 0;
+  right: 0;
+  margin: 0;
+  padding: 0;
+  width: 200px;
+  height: 50%;
+}
+/* line 46, ../sass/_main.scss */
+.main_content .history {
+  position: fixed;
+  right: 0;
+  bottom: 0;
+  height: 50%;
+  width: 200px;
+  border-color: #00c4ff;
+  border-style: solid;
+  border-width: 5px;
+  -moz-border-radius: 16px;
+  -webkit-border-radius: 16px;
+  border-radius: 16px;
+}
+/* line 58, ../sass/_main.scss */
+.main_content #mapid {
+  padding: 0px;
+  float: left;
+  margin: 0;
+  height: 50%;
+  width: 50%;
 }
 
-/* position of log in menu
+/* position of log in menu*/
+/* line 68, ../sass/_main.scss */
 .main-container {
   position: relative;
   margin: auto;
@@ -45,18 +73,17 @@
   right: 0;
   bottom: 20px;
   left: 0;
-  width:800px;
-  height:850px;
+  width: 800px;
+  height: 850px;
 }
- */
-/* line 71, ../sass/_main.scss */
+
+/* line 80, ../sass/_main.scss */
 a.menu_links {
   padding-right: 5px;
   cursor: pointer;
 }
 
-/*Footer */
-/* line 91, ../sass/_main.scss */
+/* line 94, ../sass/_main.scss */
 .new_announcement_wrapper {
   float: right;
   position: relative;

@@ -30,13 +30,16 @@ function mOver(obj) {
 
 <script src="{{=URL('static', 'js/leaflet.awesome-markers.js')}}"></script>
 
+<div class="main_content">
+
 <div id="mapid" >
     <script>
         //this re-sizes the window automattically. Just change the numbers after height and width.
         //If you want to reserve part of the screen for a menu, like the vertical menu we have on the left,
         //You have to change the padding in the css file.
+
     $(window).on("resize", function() {
-        $("#mapid").height($(window).height() * 1.00).width($(window).width() * 0.88);
+        $("#mapid").height($(window).height() * 1.00).width($(window).width() * 0.50);
         //New_Map.map.invalidateSize();
     }).trigger("resize");
     </script>
@@ -47,49 +50,17 @@ function mOver(obj) {
 
 
 
-<!-------------- Dynamic Navigation Bar --------------------->
-<div class="main_content">
+<!-------------- Left Navigation Bar --------------------->
 
 
     <div id="vue-div" class="display:none">
-
-
-
      <nav class="vertical_menu navbar navbar-default" role="navigation">
       <div class="container-fluid">
-        <div class="navbar-header navbar-brand"> Public Service Announcement </div>
-        <div class="collapse navbar-collapse navbar-ex1-collapse">
-             <p class="collapse navbar-collapse navbar-ex1-collapse">
-                 <ul class="nav navbar-nav">
-                    {{='auth' in globals() and auth.navbar('Welcome',mode='dropdown') or ''}}
-                 </ul>
-            </p>
-
-            <!--     Navbar Starts Here                       -->
             <ul class="nav navbar-nav">
-               <!--- <li class="web2py-menu-first"><a href="/project/default/index">Home</a></li> --->
-              <li v-if="'{{=auth.user_id}}' > 0" class="web2py-menu-first"><a href="/project/default/index">My Announcements</a></li>
-              <li v-if="'{{=auth.user_id}}' > 0" class="dropdown" data-w2pmenulevel="l0">
-                  <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                        Create Event
-                  </a>
-
-                  <ul class="dropdown-menu">
-                      <li>
-                          <a v-on:click="set_next_announcement('urgent')" id="set_announcement_urgent" class="menu_links">
-                            Urgent
-                          </a>
-                      </li>
-                      <li><a v-on:click="set_next_announcement('event')" id="set_announcement_event" class="menu_links">
-                          Event
-                      </a></li>
-                      <li><a v-on:click="set_next_announcement('shutdown')" id="set_announcement_shutdown" class="menu_links">
-                          Shut Down
-                      </a></li>
-                  </ul>
-              </li>
-
-              <li class="dropdown" data-w2pmenulevel="l0">
+                 <li class="dropdown" data-w2pmenulevel="l0">
+                  <a href="#" class="dropdown-toggle" data-toggle="dropdown">search</a>
+                 </li>
+                <li class="dropdown" data-w2pmenulevel="l0">
                   <a href="#" class="dropdown-toggle" data-toggle="dropdown">Filter</a>
                   <ul class="dropdown-menu">
                     <li><a v-on:click="show()" class="menu_links">Show only Urgent</a></li>
@@ -113,13 +84,49 @@ function mOver(obj) {
                   </ul>
               </li>
           </ul>
-            <!--     Navbar Ends Here                       -->
+      </div>
+    </nav>
+
+    <!---- Right Nav Bar ----->
+    <nav class="right_menu navbar navbar-default" role="navigation">
+      <div class="container-fluid">
+        <div class="navbar-header navbar-brand"> Public Service Announcement </div>
+        <div class="collapse navbar-collapse navbar-ex1-collapse">
+             <p class="collapse navbar-collapse navbar-ex1-collapse">
+                 <ul class="nav navbar-nav">
+                    {{='auth' in globals() and auth.navbar('Welcome',mode='dropdown') or ''}}
+                 </ul>
+            </p>
+
+            <ul class="nav navbar-nav">
+               <!--- <li class="web2py-menu-first"><a href="/project/default/index">Home</a></li> --->
+               <li v-if="'{{=auth.user_id}}' > 0" class="dropdown" data-w2pmenulevel="l0">
+                  <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                        Create Event
+                  </a>
+                  <ul class="dropdown-menu">
+                      <li>
+                          <a v-on:click="set_next_announcement('urgent')" id="set_announcement_urgent" class="menu_links">
+                            Urgent
+                          </a>
+                      </li>
+                      <li><a v-on:click="set_next_announcement('event')" id="set_announcement_event" class="menu_links">
+                          Event
+                      </a></li>
+                      <li><a v-on:click="set_next_announcement('shutdown')" id="set_announcement_shutdown" class="menu_links">
+                          Shut Down
+                      </a></li>
+                  </ul>
+              </li>
+
+              <li class="dropdown" data-w2pmenulevel="l0">
+                  <a href="#" class="dropdown-toggle" data-toggle="dropdown">history</a>
+              </li>
+           </ul>
 
         </div>
       </div>
-    </nav>  <!-- end vertical_menuj     -->
-
-
+    </nav>
 
 
     <div v-if="announcement_form.active" id="create_new_announcement" class="new_announcement_wrapper" >
@@ -155,13 +162,15 @@ function mOver(obj) {
         </form>
    </div>
 
+          <div class="history">
+
+          </div>
 
 
-    </div> <!-- end vue-div -->
+  </div> <!-- end vue-div -->
 
             <!-- here is the campus map     -->
-
-
 </div> <!-- end main-content -->
+
 
 <script src="{{=URL('static', 'js/default_index.js')}}">    </script>
