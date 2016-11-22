@@ -47,17 +47,14 @@ function mOver(obj) {
 
 
 
-<!-------------- Dynamic Navigation Bar --------------------->
+<!-------------- Left Navigation Bar --------------------->
 <div class="main_content">
 
 
     <div id="vue-div" class="display:none">
-
      <nav class="vertical_menu navbar navbar-default" role="navigation">
       <div class="container-fluid">
-          <!--     Navbar Starts Here                       -->
             <ul class="nav navbar-nav">
-               <!--- <li class="web2py-menu-first"><a href="/project/default/index">Home</a></li> --->
                  <li class="dropdown" data-w2pmenulevel="l0">
                   <a href="#" class="dropdown-toggle" data-toggle="dropdown">search</a>
                  </li>
@@ -85,10 +82,10 @@ function mOver(obj) {
                   </ul>
               </li>
           </ul>
-            <!--     Navbar Ends Here                       -->
       </div>
-    </nav>  <!-- end vertical_menuj     -->
+    </nav>
 
+    <!---- Right Nav Bar ----->
     <nav class="right_menu navbar navbar-default" role="navigation">
       <div class="container-fluid">
         <div class="navbar-header navbar-brand"> Public Service Announcement </div>
@@ -99,7 +96,6 @@ function mOver(obj) {
                  </ul>
             </p>
 
-            <!--     Navbar Starts Here                       -->
             <ul class="nav navbar-nav">
                <!--- <li class="web2py-menu-first"><a href="/project/default/index">Home</a></li> --->
                <li v-if="'{{=auth.user_id}}' > 0" class="dropdown" data-w2pmenulevel="l0">
@@ -125,12 +121,13 @@ function mOver(obj) {
                   <a href="#" class="dropdown-toggle" data-toggle="dropdown">history</a>
               </li>
            </ul>
-            <!--     Navbar Ends Here                       -->
 
         </div>
       </div>
-    </nav>  <!-- end vertical_menuj     -->
+    </nav>
 
+
+    <!---
     <div v-if="announcement_form.active" id="create_new_announcement" class="new_announcement_wrapper" >
         <form action="#" v-on:submit.prevent="add_announcement" class="form-horizontal" enctype="multipart/form-data" method="post">
 
@@ -163,14 +160,17 @@ function mOver(obj) {
 
         </form>
    </div>
+       ---->
 
+          <div class="history">
+
+          </div>
 
 
   </div> <!-- end vue-div -->
 
             <!-- here is the campus map     -->
-
-
 </div> <!-- end main-content -->
+
 
 <script src="{{=URL('static', 'js/default_index.js')}}">    </script>

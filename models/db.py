@@ -97,8 +97,7 @@ plugins = PluginManager()
 """
 
 auth.settings.extra_fields['auth_user']=[
-    Field('score', 'integer', readable = False, writable=False),
-    Field('nickname')
+
 ]
 """   ***********************************************    """
 
