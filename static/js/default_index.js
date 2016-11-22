@@ -52,7 +52,9 @@ var app = function() {
                 category: self.next_announcement.category
             },
             function (data) {
-                self.vue.copy.push(data.announcement);
+                    self.vue.names.unshift(data.announcement.name);
+                    self.vue.description.unshift(data.announcement.description);
+                    self.vue.category.unshift(data.announcement.category);
                 $.web2py.enableElement($("#add_announcement_submit"));
                 //self.vue.posts.unshift(data.post);
                 clear_announcement_form();
@@ -76,8 +78,6 @@ var app = function() {
 
                 for(var i=0; i < a.length; i++){
 
-                    //could be here also???
-
                     var ann = self.vue.all_announcements[i];
 
                     /* Some of the categories are Null */
@@ -89,7 +89,7 @@ var app = function() {
 
                     console.log('ann' + str);
 
-                    /* something funniy is happening here" */
+                    /* something funny is happening here, is data being lost? */
 
                     self.vue.all_announcements[i] = Announcement_from_db(ann);
 
