@@ -80,29 +80,23 @@ var app = function() {
 
                     var ann = self.vue.all_announcements[i];
 
-                    self.vue.name = ann.name;
-                    self.vue.description = ann.description;
+                    /* Some of the categories are Null */
+                    self.vue.names.push(ann.name);
+                    self.vue.description.push(ann.description);
+                    self.vue.category.push(ann.category);
 
-                    //str = JSON.stringify(self.vue.copy[i]);
-
-                    //console.log('copy' + str);
-                    /*
                     str = JSON.stringify(ann);
 
                     console.log('ann' + str);
-                    */
-                    str = JSON.stringify(ann);
 
-                    console.log('lol' + str);
+                    /* something funniy is happening here" */
 
                     self.vue.all_announcements[i] = Announcement_from_db(ann);
-                    /*
+
                     str = JSON.stringify(self.vue.all_announcements[i]);
 
-                    console.log('self.vue.all_announcements[i]' + str);
+                    console.log('solution maybe' + str);
 
-                    alert(self.vue.all_announcements[i]);
-                    */
                     console.log(self.vue.all_announcements[i]);
                     self.campus_map.set_marker(
                         self.vue.all_announcements[i]
@@ -207,9 +201,9 @@ var app = function() {
             isCreatingAnnouncement: false,
             announcement_form: _announcement_form,
             all_announcements: [],
-            copy:[],
-            name: null,
-            description: null
+            names: [],
+            description: [],
+            category: [],
         },
 
         methods: {

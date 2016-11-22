@@ -15,25 +15,6 @@ var Announcement_Icon = function (){
         return self;
 };
 
-var Announcement_from_db = function (ann){
-    //console.log('Announcement_from_db', ann);
-
-     var self = null;
-    /*
-    var Announcement_Icon = function (){
-        var self = {};
-
-        self.drawn = false;
-        self.spin = true;
-        self.shadowSize= [0, 0];
-        self.latlng = {
-            'lat': ann.latitude,
-            'lng': ann.longitude
-        };
-        return self;
-    };
-    */
-    /*
     var Urgent_Announcement = function(){
         var icon = Announcement_Icon();
         icon.icon ='glyphicon glyphicon-exclamation-sign';
@@ -61,8 +42,10 @@ var Announcement_from_db = function (ann){
     };
 
 
-    var self = null;
-    */
+var Announcement_from_db = function (ann){
+    //console.log('Announcement_from_db', ann);
+
+     var self = null;
 
     console.log('ann.category=', ann.category);
 
@@ -100,20 +83,7 @@ var Announcement_from_db = function (ann){
 var Announcement = function (announcement_type) {
 
     console.log("Announcement: ann_type = ", announcement_type);
-    /*
-     var Announcement_Icon = function (){
-     var self = {};
 
-     self.drawn = false;
-     self.spin = true;
-     self.shadowSize= [0, 0];
-     self.latlng = {
-     'lat': null,
-     'lng': null
-     };
-     return self;
-     };
-     */
     switch (announcement_type) {
         case "urgent":
             self = Urgent_Announcement();
@@ -139,32 +109,6 @@ var Announcement = function (announcement_type) {
     self.drawn = false;
     return self;
 };
-
-    var Urgent_Announcement = function(){
-        var icon = Announcement_Icon();
-        icon.icon ='glyphicon glyphicon-exclamation-sign';
-        icon.markerColor = 'orange';
-        icon.category = 'urgent';
-        return L.AwesomeMarkers.icon(icon);
-    };
-
-
-    var Event_Announcement = function(){
-        var icon = Announcement_Icon();
-        icon.icon ='glyphicon glyphicon-user';
-        icon.markerColor = 'green';
-        icon.category = 'event';
-        return L.AwesomeMarkers.icon(icon);
-    };
-
-
-    var Shutdown_Announcement = function(){
-        var icon = Announcement_Icon();
-        icon.icon ='glyphicon glyphicon-remove';
-        icon.markerColor = 'red';
-        icon.category = 'shutdown';
-        return L.AwesomeMarkers.icon(icon);
-    };
 
 
 
