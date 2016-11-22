@@ -2,10 +2,24 @@
  * Created by diesel on 11/18/16.
  */
 
+var Announcement_Icon = function (){
+        var self = {};
 
+        self.drawn = false;
+        self.spin = true;
+        self.shadowSize= [0, 0];
+        self.latlng = {
+            'lat': null,
+            'lng': null
+        };
+        return self;
+};
 
 var Announcement_from_db = function (ann){
     console.log('Announcement_from_db', ann);
+
+     var self = null;
+    /*
     var Announcement_Icon = function (){
         var self = {};
 
@@ -18,7 +32,8 @@ var Announcement_from_db = function (ann){
         };
         return self;
     };
-
+    */
+    /*
     var Urgent_Announcement = function(){
         var icon = Announcement_Icon();
         icon.icon ='glyphicon glyphicon-exclamation-sign';
@@ -47,16 +62,18 @@ var Announcement_from_db = function (ann){
 
 
     var self = null;
-
+    */
     //console.log('ann.category=', ann.category);
 
     switch (ann.category){
         case "urgent":
             self = Urgent_Announcement();
+            self.category = 'urgent';
             break;
 
         case "event":
             self = Event_Announcement();
+            self.category = 'event';
             break;
 
         case "shutdown":
@@ -68,7 +85,9 @@ var Announcement_from_db = function (ann){
             self = Urgent_Announcement();
             break;
     }
+
     self.drawn = false;
+
     self.latlng = {
         'lat': ann.latitude,
         'lng': ann.longitude
@@ -77,23 +96,45 @@ var Announcement_from_db = function (ann){
     return self;
 };
 
-
-var Announcement = function (announcement_type){
+var Announcement = function (announcement_type) {
 
     console.log("Announcement: ann_type = ", announcement_type);
-    var Announcement_Icon = function (){
-        var self = {};
+    /*
+     var Announcement_Icon = function (){
+     var self = {};
 
-        self.drawn = false;
-        self.spin = true;
-        self.shadowSize= [0, 0];
-        self.latlng = {
-            'lat': null,
-            'lng': null
-        };
-        return self;
-    };
+     self.drawn = false;
+     self.spin = true;
+     self.shadowSize= [0, 0];
+     self.latlng = {
+     'lat': null,
+     'lng': null
+     };
+     return self;
+     };
+     */
+    switch (announcement_type) {
+        case "urgent":
+            self = Urgent_Announcement();
+            break;
 
+        case "event":
+            self = Event_Announcement();
+            break;
+
+        case "shutdown":
+            self = Shutdown_Announcement();
+            self.category = 'shutdown';
+            break;
+
+        default:
+            self = Urgent_Announcement();
+            break;
+    }
+
+    self.drawn = false;
+    return self;
+};
 
     var Urgent_Announcement = function(){
         var icon = Announcement_Icon();
@@ -123,29 +164,7 @@ var Announcement = function (announcement_type){
 
 
 
-    var self = null;
-
-
-
-    switch (announcement_type){
-        case "urgent":
-            self = Urgent_Announcement();
-            break;
-
-        case "event":
-            self = Event_Announcement();
-            break;
-
-        case "shutdown":
-            self = Shutdown_Announcement();
-            self.category = 'shutdown';
-            break;
-
-        default:
-            self = Urgent_Announcement();
-            break;
-    }
-
-    self.drawn = false;
-    return self;
-};
+    //var self = null;
+    //self.drawn = false;
+    //return self;
+//};

@@ -28,6 +28,7 @@ var app = function() {
             function (data) {
                 console.log(data.posts[0]);
                 self.vue.all_announcements = data.announcements;
+                console.log(self.vue.all_announcements);
                 self.vue.has_more = data.has_more;
                 self.vue.logged_in = data.logged_in;
                 console.log('anns.length=', self.vue.all_announcements.length);
@@ -40,6 +41,8 @@ var app = function() {
         console.log("add an announcement=", self.next_announcement);
 
         // The submit button to add a post has been added.
+
+        /* There is something wrong with this post request!!!!! */
         $.post(add_announcement_url,
             {
                 name: self.vue.announcement_form.name,
@@ -70,10 +73,14 @@ var app = function() {
                 var a = self.vue.all_announcements;
                 console.log('a[0]=',a[0]);
                 for(var i=0; i < a.length; i++){
+
+                    //could be here also???
+
                     var ann = self.vue.all_announcements[i];
 
                     self.vue.all_announcements[i] = Announcement_from_db(ann);
 
+                    console.log(self.vue.all_announcements[i]);
                     self.campus_map.set_marker(
                         self.vue.all_announcements[i]
                     );
@@ -82,6 +89,7 @@ var app = function() {
                         self.vue.all_announcements[i]
                     );
                 }
+
             });
 
         /*
@@ -102,6 +110,8 @@ var app = function() {
         self.toggle_add_announcement();
     };
 
+
+    /*     Maybe its here???????? */
 
     self.set_next_announcement = function (new_announcemnt){
         self.next_announcement = Announcement(new_announcemnt);
@@ -172,7 +182,8 @@ var app = function() {
             logged_in: false,
             isCreatingAnnouncement: false,
             announcement_form: _announcement_form,
-            all_announcements: []
+            all_announcements: [],
+            lol:[]
         },
 
         methods: {

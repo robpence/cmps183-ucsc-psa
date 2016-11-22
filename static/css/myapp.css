@@ -54,8 +54,15 @@
   -moz-border-radius: 16px;
   -webkit-border-radius: 16px;
   border-radius: 16px;
+  overflow-y: scroll;
 }
-/* line 58, ../sass/_main.scss */
+/* line 57, ../sass/_main.scss */
+.main_content .history .ann {
+  border-color: #000000;
+  border-style: solid;
+  border-width: 5px;
+}
+/* line 65, ../sass/_main.scss */
 .main_content #mapid {
   padding: 0px;
   float: left;
@@ -65,7 +72,7 @@
 }
 
 /* position of log in menu*/
-/* line 68, ../sass/_main.scss */
+/* line 75, ../sass/_main.scss */
 .main-container {
   position: relative;
   margin: auto;
@@ -77,13 +84,13 @@
   height: 850px;
 }
 
-/* line 80, ../sass/_main.scss */
+/* line 87, ../sass/_main.scss */
 a.menu_links {
   padding-right: 5px;
   cursor: pointer;
 }
 
-/* line 94, ../sass/_main.scss */
+/* line 101, ../sass/_main.scss */
 .new_announcement_wrapper {
   float: right;
   position: relative;
