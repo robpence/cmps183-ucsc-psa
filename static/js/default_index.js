@@ -205,7 +205,7 @@ var app = function() {
 
     self.view_announcement = function(coordinates) {
         view_coordinates_of_announcement(coordinates.lat,coordinates.long);
-    }
+    };
 
     self.campus_map = New_Map(self.map_click);
 
