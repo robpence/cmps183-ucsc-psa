@@ -17,11 +17,11 @@
 
   }
 */
-/* line 25, ../sass/_main.scss */
+/* line 23, ../sass/_main.scss */
 .main_content {
   /*Side menu layout */
 }
-/* line 27, ../sass/_main.scss */
+/* line 25, ../sass/_main.scss */
 .main_content .vertical_menu {
   position: fixed;
   top: 0;
@@ -31,17 +31,17 @@
   width: 150px;
   height: 100%;
 }
-/* line 38, ../sass/_main.scss */
+/* line 36, ../sass/_main.scss */
 .main_content .right_menu {
   position: fixed;
   top: 0;
   right: 0;
   margin: 0;
   padding: 0;
-  width: 150px;
+  width: 200px;
   height: 50%;
 }
-/* line 48, ../sass/_main.scss */
+/* line 46, ../sass/_main.scss */
 .main_content .history {
   position: fixed;
   right: 0;
@@ -55,9 +55,17 @@
   -webkit-border-radius: 16px;
   border-radius: 16px;
 }
+/* line 58, ../sass/_main.scss */
+.main_content #mapid {
+  padding: 0px;
+  float: left;
+  margin: 0;
+  height: 50%;
+  width: 50%;
+}
 
 /* position of log in menu*/
-/* line 62, ../sass/_main.scss */
+/* line 68, ../sass/_main.scss */
 .main-container {
   position: relative;
   margin: auto;
@@ -69,13 +77,13 @@
   height: 850px;
 }
 
-/* line 74, ../sass/_main.scss */
+/* line 80, ../sass/_main.scss */
 a.menu_links {
   padding-right: 5px;
   cursor: pointer;
 }
 
-/* line 88, ../sass/_main.scss */
+/* line 94, ../sass/_main.scss */
 .new_announcement_wrapper {
   float: right;
   position: relative;

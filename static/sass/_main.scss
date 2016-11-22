@@ -1,8 +1,6 @@
 
 
 /*Layout of map displayed on screen */
-
-
 /*
 .map_content {
     position: relative;
@@ -28,7 +26,7 @@
 
     position: fixed;
     top: 0;
-    left: 0;
+    left:0;
     margin: 0;
     padding: 0;
     width: 150px;
@@ -41,7 +39,7 @@
     right: 0;
     margin: 0;
     padding: 0;
-    width: 150px;
+    width: 200px;
     height: 50%;
   }
 
@@ -56,6 +54,14 @@
     border-width: 5px;
     @include border-radius(16px);
   }
+
+  #mapid {
+    padding: 0px;
+    float:left;
+    margin:0;
+    height: 50%;
+    width: 50%;
+    }
 }
 
 /* position of log in menu*/

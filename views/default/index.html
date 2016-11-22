@@ -29,26 +29,28 @@ function mOver(obj) {
 <script src="{{=URL('static', 'js/ourmap.js')}}"></script>
 
 <script src="{{=URL('static', 'js/leaflet.awesome-markers.js')}}"></script>
-<!---
+
+<div class="main_content">
+
 <div id="mapid" >
     <script>
         //this re-sizes the window automattically. Just change the numbers after height and width.
         //If you want to reserve part of the screen for a menu, like the vertical menu we have on the left,
         //You have to change the padding in the css file.
+
     $(window).on("resize", function() {
-        $("#mapid").height($(window).height() * 1.00).width($(window).width() * 0.88);
+        $("#mapid").height($(window).height() * 1.00).width($(window).width() * 0.50);
         //New_Map.map.invalidateSize();
     }).trigger("resize");
     </script>
 </div>
------>
+
 <script src="{{=URL('static', 'js/ourmap.js')}}"></script>
 <!-- <script src="js/leaflet.awesome-markers.js"></script>--->
 
 
 
 <!-------------- Left Navigation Bar --------------------->
-<div class="main_content">
 
 
     <div id="vue-div" class="display:none">
@@ -127,7 +129,6 @@ function mOver(obj) {
     </nav>
 
 
-    <!---
     <div v-if="announcement_form.active" id="create_new_announcement" class="new_announcement_wrapper" >
         <form action="#" v-on:submit.prevent="add_announcement" class="form-horizontal" enctype="multipart/form-data" method="post">
 
@@ -160,7 +161,6 @@ function mOver(obj) {
 
         </form>
    </div>
-       ---->
 
           <div class="history">
 
