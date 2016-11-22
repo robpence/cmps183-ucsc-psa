@@ -52,7 +52,6 @@ var app = function() {
                 category: self.next_announcement.category
             },
             function (data) {
-
                 self.vue.copy.push(data.announcement);
                 $.web2py.enableElement($("#add_announcement_submit"));
                 //self.vue.posts.unshift(data.post);
@@ -68,7 +67,6 @@ var app = function() {
             function (data) {
                 //console.log('callback: populate_map');
                 self.vue.all_announcements = data.announcements;
-                //self.vue.copy = data.announcements;
                 /*
                 console.log('anns.length=', self.vue.all_announcements.length);
                 console.log('data=', data);
@@ -81,6 +79,9 @@ var app = function() {
                     //could be here also???
 
                     var ann = self.vue.all_announcements[i];
+
+                    self.vue.name = ann.name;
+                    self.vue.description = ann.description;
 
                     //str = JSON.stringify(self.vue.copy[i]);
 
@@ -206,7 +207,9 @@ var app = function() {
             isCreatingAnnouncement: false,
             announcement_form: _announcement_form,
             all_announcements: [],
-            copy:[]
+            copy:[],
+            name: null,
+            description: null
         },
 
         methods: {
