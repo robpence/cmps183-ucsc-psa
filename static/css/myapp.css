@@ -61,8 +61,13 @@
   border-color: #000000;
   border-style: solid;
   border-width: 5px;
+  cursor: pointer;
 }
-/* line 65, ../sass/_main.scss */
+/* line 64, ../sass/_main.scss */
+.main_content .history .ann:hover {
+  background-color: #A2A2A2;
+}
+/* line 69, ../sass/_main.scss */
 .main_content #mapid {
   padding: 0px;
   float: left;
@@ -72,7 +77,7 @@
 }
 
 /* position of log in menu*/
-/* line 75, ../sass/_main.scss */
+/* line 79, ../sass/_main.scss */
 .main-container {
   position: relative;
   margin: auto;
@@ -84,13 +89,13 @@
   height: 850px;
 }
 
-/* line 87, ../sass/_main.scss */
+/* line 91, ../sass/_main.scss */
 a.menu_links {
   padding-right: 5px;
   cursor: pointer;
 }
 
-/* line 101, ../sass/_main.scss */
+/* line 105, ../sass/_main.scss */
 .new_announcement_wrapper {
   float: right;
   position: relative;

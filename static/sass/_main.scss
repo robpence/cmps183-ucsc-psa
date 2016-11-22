@@ -55,10 +55,14 @@
     @include border-radius(16px);
     overflow-y: scroll;
      .ann {
+        //background-color: #A2A2A2;
         border-color: #000000;
         border-style: solid;
         border-width: 5px;
-
+        cursor: pointer;
+     }
+     .ann:hover {
+       background-color: #A2A2A2;
      }
   }
 

@@ -12,7 +12,7 @@ def get_announcements():
     anns = []
     #has_more = False
 
-    rows = db(db.Announcements).select()
+    rows = db(db.Announcements).select(orderby=~db.Announcements.created_on)
 
     logger.info("====> api:get_announcements(): numrows = %r" % len(rows) )
 
@@ -24,7 +24,7 @@ def get_announcements():
 
 
     #logged_in = auth.user_id is not None
-    logger.info("====> api:get_announcements(): len-anns = %r" % len(anns) )
+    #logger.info("====> api:get_announcements(): len-anns = %r" % len(anns) )
 
     return response.json(dict(
         announcements=anns,
@@ -41,6 +41,7 @@ def add_announcement():
     ann_id = db.Announcements.insert( name=request.vars.name )
     ann = db.post(ann_id)
     '''
+    logger.info("category: %r" % (request.vars.category))
     vars = request.vars
     ann_id = db.Announcements.insert(
         name = vars.name,
@@ -51,7 +52,8 @@ def add_announcement():
     )
     ann = db.Announcements(ann_id)
 
-    logger.info("api:add_announcement ==> ann= %r" % (ann))
+    #logger.info("api:add_announcement ==> ann= %r" % (ann))
+    #logger.info("api:add_announcement_category ==> ann= %r" % (ann.category))
 
 
     return response.json(dict(announcement=ann))

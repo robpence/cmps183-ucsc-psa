@@ -45,8 +45,9 @@ var New_Map = function (onClick) {
     self.lng = 0;
     self.marker = null;
 
+    /*on-click view of div showing announcement */
     view_coordinates_of_announcement = function(lat, long) {
-        self.map.setView([lat,long], 17, {animation: true});
+        self.map.setView([lat,long], 22, {animation: true});
     };
 
     set_coordinates = function(coordinates){
