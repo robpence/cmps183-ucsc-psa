@@ -64,11 +64,11 @@ var app = function() {
                 self.vue.all_announcements = data.announcements;
                 self.vue.has_more = data.has_more;
                 self.vue.logged_in = data.logged_in;
-                console.log('anns.length=', self.vue.all_announcements.length);
-                console.log('data=', data);
+                //console.log('anns.length=', self.vue.all_announcements.length);
+                //console.log('data=', data);
 
                 var a = self.vue.all_announcements;
-                console.log('a[0]=',a[0]);
+                //console.log('a[0]=',a[0]);
                 for(var i=0; i < a.length; i++){
                     var ann = self.vue.all_announcements[i];
 
@@ -83,17 +83,6 @@ var app = function() {
                     );
                 }
             });
-
-        /*
-        self.get_announcements();
-        console.log('ans[0]=', self.vue.all_announcements[0])
-        var a = self.vue.all_announcements;
-        console.log('a.length=', self.vue.all_announcements.length);
-
-        for(var i=0; i < a.length; i++){
-            console.log('a[i]=',a);
-        }
-        */
     };
 
     self.map_click = function(lat, lng){
@@ -160,7 +149,12 @@ var app = function() {
     };
 
 
-    self.campus_map = New_Map(self.map_click);
+    self.campus_map = New_Map(function(lat, lng){
+        // this function gets called when the map is clicked
+        self.next_announcement.lat = lat;
+        self.next_announcement.lng = lng;
+        self.toggle_add_announcement();
+    });
 
     // Complete as needed.
     self.vue = new Vue({
@@ -179,7 +173,8 @@ var app = function() {
             urgent_cursor: self.urgent_cursor,
             set_next_announcement: self.set_next_announcement,
             add_announcement: self.add_announcement,
-            toggle_add_announcement: self.toggle_add_announcement
+            toggle_add_announcement: self.toggle_add_announcement,
+            change_view: self.change_view
         }
 
     });

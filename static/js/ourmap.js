@@ -53,13 +53,12 @@ var New_Map = function (onClick) {
 
     self.add_marker = function (e) {
         if (!self.marker.drawn) {
-            //self.draw_circle(e);
+            // if this marker came from our db then it
             if (self.marker.latlng == null){
                 self.marker.latlng = e.latlng;
             }
 
             L.marker(self.marker.latlng, {icon:self.marker.icon}).addTo(self.map);
-            //self.circle = null;
             self.marker.drawn = true;
         }
 
