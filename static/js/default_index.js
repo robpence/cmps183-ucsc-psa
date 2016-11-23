@@ -57,8 +57,8 @@ var app = function() {
                     self.vue.category.unshift(data.announcement.category);
 
                     var coords = {
-                    lat: data.latitude,
-                    long: data.longitude,
+                    lat: data.announcement.latitude,
+                    long: data.announcement.longitude,
                     };
 
                     self.vue.coordinates.unshift(coords);
@@ -107,6 +107,7 @@ var app = function() {
                     console.log('ann' + str);
 
                     /* something funny is happening here, is data being lost? */
+
                     self.vue.all_announcements[i] = Announcement_from_db(ann);
 
                     str = JSON.stringify(self.vue.all_announcements[i]);
@@ -204,6 +205,7 @@ var app = function() {
     };
 
     self.view_announcement = function(coordinates) {
+        //alert(coordinates.lat);
         view_coordinates_of_announcement(coordinates.lat,coordinates.long);
     };
 
