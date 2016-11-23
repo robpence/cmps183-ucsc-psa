@@ -209,6 +209,17 @@ var app = function() {
         view_coordinates_of_announcement(coordinates.lat,coordinates.long);
     };
 
+    self.get_my_announcements = function() {
+
+         self.vue.show_all_posts = true;
+
+        $.getJSON(get_my_announcements_url, function(data) {
+            alert('here');
+            self.vue.my_announcements = data.my_announcements;
+
+        });
+    };
+
     self.campus_map = New_Map(self.map_click);
 
     // Complete as needed.
@@ -225,7 +236,9 @@ var app = function() {
             names: [],
             description: [],
             category: [],
-            coordinates: []
+            coordinates: [],
+            my_announcements: [],
+            show_all_posts: false,
         },
 
         methods: {
@@ -233,7 +246,8 @@ var app = function() {
             add_announcement: self.add_announcement,
             toggle_add_announcement: self.toggle_add_announcement,
             change_view: self.change_view,
-            view_announcement: self.view_announcement
+            view_announcement: self.view_announcement,
+            get_my_announcements: self.get_my_announcements
         }
 
     });
