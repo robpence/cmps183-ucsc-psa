@@ -9,6 +9,9 @@
     var get_announcements_url = "{{=URL('api', 'get_announcements')}}";
     var add_announcement_url = "{{=URL('api', 'add_announcement', user_signature=True)}}";
     var get_my_announcements_url = "{{=URL('api', 'get_my_announcements')}}";
+    var get_only_urgent_url = "{{=URL('api', 'get_only_urgent')}}";
+    var get_only_event_url = "{{=URL('api', 'get_only_event')}}";
+    var get_only_shutdown_url = "{{=URL('api', 'get_only_shutdown')}}";
 
 </script>
 
@@ -80,9 +83,10 @@ function mOver(obj) {
                   <a href="#" class="dropdown-toggle" data-toggle="dropdown">Filter</a>
                   <ul class="dropdown-menu">
                     <li><a v-if="'{{=auth.user_id}}' > 0" v-on:click="get_my_announcements()"> Show my announcements </a></li>
-                    <li><a v-on:click="show()" class="menu_links">Show only Urgent</a></li>
-                    <li><a v-on:click="show()" class="menu_links">Show only Event</a></li>
-                    <li><a v-on:click="show()" class="menu_links">Show only Shutdown</a></li>
+                    <li><a v-on:click="show_every_announcement()" class="menu_links">All Announcements </a></li>
+                    <li><a v-on:click="get_urgent_announcements()" class="menu_links">Show only Urgent</a></li>
+                    <li><a v-on:click="get_event_announcements()" class="menu_links">Show only Event</a></li>
+                    <li><a v-on:click="get_shutdown_announcements()" class="menu_links">Show only Shutdown</a></li>
                   </ul>
               </li>
           </ul>
@@ -165,7 +169,7 @@ function mOver(obj) {
    </div>
 
           <div class="history">
-              <div v-if="show_all_posts == false">
+              <div v-if="show_all_announcements == true">
                    <div class="ann" v-for="(name,index) in names" v-on:click="view_announcement(coordinates[index])">
                      Title: ${names[index]} <br>
                      Description: ${description[index]} <br>
@@ -174,12 +178,35 @@ function mOver(obj) {
                      <i class="fa fa-thumbs-down" aria-hidden="true"></i>
                    </div>
               </div>
-              <div class="ann" v-for="ann in my_announcements" v-on:click="view_announcement(coordinates[index])">
-                 Title: ${ann.name} <br>
-                 Description: ${ann.description} <br>
-                 Category: ${ann.category} <br>
-                 <i class="fa fa-trash-o"></i>
-                 <i class="fa fa-pencil"></i>
+              <div v-if="show_my_announcements == true">
+                  <div class="ann" v-for="ann in my_announcements" v-on:click="">
+                     Title: ${ann.name} <br>
+                     Description: ${ann.description} <br>
+                     Category: ${ann.category} <br>
+                     <i class="fa fa-trash-o"></i>
+                     <i class="fa fa-pencil"></i>
+                  </div>
+              </div>
+              <div v-if="show_only_urgent == true">
+                  <div class="ann" v-for="ann in urgent_announcements" v-on:click="">
+                     Title: ${ann.name} <br>
+                     Description: ${ann.description} <br>
+                     Category: ${ann.category} <br>
+                  </div>
+              </div>
+              <div v-if="show_only_shutdown == true">
+                  <div class="ann" v-for="ann in shutdown_announcements" v-on:click="">
+                     Title: ${ann.name} <br>
+                     Description: ${ann.description} <br>
+                     Category: ${ann.category} <br>
+                  </div>
+              </div>
+              <div v-if="show_only_event == true">
+                  <div class="ann" v-for="ann in event_announcements" v-on:click="">
+                     Title: ${ann.name} <br>
+                     Description: ${ann.description} <br>
+                     Category: ${ann.category} <br>
+                  </div>
               </div>
           </div>
     </div> <!-- end vue-div -->

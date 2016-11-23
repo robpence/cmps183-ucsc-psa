@@ -211,13 +211,69 @@ var app = function() {
 
     self.get_my_announcements = function() {
 
-         self.vue.show_all_posts = true;
+         self.vue.show_all_announcements = false;
+         self.vue.show_only_urgent = false;
+         self.vue.show_my_announcements = true;
+         self.vue.show_only_shutdown = false;
+         self.vue.show_only_event = false;
 
         $.getJSON(get_my_announcements_url, function(data) {
-            alert('here');
+
             self.vue.my_announcements = data.my_announcements;
 
         });
+    };
+
+    self.get_urgent_announcements = function() {
+
+         self.vue.show_all_announcements = false;
+         self.vue.show_only_urgent = true;
+         self.vue.show_my_announcements = false;
+         self.vue.show_only_shutdown = false;
+         self.vue.show_only_event = false;
+
+
+        $.getJSON(get_only_urgent_url, function(data) {
+
+            self.vue.urgent_announcements = data.urgent_announcements;
+        });
+    };
+
+      self.get_event_announcements = function() {
+
+        self.vue.show_all_announcements = false;
+        self.vue.show_only_urgent = false;
+        self.vue.show_my_announcements = false;
+        self.vue.show_only_shutdown = false;
+        self.vue.show_only_event = true;
+
+
+        $.getJSON(get_only_event_url, function(data) {
+            self.vue.event_announcements = data.event_announcements;
+        });
+    };
+
+    self.get_shutdown_announcements = function() {
+
+        self.vue.show_all_announcements = false;
+        self.vue.show_only_urgent = false;
+        self.vue.show_my_announcements = false;
+        self.vue.show_only_shutdown = true;
+        self.vue.show_only_event = false;
+
+
+        $.getJSON(get_only_shutdown_url, function(data) {
+        self.vue.shutdown_announcements = data.shutdown_announcements;
+        });
+    };
+
+    self.show_every_announcement = function() {
+
+        self.vue.show_all_announcements = true;
+        self.vue.show_only_urgent = false;
+        self.vue.show_my_announcements = false;
+        self.vue.show_only_shutdown = false;
+        self.vue.show_only_event = false;
     };
 
     self.campus_map = New_Map(self.map_click);
@@ -238,7 +294,14 @@ var app = function() {
             category: [],
             coordinates: [],
             my_announcements: [],
-            show_all_posts: false,
+            urgent_announcements: [],
+            event_announcements: [],
+            shutdown_announcements:[],
+            show_all_announcements: true,
+            show_my_announcements: false,
+            show_only_urgent: false,
+            show_only_event: false,
+            show_only_shutdown: false,
         },
 
         methods: {
@@ -247,7 +310,11 @@ var app = function() {
             toggle_add_announcement: self.toggle_add_announcement,
             change_view: self.change_view,
             view_announcement: self.view_announcement,
-            get_my_announcements: self.get_my_announcements
+            get_my_announcements: self.get_my_announcements,
+            get_urgent_announcements: self.get_urgent_announcements,
+            get_shutdown_announcements: self.get_shutdown_announcements,
+            get_event_announcements: self.get_event_announcements,
+            show_every_announcement: self.show_every_announcement
         }
 
     });

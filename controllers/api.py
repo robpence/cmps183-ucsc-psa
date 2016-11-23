@@ -41,6 +41,7 @@ def add_announcement():
     ann_id = db.Announcements.insert( name=request.vars.name )
     ann = db.post(ann_id)
     '''
+
     logger.info("category: %r" % (request.vars.category))
     vars = request.vars
     ann_id = db.Announcements.insert(
@@ -57,3 +58,20 @@ def add_announcement():
 
 
     return response.json(dict(announcement=ann))
+
+def get_my_announcements():
+    my_announcements = db(db.Announcements.author == auth.user.email).select()
+    return response.json(dict(my_announcements = my_announcements))
+
+def get_only_urgent():
+    urgent_announcements = db(db.Announcements.category == 'urgent').select()
+    return response.json(dict(urgent_announcements = urgent_announcements))
+
+def get_only_event():
+    event_announcements = db(db.Announcements.category == 'event').select()
+    return response.json(dict(event_announcements = event_announcements))
+
+def get_only_shutdown():
+    shutdown_announcements = db(db.Announcements.category == 'shutdown').select()
+    logger.info("shutdown %r" % shutdown_announcements)
+    return response.json(dict(shutdown_announcements = shutdown_announcements))
