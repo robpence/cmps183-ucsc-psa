@@ -40,9 +40,6 @@ var New_Map = function (onClick) {
 
     var self = {};
     self.map = map;
-    //self.circle = null;
-    self.lat = 0;
-    self.lng = 0;
     self.marker = null;
 
     /*on-click view of div showing announcement */
@@ -61,13 +58,12 @@ var New_Map = function (onClick) {
 
     self.add_marker = function (e) {
         if (!self.marker.drawn) {
-            //self.draw_circle(e);
+            // if this marker came from our db then it
             if (self.marker.latlng == null){
                 self.marker.latlng = e.latlng;
             }
 
-            L.marker(self.marker.latlng, {icon:self.marker}).addTo(self.map);
-            //self.circle = null;
+            L.marker(self.marker.latlng, {icon:self.marker.icon}).addTo(self.map);
             self.marker.drawn = true;
         }
 
@@ -83,14 +79,6 @@ var New_Map = function (onClick) {
         self.map.panInsideBounds(bounds, { animate: false });
     });
 
-
-    //        L.marker([36.991, -122.060]).addTo(map)
-    //            .bindPopup('A pretty CSS3 popup.<br> Easily customizable.')
-    //            .openPopup();
-
-    /*
-
-    */
 
     return  self;
 };

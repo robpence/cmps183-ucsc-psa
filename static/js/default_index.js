@@ -125,17 +125,6 @@ var app = function() {
                 }
 
             });
-
-        /*
-        self.get_announcements();
-        console.log('ans[0]=', self.vue.all_announcements[0])
-        var a = self.vue.all_announcements;
-        console.log('a.length=', self.vue.all_announcements.length);
-
-        for(var i=0; i < a.length; i++){
-            console.log('a[i]=',a);
-        }
-        */
     };
 
     self.map_click = function(lat, lng){
@@ -276,7 +265,12 @@ var app = function() {
         self.vue.show_only_event = false;
     };
 
-    self.campus_map = New_Map(self.map_click);
+    self.campus_map = New_Map(function(lat, lng){
+        // this function gets called when the map is clicked
+        self.next_announcement.lat = lat;
+        self.next_announcement.lng = lng;
+        self.toggle_add_announcement();
+    });
 
     // Complete as needed.
     self.vue = new Vue({
