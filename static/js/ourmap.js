@@ -22,7 +22,6 @@ var bounds = [
             [36.971819, -122.081151]];
 
 
-
 var New_Map = function (onClick) {
 
 
@@ -41,6 +40,15 @@ var New_Map = function (onClick) {
     var self = {};
     self.map = map;
     self.marker = null;
+    var temp = null;
+    var markers = new L.FeatureGroup();
+
+
+     // var markers = new L.FeatureGroup();
+     // var marker = L.marker([36.991, -122.060]);
+     //
+     // marker.addTo(markers);
+     // markers.addTo(self.map);
 
     /*on-click view of div showing announcement */
     view_coordinates_of_announcement = function(lat, long) {
@@ -63,8 +71,11 @@ var New_Map = function (onClick) {
                 self.marker.latlng = e.latlng;
             }
 
-            L.marker(self.marker.latlng, {icon:self.marker.icon}).addTo(self.map);
+            temp = L.marker(self.marker.latlng, {icon:self.marker.icon}).addTo(self.map);
             self.marker.drawn = true;
+            temp.addTo(markers);
+            markers.addTo(self.map);
+            //alert(markers);
         }
 
     };
@@ -78,6 +89,18 @@ var New_Map = function (onClick) {
     self.map.on('drag', function() {
         self.map.panInsideBounds(bounds, { animate: false });
     });
+
+    self.clear_map = function() {
+
+         self.map.removeLayer(markers);
+    /*
+            var markers = new L.FeatureGroup();
+            var marker = L.marker([36.991, -122.060]);
+
+            marker.addTo(markers);
+            markers.addTo(self.map);
+            */
+    };
 
 
     return  self;

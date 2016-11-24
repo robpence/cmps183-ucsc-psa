@@ -200,6 +200,8 @@ var app = function() {
 
     self.get_my_announcements = function() {
 
+         self.campus_map.clear_map();
+
          self.vue.show_all_announcements = false;
          self.vue.show_only_urgent = false;
          self.vue.show_my_announcements = true;
