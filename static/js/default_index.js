@@ -212,10 +212,32 @@ var app = function() {
 
             self.vue.my_announcements = data.my_announcements;
 
+            self.draw_my_announcements();
+
         });
     };
 
+    self.draw_my_announcements = function() {
+
+        for(var i=0; i < self.vue.my_announcements.length; i++) {
+
+            var ann = self.vue.my_announcements[i];
+
+            self.vue.my_announcements[i] = Announcement_from_db(ann);
+
+            self.campus_map.set_marker(
+                self.vue.my_announcements[i]
+            );
+
+            self.campus_map.add_marker(
+                self.vue.my_announcements[i]
+            );
+        }
+    };
+
     self.get_urgent_announcements = function() {
+
+         self.campus_map.clear_for_urgent();
 
          self.vue.show_all_announcements = false;
          self.vue.show_only_urgent = true;
@@ -227,10 +249,33 @@ var app = function() {
         $.getJSON(get_only_urgent_url, function(data) {
 
             self.vue.urgent_announcements = data.urgent_announcements;
+
+            self.draw_urgent_announcements();
         });
     };
 
+    self.draw_urgent_announcements = function() {
+
+        for(var i=0; i <  self.vue.urgent_announcements.length; i++) {
+
+            var ann =  self.vue.urgent_announcements[i];
+
+            self.vue.urgent_announcements[i] = Announcement_from_db(ann);
+
+            self.campus_map.set_marker(
+                self.vue.urgent_announcements[i]
+            );
+
+            //using this function to not conflict with the layers
+            self.campus_map.create(
+                self.vue.urgent_announcements[i]
+            );
+        }
+    };
+
       self.get_event_announcements = function() {
+
+        self.campus_map.clear_for_event();
 
         self.vue.show_all_announcements = false;
         self.vue.show_only_urgent = false;
@@ -241,10 +286,32 @@ var app = function() {
 
         $.getJSON(get_only_event_url, function(data) {
             self.vue.event_announcements = data.event_announcements;
+            self.draw_event_announcements();
         });
     };
 
+    self.draw_event_announcements = function() {
+
+        for(var i=0; i <  self.vue.event_announcements.length; i++) {
+
+            var ann =  self.vue.event_announcements[i];
+
+            self.vue.event_announcements[i] = Announcement_from_db(ann);
+
+            self.campus_map.set_marker(
+                self.vue.event_announcements[i]
+            );
+
+            //using this function to not conflict with the layers
+            self.campus_map.create(
+                self.vue.event_announcements[i]
+            );
+        }
+    };
+
     self.get_shutdown_announcements = function() {
+
+        self.campus_map.clear_for_shutdown();
 
         self.vue.show_all_announcements = false;
         self.vue.show_only_urgent = false;
@@ -255,7 +322,27 @@ var app = function() {
 
         $.getJSON(get_only_shutdown_url, function(data) {
         self.vue.shutdown_announcements = data.shutdown_announcements;
+        self.draw_shutdown_announcements();
         });
+    };
+
+       self.draw_shutdown_announcements = function() {
+
+        for(var i=0; i <  self.vue.shutdown_announcements.length; i++) {
+
+            var ann =  self.vue.shutdown_announcements[i];
+
+            self.vue.shutdown_announcements[i] = Announcement_from_db(ann);
+
+            self.campus_map.set_marker(
+                self.vue.shutdown_announcements[i]
+            );
+
+            //using this function to not conflict with the layers
+            self.campus_map.create(
+                self.vue.shutdown_announcements[i]
+            );
+        }
     };
 
     self.show_every_announcement = function() {
@@ -310,7 +397,11 @@ var app = function() {
             get_urgent_announcements: self.get_urgent_announcements,
             get_shutdown_announcements: self.get_shutdown_announcements,
             get_event_announcements: self.get_event_announcements,
-            show_every_announcement: self.show_every_announcement
+            show_every_announcement: self.show_every_announcement,
+            draw_my_announcements: self.draw_my_announcements,
+            draw_urgent_announcements: self.draw_urgent_announcements,
+            draw_event_announcements: self.draw_event_announcements,
+            draw_shutdown_announcements: self.draw_shutdown_announcements,
         }
 
     });

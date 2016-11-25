@@ -42,6 +42,9 @@ var New_Map = function (onClick) {
     self.marker = null;
     var temp = null;
     var markers = new L.FeatureGroup();
+    var urgent_marker_layer = new L.FeatureGroup();
+    var event_marker_layer = new L.FeatureGroup();
+    var shutdown_marker_layer = new L.FeatureGroup();
 
 
      // var markers = new L.FeatureGroup();
@@ -80,6 +83,26 @@ var New_Map = function (onClick) {
 
     };
 
+    /* function to draw markers using filter, made this so it doesnt add to the markers layer used for toggling */
+    self.create = function(e) {
+
+        var store_marker = L.marker(self.marker.latlng, {icon:self.marker.icon}).addTo(self.map);
+
+        switch (self.marker.category) {
+            case "urgent":
+                store_marker.addTo(urgent_marker_layer);
+                urgent_marker_layer.addTo(self.map);
+            case "shutdown":
+                store_marker.addTo(shutdown_marker_layer);
+                shutdown_marker_layer.addTo(self.map);
+            case "event":
+                store_marker.addTo(event_marker_layer);
+                event_marker_layer.addTo(self.map);
+            default:
+                break;
+        }
+    };
+
     self.map.on('click', function(e) {
         self.add_marker(e);
         onClick(e.latlng.lat, e.latlng.lng);
@@ -91,15 +114,25 @@ var New_Map = function (onClick) {
     });
 
     self.clear_map = function() {
+        self.map.removeLayer(markers);
+    };
 
-         self.map.removeLayer(markers);
-    /*
-            var markers = new L.FeatureGroup();
-            var marker = L.marker([36.991, -122.060]);
+    self.clear_for_urgent = function() {
+        self.map.removeLayer(event_marker_layer);
+        self.map.removeLayer(shutdown_marker_layer);
+        self.map.removeLayer(markers);
+    };
 
-            marker.addTo(markers);
-            markers.addTo(self.map);
-            */
+    self.clear_for_shutdown = function() {
+        self.map.removeLayer(event_marker_layer);
+        self.map.removeLayer(urgent_marker_layer);
+        self.map.removeLayer(markers);
+    };
+
+    self.clear_for_event = function() {
+       self.map.removeLayer(shutdown_marker_layer);
+       self.map.removeLayer(urgent_marker_layer);
+       self.map.removeLayer(markers);
     };
 
 
