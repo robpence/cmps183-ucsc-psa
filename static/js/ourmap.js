@@ -48,13 +48,6 @@ var New_Map = function (onClick) {
     var shutdown_marker_layer = new L.FeatureGroup();
     var my_announcement_layer = new L.FeatureGroup();
 
-
-     // var markers = new L.FeatureGroup();
-     // var marker = L.marker([36.991, -122.060]);
-     //
-     // marker.addTo(markers);
-     // markers.addTo(self.map);
-
     /*on-click view of div showing announcement */
     view_coordinates_of_announcement = function(lat, long) {
         self.map.setView([lat,long], 22, {animation: true});
@@ -105,6 +98,7 @@ var New_Map = function (onClick) {
                 break;
         }
     };
+
 
     self.create_my_announcement_layer = function() {
         var store_marker = L.marker(self.marker.latlng, {icon:self.marker.icon}).addTo(self.map);

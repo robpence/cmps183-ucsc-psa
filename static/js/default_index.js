@@ -38,6 +38,7 @@ var app = function() {
     self.add_announcement = function () {
         // The submit button to add a post has been pressed.
         console.log("add an announcement=", self.next_announcement);
+        console.log("LLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLL");
 
         // The submit button to add a post has been added.
 
@@ -61,13 +62,39 @@ var app = function() {
                     long: data.announcement.longitude,
                     };
 
+
                     self.vue.coordinates.unshift(coords);
 
+                    //Allows for history to update automatically
+                    self.update_history();
+
+
                 $.web2py.enableElement($("#add_announcement_submit"));
-                //self.vue.posts.unshift(data.post);
                 clear_announcement_form();
             });
 
+    };
+
+    /*
+    history sidebar will be updated upon submission of any event regardless of what filter
+   */
+    self.update_history = function() {
+
+         $.getJSON(get_my_announcements_url, function(data) {
+             self.vue.my_announcements = data.my_announcements;
+         });
+
+         $.getJSON(get_only_urgent_url, function(data) {
+            self.vue.urgent_announcements = data.urgent_announcements;
+        });
+
+        $.getJSON(get_only_event_url, function(data) {
+           self.vue.event_announcements = data.event_announcements;
+        });
+
+        $.getJSON(get_only_shutdown_url, function(data) {
+        self.vue.shutdown_announcements = data.shutdown_announcements;
+        });
     };
 
 
@@ -142,7 +169,7 @@ var app = function() {
         self.campus_map.set_marker(
             self.next_announcement
         );
-        console.log('next_announcement=', self.next_announcement);
+       // console.log('next_announcement=', self.next_announcement);
         // show the form
         //self.vue.announcement_form.active = true;
 
@@ -199,7 +226,6 @@ var app = function() {
     };
 
     self.get_my_announcements = function() {
-
 
         /* this is the toggle for the history in the sidebar */
          self.vue.show_all_announcements = false;
@@ -265,7 +291,7 @@ var app = function() {
                 self.vue.urgent_announcements[i]
             );
 
-            //using this function to not conflict with the layers
+            //adding to urgent layer
             self.campus_map.create(
                 self.vue.urgent_announcements[i]
             );
@@ -301,7 +327,7 @@ var app = function() {
                 self.vue.event_announcements[i]
             );
 
-            //using this function to not conflict with the layers
+            //adding to event layer
             self.campus_map.create(
                 self.vue.event_announcements[i]
             );
@@ -343,7 +369,7 @@ var app = function() {
                 self.vue.shutdown_announcements[i]
             );
 
-            //using this function to not conflict with the layers
+            //adding to shutdown layer
             self.campus_map.create(
                 self.vue.shutdown_announcements[i]
             );
@@ -411,6 +437,7 @@ var app = function() {
             draw_urgent_announcements: self.draw_urgent_announcements,
             draw_event_announcements: self.draw_event_announcements,
             draw_shutdown_announcements: self.draw_shutdown_announcements,
+            update_history: self.update_history,
         }
 
     });
