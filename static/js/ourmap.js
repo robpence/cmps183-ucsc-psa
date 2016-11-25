@@ -41,10 +41,11 @@ var New_Map = function (onClick) {
     self.map = map;
     self.marker = null;
     var temp = null;
-    var markers = new L.FeatureGroup();
+    var all_markers = new L.FeatureGroup();
     var urgent_marker_layer = new L.FeatureGroup();
     var event_marker_layer = new L.FeatureGroup();
     var shutdown_marker_layer = new L.FeatureGroup();
+    var my_announcement_layer = new L.FeatureGroup();
 
 
      // var markers = new L.FeatureGroup();
@@ -74,11 +75,9 @@ var New_Map = function (onClick) {
                 self.marker.latlng = e.latlng;
             }
 
-            temp = L.marker(self.marker.latlng, {icon:self.marker.icon}).addTo(self.map);
-            self.marker.drawn = true;
-            temp.addTo(markers);
-            markers.addTo(self.map);
-            //alert(markers);
+            store_marker = L.marker(self.marker.latlng, {icon:self.marker.icon}).addTo(self.map);
+            store_marker.addTo(all_markers);
+            all_markers.addTo(self.map);
         }
 
     };
@@ -92,15 +91,24 @@ var New_Map = function (onClick) {
             case "urgent":
                 store_marker.addTo(urgent_marker_layer);
                 urgent_marker_layer.addTo(self.map);
+                break;
             case "shutdown":
                 store_marker.addTo(shutdown_marker_layer);
                 shutdown_marker_layer.addTo(self.map);
+                break;
             case "event":
                 store_marker.addTo(event_marker_layer);
                 event_marker_layer.addTo(self.map);
+                break;
             default:
                 break;
         }
+    };
+
+    self.create_my_announcement_layer = function() {
+        var store_marker = L.marker(self.marker.latlng, {icon:self.marker.icon}).addTo(self.map);
+        store_marker.addTo(my_announcement_layer);
+        my_announcement_layer.addTo(self.map);
     };
 
     self.map.on('click', function(e) {
@@ -113,26 +121,37 @@ var New_Map = function (onClick) {
         self.map.panInsideBounds(bounds, { animate: false });
     });
 
+
     self.clear_map = function() {
-        self.map.removeLayer(markers);
+        self.map.removeLayer(event_marker_layer);
+        self.map.removeLayer(shutdown_marker_layer);
+        self.map.removeLayer(urgent_marker_layer);
+        self.map.removeLayer(all_markers);
+        self.map.removeLayer(my_announcement_layer);
+    };
+
+    self.clear_for_all_markers = function() {
+        self.clear_map();
+        self.map.addLayer(all_markers);
+    };
+
+    self.clear_for_my_announcements = function() {
+        self.clear_map();
+        self.map.addLayer(my_announcement_layer);
     };
 
     self.clear_for_urgent = function() {
-        self.map.removeLayer(event_marker_layer);
-        self.map.removeLayer(shutdown_marker_layer);
-        self.map.removeLayer(markers);
+        self.clear_map();
+        self.map.addLayer(urgent_marker_layer);
     };
 
     self.clear_for_shutdown = function() {
-        self.map.removeLayer(event_marker_layer);
-        self.map.removeLayer(urgent_marker_layer);
-        self.map.removeLayer(markers);
+        self.clear_map();
+        self.map.addLayer(shutdown_marker_layer);
     };
 
-    self.clear_for_event = function() {
-       self.map.removeLayer(shutdown_marker_layer);
-       self.map.removeLayer(urgent_marker_layer);
-       self.map.removeLayer(markers);
+    self.clear_for_event = function() {self.clear_map();
+       self.map.addLayer(event_marker_layer);
     };
 
 

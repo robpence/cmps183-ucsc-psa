@@ -200,8 +200,9 @@ var app = function() {
 
     self.get_my_announcements = function() {
 
-         self.campus_map.clear_map();
+         //self.campus_map.clear_for_my_announcements();
 
+        /* this is the toggle for the history in the sidebar */
          self.vue.show_all_announcements = false;
          self.vue.show_only_urgent = false;
          self.vue.show_my_announcements = true;
@@ -229,15 +230,16 @@ var app = function() {
                 self.vue.my_announcements[i]
             );
 
-            self.campus_map.add_marker(
+            self.campus_map.create_my_announcement_layer(
                 self.vue.my_announcements[i]
             );
         }
+
+        self.campus_map.clear_for_my_announcements();
+
     };
 
     self.get_urgent_announcements = function() {
-
-         self.campus_map.clear_for_urgent();
 
          self.vue.show_all_announcements = false;
          self.vue.show_only_urgent = true;
@@ -247,9 +249,7 @@ var app = function() {
 
 
         $.getJSON(get_only_urgent_url, function(data) {
-
             self.vue.urgent_announcements = data.urgent_announcements;
-
             self.draw_urgent_announcements();
         });
     };
@@ -271,11 +271,11 @@ var app = function() {
                 self.vue.urgent_announcements[i]
             );
         }
+
+        self.campus_map.clear_for_urgent();
     };
 
       self.get_event_announcements = function() {
-
-        self.campus_map.clear_for_event();
 
         self.vue.show_all_announcements = false;
         self.vue.show_only_urgent = false;
@@ -307,11 +307,11 @@ var app = function() {
                 self.vue.event_announcements[i]
             );
         }
+
+        self.campus_map.clear_for_event();
     };
 
     self.get_shutdown_announcements = function() {
-
-        self.campus_map.clear_for_shutdown();
 
         self.vue.show_all_announcements = false;
         self.vue.show_only_urgent = false;
@@ -322,15 +322,21 @@ var app = function() {
 
         $.getJSON(get_only_shutdown_url, function(data) {
         self.vue.shutdown_announcements = data.shutdown_announcements;
+
+        console.log('shutdown: ' + JSON.stringify(self.vue.shutdown_announcements));
         self.draw_shutdown_announcements();
         });
+
     };
 
        self.draw_shutdown_announcements = function() {
 
-        for(var i=0; i <  self.vue.shutdown_announcements.length; i++) {
+           for(var i=0; i <  self.vue.shutdown_announcements.length; i++) {
 
-            var ann =  self.vue.shutdown_announcements[i];
+
+            var ann = self.vue.shutdown_announcements[i];
+
+            console.log('shutdown: ' + JSON.stringify(self.vue.shutdown_announcements[i]));
 
             self.vue.shutdown_announcements[i] = Announcement_from_db(ann);
 
@@ -343,6 +349,8 @@ var app = function() {
                 self.vue.shutdown_announcements[i]
             );
         }
+
+            self.campus_map.clear_for_shutdown();
     };
 
     self.show_every_announcement = function() {

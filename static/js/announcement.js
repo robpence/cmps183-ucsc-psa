@@ -42,6 +42,7 @@ var Announcement = function (announcement_type){
 
 
     function new_marker(category){
+
         switch (category){
             case "urgent":
                 return  Urgent_Marker();
@@ -90,7 +91,7 @@ var Announcement = function (announcement_type){
 
 var Announcement_from_db = function (ann){
     //console.log('Announcement_from_db', ann);
-
+    //alert(ann.category);
     var ann_marker = Announcement(ann.category);
     ann_marker.set_latlng(ann.latitude, ann.longitude);
     ann.latlng = ann_marker.latlng;
