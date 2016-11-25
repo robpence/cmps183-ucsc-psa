@@ -166,42 +166,67 @@ function mOver(obj) {
 
           <div class="history">
               <div v-if="show_all_announcements == true">
-                   <div class="ann" v-for="(name,index) in names" v-on:click="view_announcement(coordinates[index])">
-                     Title: ${names[index]} <br>
-                     Description: ${description[index]} <br>
-                     Category: ${category[index]}
-                     <i class="fa fa-thumbs-up" aria-hidden="true"></i>
-                     <i class="fa fa-thumbs-down" aria-hidden="true"></i>
+                   <div v-if="names.length == 0">
+                      No announcements have been posted yet
+                  </div>
+                  <div v-else>
+                      <div class="ann" v-for="(name,index) in names" v-on:click="view_announcement(coordinates[index])">
+                             Title: ${names[index]} <br>
+                             Description: ${description[index]} <br>
+                             Category: ${category[index]}
+                             <i class="fa fa-thumbs-up" aria-hidden="true"></i>
+                             <i class="fa fa-thumbs-down" aria-hidden="true"></i>
+                       </div>
                    </div>
               </div>
               <div v-if="show_my_announcements == true">
-                  <div class="ann" v-for="ann in my_announcements" v-on:click="">
-                     Title: ${ann.name} <br>
-                     Description: ${ann.description} <br>
-                     Category: ${ann.category} <br>
-                     <i class="fa fa-trash-o"></i>
-                     <i class="fa fa-pencil"></i>
+                   <div v-if="my_announcements.length == 0">
+                      You have not yet created an announcements
+                  </div>
+                  <div v-else>
+                      <div class="ann" v-for="ann in my_announcements" v-on:click="view_announcement_in_history(ann.latitude, ann.longitude)">
+                          Title: ${ann.name} <br>
+                         Description: ${ann.description} <br>
+                         Category: ${ann.category} <br>
+                         <i class="fa fa-trash-o"></i>
+                         <i class="fa fa-pencil"></i>
+                      </div>
                   </div>
               </div>
               <div v-if="show_only_urgent == true">
-                  <div class="ann" v-for="ann in urgent_announcements" v-on:click="">
-                     Title: ${ann.name} <br>
-                     Description: ${ann.description} <br>
-                     Category: ${ann.category} <br>
+                  <div v-if="urgent_announcements.length == 0">
+                      No announcements posted for this category yet
+                  </div>
+                  <div v-else>
+                      <div class="ann" v-for="ann in urgent_announcements" v-on:click="view_announcement_in_history(ann.latitude, ann.longitude)">
+                         Title: ${ann.name} <br>
+                         Description: ${ann.description} <br>
+                         Category: ${ann.category} <br>
+                      </div>
                   </div>
               </div>
               <div v-if="show_only_shutdown == true">
-                  <div class="ann" v-for="ann in shutdown_announcements" v-on:click="">
-                     Title: ${ann.name} <br>
-                     Description: ${ann.description} <br>
-                     Category: ${ann.category} <br>
+                  <div v-if="shutdown_announcements.length == 0">
+                      No announcements posted for this category yet
+                  </div>
+                  <div v-else>
+                      <div class="ann" v-for="ann in shutdown_announcements" v-on:click="view_announcement_in_history(ann.latitude, ann.longitude)">
+                         Title: ${ann.name} <br>
+                         Description: ${ann.description} <br>
+                         Category: ${ann.category} <br>
+                      </div>
                   </div>
               </div>
               <div v-if="show_only_event == true">
-                  <div class="ann" v-for="ann in event_announcements" v-on:click="">
-                     Title: ${ann.name} <br>
-                     Description: ${ann.description} <br>
-                     Category: ${ann.category} <br>
+                  <div v-if="event_announcements.length == 0">
+                      No announcements posted for this category yet
+                  </div>
+                  <div v-else>
+                      <div class="ann" v-for="ann in event_announcements" v-on:click="view_announcement_in_history(ann.latitude, ann.longitude)">
+                         Title: ${ann.name} <br>
+                         Description: ${ann.description} <br>
+                         Category: ${ann.category} <br>
+                      </div>
                   </div>
               </div>
           </div>

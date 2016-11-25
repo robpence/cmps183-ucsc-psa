@@ -221,8 +221,11 @@ var app = function() {
     };
 
     self.view_announcement = function(coordinates) {
-        //alert(coordinates.lat);
         view_coordinates_of_announcement(coordinates.lat,coordinates.long);
+    };
+
+    self.view_announcement_in_history = function(latitude, longitude) {
+        view_coordinates_of_announcement(latitude,longitude);
     };
 
     self.get_my_announcements = function() {
@@ -237,7 +240,7 @@ var app = function() {
         $.getJSON(get_my_announcements_url, function(data) {
 
             self.vue.my_announcements = data.my_announcements;
-
+            console.log("leeeel" + JSON.stringify(self.vue.my_announcements));
             self.draw_my_announcements();
 
         });
@@ -438,6 +441,7 @@ var app = function() {
             draw_event_announcements: self.draw_event_announcements,
             draw_shutdown_announcements: self.draw_shutdown_announcements,
             update_history: self.update_history,
+            view_announcement_in_history: self.view_announcement_in_history,
         }
 
     });
