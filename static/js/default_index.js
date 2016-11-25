@@ -200,7 +200,6 @@ var app = function() {
 
     self.get_my_announcements = function() {
 
-         //self.campus_map.clear_for_my_announcements();
 
         /* this is the toggle for the history in the sidebar */
          self.vue.show_all_announcements = false;
@@ -360,6 +359,8 @@ var app = function() {
         self.vue.show_my_announcements = false;
         self.vue.show_only_shutdown = false;
         self.vue.show_only_event = false;
+
+        self.campus_map.clear_for_all_announcements();
     };
 
     self.campus_map = New_Map(function(lat, lng){

@@ -40,7 +40,8 @@ var New_Map = function (onClick) {
     var self = {};
     self.map = map;
     self.marker = null;
-    var temp = null;
+
+   /* These layers are toggled to filter the display of icons */
     var all_markers = new L.FeatureGroup();
     var urgent_marker_layer = new L.FeatureGroup();
     var event_marker_layer = new L.FeatureGroup();
@@ -82,7 +83,7 @@ var New_Map = function (onClick) {
 
     };
 
-    /* function to draw markers using filter, made this so it doesnt add to the markers layer used for toggling */
+    /* This function creates a layer of either urgent,shutdown, or event when the user clicks on a filter option */
     self.create = function(e) {
 
         var store_marker = L.marker(self.marker.latlng, {icon:self.marker.icon}).addTo(self.map);
@@ -121,6 +122,7 @@ var New_Map = function (onClick) {
         self.map.panInsideBounds(bounds, { animate: false });
     });
 
+    /* Icons will be toggled according to which function is called */
 
     self.clear_map = function() {
         self.map.removeLayer(event_marker_layer);
@@ -130,7 +132,7 @@ var New_Map = function (onClick) {
         self.map.removeLayer(my_announcement_layer);
     };
 
-    self.clear_for_all_markers = function() {
+    self.clear_for_all_announcements = function() {
         self.clear_map();
         self.map.addLayer(all_markers);
     };
