@@ -12,6 +12,7 @@
     var get_only_urgent_url = "{{=URL('api', 'get_only_urgent')}}";
     var get_only_event_url = "{{=URL('api', 'get_only_event')}}";
     var get_only_shutdown_url = "{{=URL('api', 'get_only_shutdown')}}";
+    var get_search_url = "{{=URL('api', 'get_search')}}";
 
 </script>
 
@@ -55,14 +56,25 @@ function mOver(obj) {
 
 
 <!-------------- Left Navigation Bar --------------------->
-
-
     <div id="vue-div" class="display:none">
      <nav class="vertical_menu navbar navbar-default" role="navigation">
       <div class="container-fluid">
             <ul class="nav navbar-nav">
                  <li class="dropdown" data-w2pmenulevel="l0">
-                  <a href="#" class="dropdown-toggle" data-toggle="dropdown">search</a>
+                  search
+                     <form action="#" v-on:submit.prevent="" class="form-horizontal" enctype="multipart/form-data" method="post">
+                                <div class="form-group">
+                                    <div>
+                                      <input class="form-control string" id="editing_post" v-model="search_content"/>
+                                      <span class="help-block"></span>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div>
+                                    <input class="" type="submit" value="search" v-on:click="search()"/>
+                                    </div>
+                                </div>
+                     </form>
                  </li>
               <li class="dropdown" data-w2pmenulevel="l0">
                   <a href="#" class="dropdown-toggle" data-toggle="dropdown">View</a>
@@ -195,7 +207,7 @@ function mOver(obj) {
               </div>
               <div v-if="show_only_urgent == true">
                   <div v-if="urgent_announcements.length == 0">
-                      No announcements posted for this category yet
+                      No urgent announcements have been posted yet
                   </div>
                   <div v-else>
                       <div class="ann" v-for="ann in urgent_announcements" v-on:click="view_announcement_in_history(ann.latitude, ann.longitude)">
@@ -207,7 +219,7 @@ function mOver(obj) {
               </div>
               <div v-if="show_only_shutdown == true">
                   <div v-if="shutdown_announcements.length == 0">
-                      No announcements posted for this category yet
+                     No shutdown announcements have been posted yet
                   </div>
                   <div v-else>
                       <div class="ann" v-for="ann in shutdown_announcements" v-on:click="view_announcement_in_history(ann.latitude, ann.longitude)">
@@ -219,10 +231,22 @@ function mOver(obj) {
               </div>
               <div v-if="show_only_event == true">
                   <div v-if="event_announcements.length == 0">
-                      No announcements posted for this category yet
+                    No event announcements have been posted yet
                   </div>
                   <div v-else>
                       <div class="ann" v-for="ann in event_announcements" v-on:click="view_announcement_in_history(ann.latitude, ann.longitude)">
+                         Title: ${ann.name} <br>
+                         Description: ${ann.description} <br>
+                         Category: ${ann.category} <br>
+                      </div>
+                  </div>
+              </div>
+               <div v-if="show_search == true">
+                  <div v-if="search_announcements.length == 0">
+                    No results matched your search
+                  </div>
+                  <div v-else>
+                      <div class="ann" v-for="ann in search_announcements" v-on:click="view_announcement_in_history(ann.latitude, ann.longitude)">
                          Title: ${ann.name} <br>
                          Description: ${ann.description} <br>
                          Category: ${ann.category} <br>

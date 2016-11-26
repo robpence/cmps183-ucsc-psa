@@ -75,3 +75,14 @@ def get_only_shutdown():
     shutdown_announcements = db(db.Announcements.category == 'shutdown').select()
     logger.info("shutdown %r" % shutdown_announcements)
     return response.json(dict(shutdown_announcements = shutdown_announcements))
+
+def get_search():
+
+    t = request.vars.search_content
+
+    q = ((db.Announcements.name.contains(t)) |
+         (db.Announcements.description.contains(t)))
+
+    search_announcements = db(q).select(db.Announcements.ALL)
+    logger.info("search %r" % search_announcements)
+    return response.json(dict(search_announcements=search_announcements))

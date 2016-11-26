@@ -38,8 +38,6 @@ var app = function() {
     self.add_announcement = function () {
         // The submit button to add a post has been pressed.
         console.log("add an announcement=", self.next_announcement);
-        console.log("LLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLL");
-
         // The submit button to add a post has been added.
 
         /* There is something wrong with this post request!!!!! */
@@ -236,6 +234,7 @@ var app = function() {
          self.vue.show_my_announcements = true;
          self.vue.show_only_shutdown = false;
          self.vue.show_only_event = false;
+         self.vue.show_search = false;
 
         $.getJSON(get_my_announcements_url, function(data) {
 
@@ -274,6 +273,7 @@ var app = function() {
          self.vue.show_my_announcements = false;
          self.vue.show_only_shutdown = false;
          self.vue.show_only_event = false;
+         self.vue.show_search = false;
 
 
         $.getJSON(get_only_urgent_url, function(data) {
@@ -310,6 +310,7 @@ var app = function() {
         self.vue.show_my_announcements = false;
         self.vue.show_only_shutdown = false;
         self.vue.show_only_event = true;
+        self.vue.show_search = false;
 
 
         $.getJSON(get_only_event_url, function(data) {
@@ -346,6 +347,7 @@ var app = function() {
         self.vue.show_my_announcements = false;
         self.vue.show_only_shutdown = true;
         self.vue.show_only_event = false;
+        self.vue.show_search = false;
 
 
         $.getJSON(get_only_shutdown_url, function(data) {
@@ -388,6 +390,7 @@ var app = function() {
         self.vue.show_my_announcements = false;
         self.vue.show_only_shutdown = false;
         self.vue.show_only_event = false;
+        self.vue.show_search = false;
 
         self.campus_map.clear_for_all_announcements();
     };
@@ -399,6 +402,26 @@ var app = function() {
         self.toggle_add_announcement();
     });
 
+    self.search = function() {
+
+        self.vue.show_all_announcements = false;
+         self.vue.show_only_urgent = false;
+         self.vue.show_my_announcements = false;
+         self.vue.show_only_shutdown = false;
+         self.vue.show_only_event = false;
+         self.vue.show_search = true;
+
+        $.post(get_search_url,
+            {
+                search_content: self.vue.search_content
+            },
+            function (data) {
+                self.vue.search_announcements = data.search_announcements;
+            });
+
+
+    };
+
     // Complete as needed.
     self.vue = new Vue({
         el: "#vue-div",
@@ -406,6 +429,7 @@ var app = function() {
         unsafeDelimiters: ['!{', '}'],
 
         data: {
+            search_content: null,
             logged_in: false,
             isCreatingAnnouncement: false,
             announcement_form: _announcement_form,
@@ -418,11 +442,13 @@ var app = function() {
             urgent_announcements: [],
             event_announcements: [],
             shutdown_announcements:[],
+            search_announcements: [],
             show_all_announcements: true,
             show_my_announcements: false,
             show_only_urgent: false,
             show_only_event: false,
             show_only_shutdown: false,
+            show_search: false,
         },
 
         methods: {
@@ -442,6 +468,7 @@ var app = function() {
             draw_shutdown_announcements: self.draw_shutdown_announcements,
             update_history: self.update_history,
             view_announcement_in_history: self.view_announcement_in_history,
+            search: self.search,
         }
 
     });
