@@ -47,7 +47,7 @@ var New_Map = function (onClick) {
     var urgent_marker_layer = new L.FeatureGroup();
     var event_marker_layer = new L.FeatureGroup();
     var shutdown_marker_layer = new L.FeatureGroup();
-    var my_announcement_layer = new L.FeatureGroup();
+    var users_announcement_layer = new L.FeatureGroup();
     var search_layer = new L.FeatureGroup();
 
     /*on-click view of div showing announcement */
@@ -102,19 +102,17 @@ var New_Map = function (onClick) {
 
     };
 
+    /* this layer is created when a user enters a search query. They can be of all categories, so switch statement is no good */
     self.create_search_layer = function() {
         var store_marker = L.marker(self.marker.latlng, {icon:self.marker.icon}).addTo(self.map);
         store_marker.addTo(search_layer);
         search_layer.addTo(self.map);
-        //self.map.addLayer(search_layer);
-        //alert('length of temp is: ' + temp.length);
-        console.log('laya' + search_layer);
     };
 
-    self.create_my_announcement_layer = function() {
+    self.create_users_announcement_layer = function() {
         var store_marker = L.marker(self.marker.latlng, {icon:self.marker.icon}).addTo(self.map);
-        store_marker.addTo(my_announcement_layer);
-        my_announcement_layer.addTo(self.map);
+        store_marker.addTo(users_announcement_layer);
+        users_announcement_layer.addTo(self.map);
     };
 
     self.map.on('click', function(e) {
@@ -134,7 +132,7 @@ var New_Map = function (onClick) {
         self.map.removeLayer(shutdown_marker_layer);
         self.map.removeLayer(urgent_marker_layer);
         self.map.removeLayer(all_markers);
-        self.map.removeLayer(my_announcement_layer);
+        self.map.removeLayer(users_announcement_layer);
         self.map.removeLayer(search_layer);
         start_fresh_layer = new L.FeatureGroup(); //this is needed, since search_layer would just continue to add on itself
         search_layer = start_fresh_layer;
@@ -145,9 +143,9 @@ var New_Map = function (onClick) {
         self.map.addLayer(all_markers);
     };
 
-    self.clear_for_my_announcements = function() {
+    self.clear_for_users_announcements = function() {
         self.clear_map();
-        self.map.addLayer(my_announcement_layer);
+        self.map.addLayer(users_announcement_layer);
     };
 
     self.clear_for_urgent = function() {

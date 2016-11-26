@@ -78,8 +78,8 @@ var app = function() {
    */
     self.update_history = function() {
 
-         $.getJSON(get_my_announcements_url, function(data) {
-             self.vue.my_announcements = data.my_announcements;
+         $.getJSON(get_users_announcements_url, function(data) {
+             self.vue.users_announcements = data.users_announcements;
          });
 
          $.getJSON(get_only_urgent_url, function(data) {
@@ -226,43 +226,43 @@ var app = function() {
         view_coordinates_of_announcement(latitude,longitude);
     };
 
-    self.get_my_announcements = function() {
+    self.get_users_announcements = function() {
 
         /* this is the toggle for the history in the sidebar */
          self.vue.show_all_announcements = false;
          self.vue.show_only_urgent = false;
-         self.vue.show_my_announcements = true;
+         self.vue.show_users_announcements = true;
          self.vue.show_only_shutdown = false;
          self.vue.show_only_event = false;
          self.vue.show_search = false;
 
-        $.getJSON(get_my_announcements_url, function(data) {
+        $.getJSON(get_users_announcements_url, function(data) {
 
-            self.vue.my_announcements = data.my_announcements;
-            console.log("leeeel" + JSON.stringify(self.vue.my_announcements));
-            self.draw_my_announcements();
+            self.vue.users_announcements = data.users_announcements;
+            console.log("leeeel" + JSON.stringify(self.vue.users_announcements));
+            self.draw_users_announcements();
 
         });
     };
 
-    self.draw_my_announcements = function() {
+    self.draw_users_announcements = function() {
 
-        for(var i=0; i < self.vue.my_announcements.length; i++) {
+        for(var i=0; i < self.vue.users_announcements.length; i++) {
 
-            var ann = self.vue.my_announcements[i];
+            var ann = self.vue.users_announcements[i];
 
-            self.vue.my_announcements[i] = Announcement_from_db(ann);
+            self.vue.users_announcements[i] = Announcement_from_db(ann);
 
             self.campus_map.set_marker(
-                self.vue.my_announcements[i]
+                self.vue.users_announcements[i]
             );
 
-            self.campus_map.create_my_announcement_layer(
-                self.vue.my_announcements[i]
+            self.campus_map.create_users_announcement_layer(
+                self.vue.users_announcements[i]
             );
         }
 
-        self.campus_map.clear_for_my_announcements();
+        self.campus_map.clear_for_users_announcements();
 
     };
 
@@ -270,7 +270,7 @@ var app = function() {
 
          self.vue.show_all_announcements = false;
          self.vue.show_only_urgent = true;
-         self.vue.show_my_announcements = false;
+         self.vue.show_users_announcements = false;
          self.vue.show_only_shutdown = false;
          self.vue.show_only_event = false;
          self.vue.show_search = false;
@@ -307,7 +307,7 @@ var app = function() {
 
         self.vue.show_all_announcements = false;
         self.vue.show_only_urgent = false;
-        self.vue.show_my_announcements = false;
+        self.vue.show_users_announcements = false;
         self.vue.show_only_shutdown = false;
         self.vue.show_only_event = true;
         self.vue.show_search = false;
@@ -344,7 +344,7 @@ var app = function() {
 
         self.vue.show_all_announcements = false;
         self.vue.show_only_urgent = false;
-        self.vue.show_my_announcements = false;
+        self.vue.show_users_announcements = false;
         self.vue.show_only_shutdown = true;
         self.vue.show_only_event = false;
         self.vue.show_search = false;
@@ -387,7 +387,7 @@ var app = function() {
 
         self.vue.show_all_announcements = true;
         self.vue.show_only_urgent = false;
-        self.vue.show_my_announcements = false;
+        self.vue.show_users_announcements = false;
         self.vue.show_only_shutdown = false;
         self.vue.show_only_event = false;
         self.vue.show_search = false;
@@ -406,7 +406,7 @@ var app = function() {
 
         self.vue.show_all_announcements = false;
          self.vue.show_only_urgent = false;
-         self.vue.show_my_announcements = false;
+         self.vue.show_users_announcements = false;
          self.vue.show_only_shutdown = false;
          self.vue.show_only_event = false;
          self.vue.show_search = true;
@@ -425,7 +425,6 @@ var app = function() {
 
          for(var i=0; i <  self.vue.search_announcements.length; i++) {
 
-             alert('draw another one');
             var ann = self.vue.search_announcements[i];
 
              self.vue.search_announcements[i] = Announcement_from_db(ann);
@@ -440,7 +439,6 @@ var app = function() {
             );
         }
 
-        //self.campus_map.clear_for_search_announcements(temp);
     };
 
     self.call = function() {
@@ -463,13 +461,13 @@ var app = function() {
             description: [],
             category: [],
             coordinates: [],
-            my_announcements: [],
+            users_announcements: [],
             urgent_announcements: [],
             event_announcements: [],
             shutdown_announcements:[],
             search_announcements: [],
             show_all_announcements: true,
-            show_my_announcements: false,
+            show_users_announcements: false,
             show_only_urgent: false,
             show_only_event: false,
             show_only_shutdown: false,
@@ -483,12 +481,12 @@ var app = function() {
             toggle_add_announcement: self.toggle_add_announcement,
             change_view: self.change_view,
             view_announcement: self.view_announcement,
-            get_my_announcements: self.get_my_announcements,
+            get_users_announcements: self.get_users_announcements,
             get_urgent_announcements: self.get_urgent_announcements,
             get_shutdown_announcements: self.get_shutdown_announcements,
             get_event_announcements: self.get_event_announcements,
             show_every_announcement: self.show_every_announcement,
-            draw_my_announcements: self.draw_my_announcements,
+            draw_users_announcements: self.draw_users_announcements,
             draw_urgent_announcements: self.draw_urgent_announcements,
             draw_event_announcements: self.draw_event_announcements,
             draw_shutdown_announcements: self.draw_shutdown_announcements,

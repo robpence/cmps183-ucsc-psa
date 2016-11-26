@@ -59,9 +59,9 @@ def add_announcement():
 
     return response.json(dict(announcement=ann))
 
-def get_my_announcements():
-    my_announcements = db(db.Announcements.author == auth.user.email).select()
-    return response.json(dict(my_announcements = my_announcements))
+def get_users_announcements():
+    users_announcements = db(db.Announcements.author == auth.user.email).select()
+    return response.json(dict(users_announcements = users_announcements))
 
 def get_only_urgent():
     urgent_announcements = db(db.Announcements.category == 'urgent').select()
