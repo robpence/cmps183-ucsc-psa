@@ -58,6 +58,7 @@ var New_Map = function (onClick) {
     };
 
     self.set_marker = function(marker){
+        //console.log(marker);
         self.marker = marker;
     };
 
@@ -70,6 +71,9 @@ var New_Map = function (onClick) {
             }
 
             store_marker = L.marker(self.marker.latlng, {icon:self.marker.icon}).addTo(self.map).on('click', openwindow);
+
+            console.log("self.marker.id" + " " + self.marker.id);
+            store_marker._icon.id = self.marker.id;
             store_marker.addTo(all_markers);
             all_markers.addTo(self.map);
         }
@@ -77,12 +81,22 @@ var New_Map = function (onClick) {
     };
 
     function openwindow(e) {
+
+        console.log("e.target._icon.id" + " " + e.target._icon.id);
+        console.log(APP.vue.all_announcements[e.target._icon.id]);
+
+        var vuearrayid = (e.target._icon.id - APP.vue.all_announcements.length) * -1;
+
+        console.log(APP.vue.all_announcements[vuearrayid].description);
+        var adescription = APP.vue.all_announcements[vuearrayid].description;
+        var atitle = APP.vue.all_announcements[vuearrayid].title;
+
+
         var win =  L.control.window(self.map, {modal: true, visible: true})
-            .title('Heading!')
-            .content(' <div v-if="show_all_announcements == true"><div v-if="names.length == 0">No announcements have been posted yet </div> <div v-else> <div class="ann" v-for="(name,index) in names" v-on:click="view_announcement(coordinates[index])">Title: ${names[index]} <br> Description: ${description[index]} <br> Category: ${category[index]}<i class="fa fa-thumbs-up" aria-hidden="true"></i> <i class="fa fa-thumbs-down" aria-hidden="true"></i> </div> </div> </div> ')
+            .title('${}')
+            .content('<div>Title: ${} <br> Description: ${} <br> Category: ${} <br> <i class="fa fa-thumbs-up" aria-hidden="true"></i> <i class="fa fa-thumbs-down" aria-hidden="true"></i> </div>')
             .show('left');
-        console.log("marker was clicked");
-        console.log(e);
+
     }
 
     /* This function creates a layer of either urgent,shutdown, or event when the user clicks on a filter option */

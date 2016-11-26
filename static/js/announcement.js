@@ -13,7 +13,8 @@ var Announcement = function (announcement_type){
     var Marker = function (){
         return {
             spin: true,
-            shadowSize: [0, 0]
+            shadowSize: [0, 0],
+            //alt: self.id
         };
     };
 

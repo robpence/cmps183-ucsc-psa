@@ -37,27 +37,27 @@ function mOver(obj) {
 
 <div class="main_content">
 
-<div id="mapid" >
-    <script>
-        //this re-sizes the window automattically. Just change the numbers after height and width.
-        //If you want to reserve part of the screen for a menu, like the vertical menu we have on the left,
-        //You have to change the padding in the css file.
-        $(window).on("resize", function() {
-            $("#mapid").height($(window).height() * 1.00).width($(window).width() * 0.50);
-            //New_Map.map.invalidateSize();
-        }).trigger("resize");
-    </script>
-</div>
+
 
 <script src="{{=URL('static', 'js/ourmap.js')}}"></script>
 
 
 
-<!-------------- Left Navigation Bar --------------------->
-
-
     <div id="vue-div" class="display:none">
 
+        <div id="mapid" >
+            <script>
+                //this re-sizes the window automattically. Just change the numbers after height and width.
+                //If you want to reserve part of the screen for a menu, like the vertical menu we have on the left,
+                //You have to change the padding in the css file.
+                $(window).on("resize", function() {
+                    $("#mapid").height($(window).height() * 1.00).width($(window).width() * 0.50);
+                    //New_Map.map.invalidateSize();
+                }).trigger("resize");
+            </script>
+        </div>
+
+     <!-------------- Left Navigation Bar --------------------->
      <nav class="vertical_menu navbar navbar-default" role="navigation">
       <div class="container-fluid">
             <ul class="nav navbar-nav">
