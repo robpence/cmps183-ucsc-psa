@@ -21,8 +21,9 @@
 <script src="{{=URL('static', 'js/leaflet.awesome-markers.js')}}"></script>
 <script src="{{=URL('static', 'js/ourmap.js')}}"></script>
 <script src="{{=URL('static', 'js/announcement.js')}}"></script>
+<script src="{{=URL('static',  'js/L.Control.Window.js')}}"></script>
 
-<div onmouseover="mOver(this)" id="mapid" ></div>
+<div onmouseover="mOver(this)" id="mapid"></div>
 
 <script>
 function mOver(obj) {
@@ -41,16 +42,14 @@ function mOver(obj) {
         //this re-sizes the window automattically. Just change the numbers after height and width.
         //If you want to reserve part of the screen for a menu, like the vertical menu we have on the left,
         //You have to change the padding in the css file.
-
-    $(window).on("resize", function() {
-        $("#mapid").height($(window).height() * 1.00).width($(window).width() * 0.50);
-        //New_Map.map.invalidateSize();
-    }).trigger("resize");
+        $(window).on("resize", function() {
+            $("#mapid").height($(window).height() * 1.00).width($(window).width() * 0.50);
+            //New_Map.map.invalidateSize();
+        }).trigger("resize");
     </script>
 </div>
 
 <script src="{{=URL('static', 'js/ourmap.js')}}"></script>
-<!-- <script src="js/leaflet.awesome-markers.js"></script>--->
 
 
 
@@ -58,6 +57,7 @@ function mOver(obj) {
 
 
     <div id="vue-div" class="display:none">
+
      <nav class="vertical_menu navbar navbar-default" role="navigation">
       <div class="container-fluid">
             <ul class="nav navbar-nav">
@@ -130,7 +130,7 @@ function mOver(obj) {
       </div>
     </nav>
 
-
+    <!-- This is the form for creating a new announcement-->
     <div v-if="announcement_form.active" id="create_new_announcement" class="new_announcement_wrapper" >
         <form action="#" v-on:submit.prevent="add_announcement" class="form-horizontal" enctype="multipart/form-data" method="post">
 
@@ -164,6 +164,7 @@ function mOver(obj) {
         </form>
    </div>
 
+        <!-- Div for the history of annoucements-->
           <div class="history">
               <div v-if="show_all_announcements == true">
                    <div v-if="names.length == 0">
@@ -230,6 +231,7 @@ function mOver(obj) {
                   </div>
               </div>
           </div>
+
     </div> <!-- end vue-div -->
 
             <!-- here is the campus map     -->

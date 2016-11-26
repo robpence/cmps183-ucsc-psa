@@ -69,12 +69,21 @@ var New_Map = function (onClick) {
                 self.marker.latlng = e.latlng;
             }
 
-            store_marker = L.marker(self.marker.latlng, {icon:self.marker.icon}).addTo(self.map);
+            store_marker = L.marker(self.marker.latlng, {icon:self.marker.icon}).addTo(self.map).on('click', openwindow);
             store_marker.addTo(all_markers);
             all_markers.addTo(self.map);
         }
 
     };
+
+    function openwindow(e) {
+        var win =  L.control.window(self.map, {modal: true, visible: true})
+            .title('Heading!')
+            .content(' <div v-if="show_all_announcements == true"><div v-if="names.length == 0">No announcements have been posted yet </div> <div v-else> <div class="ann" v-for="(name,index) in names" v-on:click="view_announcement(coordinates[index])">Title: ${names[index]} <br> Description: ${description[index]} <br> Category: ${category[index]}<i class="fa fa-thumbs-up" aria-hidden="true"></i> <i class="fa fa-thumbs-down" aria-hidden="true"></i> </div> </div> </div> ')
+            .show('left');
+        console.log("marker was clicked");
+        console.log(e);
+    }
 
     /* This function creates a layer of either urgent,shutdown, or event when the user clicks on a filter option */
     self.create = function(e) {
@@ -109,6 +118,7 @@ var New_Map = function (onClick) {
     self.map.on('click', function(e) {
         self.add_marker(e);
         onClick(e.latlng.lat, e.latlng.lng);
+
     });
 
 
