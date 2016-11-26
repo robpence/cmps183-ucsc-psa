@@ -425,6 +425,7 @@ var app = function() {
 
          for(var i=0; i <  self.vue.search_announcements.length; i++) {
 
+             alert('draw another one');
             var ann = self.vue.search_announcements[i];
 
              self.vue.search_announcements[i] = Announcement_from_db(ann);
@@ -439,6 +440,10 @@ var app = function() {
             );
         }
 
+        //self.campus_map.clear_for_search_announcements(temp);
+    };
+
+    self.call = function() {
         self.campus_map.clear_for_search_announcements();
     };
 
@@ -469,6 +474,7 @@ var app = function() {
             show_only_event: false,
             show_only_shutdown: false,
             show_search: false,
+            call:self.call,
         },
 
         methods: {

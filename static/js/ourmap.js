@@ -21,8 +21,6 @@ var bounds = [
             //north east
             [36.971819, -122.081151]];
 
-marker_array_for_search = [];
-temp = [];
 
 
 var New_Map = function (onClick) {
@@ -101,13 +99,16 @@ var New_Map = function (onClick) {
             default:
                 break;
         }
+
     };
 
     self.create_search_layer = function() {
-
         var store_marker = L.marker(self.marker.latlng, {icon:self.marker.icon}).addTo(self.map);
         store_marker.addTo(search_layer);
         search_layer.addTo(self.map);
+        //self.map.addLayer(search_layer);
+        //alert('length of temp is: ' + temp.length);
+        console.log('laya' + search_layer);
     };
 
     self.create_my_announcement_layer = function() {
@@ -135,6 +136,8 @@ var New_Map = function (onClick) {
         self.map.removeLayer(all_markers);
         self.map.removeLayer(my_announcement_layer);
         self.map.removeLayer(search_layer);
+        start_fresh_layer = new L.FeatureGroup(); //this is needed, since search_layer would just continue to add on itself
+        search_layer = start_fresh_layer;
     };
 
     self.clear_for_all_announcements = function() {
@@ -163,11 +166,10 @@ var New_Map = function (onClick) {
     };
 
     self.clear_for_search_announcements = function() {
-        self.clear_map();
-        self.map.addLayer(search_layer);
-
+        self.clear_map(); //clear the map, and the old search layer
+        APP.search(); //get a new series of icons which match search query, and update layer
+        search_layer.addTo(self.map); //add new layer
     };
-
 
     return  self;
 };
