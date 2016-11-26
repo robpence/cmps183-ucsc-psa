@@ -21,6 +21,9 @@ var bounds = [
             //north east
             [36.971819, -122.081151]];
 
+marker_array_for_search = [];
+temp = [];
+
 
 var New_Map = function (onClick) {
 
@@ -47,6 +50,7 @@ var New_Map = function (onClick) {
     var event_marker_layer = new L.FeatureGroup();
     var shutdown_marker_layer = new L.FeatureGroup();
     var my_announcement_layer = new L.FeatureGroup();
+    var search_layer = new L.FeatureGroup();
 
     /*on-click view of div showing announcement */
     view_coordinates_of_announcement = function(lat, long) {
@@ -99,6 +103,12 @@ var New_Map = function (onClick) {
         }
     };
 
+    self.create_search_layer = function() {
+
+        var store_marker = L.marker(self.marker.latlng, {icon:self.marker.icon}).addTo(self.map);
+        store_marker.addTo(search_layer);
+        search_layer.addTo(self.map);
+    };
 
     self.create_my_announcement_layer = function() {
         var store_marker = L.marker(self.marker.latlng, {icon:self.marker.icon}).addTo(self.map);
@@ -124,6 +134,7 @@ var New_Map = function (onClick) {
         self.map.removeLayer(urgent_marker_layer);
         self.map.removeLayer(all_markers);
         self.map.removeLayer(my_announcement_layer);
+        self.map.removeLayer(search_layer);
     };
 
     self.clear_for_all_announcements = function() {
@@ -146,8 +157,15 @@ var New_Map = function (onClick) {
         self.map.addLayer(shutdown_marker_layer);
     };
 
-    self.clear_for_event = function() {self.clear_map();
+    self.clear_for_event = function() {
+       self.clear_map();
        self.map.addLayer(event_marker_layer);
+    };
+
+    self.clear_for_search_announcements = function() {
+        self.clear_map();
+        self.map.addLayer(search_layer);
+
     };
 
 

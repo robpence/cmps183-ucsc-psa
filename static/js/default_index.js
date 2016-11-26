@@ -417,9 +417,29 @@ var app = function() {
             },
             function (data) {
                 self.vue.search_announcements = data.search_announcements;
+                self.draw_search_announcements();
             });
+    };
 
+     self.draw_search_announcements = function() {
 
+         for(var i=0; i <  self.vue.search_announcements.length; i++) {
+
+            var ann = self.vue.search_announcements[i];
+
+             self.vue.search_announcements[i] = Announcement_from_db(ann);
+
+            self.campus_map.set_marker(
+                self.vue.search_announcements[i]
+            );
+
+            //adding to search layer
+            self.campus_map.create_search_layer(
+                self.vue.search_announcements[i]
+            );
+        }
+
+        self.campus_map.clear_for_search_announcements();
     };
 
     // Complete as needed.
@@ -469,6 +489,7 @@ var app = function() {
             update_history: self.update_history,
             view_announcement_in_history: self.view_announcement_in_history,
             search: self.search,
+            draw_search_announcements: self.draw_search_announcements,
         }
 
     });
