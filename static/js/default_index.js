@@ -73,6 +73,8 @@ var app = function() {
                 clear_announcement_form();
             });
 
+            $('#CreateAnnouncementModal').modal('hide');
+
     };
 
     /*

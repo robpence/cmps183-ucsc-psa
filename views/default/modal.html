@@ -28,3 +28,41 @@
         </div>
     </div>
 </div>
+
+<div id="CreateAnnouncementModal" class="modal fade" data-backdrop="static" data-keyboard="false">
+   <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 id="createAnnouncementTitle" class="modal-title">New Announcement</h4>
+            </div>
+            <div id="createAnnouncementBody" class="modal-body">
+
+                <form action="#" v-on:submit.prevent="add_announcement" class="form-horizontal" enctype="multipart/form-data" method="post">
+
+                    <h3>Announcement Name</h3>
+                    <div class="form-group" id="no_table_name__row">
+                        <div>
+                            <input class="form-control string"  id="no_table_name"  v-model="announcement_form.name" placeholder="announcement name" type="text" />
+                            <span class="help-block"></span>
+                        </div>
+                    </div>
+
+                    <h3>Announcement Description</h3>
+                    <div class="form-group" id="no_table_description__row">
+                        <div>
+                            <input class="form-control string" id="no_table_description" v-model="announcement_form.description" placeholder="description" type="text" />
+                          <span class="help-block"></span>
+                        </div>
+                    </div>
+
+                    <div class="form-group" id="submit_announcement_row">
+                        <div>
+                            <input class="btn btn-primary" id="add_announcement_submit" type="submit" value="Submit" />
+                        </div>
+                        <button  class="btn btn-warning btn-sm" data-dismiss="modal"> Cancel </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

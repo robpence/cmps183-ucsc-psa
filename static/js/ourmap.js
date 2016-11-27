@@ -73,7 +73,11 @@ var New_Map = function (onClick) {
             store_marker = L.marker(self.marker.latlng, {icon:self.marker.icon}).addTo(self.map).on('click', openwindow);
 
             console.log("self.marker.id" + " " + self.marker.id);
+
+            //this probably has to change to something else.
             store_marker._icon.id = self.marker.id;
+
+
             store_marker.addTo(all_markers);
             all_markers.addTo(self.map);
         }
@@ -125,6 +129,8 @@ var New_Map = function (onClick) {
     self.map.on('click', function(e) {
         self.add_marker(e);
         onClick(e.latlng.lat, e.latlng.lng);
+
+        $('#CreateAnnouncementModal').modal('show');
 
     });
 
