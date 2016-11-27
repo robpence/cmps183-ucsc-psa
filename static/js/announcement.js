@@ -76,6 +76,7 @@ var Announcement = function (announcement_type){
         created_on: null,
         latlng: null,
         set_latlng: null,
+        score: 1,
         icon: new_marker(announcement_type)
     };
 

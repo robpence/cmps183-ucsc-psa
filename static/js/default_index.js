@@ -392,6 +392,19 @@ var app = function() {
         self.campus_map.clear_for_all_announcements();
     };
 
+    self.announcement_Detail = function(index) {
+        announcement = self.vue.all_announcements[index];
+        $('#announcementDetailTitle').html(announcement.name);
+        $('#announcementDetailDescription').html(announcement.description);
+        $('#announcementDetailAuthor').html(announcement.author);
+        $('#announcementDetailCreatedon').html(announcement.created_on);
+        $('#announcementDetailCategory').html(announcement.category);
+        $('#announcementDetailScore').html(announcement.score);
+
+
+        $('#AnnouncementModal').modal('show');
+    };
+
     self.campus_map = New_Map(function(lat, lng){
         // this function gets called when the map is clicked
         self.next_announcement.lat = lat;
@@ -442,6 +455,7 @@ var app = function() {
             draw_shutdown_announcements: self.draw_shutdown_announcements,
             update_history: self.update_history,
             view_announcement_in_history: self.view_announcement_in_history,
+            announcement_Detail: self.announcement_Detail,
         }
 
     });

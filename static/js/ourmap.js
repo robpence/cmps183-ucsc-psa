@@ -81,22 +81,9 @@ var New_Map = function (onClick) {
     };
 
     function openwindow(e) {
-
         console.log("e.target._icon.id" + " " + e.target._icon.id);
         console.log(APP.vue.all_announcements[e.target._icon.id]);
-
-        var vuearrayid = (e.target._icon.id - APP.vue.all_announcements.length) * -1;
-
-        console.log(APP.vue.all_announcements[vuearrayid].description);
-        var adescription = APP.vue.all_announcements[vuearrayid].description;
-        var atitle = APP.vue.all_announcements[vuearrayid].title;
-
-
-        var win =  L.control.window(self.map, {modal: true, visible: true})
-            .title('${}')
-            .content('<div>Title: ${} <br> Description: ${} <br> Category: ${} <br> <i class="fa fa-thumbs-up" aria-hidden="true"></i> <i class="fa fa-thumbs-down" aria-hidden="true"></i> </div>')
-            .show('left');
-
+        APP.announcement_Detail(e.target._icon.id);
     }
 
     /* This function creates a layer of either urgent,shutdown, or event when the user clicks on a filter option */
