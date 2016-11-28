@@ -71,7 +71,7 @@ var New_Map = function (onClick) {
             }
 
             store_marker = L.marker(self.marker.latlng, {icon:self.marker.icon}).addTo(self.map).on('click', openwindow);
-
+            console.log(store_marker);
             console.log("self.marker.id" + " " + self.marker.id);
 
             //this probably has to change to something else.
@@ -87,20 +87,28 @@ var New_Map = function (onClick) {
     //Opens the popup for the announcements information.
     function openwindow(e) {
 
+        console.log(e);
         console.log("e.target._icon.id" + " " + e.target._icon.id);
         console.log(APP.vue.all_announcements[e.target._icon.id]);
 
         //there is probably a better way of doing this, also it might not work if theres a odd amount but idk.
-        var vuearrayid = (e.target._icon.id - APP.vue.all_announcements.length) * -1;
+        //var vuearrayid = (e.target._icon.id - APP.vue.all_announcements.length) * -1;
 
-        APP.announcement_Detail(vuearrayid);
+       //APP.announcement_Detail(vuearrayid);
+        APP.announcement_Detail(e.target._icon.id);
 
     }
 
     /* This function creates a layer of either urgent,shutdown, or event when the user clicks on a filter option */
     self.create = function(e) {
 
-        var store_marker = L.marker(self.marker.latlng, {icon:self.marker.icon}).addTo(self.map);
+        var store_marker = L.marker(self.marker.latlng, {icon:self.marker.icon}).addTo(self.map).on('click', openwindow);
+        console.log("marker id" + " " + self.marker.id);
+        //this isnt adding the correct value to the stored marker and i dont know why.
+        store_marker._icon.id = self.marker.id;
+        console.log("store_marker icon id " + store_marker._icon.id);
+        console.log(store_marker);
+
 
         switch (self.marker.category) {
             case "urgent":
@@ -122,7 +130,11 @@ var New_Map = function (onClick) {
 
 
     self.create_my_announcement_layer = function() {
-        var store_marker = L.marker(self.marker.latlng, {icon:self.marker.icon}).addTo(self.map);
+        var store_marker = L.marker(self.marker.latlng, {icon:self.marker.icon}).addTo(self.map).on('click', openwindow);
+
+        //this isn't doing anything for some reason
+        store_marker._icon.id = self.marker.id;
+
         store_marker.addTo(my_announcement_layer);
         my_announcement_layer.addTo(self.map);
     };
