@@ -71,6 +71,7 @@ var app = function() {
 
                 $.web2py.enableElement($("#add_announcement_submit"));
                 clear_announcement_form();
+                self.vue.map_clickable = false;
                 $('#CreateAnnouncementModal').modal('hide');
             });
 
@@ -170,6 +171,9 @@ var app = function() {
         self.campus_map.set_marker(
             self.next_announcement
         );
+
+        //lets you click on the map after selecting which type of announcement you want to make
+        self.vue.map_clickable = true;
        // console.log('next_announcement=', self.next_announcement);
         // show the form
         //self.vue.announcement_form.active = true;
@@ -178,6 +182,7 @@ var app = function() {
 
     self.toggle_add_announcement = function (){
         self.vue.announcement_form.active = !self.vue.announcement_form.active;
+        self.vue.map_clickable = !self.vue.map_clickable;
     };
 
 
@@ -437,6 +442,7 @@ var app = function() {
             show_only_urgent: false,
             show_only_event: false,
             show_only_shutdown: false,
+            map_clickable: false
         },
 
         methods: {

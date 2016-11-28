@@ -84,6 +84,7 @@ var New_Map = function (onClick) {
 
     };
 
+    //Opens the popup for the announcements information.
     function openwindow(e) {
 
         console.log("e.target._icon.id" + " " + e.target._icon.id);
@@ -127,10 +128,11 @@ var New_Map = function (onClick) {
     };
 
     self.map.on('click', function(e) {
-        self.add_marker(e);
-        onClick(e.latlng.lat, e.latlng.lng);
-
-        $('#CreateAnnouncementModal').modal('show');
+        if(APP.vue.map_clickable == true){
+            self.add_marker(e);
+            onClick(e.latlng.lat, e.latlng.lng);
+            $('#CreateAnnouncementModal').modal('show');
+        }
 
     });
 
