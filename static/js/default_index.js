@@ -40,15 +40,8 @@ var app = function() {
 
     self.add_announcement = function () {
         // The submit button to add a post has been pressed.
-
-         //self.set_next_announcement(self.vue.announcement_form.category);
-
-        //console.log("add an announcement=", self.next_announcement);
-
         // The submit button to add a post has been added.
-
         /* There is something wrong with this post request!!!!! */
-
         $.post(add_announcement_url,
             {
                 name: self.vue.announcement_form.name,
@@ -81,6 +74,8 @@ var app = function() {
 
         $.getJSON(get_announcements_url,
             function (data) {
+
+                self.vue.logged_in = data.logged_in;
                 //console.log('callback: populate_map');
                 self.vue.all_announcements = data.announcements;
                 var a = self.vue.all_announcements;
@@ -144,47 +139,14 @@ var app = function() {
 
     self.change_view = function(location) {
 
-        switch (location) {
-            case "kresge":
-                set_coordinates(kresge_college);
-                break;
-            case "merrill":
-                set_coordinates(merrill_college);
-                break;
-            case "rachael_carson":
-                set_coordinates(college_8);
-                break;
-            case "oakes":
-                set_coordinates(oakes_college);
-                break;
-            case "college_9":
-                set_coordinates(college_9);
-                break;
-            case "college_10":
-                set_coordinates(college_10);
-                break;
-            case "crown":
-                set_coordinates(crown_college);
-                break;
-            case "porter":
-                set_coordinates(porter_college);
-                break;
-            case "cowell":
-                set_coordinates(cowell_college);
-                break;
-
-            case "stevenson":
-                set_coordinates(stevenson_college);
-                break;
-            default:
-                set_coordinates(kresge_college);
-                break;
-        }
     };
 
     self.view_announcement = function(coordinates) {
         //alert(coordinates.lat);
-        view_coordinates_of_announcement(coordinates.lat,coordinates.long);
+        self.camputs_map.view_coordinates_of_announcement(
+            coordinates.lat,
+            coordinates.long
+        );
     };
 
     self.get_my_announcements = function() {
@@ -275,6 +237,12 @@ var app = function() {
         self.set_next_announcement('default');
     };
 
+
+    self.user_can_create = function(){
+        return self.logged_in;
+    };
+
+
     // Complete as needed.
     self.vue = new Vue({
         el: "#vue-div",
@@ -312,6 +280,7 @@ var app = function() {
             view_announcement: self.view_announcement,
             create_announcement_button: self.create_announcement_button,
             update_marker: self.update_marker,
+            user_can_create: self.user_can_create,
 
             get_my_announcements: self.get_my_announcements,
             get_urgent_announcements: self.get_urgent_announcements,

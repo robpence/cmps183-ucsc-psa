@@ -50,7 +50,46 @@ var New_Map = function (onClick) {
     };
 
 
-    set_coordinates = function(coordinates){
+    self.change_map_view = function(){
+        switch (location) {
+            case "kresge":
+                self.set_coordinates(kresge_college);
+                break;
+            case "merrill":
+                self.set_coordinates(merrill_college);
+                break;
+            case "rachael_carson":
+                self.set_coordinates(college_8);
+                break;
+            case "oakes":
+                self.set_coordinates(oakes_college);
+                break;
+            case "college_9":
+                self.set_coordinates(college_9);
+                break;
+            case "college_10":
+                self.set_coordinates(college_10);
+                break;
+            case "crown":
+                self.set_coordinates(crown_college);
+                break;
+            case "porter":
+                self.set_coordinates(porter_college);
+                break;
+            case "cowell":
+                self.set_coordinates(cowell_college);
+                break;
+
+            case "stevenson":
+                self.set_coordinates(stevenson_college);
+                break;
+            default:
+                self.set_coordinates(central_campus);
+                break;
+        }
+    };
+
+    self.set_coordinates = function(coordinates){
         self.map.setView(coordinates, 17, {animation: true});
     };
 
