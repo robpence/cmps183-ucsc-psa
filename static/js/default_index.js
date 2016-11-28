@@ -71,9 +71,8 @@ var app = function() {
 
                 $.web2py.enableElement($("#add_announcement_submit"));
                 clear_announcement_form();
+                $('#CreateAnnouncementModal').modal('hide');
             });
-
-            $('#CreateAnnouncementModal').modal('hide');
 
     };
 
