@@ -4,8 +4,11 @@
 var _announcement_form = {
     description: null,
     name: null,
-    active: false
+    active: false,
+    category: null
 };
+
+
 
 var app = function() {
 
@@ -37,7 +40,10 @@ var app = function() {
 
     self.add_announcement = function () {
         // The submit button to add a post has been pressed.
-        console.log("add an announcement=", self.next_announcement);
+
+         //self.set_next_announcement(self.vue.announcement_form.category);
+
+        //console.log("add an announcement=", self.next_announcement);
 
         // The submit button to add a post has been added.
 
@@ -77,19 +83,11 @@ var app = function() {
             function (data) {
                 //console.log('callback: populate_map');
                 self.vue.all_announcements = data.announcements;
-                /*
-                console.log('anns.length=', self.vue.all_announcements.length);
-                console.log('data=', data);
-                */
                 var a = self.vue.all_announcements;
-                //console.log('a[0]=',a[0]);
-
                 for(var i=0; i < a.length; i++){
-
                     var ann = self.vue.all_announcements[i];
 
                     /* Used for the history bar */
-
                     self.vue.names.push(ann.name);
                     self.vue.description.push(ann.description);
                     self.vue.category.push(ann.category);
@@ -101,20 +99,13 @@ var app = function() {
                     };
 
                     self.vue.coordinates.push(coords);
-
                     str = JSON.stringify(ann);
 
-                    console.log('ann' + str);
-
                     /* something funny is happening here, is data being lost? */
-
                     self.vue.all_announcements[i] = Announcement_from_db(ann);
-
                     str = JSON.stringify(self.vue.all_announcements[i]);
 
-                    console.log('self.vue.all_announcements[i]' + str);
 
-                    console.log(self.vue.all_announcements[i]);
                     self.campus_map.set_marker(
                         self.vue.all_announcements[i]
                     );
@@ -123,30 +114,28 @@ var app = function() {
                         self.vue.all_announcements[i]
                     );
                 }
-
             });
     };
 
-    self.map_click = function(lat, lng){
-        self.next_announcement.lat = lat;
-        self.next_announcement.lng = lng;
-        self.toggle_add_announcement();
-    };
 
 
     /*     Maybe its here???????? */
-
     self.set_next_announcement = function (new_announcement){
-
         self.next_announcement = Announcement(new_announcement);
         self.campus_map.set_marker(
             self.next_announcement
         );
-        console.log('next_announcement=', self.next_announcement);
-        // show the form
-        //self.vue.announcement_form.active = true;
-
     };
+
+
+    self.update_marker = function(cat){
+        self.next_announcement = Announcement(cat);
+        console.log('next_announcement ==> ', self.next_announcement.category);
+
+        self.campus_map.update_marker(self.next_announcement);
+        console.log('update marker ==> ', self.next_announcement.category);
+    };
+
 
     self.toggle_add_announcement = function (){
         self.vue.announcement_form.active = !self.vue.announcement_form.active;
@@ -256,6 +245,7 @@ var app = function() {
         });
     };
 
+
     self.show_every_announcement = function() {
 
         self.vue.show_all_announcements = true;
@@ -265,12 +255,25 @@ var app = function() {
         self.vue.show_only_event = false;
     };
 
+
     self.campus_map = New_Map(function(lat, lng){
         // this function gets called when the map is clicked
         self.next_announcement.lat = lat;
         self.next_announcement.lng = lng;
         self.toggle_add_announcement();
     });
+
+
+    self.cancel_announcement_button = function (){
+       self.vue.isCreatingAnnouncement = false;
+        clear_announcement_form();
+    };
+
+
+    self.create_announcement_button = function(){
+        self.vue.isCreatingAnnouncement = true;
+        self.set_next_announcement('default');
+    };
 
     // Complete as needed.
     self.vue = new Vue({
@@ -282,6 +285,8 @@ var app = function() {
             logged_in: false,
             isCreatingAnnouncement: false,
             announcement_form: _announcement_form,
+
+
             all_announcements: [],
             names: [],
             description: [],
@@ -299,11 +304,15 @@ var app = function() {
         },
 
         methods: {
+            cancel_announcement_button: self.cancel_announcement_button,
             set_next_announcement: self.set_next_announcement,
             add_announcement: self.add_announcement,
             toggle_add_announcement: self.toggle_add_announcement,
             change_view: self.change_view,
             view_announcement: self.view_announcement,
+            create_announcement_button: self.create_announcement_button,
+            update_marker: self.update_marker,
+
             get_my_announcements: self.get_my_announcements,
             get_urgent_announcements: self.get_urgent_announcements,
             get_shutdown_announcements: self.get_shutdown_announcements,

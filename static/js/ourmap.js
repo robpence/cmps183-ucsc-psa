@@ -41,18 +41,31 @@ var New_Map = function (onClick) {
     var self = {};
     self.map = map;
     self.marker = null;
+    self.most_recent = null;
+
 
     /*on-click view of div showing announcement */
     view_coordinates_of_announcement = function(lat, long) {
         self.map.setView([lat,long], 22, {animation: true});
     };
 
+
     set_coordinates = function(coordinates){
         self.map.setView(coordinates, 17, {animation: true});
     };
 
+
     self.set_marker = function(marker){
         self.marker = marker;
+    };
+
+
+    self.update_marker = function(new_marker){
+        self.delete_most_recent();
+        var latlng = self.marker.latlng;
+        self.marker = new_marker;
+        self.marker.latlng = latlng;
+        self.add_marker(self.marker);
     };
 
 
@@ -62,12 +75,22 @@ var New_Map = function (onClick) {
             if (self.marker.latlng == null){
                 self.marker.latlng = e.latlng;
             }
-
-            L.marker(self.marker.latlng, {icon:self.marker.icon}).addTo(self.map);
+            console.log('add_marker');
+            self.most_recent = new L.marker(self.marker.latlng, {icon:self.marker.icon});
+            self.map.addLayer(self.most_recent);
+            //self.most_recent.addTo(self.map);
             self.marker.drawn = true;
         }
 
     };
+
+
+    self.delete_most_recent = function(){
+        console.log('delete_most_recent');
+        self.map.removeLayer(self.most_recent);
+        self.most_recent = null;
+    };
+
 
     self.map.on('click', function(e) {
         self.add_marker(e);

@@ -1,13 +1,13 @@
 {{extend 'layout.html'}}
 
 {{block head}}
-<script src="{{=URL('static', 'js/vue.js')}}"></script>
-
+<script src="{{=URL('static', 'js/vue.min.js')}}"></script>
 <script>
 
 
     var get_announcements_url = "{{=URL('api', 'get_announcements')}}";
     var add_announcement_url = "{{=URL('api', 'add_announcement', user_signature=True)}}";
+
     var get_my_announcements_url = "{{=URL('api', 'get_my_announcements')}}";
     var get_only_urgent_url = "{{=URL('api', 'get_only_urgent')}}";
     var get_only_event_url = "{{=URL('api', 'get_only_event')}}";
@@ -21,6 +21,7 @@
 <script src="{{=URL('static', 'js/leaflet.awesome-markers.js')}}"></script>
 <script src="{{=URL('static', 'js/ourmap.js')}}"></script>
 <script src="{{=URL('static', 'js/announcement.js')}}"></script>
+
 
 <div onmouseover="mOver(this)" id="mapid" ></div>
 
@@ -96,7 +97,9 @@ function mOver(obj) {
     <!---- Right Nav Bar ----->
     <nav class="right_menu navbar navbar-default" role="navigation">
       <div class="container-fluid">
+
         <div class="navbar-header navbar-brand"> Public Service Announcement </div>
+
         <div class="collapse navbar-collapse navbar-ex1-collapse">
              <p class="collapse navbar-collapse navbar-ex1-collapse">
                  <ul class="nav navbar-nav">
@@ -126,13 +129,75 @@ function mOver(obj) {
               </li>
            </ul>
 
+            <!-- create announcement buttons -->
+            <div class="button-bar-create-announcement">
+                <button v-if="!isCreatingAnnouncement" class="btn btn-danger btn-sm"
+                        v-on:click="create_announcement_button()" >
+                        <!-- v-bind:class="{'disabled': !logged_in}"-->
+                    Create Announcement
+                </button>
+
+                <button v-if="isCreatingAnnouncement" class="btn btn-warning btn-sm"
+                        v-on:click="cancel_announcement_button()">
+                    Cancel
+                </button>
+            </div>
+
+            <!-- create announcement Form -->
+            <div class="create-announcement-wrapper" v-if="isCreatingAnnouncement" >
+            <form id="create_announcement_form"
+                  action="#"
+                  v-on:submit.prevent="add_announcement"
+                  enctype="multipart/form-data"
+                  method="post">
+                <!-- text -->
+                <p>
+                    Title
+                    <input type="text" v-model="announcement_form.name">
+                </p>
+                <p>
+                    Description
+                    <input type="text" v-model="announcement_form.description">
+                </p>
+
+        <!-- radio buttons -->
+            <ul>
+                <li>
+                    <input v-on:click="update_marker('urgent')" type="radio" name="category" value="Urgent" v-model="announcement_form.category">
+                    urgent
+                </li>
+                <li>
+                    <input v-on:click="update_marker('event')" type="radio" name="category" value="Event" v-model="announcement_form.category">
+                    event
+                </li>
+                <li>
+                  <input v-on:click="update_marker('shutdown')" type="radio" name="category" value="Shut Down" v-model="announcement_form.category">
+                    shut down
+                </li>
+                <li>
+                  ${announcement_form.category}
+                </li>
+            </ul>
+
+            <!-- submit button -->
+           <button
+                class="btn btn-primary"
+                       id="add_announcement_submit"
+                        v-on:click="add_announcement()" >
+                Submit
+            </button>
+
+            </form></div>
+
         </div>
+
       </div>
     </nav>
 
 
+<!--
     <div v-if="announcement_form.active" id="create_new_announcement" class="new_announcement_wrapper" >
-        <form action="#" v-on:submit.prevent="add_announcement" class="form-horizontal" enctype="multipart/form-data" method="post">
+        <form >
 
         <h3>Announcement Name</h3>
         <div class="form-group" id="no_table_name__row">
@@ -152,18 +217,21 @@ function mOver(obj) {
 
 
         <div class="form-group" id="submit_announcement_row">
-            <div>
-                <input class="btn btn-primary" id="add_announcement_submit" type="submit" value="Submit" />
-            </div>
+            <button
+                class="btn btn-primary"
+                       id="add_announcement_submit"
+                        v-on:click="add_announcement()" >
+                Submit
+            </button>
 
-             <button  class="btn btn-warning btn-sm" >
+             <button  class="btn btn-warning btn-sm" v-on:click="cancel_announcement_button()">
                 Cancel
             </button>
         </div>
 
         </form>
    </div>
-
+-->
           <div class="history">
               <div v-if="show_all_announcements == true">
                    <div class="ann" v-for="(name,index) in names" v-on:click="view_announcement(coordinates[index])">
