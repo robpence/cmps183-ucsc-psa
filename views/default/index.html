@@ -140,20 +140,20 @@ function mOver(obj) {
 -->
                 <!-- create announcement buttons -->
                 <div class="button-bar-create-announcement">
-                    <button v-if="!isCreatingAnnouncement" class="btn btn-danger btn-sm"
+                    <button v-if="!map_clickable" class="btn btn-danger btn-sm"
                             v-on:click="create_announcement_button()" >
                             <!-- v-bind:class="{'disabled': !logged_in}"-->
                         Create Announcement
                     </button>
 
-                    <button v-if="isCreatingAnnouncement" class="btn btn-warning btn-sm"
+                    <button v-if="map_clickable" class="btn btn-warning btn-sm"
                             v-on:click="cancel_announcement_button()">
                         Cancel
                     </button>
                 </div>
 
                 <!-- create announcement Form -->
-                <div class="create-announcement-wrapper" v-if="isCreatingAnnouncement" >
+                <div class="create-announcement-wrapper" v-if="map_clickable" >
                 <form id="create_announcement_form"
                       action="#"
                       v-on:submit.prevent="add_announcement"

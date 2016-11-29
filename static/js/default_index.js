@@ -272,23 +272,24 @@ var app = function() {
         self.next_announcement.lat = lat;
         self.next_announcement.lng = lng;
         self.vue.announcement_form.active = false;
-        return self.vue.isCreatingAnnouncement;
+        //return self.vue.isCreatingAnnouncement;
     });
 
 
     self.cancel_announcement_button = function (){
         self.campus_map.delete_most_recent();
-        self.vue.isCreatingAnnouncement = false;
-        //self.vue.map_clickable = false;
-        //console.log(self.vue.map_clickable);
+        //self.vue.isCreatingAnnouncement = false;
+        self.vue.map_clickable = false;
+        console.log(self.vue.map_clickable);
         self.toggle_add_announcement();
-        //console.log(self.vue.map_clickable);
+        console.log(self.vue.map_clickable);
         clear_announcement_form();
     };
 
 
     self.create_announcement_button = function(){
-        self.vue.isCreatingAnnouncement = true;
+        //self.vue.isCreatingAnnouncement = true;
+        self.vue.map_clickable = true;
         self.set_next_announcement('default');
     };
 
