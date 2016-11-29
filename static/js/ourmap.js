@@ -22,6 +22,7 @@ var bounds = [
             [36.971819, -122.081151]];
 
 
+
 var New_Map = function (onClick) {
 
 
@@ -40,6 +41,9 @@ var New_Map = function (onClick) {
     var self = {};
     self.map = map;
     self.marker = null;
+    self.most_recent = null;
+    self.all_markers = [];
+
 
    /* These layers are toggled to filter the display of icons */
     var all_markers = new L.FeatureGroup();
@@ -53,23 +57,78 @@ var New_Map = function (onClick) {
         self.map.setView([lat,long], 22, {animation: true});
     };
 
-    set_coordinates = function(coordinates){
+
+    self.change_map_view = function(){
+        switch (location) {
+            case "kresge":
+                self.set_coordinates(kresge_college);
+                break;
+            case "merrill":
+                self.set_coordinates(merrill_college);
+                break;
+            case "rachael_carson":
+                self.set_coordinates(college_8);
+                break;
+            case "oakes":
+                self.set_coordinates(oakes_college);
+                break;
+            case "college_9":
+                self.set_coordinates(college_9);
+                break;
+            case "college_10":
+                self.set_coordinates(college_10);
+                break;
+            case "crown":
+                self.set_coordinates(crown_college);
+                break;
+            case "porter":
+                self.set_coordinates(porter_college);
+                break;
+            case "cowell":
+                self.set_coordinates(cowell_college);
+                break;
+
+            case "stevenson":
+                self.set_coordinates(stevenson_college);
+                break;
+            default:
+                self.set_coordinates(central_campus);
+                break;
+        }
+    };
+
+    self.set_coordinates = function(coordinates){
         self.map.setView(coordinates, 17, {animation: true});
     };
 
     self.set_marker = function(marker){
-        //console.log(marker);
         self.marker = marker;
     };
 
 
+    self.update_marker = function(new_marker){
+        self.delete_most_recent();
+        //var latlng = self.marker.latlng;
+        //self.marker = new_marker;
+        //self.marker.latlng = latlng;
+        self.marker.icon = new_marker.icon;
+        self.marker.category = new_marker.category;
+        self.marker.drawn = false;
+        self.add_marker(self.marker);
+    };
+
+
     self.add_marker = function (e) {
-        if (!self.marker.drawn) {
+        if (true){ //(!self.marker.drawn) {
             // if this marker came from our db then it
             if (self.marker.latlng == null){
                 self.marker.latlng = e.latlng;
             }
-
+            self.most_recent = new L.marker(self.marker.latlng, {icon:self.marker.icon});
+            self.map.addLayer(self.most_recent);
+            //self.most_recent.addTo(self.map);
+            self.marker.drawn = true;
+            
             store_marker = L.marker(self.marker.latlng, {icon:self.marker.icon}).addTo(self.map).on('click', openwindow);
             console.log(store_marker);
             console.log("self.marker.id" + " " + self.marker.id);
@@ -80,6 +139,8 @@ var New_Map = function (onClick) {
 
             store_marker.addTo(all_markers);
             all_markers.addTo(self.map);
+        
+            
         }
 
     };
@@ -139,6 +200,29 @@ var New_Map = function (onClick) {
         my_announcement_layer.addTo(self.map);
     };
 
+
+    self.clear_map = function(){
+        for(var i = 0; i < self.all_markers.length; i++){
+            self.map.removeLayer(self.all_markers[i]);
+        }
+    };
+
+
+    self.finalize_marker = function(){
+        self.all_markers.push(self.most_recent);
+        self.most_recent = null;
+    };
+
+
+    self.delete_most_recent = function(){
+        console.log('delete_most_recent');
+        if(self.most_recent != null) {
+            self.map.removeLayer(self.most_recent);
+            self.most_recent = null;
+        }
+    };
+
+
     self.map.on('click', function(e) {
         if(APP.vue.map_clickable == true){
             self.add_marker(e);
@@ -152,40 +236,6 @@ var New_Map = function (onClick) {
     self.map.on('drag', function() {
         self.map.panInsideBounds(bounds, { animate: false });
     });
-
-    /* Icons will be toggled according to which function is called */
-
-    self.clear_map = function() {
-        self.map.removeLayer(event_marker_layer);
-        self.map.removeLayer(shutdown_marker_layer);
-        self.map.removeLayer(urgent_marker_layer);
-        self.map.removeLayer(all_markers);
-        self.map.removeLayer(my_announcement_layer);
-    };
-
-    self.clear_for_all_announcements = function() {
-        self.clear_map();
-        self.map.addLayer(all_markers);
-    };
-
-    self.clear_for_my_announcements = function() {
-        self.clear_map();
-        self.map.addLayer(my_announcement_layer);
-    };
-
-    self.clear_for_urgent = function() {
-        self.clear_map();
-        self.map.addLayer(urgent_marker_layer);
-    };
-
-    self.clear_for_shutdown = function() {
-        self.clear_map();
-        self.map.addLayer(shutdown_marker_layer);
-    };
-
-    self.clear_for_event = function() {self.clear_map();
-       self.map.addLayer(event_marker_layer);
-    };
 
 
     return  self;

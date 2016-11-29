@@ -4,7 +4,8 @@
 var _announcement_form = {
     description: null,
     name: null,
-    active: false
+    active: false,
+    category: null
 };
 
 var app = function() {
@@ -15,6 +16,7 @@ var app = function() {
     function clear_announcement_form() {
         self.vue.announcement_form.description = null;
         self.vue.announcement_form.name = null;
+        self.vue.announcement_form.active = false;
         self.toggle_add_announcement();
     }
 
@@ -62,15 +64,12 @@ var app = function() {
                     long: data.announcement.longitude,
                     };
 
-
                     self.vue.coordinates.unshift(coords);
 
-                    //Allows for history to update automatically
-                    self.update_history();
-
-
                 $.web2py.enableElement($("#add_announcement_submit"));
+                self.vue.isCreatingAnnouncement = false;
                 clear_announcement_form();
+                self.campus_map.finalize_mark
                 self.populate_map();
                 self.vue.map_clickable = false;
                 $('#CreateAnnouncementModal').modal('hide');
@@ -78,73 +77,45 @@ var app = function() {
 
     };
 
-    /*
-    history sidebar will be updated upon submission of any event regardless of what filter
-   */
-    self.update_history = function() {
 
-         $.getJSON(get_my_announcements_url, function(data) {
-             self.vue.my_announcements = data.my_announcements;
-         });
+    self.populate_map = function(marker_list, requirments){
+        for(var i=0; i < marker_list.length; i++){
+            var ann = marker_list[i];
+            for (req in requirments){
 
-         $.getJSON(get_only_urgent_url, function(data) {
-            self.vue.urgent_announcements = data.urgent_announcements;
-        });
+                if (req in ann && ann[req] == requirments[req]){
+                    self.campus_map.set_marker(ann);
+                    self.campus_map.add_marker(ann);
+                    self.vue.announcements_to_show.push(ann);
+                    self.campus_map.finalize_marker();
+                    break;
+                }
+            }
+        }
+    };
 
-        $.getJSON(get_only_event_url, function(data) {
-           self.vue.event_announcements = data.event_announcements;
-        });
 
-        $.getJSON(get_only_shutdown_url, function(data) {
-        self.vue.shutdown_announcements = data.shutdown_announcements;
+    self.re_populate_map = function(){
+        self.campus_map.clear_map();
+        self.populate_map(self.vue.all_announcements, {
+            category: 'urgent'
         });
     };
 
 
-    self.populate_map = function (){
+    self.initial_populate_map = function (){
 
         $.getJSON(get_announcements_url,
             function (data) {
+
+                self.vue.logged_in = data.logged_in;
                 //console.log('callback: populate_map');
+
                 self.vue.all_announcements = data.announcements;
-                /*
-                console.log('anns.length=', self.vue.all_announcements.length);
-                console.log('data=', data);
-                */
                 var a = self.vue.all_announcements;
-                //console.log('a[0]=',a[0]);
-
                 for(var i=0; i < a.length; i++){
-
                     var ann = self.vue.all_announcements[i];
-
-                    /* Used for the history bar */
-
-                    self.vue.names.push(ann.name);
-                    self.vue.description.push(ann.description);
-                    self.vue.category.push(ann.category);
-
-                    var coords = {
-                    lat: ann.latitude,
-                    long: ann.longitude,
-                    active: false
-                    };
-
-                    self.vue.coordinates.push(coords);
-
-                    str = JSON.stringify(ann);
-
-                    console.log('ann' + str);
-
-                    /* something funny is happening here, is data being lost? */
-
                     self.vue.all_announcements[i] = Announcement_from_db(ann);
-
-                    str = JSON.stringify(self.vue.all_announcements[i]);
-
-                    console.log('self.vue.all_announcements[i]' + str);
-
-                    console.log(self.vue.all_announcements[i]);
                     self.campus_map.set_marker(
                         self.vue.all_announcements[i]
                     );
@@ -152,6 +123,7 @@ var app = function() {
                     self.campus_map.add_marker(
                         self.vue.all_announcements[i]
                     );
+                    self.campus_map.finalize_marker();
                 }
 
             });
@@ -185,50 +157,23 @@ var app = function() {
         self.vue.announcement_form.active = !self.vue.announcement_form.active;
         self.vue.map_clickable = !self.vue.map_clickable;
     };
+    
+    self.update_marker = function(cat){
+        self.next_announcement = Announcement(cat);
+        self.campus_map.update_marker(self.next_announcement);
+    };
 
 
     self.change_view = function(location) {
 
-        switch (location) {
-            case "kresge":
-                set_coordinates(kresge_college);
-                break;
-            case "merrill":
-                set_coordinates(merrill_college);
-                break;
-            case "rachael_carson":
-                set_coordinates(college_8);
-                break;
-            case "oakes":
-                set_coordinates(oakes_college);
-                break;
-            case "college_9":
-                set_coordinates(college_9);
-                break;
-            case "college_10":
-                set_coordinates(college_10);
-                break;
-            case "crown":
-                set_coordinates(crown_college);
-                break;
-            case "porter":
-                set_coordinates(porter_college);
-                break;
-            case "cowell":
-                set_coordinates(cowell_college);
-                break;
-
-            case "stevenson":
-                set_coordinates(stevenson_college);
-                break;
-            default:
-                set_coordinates(kresge_college);
-                break;
-        }
     };
 
     self.view_announcement = function(coordinates) {
-        view_coordinates_of_announcement(coordinates.lat,coordinates.long);
+        //alert(coordinates.lat);
+        self.camputs_map.view_coordinates_of_announcement(
+            coordinates.lat,
+            coordinates.long
+        );
     };
 
     self.view_announcement_in_history = function(latitude, longitude) {
@@ -237,7 +182,6 @@ var app = function() {
 
     self.get_my_announcements = function() {
 
-        /* this is the toggle for the history in the sidebar */
          self.vue.show_all_announcements = false;
          self.vue.show_only_urgent = false;
          self.vue.show_my_announcements = true;
@@ -251,27 +195,6 @@ var app = function() {
             self.draw_my_announcements();
 
         });
-    };
-
-    self.draw_my_announcements = function() {
-
-        for(var i=0; i < self.vue.my_announcements.length; i++) {
-
-            var ann = self.vue.my_announcements[i];
-
-            self.vue.my_announcements[i] = Announcement_from_db(ann);
-
-            self.campus_map.set_marker(
-                self.vue.my_announcements[i]
-            );
-
-            self.campus_map.create_my_announcement_layer(
-                self.vue.my_announcements[i]
-            );
-        }
-
-        self.campus_map.clear_for_my_announcements();
-
     };
 
     self.get_urgent_announcements = function() {
@@ -289,27 +212,6 @@ var app = function() {
         });
     };
 
-    self.draw_urgent_announcements = function() {
-
-        for(var i=0; i <  self.vue.urgent_announcements.length; i++) {
-
-            var ann =  self.vue.urgent_announcements[i];
-
-            self.vue.urgent_announcements[i] = Announcement_from_db(ann);
-
-            self.campus_map.set_marker(
-                self.vue.urgent_announcements[i]
-            );
-
-            //adding to urgent layer
-            self.campus_map.create(
-                self.vue.urgent_announcements[i]
-            );
-        }
-
-        self.campus_map.clear_for_urgent();
-    };
-
       self.get_event_announcements = function() {
 
         self.vue.show_all_announcements = false;
@@ -321,29 +223,7 @@ var app = function() {
 
         $.getJSON(get_only_event_url, function(data) {
             self.vue.event_announcements = data.event_announcements;
-            self.draw_event_announcements();
         });
-    };
-
-    self.draw_event_announcements = function() {
-
-        for(var i=0; i <  self.vue.event_announcements.length; i++) {
-
-            var ann =  self.vue.event_announcements[i];
-
-            self.vue.event_announcements[i] = Announcement_from_db(ann);
-
-            self.campus_map.set_marker(
-                self.vue.event_announcements[i]
-            );
-
-            //adding to event layer
-            self.campus_map.create(
-                self.vue.event_announcements[i]
-            );
-        }
-
-        self.campus_map.clear_for_event();
     };
 
     self.get_shutdown_announcements = function() {
@@ -357,36 +237,9 @@ var app = function() {
 
         $.getJSON(get_only_shutdown_url, function(data) {
         self.vue.shutdown_announcements = data.shutdown_announcements;
-
-        console.log('shutdown: ' + JSON.stringify(self.vue.shutdown_announcements));
-        self.draw_shutdown_announcements();
         });
-
     };
 
-       self.draw_shutdown_announcements = function() {
-
-           for(var i=0; i <  self.vue.shutdown_announcements.length; i++) {
-
-
-            var ann = self.vue.shutdown_announcements[i];
-
-            console.log('shutdown: ' + JSON.stringify(self.vue.shutdown_announcements[i]));
-
-            self.vue.shutdown_announcements[i] = Announcement_from_db(ann);
-
-            self.campus_map.set_marker(
-                self.vue.shutdown_announcements[i]
-            );
-
-            //adding to shutdown layer
-            self.campus_map.create(
-                self.vue.shutdown_announcements[i]
-            );
-        }
-
-            self.campus_map.clear_for_shutdown();
-    };
 
     self.show_every_announcement = function() {
 
@@ -413,12 +266,28 @@ var app = function() {
         $('#AnnouncementModal').modal('show');
     };
 
+
     self.campus_map = New_Map(function(lat, lng){
         // this function gets called when the map is clicked
         self.next_announcement.lat = lat;
         self.next_announcement.lng = lng;
-        self.toggle_add_announcement();
+        self.vue.announcement_form.active = false;
+        return self.vue.isCreatingAnnouncement;
     });
+
+
+    self.cancel_announcement_button = function (){
+        self.campus_map.delete_most_recent();
+        self.vue.isCreatingAnnouncement = false;
+        clear_announcement_form();
+    };
+
+
+    self.create_announcement_button = function(){
+        self.vue.isCreatingAnnouncement = true;
+        self.set_next_announcement('default');
+    };
+
 
     // Complete as needed.
     self.vue = new Vue({
@@ -430,7 +299,10 @@ var app = function() {
             logged_in: false,
             isCreatingAnnouncement: false,
             announcement_form: _announcement_form,
+
             all_announcements: [],
+            announcements_to_show: [],
+
             names: [],
             description: [],
             category: [],
@@ -448,11 +320,16 @@ var app = function() {
         },
 
         methods: {
+            cancel_announcement_button: self.cancel_announcement_button,
             set_next_announcement: self.set_next_announcement,
             add_announcement: self.add_announcement,
             toggle_add_announcement: self.toggle_add_announcement,
             change_view: self.change_view,
             view_announcement: self.view_announcement,
+            create_announcement_button: self.create_announcement_button,
+            update_marker: self.update_marker,
+            re_populate_map: self.re_populate_map,
+
             get_my_announcements: self.get_my_announcements,
             get_urgent_announcements: self.get_urgent_announcements,
             get_shutdown_announcements: self.get_shutdown_announcements,
@@ -469,7 +346,7 @@ var app = function() {
 
     });
 
-    self.populate_map();
+    self.initial_populate_map();
 
     console.log("map_var:", map_var);
     $("#vue-div").show();

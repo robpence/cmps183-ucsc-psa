@@ -18,6 +18,11 @@ var Announcement = function (announcement_type){
         };
     };
 
+    var default_marker = function(){
+        var m = Marker();
+        return L.AwesomeMarkers.icon(m);
+    };
+
     var Urgent_Marker = function(){
         var m = Marker();
         m.icon ='glyphicon glyphicon-exclamation-sign';
@@ -58,9 +63,7 @@ var Announcement = function (announcement_type){
                 break;
 
             default:
-                console.log('new Announcement: unrecognized category=',
-                            category);
-                return  Urgent_Marker();
+                return  default_marker();
                 break;
         }
     }
