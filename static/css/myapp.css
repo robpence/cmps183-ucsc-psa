@@ -28,10 +28,27 @@
   left: 0;
   margin: 0;
   padding: 0;
-  width: 150px;
-  height: 50%;
+  width: 200px;
+  height: 100%;
 }
-/* line 36, ../sass/_main.scss */
+/* line 38, ../sass/_main.scss */
+.main_content .vertical_menu .container-fluid .filter-form-wrapper .filter-list {
+  color: #4f80d2;
+  background-color: #c0d8ff;
+  position: fixed;
+  left: 200px;
+  bottom: 0;
+  height: 50%;
+  width: 200px;
+  border-color: #00c4ff;
+  border-style: solid;
+  border-width: 5px;
+  -moz-border-radius: 16px;
+  -webkit-border-radius: 16px;
+  border-radius: 16px;
+  overflow-y: scroll;
+}
+/* line 60, ../sass/_main.scss */
 .main_content .right_menu {
   position: fixed;
   top: 0;
@@ -41,7 +58,7 @@
   width: 200px;
   height: 100%;
 }
-/* line 46, ../sass/_main.scss */
+/* line 70, ../sass/_main.scss */
 .main_content .history {
   position: fixed;
   left: 0;
@@ -56,25 +73,30 @@
   border-radius: 16px;
   overflow-y: scroll;
 }
-/* line 57, ../sass/_main.scss */
+/* line 81, ../sass/_main.scss */
 .main_content .history .ann {
   border-color: #000000;
   border-style: solid;
   border-width: 5px;
   cursor: pointer;
 }
-/* line 64, ../sass/_main.scss */
+/* line 88, ../sass/_main.scss */
 .main_content .history .ann:hover {
   background-color: #A2A2A2;
 }
 
-/* line 70, ../sass/_main.scss */
+/* line 96, ../sass/_main.scss */
 .create-announcement-wrapper {
   color: #aaa;
 }
 
+/* line 101, ../sass/_main.scss */
+.filter-form-wrapper {
+  color: #aaa;
+}
+
 /* position of log in menu*/
-/* line 75, ../sass/_main.scss */
+/* line 107, ../sass/_main.scss */
 .main-container {
   position: relative;
   margin: auto;
@@ -86,13 +108,13 @@
   height: 850px;
 }
 
-/* line 87, ../sass/_main.scss */
+/* line 119, ../sass/_main.scss */
 a.menu_links {
   padding-right: 5px;
   cursor: pointer;
 }
 
-/* line 101, ../sass/_main.scss */
+/* line 133, ../sass/_main.scss */
 .new_announcement_wrapper {
   float: right;
   position: relative;
@@ -106,4 +128,20 @@ a.menu_links {
   -moz-border-radius: 16px;
   -webkit-border-radius: 16px;
   border-radius: 16px;
+}
+
+/* line 158, ../sass/_main.scss */
+.filter-list {
+  transition: all .3s ease;
+  height: 30px;
+  padding: 10px;
+  background-color: #eee;
+  overflow: hidden;
+}
+
+/* line 165, ../sass/_main.scss */
+.filter-list.v-enter, .msg.v-leave {
+  height: 0;
+  padding: 0 10px;
+  opacity: 0;
 }

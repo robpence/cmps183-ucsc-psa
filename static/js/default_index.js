@@ -8,7 +8,12 @@ var _announcement_form = {
     category: null
 };
 
-
+var _filter_form = {
+    category: null,
+    username: null,
+    age: null,
+    show:false
+};
 
 var app = function() {
 
@@ -72,6 +77,9 @@ var app = function() {
 
 
     self.populate_map = function(marker_list, requirments){
+
+        console.log('requrments=', requirments);
+
         for(var i=0; i < marker_list.length; i++){
             var ann = marker_list[i];
             for (req in requirments){
@@ -90,9 +98,9 @@ var app = function() {
 
     self.re_populate_map = function(){
         self.campus_map.clear_map();
-        self.populate_map(self.vue.all_announcements, {
-            category: 'urgent'
-        });
+        self.populate_map(
+            self.vue.all_announcements,
+            self.vue.filter_form);
     };
 
 
@@ -241,6 +249,15 @@ var app = function() {
     };
 
 
+    self.toggle_filter_show = function(){
+        self.vue.filter_form.show = !self.vue.filter_form.show;
+    };
+
+
+    self.filter_submit_button = function(){
+        self.re_populate_map();
+    };
+
     // Complete as needed.
     self.vue = new Vue({
         el: "#vue-div",
@@ -251,9 +268,12 @@ var app = function() {
             logged_in: false,
             isCreatingAnnouncement: false,
             announcement_form: _announcement_form,
+            filter_form: _filter_form,
 
             all_announcements: [],
             announcements_to_show: [],
+
+
 
             names: [],
             description: [],
@@ -270,7 +290,10 @@ var app = function() {
             show_only_shutdown: false,
         },
 
+
+
         methods: {
+            toggle_filter_show: self.toggle_filter_show,
             cancel_announcement_button: self.cancel_announcement_button,
             set_next_announcement: self.set_next_announcement,
             add_announcement: self.add_announcement,
@@ -279,6 +302,8 @@ var app = function() {
             create_announcement_button: self.create_announcement_button,
             update_marker: self.update_marker,
             re_populate_map: self.re_populate_map,
+            filter_submit_button: self.filter_submit_button,
+
 
             get_my_announcements: self.get_my_announcements,
             get_urgent_announcements: self.get_urgent_announcements,

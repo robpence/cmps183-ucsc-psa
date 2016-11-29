@@ -68,7 +68,8 @@
                     <li><a v-on:click="change_view('oakes')" class="menu_links">Oakes</a></li>
                   </ul>
               </li>
-              <li class="dropdown" data-w2pmenulevel="l0">
+
+            <li class="dropdown" data-w2pmenulevel="l0">
                   <a href="#" class="dropdown-toggle" data-toggle="dropdown">Filter</a>
                   <ul class="dropdown-menu">
                     <li><a v-if="'{{=auth.user_id}}' > 0" v-on:click="get_my_announcements()"> Show my announcements </a></li>
@@ -81,10 +82,53 @@
 
           </ul>
 
+
+
         <button class="btn btn-warning btn-sm"
             v-on:click="re_populate_map()">
             re-populate map
         </button>
+
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/velocity/1.2.3/velocity.min.js"></script>
+
+          <div class="filter-form-wrapper">
+              <button v-on:click="toggle_filter_show()" class="filter-dropdown-toggle">Filter</button>
+
+
+              <ul v-if="filter_form.show" class="filter-list" v-transition>
+
+                <li><p>name <input type="checkbox" v-model="filter_form.name"></p></li>
+                <li><p>age <input type="checkbox" v-model="filter_form.age"></p></li>
+                <li>
+                    Category
+            <!-- radio buttons -->
+                <ul>
+                    <li>
+                        <input  type="radio" name="category" value="urgent" v-model="filter_form.category">
+                        urgent
+                    </li>
+                    <li>
+                        <input  type="radio" name="category" value="event" v-model="filter_form.category">
+                        event
+                    </li>
+                    <li>
+                      <input  type="radio" name="category" value="shutdown" v-model="filter_form.category">
+                        shut down
+                    </li>
+                </ul>
+                </li>
+                <li>
+                    <button class="btn btn-warning btn-sm"
+                        v-on:click="filter_submit_button()">
+                        submit filter
+                    </button>
+                </li>
+
+              </ul>
+
+        </div>
+
 
         </div>
         </nav>
@@ -228,6 +272,7 @@
             </form>
         </div>
         -->
+
         <div class="history">
           <div v-if="show_all_announcements == true">
                <div class="ann" v-for="(name,index) in names" v-on:click="view_announcement(coordinates[index])">
@@ -269,6 +314,8 @@
               </div>
           </div>
         </div>
+
+
     </div> <!-- end vue-div -->
 
             <!-- here is the campus map     -->

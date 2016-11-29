@@ -29,9 +29,33 @@
     left:0;
     margin: 0;
     padding: 0;
-    width: 150px;
-    height: 50%;
+    width: 200px;
+    height: 100%;
+
+
+    .container-fluid {
+      .filter-form-wrapper{
+        .filter-list{
+          color:$clrLogoSimil;
+          background-color:$clrIdentical;
+          position: fixed;
+          left: 200px;
+          bottom: 0;
+          height: 50%;
+          width: 200px;
+          border-color: #00c4ff;
+          border-style: solid;
+          border-width: 5px;
+          @include border-radius(16px);
+          overflow-y: scroll;
+        }
+      }
+    }
   }
+
+
+
+
 
   .right_menu {
     position: fixed;
@@ -67,9 +91,17 @@
   }
 
 }
-  .create-announcement-wrapper{
+
+
+.create-announcement-wrapper{
     color: $clrMainSplash;
-  }
+}
+
+
+.filter-form-wrapper{
+    color: $clrMainSplash;
+}
+
 
 /* position of log in menu*/
   .main-container {
@@ -120,4 +152,18 @@ a.menu_links {
       //width: 80%;
     }
   }
+}
+
+
+.filter-list {
+    transition: all .3s ease;
+    height: 30px;
+    padding: 10px;
+    background-color: #eee;
+    overflow: hidden;
+}
+.filter-list.v-enter, .msg.v-leave {
+    height: 0;
+    padding: 0 10px;
+    opacity: 0;
 }
