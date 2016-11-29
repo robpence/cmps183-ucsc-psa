@@ -1,0 +1,123 @@
+
+
+/*Layout of map displayed on screen */
+/*
+.map_content {
+    position: relative;
+    margin: 40px 40px 40px 40px;
+
+
+    #mapid {
+      //position: relative;
+      //margin: auto;
+      width:800px;
+      height:800px;
+
+      //height: 80%;
+      //width: 80%;
+    }
+
+  }
+*/
+
+.main_content {
+  /*Side menu layout */
+  .vertical_menu {
+
+    position: fixed;
+    top: 0;
+    left:0;
+    margin: 0;
+    padding: 0;
+    width: 150px;
+    height: 50%;
+  }
+
+  .right_menu {
+    position: fixed;
+    top: 0;
+    right: 0;
+    margin: 0;
+    padding: 0;
+    width: 200px;
+    height: 100%;
+  }
+
+  .history {
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    height: 50%;
+    width: 200px;
+    border-color: #00c4ff;
+    border-style: solid;
+    border-width: 5px;
+    @include border-radius(16px);
+    overflow-y: scroll;
+     .ann {
+        //background-color: #A2A2A2;
+        border-color: #000000;
+        border-style: solid;
+        border-width: 5px;
+        cursor: pointer;
+     }
+     .ann:hover {
+       background-color: #A2A2A2;
+     }
+  }
+
+}
+  .create-announcement-wrapper{
+    color: $clrMainSplash;
+  }
+
+/* position of log in menu*/
+  .main-container {
+    position: relative;
+    margin: auto;
+    top: 0;
+    right: 0;
+    bottom: 20px;
+    left: 0;
+    width: 800px;
+    height: 850px;
+  }
+
+
+a.menu_links {
+  padding-right:5px;
+  cursor: pointer;
+}
+
+
+.form-group {
+//  border-color: $clrPostBorder;
+//  border-style: solid;
+//  border-width: 1px;
+//  background: $clrPostBackground;
+}
+
+
+.new_announcement_wrapper {
+    float: right;
+    position: relative;
+    margin: 10px 10px 10px 10px;
+    padding: 0 40px 0 40px;
+    //width: 150px;
+    width: 30%;
+
+    border-color: $clrPostBorder;
+    border-style: solid;
+    border-width: 1px;
+    background: $clrNavBorder;
+    // margin: 20px 0px 20px 0px;
+    // padding: 20px;
+    @include border-radius(16px);
+
+  .form-body{
+
+    .form-horizontal {
+      //width: 80%;
+    }
+  }
+}

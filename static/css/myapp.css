@@ -1,0 +1,109 @@
+/*Layout of map displayed on screen */
+/*
+.map_content {
+    position: relative;
+    margin: 40px 40px 40px 40px;
+
+
+    #mapid {
+      //position: relative;
+      //margin: auto;
+      width:800px;
+      height:800px;
+
+      //height: 80%;
+      //width: 80%;
+    }
+
+  }
+*/
+/* line 23, ../sass/_main.scss */
+.main_content {
+  /*Side menu layout */
+}
+/* line 25, ../sass/_main.scss */
+.main_content .vertical_menu {
+  position: fixed;
+  top: 0;
+  left: 0;
+  margin: 0;
+  padding: 0;
+  width: 150px;
+  height: 50%;
+}
+/* line 36, ../sass/_main.scss */
+.main_content .right_menu {
+  position: fixed;
+  top: 0;
+  right: 0;
+  margin: 0;
+  padding: 0;
+  width: 200px;
+  height: 100%;
+}
+/* line 46, ../sass/_main.scss */
+.main_content .history {
+  position: fixed;
+  left: 0;
+  bottom: 0;
+  height: 50%;
+  width: 200px;
+  border-color: #00c4ff;
+  border-style: solid;
+  border-width: 5px;
+  -moz-border-radius: 16px;
+  -webkit-border-radius: 16px;
+  border-radius: 16px;
+  overflow-y: scroll;
+}
+/* line 57, ../sass/_main.scss */
+.main_content .history .ann {
+  border-color: #000000;
+  border-style: solid;
+  border-width: 5px;
+  cursor: pointer;
+}
+/* line 64, ../sass/_main.scss */
+.main_content .history .ann:hover {
+  background-color: #A2A2A2;
+}
+
+/* line 70, ../sass/_main.scss */
+.create-announcement-wrapper {
+  color: #aaa;
+}
+
+/* position of log in menu*/
+/* line 75, ../sass/_main.scss */
+.main-container {
+  position: relative;
+  margin: auto;
+  top: 0;
+  right: 0;
+  bottom: 20px;
+  left: 0;
+  width: 800px;
+  height: 850px;
+}
+
+/* line 87, ../sass/_main.scss */
+a.menu_links {
+  padding-right: 5px;
+  cursor: pointer;
+}
+
+/* line 101, ../sass/_main.scss */
+.new_announcement_wrapper {
+  float: right;
+  position: relative;
+  margin: 10px 10px 10px 10px;
+  padding: 0 40px 0 40px;
+  width: 30%;
+  border-color: #444;
+  border-style: solid;
+  border-width: 1px;
+  background: #bbb;
+  -moz-border-radius: 16px;
+  -webkit-border-radius: 16px;
+  border-radius: 16px;
+}

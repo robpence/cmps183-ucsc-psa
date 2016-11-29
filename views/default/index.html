@@ -1,15 +1,31 @@
 {{extend 'layout.html'}}
 
 {{block head}}
-<script src="{{=URL('static', 'js/vue.js')}}"></script>
+<script src="{{=URL('static', 'js/vue.min.js')}}"></script>
 <script>
 
-</script>
-{{end}}
-<script src="https://unpkg.com/leaflet@1.0.1/dist/leaflet.js"></script>
 
-<div onmouseover="mOver(this)"
-id="mapid" ></div>
+    var get_announcements_url = "{{=URL('api', 'get_announcements')}}";
+    var add_announcement_url = "{{=URL('api', 'add_announcement', user_signature=True)}}";
+    var get_my_announcements_url = "{{=URL('api', 'get_my_announcements')}}";
+
+    var get_users_announcements_url = "{{=URL('api', 'get_users_announcements')}}";
+    var get_only_urgent_url = "{{=URL('api', 'get_only_urgent')}}";
+    var get_only_event_url = "{{=URL('api', 'get_only_event')}}";
+    var get_only_shutdown_url = "{{=URL('api', 'get_only_shutdown')}}";
+    var get_search_url = "{{=URL('api', 'get_search')}}";
+
+</script>
+
+{{end}}
+
+<script src="https://unpkg.com/leaflet@1.0.1/dist/leaflet.js"></script>
+<script src="{{=URL('static', 'js/leaflet.awesome-markers.js')}}"></script>
+<script src="{{=URL('static', 'js/ourmap.js')}}"></script>
+<script src="{{=URL('static', 'js/announcement.js')}}"></script>
+<script src="{{=URL('static',  'js/L.Control.Window.js')}}"></script>
+
+<div onmouseover="mOver(this)" id="mapid"></div>
 
 <script>
 function mOver(obj) {
@@ -18,60 +34,55 @@ function mOver(obj) {
 </script>
 
 <script src="{{=URL('static', 'js/ourmap.js')}}"></script>
-=======
+
 <script src="{{=URL('static', 'js/leaflet.awesome-markers.js')}}"></script>
-<div id="mapid" ></div>
+
+
+<div class="main_content">
+
+
 
 <script src="{{=URL('static', 'js/ourmap.js')}}"></script>
-<!-- <script src="js/leaflet.awesome-markers.js"></script>--->
 
 
 
-<!-------------- Dynamic Navigation Bar --------------------->
-<div class="main_content">
     <div id="vue-div" class="display:none">
+
+        <div id="mapid" >
+            <script>
+                //this re-sizes the window automattically. Just change the numbers after height and width.
+                //If you want to reserve part of the screen for a menu, like the vertical menu we have on the left,
+                //You have to change the padding in the css file.
+                $(window).on("resize", function() {
+                    $("#mapid").height($(window).height() * 1.00).width($(window).width() * 0.50);
+                    //New_Map.map.invalidateSize();
+                }).trigger("resize");
+            </script>
+
+            {{ include "default/modal.html" }}
+
+        </div>
+
+     <!-------------- Left Navigation Bar --------------------->
      <nav class="vertical_menu navbar navbar-default" role="navigation">
       <div class="container-fluid">
-        <div class="navbar-header navbar-brand"> Public Service Announcement </div>
-        <div class="collapse navbar-collapse navbar-ex1-collapse">
-             <p class="collapse navbar-collapse navbar-ex1-collapse">
-                 <ul class="nav navbar-nav">
-                    {{='auth' in globals() and auth.navbar('Welcome',mode='dropdown') or ''}}
-                 </ul>
-            </p>
-
-            <!--     Navbar Starts Here                       -->
             <ul class="nav navbar-nav">
-               <!--- <li class="web2py-menu-first"><a href="/project/default/index">Home</a></li> --->
-              <li v-if="'{{=auth.user_id}}' > 0" class="web2py-menu-first"><a href="/project/default/index">My Announcements</a></li>
-              <li v-if="'{{=auth.user_id}}' > 0" class="dropdown" data-w2pmenulevel="l0"><a href="#" class="dropdown-toggle" data-toggle="dropdown">Create Event</a>
-                  <ul class="dropdown-menu">
-                      <li><a v-on:click="set_announcement('urgent')" id = "urgent" onmouseover="mOver(this) " class="menu_links">Urgent</a></li>
-                      <li><a v-on:click="set_announcement('event')" id = "event" onmouseover="mOver(this) "class="menu_links">Event</a></li>
-                      <li><a v-on:click="set_announcement('shut_down')" id = "shut_down" onmouseover="mOver(this)" class="menu_links">Shut Down</a></li>
-                  </ul>
-              </li>
-<!-- 			  <script>
-					function myFunction() {
-					document.getElementById("urgent").style.cursor = "crosshair";
-					}
-					function myFunction() {
-					document.getElementById("event").style.cursor = "crosshair";
-					}
-					function myFunction() {
-					document.getElementById("shut_down").style.cursor = "crosshair";
-					}
-				</script> -->
-			  <!--<li v-if="'{{=auth.user_id}}' > 0" class="web2py-menu-first"><a href="/project/default/index">My Announcements</a></li>-->
-
-              <li class="dropdown" data-w2pmenulevel="l0">
-                  <a href="#" class="dropdown-toggle" data-toggle="dropdown">Filter</a>
-                  <ul class="dropdown-menu">
-                    <li><a v-on:click="show()" class="menu_links">Show only Urgent</a></li>
-                    <li><a v-on:click="show()" class="menu_links">Show only Event</a></li>
-                    <li><a v-on:click="show()" class="menu_links">Show only Shut Down</a></li>
-                  </ul>
-              </li>
+                 <li class="dropdown" data-w2pmenulevel="l0">
+                  search
+                     <form action="#" v-on:submit.prevent="" class="form-horizontal" enctype="multipart/form-data" method="post">
+                                <div class="form-group">
+                                    <div>
+                                      <input class="form-control string" id="editing_post" v-model="search_content"/>
+                                      <span class="help-block"></span>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div>
+                                    <input class="" type="submit" value="search" v-on:click="call"/>
+                                    </div>
+                                </div>
+                     </form>
+                 </li>
               <li class="dropdown" data-w2pmenulevel="l0">
                   <a href="#" class="dropdown-toggle" data-toggle="dropdown">View</a>
                   <ul class="dropdown-menu">
@@ -87,14 +98,194 @@ function mOver(obj) {
                     <li><a v-on:click="change_view('oakes')" class="menu_links">Oakes</a></li>
                   </ul>
               </li>
+              <li class="dropdown" data-w2pmenulevel="l0">
+                  <a href="#" class="dropdown-toggle" data-toggle="dropdown">Filter</a>
+                  <ul class="dropdown-menu">
+                    <li><a v-if="'{{=auth.user_id}}' > 0" v-on:click="get_users_announcements()"> Show my announcements </a></li>
+                    <li><a v-on:click="show_every_announcement()" class="menu_links">All Announcements </a></li>
+                    <li><a v-on:click="get_urgent_announcements()" class="menu_links">Show only Urgent</a></li>
+                    <li><a v-on:click="get_event_announcements()" class="menu_links">Show only Event</a></li>
+                    <li><a v-on:click="get_shutdown_announcements()" class="menu_links">Show only Shutdown</a></li>
+                  </ul>
+              </li>
           </ul>
-            <!--     Navbar Ends Here                       -->
+
+        <button class="btn btn-warning btn-sm"
+            v-on:click="re_populate_map()">
+            re-populate map
+        </button>
 
         </div>
-      </div>
-    </nav>
-    </div>
-</div>
+        </nav>
 
-<script src="{{=URL('static', 'js/default_index.js')}}">
-</script>
+        <!---- Right Nav Bar ----->
+        <nav class="right_menu navbar navbar-default" role="navigation">
+          <div class="container-fluid">
+
+            <div class="navbar-header navbar-brand"> Public Service Announcement </div>
+
+            <div  class="collapse navbar-collapse navbar-ex1-collapse">
+                 <p class="collapse navbar-collapse navbar-ex1-collapse">
+                     <ul class="nav navbar-nav">
+                        {{='auth' in globals() and auth.navbar('Welcome',mode='dropdown') or ''}}
+                     </ul>
+                </p>
+
+                <div v-if="'{{=auth.user_id}}' > 0" class="logged-in-left-user-tools">
+                <ul class="nav navbar-nav">
+                   <!--- <li class="web2py-menu-first"><a href="/project/default/index">Home</a></li> --->
+<!--                   <li v-if="logged_in" class="dropdown" data-w2pmenulevel="l0">
+                      <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                            Create Event
+                      </a>
+                      <ul class="dropdown-menu">
+                          <li>
+                              <a v-on:click="set_next_announcement('urgent')" id="set_announcement_urgent" class="menu_links">
+                                Urgent
+                              </a>
+                          </li>
+                          <li><a v-on:click="set_next_announcement('event')" id="set_announcement_event" class="menu_links">
+                              Event
+                          </a></li>
+                          <li><a v-on:click="set_next_announcement('shutdown')" id="set_announcement_shutdown" class="menu_links">
+                              Shut Down
+                          </a></li>
+                      </ul>
+                  </li>
+               </ul>
+-->
+                <!-- create announcement buttons -->
+                <div class="button-bar-create-announcement">
+                    <button v-if="!map_clickable" class="btn btn-danger btn-sm"
+                            v-on:click="create_announcement_button()" >
+                            <!-- v-bind:class="{'disabled': !logged_in}"-->
+                        Create Announcement
+                    </button>
+
+                    <button v-if="map_clickable" class="btn btn-warning btn-sm"
+                            v-on:click="cancel_announcement_button()">
+                        Cancel
+                    </button>
+                </div>
+
+                <!-- create announcement Form -->
+                <div class="create-announcement-wrapper" v-if="map_clickable" >
+                <form id="create_announcement_form"
+                      action="#"
+                      v-on:submit.prevent="add_announcement"
+                      enctype="multipart/form-data"
+                      method="post">
+                    <!-- text -->
+
+            <!-- radio buttons -->
+                <ul>
+                    <li>
+                        <input v-on:click="update_marker('urgent')" type="radio" name="category" value="Urgent" v-model="announcement_form.category">
+                        urgent
+                    </li>
+                    <li>
+                        <input v-on:click="update_marker('event')" type="radio" name="category" value="Event" v-model="announcement_form.category">
+                        event
+                    </li>
+                    <li>
+                      <input v-on:click="update_marker('shutdown')" type="radio" name="category" value="Shut Down" v-model="announcement_form.category">
+                        shut down
+                    </li>
+                    <li>
+                      ${announcement_form.category}
+                    </li>
+                </ul>
+                </form></div>
+
+            </div>
+            </div>
+          </div>
+        </nav>
+
+        <!-- Div for the history of annoucements-->
+          <div class="history">
+              <div v-if="show_all_announcements == true">
+                   <div v-if="names.length == 0">
+                      No announcements have been posted yet
+                  </div>
+                  <div v-else>
+                      <div class="ann" v-for="(name,index) in names" v-on:click="view_announcement(coordinates[index])">
+                             Title: ${names[index]} <br>
+                             Description: ${description[index]} <br>
+                             Category: ${category[index]}
+                             <i class="fa fa-thumbs-up" aria-hidden="true"></i>
+                             <i class="fa fa-thumbs-down" aria-hidden="true"></i>
+                       </div>
+                   </div>
+              </div>
+              <div v-if="show_users_announcements == true">
+                   <div v-if="users_announcements.length == 0">
+                      You have not yet created an announcements
+                  </div>
+                  <div v-else>
+                      <div class="ann" v-for="ann in users_announcements" v-on:click="view_announcement_in_history(ann.latitude, ann.longitude)">
+                          Title: ${ann.name} <br>
+                         Description: ${ann.description} <br>
+                         Category: ${ann.category} <br>
+                         <i class="fa fa-trash-o"></i>
+                         <i class="fa fa-pencil"></i>
+                      </div>
+                  </div>
+              </div>
+              <div v-if="show_only_urgent == true">
+                  <div v-if="urgent_announcements.length == 0">
+                      No urgent announcements have been posted yet
+                  </div>
+                  <div v-else>
+                      <div class="ann" v-for="ann in urgent_announcements" v-on:click="view_announcement_in_history(ann.latitude, ann.longitude)">
+                         Title: ${ann.name} <br>
+                         Description: ${ann.description} <br>
+                         Category: ${ann.category} <br>
+                      </div>
+                  </div>
+              </div>
+              <div v-if="show_only_shutdown == true">
+                  <div v-if="shutdown_announcements.length == 0">
+                     No shutdown announcements have been posted yet
+                  </div>
+                  <div v-else>
+                      <div class="ann" v-for="ann in shutdown_announcements" v-on:click="view_announcement_in_history(ann.latitude, ann.longitude)">
+                         Title: ${ann.name} <br>
+                         Description: ${ann.description} <br>
+                         Category: ${ann.category} <br>
+                      </div>
+                  </div>
+              </div>
+              <div v-if="show_only_event == true">
+                  <div v-if="event_announcements.length == 0">
+                    No event announcements have been posted yet
+                  </div>
+                  <div v-else>
+                      <div class="ann" v-for="ann in event_announcements" v-on:click="view_announcement_in_history(ann.latitude, ann.longitude)">
+                         Title: ${ann.name} <br>
+                         Description: ${ann.description} <br>
+                         Category: ${ann.category} <br>
+                      </div>
+                  </div>
+              </div>
+               <div v-if="show_search == true">
+                  <div v-if="search_announcements.length == 0">
+                    No results matched your search
+                  </div>
+                  <div v-else>
+                      <div class="ann" v-for="ann in search_announcements" v-on:click="view_announcement_in_history(ann.latitude, ann.longitude)">
+                         Title: ${ann.name} <br>
+                         Description: ${ann.description} <br>
+                         Category: ${ann.category} <br>
+                      </div>
+                  </div>
+              </div>
+          </div>
+
+    </div> <!-- end vue-div -->
+
+            <!-- here is the campus map     -->
+</div> <!-- end main-content -->
+
+
+<script src="{{=URL('static', 'js/default_index.js')}}">    </script>

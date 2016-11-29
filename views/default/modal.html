@@ -1,0 +1,68 @@
+<div id="AnnouncementModal" class="modal fade" data-backdrop="static" data-keyboard="false">
+   <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 id="announcementDetailTitle" class="modal-title">New Announcement</h4>
+            </div>
+            <div id="AnnouncementBody" class="modal-body">
+
+                <!--
+                    put description, author etc here i guess.
+                -->
+                <strong>Desc: </strong><span id="announcementDetailDescription"></span>
+                <br>
+                <strong>Author: </strong><span id="announcementDetailAuthor"></span>
+                <br>
+                <strong>Created On: </strong><span id="announcementDetailCreatedon"></span>
+                <br>
+                <strong>Category: </strong><span id="announcementDetailCategory"></span>
+                <br>
+                <strong>Score: </strong><span id="announcementDetailScore"></span>
+                <br>
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" id="announcement_cancel" data-dismiss="modal">Cancel</button>
+                <button type="button" class="btn btn-primary" id="announcement_submit">Submit</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="CreateAnnouncementModal" class="modal fade" data-backdrop="static" data-keyboard="false">
+   <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 id="createAnnouncementTitle" class="modal-title">New Announcement</h4>
+            </div>
+            <div id="createAnnouncementBody" class="modal-body">
+
+                <form action="#" v-on:submit.prevent="add_announcement" class="form-horizontal" enctype="multipart/form-data" method="post">
+
+                    <h3>Announcement Name</h3>
+                    <div class="form-group" id="no_table_name__row">
+                        <div>
+                            <input class="form-control string"  id="no_table_name"  v-model="announcement_form.name" placeholder="announcement name" type="text" />
+                            <span class="help-block"></span>
+                        </div>
+                    </div>
+
+                    <h3>Announcement Description</h3>
+                    <div class="form-group" id="no_table_description__row">
+                        <div>
+                            <input class="form-control string" id="no_table_description" v-model="announcement_form.description" placeholder="description" type="text" />
+                          <span class="help-block"></span>
+                        </div>
+                    </div>
+
+                    <div class="form-group" id="submit_announcement_row">
+                        <div>
+                            <input class="btn btn-primary" id="add_announcement_submit" type="submit" value="Submit" />
+                        </div>
+                        <button  class="btn btn-warning btn-sm" data-dismiss="modal"> Cancel </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
