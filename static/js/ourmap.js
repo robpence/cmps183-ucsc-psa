@@ -125,6 +125,7 @@ var New_Map = function (onClick) {
             if (self.marker.latlng == null){
                 self.marker.latlng = e.latlng;
             }
+
             //self.most_recent = new L.marker(self.marker.latlng, {icon:self.marker.icon}).on('click', openwindow);
             //self.most_recent._icon.id = self.marker.id;
             //self.map.addLayer(self.most_recent);
@@ -132,7 +133,7 @@ var New_Map = function (onClick) {
             self.marker.drawn = true;
             store_marker = L.marker(self.marker.latlng, {icon:self.marker.icon}).addTo(self.map).on('click', openwindow);
 
-            console.log(store_marker);
+            //console.log(store_marker);
             console.log("self.marker.id" + " " + self.marker.id);
 
             store_marker._icon.id = self.marker.id;
@@ -151,7 +152,7 @@ var New_Map = function (onClick) {
         console.log("e.target._icon.id" + " " + e.target._icon.id);
         console.log(APP.vue.all_announcements[e.target._icon.id]);
 
-        //there is probably a better way of doing this, also it might not work if theres a odd amount but idk.
+        //there is probably a better way of doing this
         var vuearrayid = (e.target._icon.id - APP.vue.all_announcements.length) * -1;
 
        APP.announcement_Detail(vuearrayid);
@@ -191,13 +192,21 @@ var New_Map = function (onClick) {
     
     /* this layer is created when a user enters a search query. They can be of all categories, so switch statement is no good */
     self.create_search_layer = function() {
-        var store_marker = L.marker(self.marker.latlng, {icon:self.marker.icon}).addTo(self.map);
+        var store_marker = L.marker(self.marker.latlng, {icon:self.marker.icon}).addTo(self.map).on('click', openwindow);
+
+        //this isn't doing anything for some reason
+        store_marker._icon.id = self.marker.id;
+
         store_marker.addTo(search_layer);
         search_layer.addTo(self.map);
     };
 
     self.create_users_announcement_layer = function() {
-        var store_marker = L.marker(self.marker.latlng, {icon:self.marker.icon}).addTo(self.map);
+        var store_marker = L.marker(self.marker.latlng, {icon:self.marker.icon}).addTo(self.map).on('click', openwindow);
+
+        //this isn't doing anything for some reason
+        store_marker._icon.id = self.marker.id;
+
         store_marker.addTo(users_announcement_layer);
         users_announcement_layer.addTo(self.map);
     };
