@@ -126,6 +126,7 @@ var New_Map = function (onClick) {
                 self.marker.latlng = e.latlng;
             }
             //self.most_recent = new L.marker(self.marker.latlng, {icon:self.marker.icon}).on('click', openwindow);
+            //self.most_recent._icon.id = self.marker.id;
             //self.map.addLayer(self.most_recent);
             //self.most_recent.addTo(self.map);
             self.marker.drawn = true;
@@ -133,7 +134,7 @@ var New_Map = function (onClick) {
 
             console.log(store_marker);
             console.log("self.marker.id" + " " + self.marker.id);
-            
+
             store_marker._icon.id = self.marker.id;
             store_marker.addTo(all_markers);
             all_markers.addTo(self.map);

@@ -22,20 +22,7 @@ var app = function() {
 
 
     Vue.config.silent = false; // show all warnings
-    /*
-    self.get_announcements = function() {
-        $.getJSON(get_announcements_url,
-            function (data) {
-                console.log(data.posts[0]);
-                self.vue.all_announcements = data.announcements;
-                console.log(self.vue.all_announcements);
-                self.vue.has_more = data.has_more;
-                self.vue.logged_in = data.logged_in;
-                console.log('anns.length=', self.vue.all_announcements.length);
-                console.log('data=', data);
-        })
-    };
-    */
+
 
     self.add_announcement = function () {
         // The submit button to add a post has been pressed.
