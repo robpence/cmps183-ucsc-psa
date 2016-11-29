@@ -469,7 +469,7 @@ var app = function() {
             show_only_urgent: false,
             show_only_event: false,
             show_only_shutdown: false,
-            map_clickable: false
+            map_clickable: false,
             show_search: false,
             call:self.call,
         },
@@ -482,7 +482,6 @@ var app = function() {
             change_view: self.change_view,
             view_announcement: self.view_announcement,
             get_users_announcements: self.get_users_announcements,
-            
             create_announcement_button: self.create_announcement_button,
             update_marker: self.update_marker,
             re_populate_map: self.re_populate_map,
@@ -500,9 +499,8 @@ var app = function() {
             update_history: self.update_history,
             view_announcement_in_history: self.view_announcement_in_history,
             search: self.search,
-            draw_search_announcements:
+            draw_search_announcements: self.draw_search_announcements,
             announcement_Detail: self.announcement_Detail,
-            self.draw_search_announcements,
         }
 
     });
