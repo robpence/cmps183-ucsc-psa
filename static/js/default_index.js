@@ -52,24 +52,29 @@ var app = function() {
                     self.vue.coordinates.unshift(coords);
 
                     //Allows for history to update automatically
-                    self.update_history();
+                    //self.update_history();
 
 
                 $.web2py.enableElement($("#add_announcement_submit"));
                 $('#CreateAnnouncementModal').modal('hide');
                 self.vue.isCreatingAnnouncement = false;
                 clear_announcement_form();
+                
                 //self.campus_map.finalize_mark();
-                self.populate_map();
+
+                //its dumb to have to re populate the entire map after only adding 1 announcement but we can
+                //fix that later
+                self.vue.initial_populate_map();
                 self.vue.map_clickable = false;
             });
 
     };
 
 
-         $.getJSON(get_users_announcements_url, function(data) {
-             self.vue.users_announcements = data.users_announcements;
-         });
+    $.getJSON(get_users_announcements_url, function(data) {
+        self.vue.users_announcements = data.users_announcements;
+    });
+
     self.populate_map = function(marker_list, requirments){
         for(var i=0; i < marker_list.length; i++){
             var ann = marker_list[i];
@@ -85,7 +90,6 @@ var app = function() {
             }
         }
     };
-
 
     self.re_populate_map = function(){
         self.campus_map.clear_map();
