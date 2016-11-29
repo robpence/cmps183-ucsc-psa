@@ -67,12 +67,12 @@ var app = function() {
                     self.vue.coordinates.unshift(coords);
 
                 $.web2py.enableElement($("#add_announcement_submit"));
+                $('#CreateAnnouncementModal').modal('hide');
                 self.vue.isCreatingAnnouncement = false;
                 clear_announcement_form();
-                self.campus_map.finalize_mark
+                //self.campus_map.finalize_mark();
                 self.populate_map();
                 self.vue.map_clickable = false;
-                $('#CreateAnnouncementModal').modal('hide');
             });
 
     };
@@ -329,7 +329,8 @@ var app = function() {
             create_announcement_button: self.create_announcement_button,
             update_marker: self.update_marker,
             re_populate_map: self.re_populate_map,
-
+            initial_populate_map: self.initial_populate_map,
+            populate_map: self.populate_map,
             get_my_announcements: self.get_my_announcements,
             get_urgent_announcements: self.get_urgent_announcements,
             get_shutdown_announcements: self.get_shutdown_announcements,

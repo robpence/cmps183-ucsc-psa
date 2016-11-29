@@ -160,14 +160,6 @@ function mOver(obj) {
                       enctype="multipart/form-data"
                       method="post">
                     <!-- text -->
-                    <p>
-                        Title
-                        <input type="text" v-model="announcement_form.name">
-                    </p>
-                    <p>
-                        Description
-                        <input type="text" v-model="announcement_form.description">
-                    </p>
 
             <!-- radio buttons -->
                 <ul>
@@ -187,15 +179,6 @@ function mOver(obj) {
                       ${announcement_form.category}
                     </li>
                 </ul>
-
-                <!-- submit button -->
-               <button
-                    class="btn btn-primary"
-                           id="add_announcement_submit"
-                            v-on:click="add_announcement()" >
-                    Submit
-                </button>
-
                 </form></div>
 
             </div>
