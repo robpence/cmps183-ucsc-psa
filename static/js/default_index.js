@@ -365,7 +365,6 @@ var app = function() {
         $('#announcementDetailCategory').html(announcement.category);
         $('#announcementDetailScore').html(announcement.score);
 
-
         $('#AnnouncementModal').modal('show');
     };
 
@@ -381,7 +380,6 @@ var app = function() {
 
     self.cancel_announcement_button = function (){
         self.campus_map.delete_most_recent();
-        //self.vue.isCreatingAnnouncement = false;
         self.vue.map_clickable = false;
         console.log(self.vue.map_clickable);
         self.toggle_add_announcement();
@@ -391,7 +389,6 @@ var app = function() {
 
 
     self.create_announcement_button = function(){
-        //self.vue.isCreatingAnnouncement = true;
         self.vue.map_clickable = true;
         self.set_next_announcement('default');
     };
@@ -451,10 +448,8 @@ var app = function() {
             logged_in: false,
             isCreatingAnnouncement: false,
             announcement_form: _announcement_form,
-
             all_announcements: [],
             announcements_to_show: [],
-
             names: [],
             description: [],
             category: [],

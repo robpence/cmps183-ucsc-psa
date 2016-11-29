@@ -120,21 +120,20 @@ var New_Map = function (onClick) {
 
 
     self.add_marker = function (e) {
-        if (true){ //(!self.marker.drawn) {
+        if (!self.marker.drawn) {
             // if this marker came from our db then it
             if (self.marker.latlng == null){
                 self.marker.latlng = e.latlng;
             }
-            self.most_recent = new L.marker(self.marker.latlng, {icon:self.marker.icon});
-            self.map.addLayer(self.most_recent);
+            //self.most_recent = new L.marker(self.marker.latlng, {icon:self.marker.icon}).on('click', openwindow);
+            //self.map.addLayer(self.most_recent);
             //self.most_recent.addTo(self.map);
             self.marker.drawn = true;
-            
             store_marker = L.marker(self.marker.latlng, {icon:self.marker.icon}).addTo(self.map).on('click', openwindow);
+
             console.log(store_marker);
             console.log("self.marker.id" + " " + self.marker.id);
-
-            store_marker = L.marker(self.marker.latlng, {icon:self.marker.icon}).addTo(self.map);
+            
             store_marker._icon.id = self.marker.id;
             store_marker.addTo(all_markers);
             all_markers.addTo(self.map);
