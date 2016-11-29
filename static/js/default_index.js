@@ -71,6 +71,7 @@ var app = function() {
 
                 $.web2py.enableElement($("#add_announcement_submit"));
                 clear_announcement_form();
+                self.populate_map();
                 self.vue.map_clickable = false;
                 $('#CreateAnnouncementModal').modal('hide');
             });
@@ -400,6 +401,7 @@ var app = function() {
 
     self.announcement_Detail = function(index) {
         announcement = self.vue.all_announcements[index];
+        //announcement = self.vue.names[index];
         $('#announcementDetailTitle').html(announcement.name);
         $('#announcementDetailDescription').html(announcement.description);
         $('#announcementDetailAuthor').html(announcement.author);

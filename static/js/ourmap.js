@@ -92,10 +92,10 @@ var New_Map = function (onClick) {
         console.log(APP.vue.all_announcements[e.target._icon.id]);
 
         //there is probably a better way of doing this, also it might not work if theres a odd amount but idk.
-        //var vuearrayid = (e.target._icon.id - APP.vue.all_announcements.length) * -1;
+        var vuearrayid = (e.target._icon.id - APP.vue.all_announcements.length) * -1;
 
-       //APP.announcement_Detail(vuearrayid);
-        APP.announcement_Detail(e.target._icon.id);
+       APP.announcement_Detail(vuearrayid);
+        //APP.announcement_Detail(e.target._icon.id);
 
     }
 
