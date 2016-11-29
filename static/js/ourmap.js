@@ -42,6 +42,7 @@ var New_Map = function (onClick) {
     self.map = map;
     self.marker = null;
     self.most_recent = null;
+    self.all_markers = [];
 
 
     /*on-click view of div showing announcement */
@@ -101,20 +102,22 @@ var New_Map = function (onClick) {
 
     self.update_marker = function(new_marker){
         self.delete_most_recent();
-        var latlng = self.marker.latlng;
-        self.marker = new_marker;
-        self.marker.latlng = latlng;
+        //var latlng = self.marker.latlng;
+        //self.marker = new_marker;
+        //self.marker.latlng = latlng;
+        self.marker.icon = new_marker.icon;
+        self.marker.category = new_marker.category;
+        self.marker.drawn = false;
         self.add_marker(self.marker);
     };
 
 
     self.add_marker = function (e) {
-        if (!self.marker.drawn) {
+        if (true){ //(!self.marker.drawn) {
             // if this marker came from our db then it
             if (self.marker.latlng == null){
                 self.marker.latlng = e.latlng;
             }
-            console.log('add_marker');
             self.most_recent = new L.marker(self.marker.latlng, {icon:self.marker.icon});
             self.map.addLayer(self.most_recent);
             //self.most_recent.addTo(self.map);
@@ -124,16 +127,32 @@ var New_Map = function (onClick) {
     };
 
 
-    self.delete_most_recent = function(){
-        console.log('delete_most_recent');
-        self.map.removeLayer(self.most_recent);
+    self.clear_map = function(){
+        for(var i = 0; i < self.all_markers.length; i++){
+            self.map.removeLayer(self.all_markers[i]);
+        }
+    };
+
+
+    self.finalize_marker = function(){
+        self.all_markers.push(self.most_recent);
         self.most_recent = null;
     };
 
 
+    self.delete_most_recent = function(){
+        console.log('delete_most_recent');
+        if(self.most_recent != null) {
+            self.map.removeLayer(self.most_recent);
+            self.most_recent = null;
+        }
+    };
+
+
     self.map.on('click', function(e) {
-        self.add_marker(e);
-        onClick(e.latlng.lat, e.latlng.lng);
+        if (onClick(e.latlng.lat, e.latlng.lng)) {
+            self.add_marker(e);
+        }
     });
 
 

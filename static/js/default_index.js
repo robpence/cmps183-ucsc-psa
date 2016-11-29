@@ -18,7 +18,7 @@ var app = function() {
     function clear_announcement_form() {
         self.vue.announcement_form.description = null;
         self.vue.announcement_form.name = null;
-        self.toggle_add_announcement();
+        self.vue.announcement_form.active = false;
     }
 
 
@@ -63,44 +63,52 @@ var app = function() {
                     self.vue.coordinates.unshift(coords);
 
                 $.web2py.enableElement($("#add_announcement_submit"));
-                //self.vue.posts.unshift(data.post);
+                self.vue.isCreatingAnnouncement = false;
                 clear_announcement_form();
+                self.campus_map.finalize_marker();
             });
 
     };
 
 
-    self.populate_map = function (){
+    self.populate_map = function(marker_list, requirments){
+        for(var i=0; i < marker_list.length; i++){
+            var ann = marker_list[i];
+            for (req in requirments){
+
+                if (req in ann && ann[req] == requirments[req]){
+                    self.campus_map.set_marker(ann);
+                    self.campus_map.add_marker(ann);
+                    self.vue.announcements_to_show.push(ann);
+                    self.campus_map.finalize_marker();
+                    break;
+                }
+            }
+        }
+    };
+
+
+    self.re_populate_map = function(){
+        self.campus_map.clear_map();
+        self.populate_map(self.vue.all_announcements, {
+            category: 'urgent'
+        });
+    };
+
+
+    self.initial_populate_map = function (){
 
         $.getJSON(get_announcements_url,
             function (data) {
 
                 self.vue.logged_in = data.logged_in;
                 //console.log('callback: populate_map');
+
                 self.vue.all_announcements = data.announcements;
                 var a = self.vue.all_announcements;
                 for(var i=0; i < a.length; i++){
                     var ann = self.vue.all_announcements[i];
-
-                    /* Used for the history bar */
-                    self.vue.names.push(ann.name);
-                    self.vue.description.push(ann.description);
-                    self.vue.category.push(ann.category);
-
-                    var coords = {
-                    lat: ann.latitude,
-                    long: ann.longitude,
-                    active: false
-                    };
-
-                    self.vue.coordinates.push(coords);
-                    str = JSON.stringify(ann);
-
-                    /* something funny is happening here, is data being lost? */
                     self.vue.all_announcements[i] = Announcement_from_db(ann);
-                    str = JSON.stringify(self.vue.all_announcements[i]);
-
-
                     self.campus_map.set_marker(
                         self.vue.all_announcements[i]
                     );
@@ -108,6 +116,7 @@ var app = function() {
                     self.campus_map.add_marker(
                         self.vue.all_announcements[i]
                     );
+                    self.campus_map.finalize_marker();
                 }
             });
     };
@@ -125,15 +134,7 @@ var app = function() {
 
     self.update_marker = function(cat){
         self.next_announcement = Announcement(cat);
-        console.log('next_announcement ==> ', self.next_announcement.category);
-
         self.campus_map.update_marker(self.next_announcement);
-        console.log('update marker ==> ', self.next_announcement.category);
-    };
-
-
-    self.toggle_add_announcement = function (){
-        self.vue.announcement_form.active = !self.vue.announcement_form.active;
     };
 
 
@@ -222,12 +223,14 @@ var app = function() {
         // this function gets called when the map is clicked
         self.next_announcement.lat = lat;
         self.next_announcement.lng = lng;
-        self.toggle_add_announcement();
+        self.vue.announcement_form.active = false;
+        return self.vue.isCreatingAnnouncement;
     });
 
 
     self.cancel_announcement_button = function (){
-       self.vue.isCreatingAnnouncement = false;
+        self.campus_map.delete_most_recent();
+        self.vue.isCreatingAnnouncement = false;
         clear_announcement_form();
     };
 
@@ -235,11 +238,6 @@ var app = function() {
     self.create_announcement_button = function(){
         self.vue.isCreatingAnnouncement = true;
         self.set_next_announcement('default');
-    };
-
-
-    self.user_can_create = function(){
-        return self.logged_in;
     };
 
 
@@ -254,8 +252,9 @@ var app = function() {
             isCreatingAnnouncement: false,
             announcement_form: _announcement_form,
 
-
             all_announcements: [],
+            announcements_to_show: [],
+
             names: [],
             description: [],
             category: [],
@@ -275,12 +274,11 @@ var app = function() {
             cancel_announcement_button: self.cancel_announcement_button,
             set_next_announcement: self.set_next_announcement,
             add_announcement: self.add_announcement,
-            toggle_add_announcement: self.toggle_add_announcement,
             change_view: self.change_view,
             view_announcement: self.view_announcement,
             create_announcement_button: self.create_announcement_button,
             update_marker: self.update_marker,
-            user_can_create: self.user_can_create,
+            re_populate_map: self.re_populate_map,
 
             get_my_announcements: self.get_my_announcements,
             get_urgent_announcements: self.get_urgent_announcements,
@@ -291,7 +289,7 @@ var app = function() {
 
     });
 
-    self.populate_map();
+    self.initial_populate_map();
 
     console.log("map_var:", map_var);
     $("#vue-div").show();

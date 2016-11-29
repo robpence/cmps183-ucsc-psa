@@ -39,7 +39,7 @@
         }).trigger("resize");
         </script>
     </div>
-    
+
 
 
 
@@ -78,7 +78,14 @@
                     <li><a v-on:click="get_shutdown_announcements()" class="menu_links">Show only Shutdown</a></li>
                   </ul>
               </li>
+
           </ul>
+
+        <button class="btn btn-warning btn-sm"
+            v-on:click="re_populate_map()">
+            re-populate map
+        </button>
+
         </div>
         </nav>
 
@@ -98,7 +105,7 @@
                 <div v-if="'{{=auth.user_id}}' > 0" class="logged-in-left-user-tools">
                 <ul class="nav navbar-nav">
                    <!--- <li class="web2py-menu-first"><a href="/project/default/index">Home</a></li> --->
-                   <li v-if="user_can_create()" class="dropdown" data-w2pmenulevel="l0">
+<!--                   <li v-if="logged_in" class="dropdown" data-w2pmenulevel="l0">
                       <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                             Create Event
                       </a>
@@ -117,7 +124,7 @@
                       </ul>
                   </li>
                </ul>
-
+-->
                 <!-- create announcement buttons -->
                 <div class="button-bar-create-announcement">
                     <button v-if="!isCreatingAnnouncement" class="btn btn-danger btn-sm"
