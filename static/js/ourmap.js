@@ -229,7 +229,6 @@ var New_Map = function (onClick) {
             onClick(e.latlng.lat, e.latlng.lng);
             $('#CreateAnnouncementModal').modal('show');
         }
-
     });
 
 

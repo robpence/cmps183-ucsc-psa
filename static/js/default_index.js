@@ -248,8 +248,8 @@ var app = function() {
         self.vue.show_my_announcements = false;
         self.vue.show_only_shutdown = false;
         self.vue.show_only_event = false;
-
         self.campus_map.clear_for_all_announcements();
+
     };
 
     self.announcement_Detail = function(index) {
@@ -279,6 +279,10 @@ var app = function() {
     self.cancel_announcement_button = function (){
         self.campus_map.delete_most_recent();
         self.vue.isCreatingAnnouncement = false;
+        //self.vue.map_clickable = false;
+        //console.log(self.vue.map_clickable);
+        self.toggle_add_announcement();
+        //console.log(self.vue.map_clickable);
         clear_announcement_form();
     };
 
