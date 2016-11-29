@@ -8,9 +8,12 @@
     var get_announcements_url = "{{=URL('api', 'get_announcements')}}";
     var add_announcement_url = "{{=URL('api', 'add_announcement', user_signature=True)}}";
     var get_my_announcements_url = "{{=URL('api', 'get_my_announcements')}}";
+
+    var get_users_announcements_url = "{{=URL('api', 'get_users_announcements')}}";
     var get_only_urgent_url = "{{=URL('api', 'get_only_urgent')}}";
     var get_only_event_url = "{{=URL('api', 'get_only_event')}}";
     var get_only_shutdown_url = "{{=URL('api', 'get_only_shutdown')}}";
+    var get_search_url = "{{=URL('api', 'get_search')}}";
 
 </script>
 
@@ -65,7 +68,20 @@ function mOver(obj) {
       <div class="container-fluid">
             <ul class="nav navbar-nav">
                  <li class="dropdown" data-w2pmenulevel="l0">
-                  <a href="#" class="dropdown-toggle" data-toggle="dropdown">search</a>
+                  search
+                     <form action="#" v-on:submit.prevent="" class="form-horizontal" enctype="multipart/form-data" method="post">
+                                <div class="form-group">
+                                    <div>
+                                      <input class="form-control string" id="editing_post" v-model="search_content"/>
+                                      <span class="help-block"></span>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div>
+                                    <input class="" type="submit" value="search" v-on:click="call"/>
+                                    </div>
+                                </div>
+                     </form>
                  </li>
               <li class="dropdown" data-w2pmenulevel="l0">
                   <a href="#" class="dropdown-toggle" data-toggle="dropdown">View</a>
@@ -85,7 +101,7 @@ function mOver(obj) {
               <li class="dropdown" data-w2pmenulevel="l0">
                   <a href="#" class="dropdown-toggle" data-toggle="dropdown">Filter</a>
                   <ul class="dropdown-menu">
-                    <li><a v-if="'{{=auth.user_id}}' > 0" v-on:click="get_my_announcements()"> Show my announcements </a></li>
+                    <li><a v-if="'{{=auth.user_id}}' > 0" v-on:click="get_users_announcements()"> Show my announcements </a></li>
                     <li><a v-on:click="show_every_announcement()" class="menu_links">All Announcements </a></li>
                     <li><a v-on:click="get_urgent_announcements()" class="menu_links">Show only Urgent</a></li>
                     <li><a v-on:click="get_event_announcements()" class="menu_links">Show only Event</a></li>
@@ -202,12 +218,12 @@ function mOver(obj) {
                        </div>
                    </div>
               </div>
-              <div v-if="show_my_announcements == true">
-                   <div v-if="my_announcements.length == 0">
+              <div v-if="show_users_announcements == true">
+                   <div v-if="users_announcements.length == 0">
                       You have not yet created an announcements
                   </div>
                   <div v-else>
-                      <div class="ann" v-for="ann in my_announcements" v-on:click="view_announcement_in_history(ann.latitude, ann.longitude)">
+                      <div class="ann" v-for="ann in users_announcements" v-on:click="view_announcement_in_history(ann.latitude, ann.longitude)">
                           Title: ${ann.name} <br>
                          Description: ${ann.description} <br>
                          Category: ${ann.category} <br>
@@ -218,7 +234,7 @@ function mOver(obj) {
               </div>
               <div v-if="show_only_urgent == true">
                   <div v-if="urgent_announcements.length == 0">
-                      No announcements posted for this category yet
+                      No urgent announcements have been posted yet
                   </div>
                   <div v-else>
                       <div class="ann" v-for="ann in urgent_announcements" v-on:click="view_announcement_in_history(ann.latitude, ann.longitude)">
@@ -230,7 +246,7 @@ function mOver(obj) {
               </div>
               <div v-if="show_only_shutdown == true">
                   <div v-if="shutdown_announcements.length == 0">
-                      No announcements posted for this category yet
+                     No shutdown announcements have been posted yet
                   </div>
                   <div v-else>
                       <div class="ann" v-for="ann in shutdown_announcements" v-on:click="view_announcement_in_history(ann.latitude, ann.longitude)">
@@ -242,10 +258,22 @@ function mOver(obj) {
               </div>
               <div v-if="show_only_event == true">
                   <div v-if="event_announcements.length == 0">
-                      No announcements posted for this category yet
+                    No event announcements have been posted yet
                   </div>
                   <div v-else>
                       <div class="ann" v-for="ann in event_announcements" v-on:click="view_announcement_in_history(ann.latitude, ann.longitude)">
+                         Title: ${ann.name} <br>
+                         Description: ${ann.description} <br>
+                         Category: ${ann.category} <br>
+                      </div>
+                  </div>
+              </div>
+               <div v-if="show_search == true">
+                  <div v-if="search_announcements.length == 0">
+                    No results matched your search
+                  </div>
+                  <div v-else>
+                      <div class="ann" v-for="ann in search_announcements" v-on:click="view_announcement_in_history(ann.latitude, ann.longitude)">
                          Title: ${ann.name} <br>
                          Description: ${ann.description} <br>
                          Category: ${ann.category} <br>

@@ -50,7 +50,8 @@ var New_Map = function (onClick) {
     var urgent_marker_layer = new L.FeatureGroup();
     var event_marker_layer = new L.FeatureGroup();
     var shutdown_marker_layer = new L.FeatureGroup();
-    var my_announcement_layer = new L.FeatureGroup();
+    var users_announcement_layer = new L.FeatureGroup();
+    var search_layer = new L.FeatureGroup();
 
     /*on-click view of div showing announcement */
     view_coordinates_of_announcement = function(lat, long) {
@@ -133,10 +134,8 @@ var New_Map = function (onClick) {
             console.log(store_marker);
             console.log("self.marker.id" + " " + self.marker.id);
 
-            //this probably has to change to something else.
+            store_marker = L.marker(self.marker.latlng, {icon:self.marker.icon}).addTo(self.map);
             store_marker._icon.id = self.marker.id;
-
-
             store_marker.addTo(all_markers);
             all_markers.addTo(self.map);
         
@@ -187,6 +186,20 @@ var New_Map = function (onClick) {
             default:
                 break;
         }
+
+    };
+    
+    /* this layer is created when a user enters a search query. They can be of all categories, so switch statement is no good */
+    self.create_search_layer = function() {
+        var store_marker = L.marker(self.marker.latlng, {icon:self.marker.icon}).addTo(self.map);
+        store_marker.addTo(search_layer);
+        search_layer.addTo(self.map);
+    };
+
+    self.create_users_announcement_layer = function() {
+        var store_marker = L.marker(self.marker.latlng, {icon:self.marker.icon}).addTo(self.map);
+        store_marker.addTo(users_announcement_layer);
+        users_announcement_layer.addTo(self.map);
     };
 
 
@@ -236,6 +249,49 @@ var New_Map = function (onClick) {
         self.map.panInsideBounds(bounds, { animate: false });
     });
 
+    /* Icons will be toggled according to which function is called */
+
+    self.clear_map = function() {
+        self.map.removeLayer(event_marker_layer);
+        self.map.removeLayer(shutdown_marker_layer);
+        self.map.removeLayer(urgent_marker_layer);
+        self.map.removeLayer(all_markers);
+        self.map.removeLayer(users_announcement_layer);
+        self.map.removeLayer(search_layer);
+        start_fresh_layer = new L.FeatureGroup(); //this is needed, since search_layer would just continue to add on itself
+        search_layer = start_fresh_layer;
+    };
+
+    self.clear_for_all_announcements = function() {
+        self.clear_map();
+        self.map.addLayer(all_markers);
+    };
+
+    self.clear_for_users_announcements = function() {
+        self.clear_map();
+        self.map.addLayer(users_announcement_layer);
+    };
+
+    self.clear_for_urgent = function() {
+        self.clear_map();
+        self.map.addLayer(urgent_marker_layer);
+    };
+
+    self.clear_for_shutdown = function() {
+        self.clear_map();
+        self.map.addLayer(shutdown_marker_layer);
+    };
+
+    self.clear_for_event = function() {
+       self.clear_map();
+       self.map.addLayer(event_marker_layer);
+    };
+
+    self.clear_for_search_announcements = function() {
+        self.clear_map(); //clear the map, and the old search layer
+        APP.search(); //get a new series of icons which match search query, and update layer
+        search_layer.addTo(self.map); //add new layer
+    };
 
     return  self;
 };

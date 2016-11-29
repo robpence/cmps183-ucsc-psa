@@ -60,9 +60,9 @@ def add_announcement():
 
     return response.json(dict(announcement=ann))
 
-def get_my_announcements():
-    my_announcements = db(db.Announcements.author == auth.user.email).select()
-    return response.json(dict(my_announcements = my_announcements))
+def get_users_announcements():
+    users_announcements = db(db.Announcements.author == auth.user.email).select()
+    return response.json(dict(users_announcements = users_announcements))
 
 def get_only_urgent():
     urgent_announcements = db(db.Announcements.category == 'urgent').select()
@@ -76,3 +76,14 @@ def get_only_shutdown():
     shutdown_announcements = db(db.Announcements.category == 'shutdown').select()
     logger.info("shutdown %r" % shutdown_announcements)
     return response.json(dict(shutdown_announcements = shutdown_announcements))
+
+def get_search():
+
+    t = request.vars.search_content
+
+    q = ((db.Announcements.name.contains(t)) |
+         (db.Announcements.description.contains(t)))
+
+    search_announcements = db(q).select(db.Announcements.ALL)
+    logger.info("search %r" % search_announcements)
+    return response.json(dict(search_announcements=search_announcements))
