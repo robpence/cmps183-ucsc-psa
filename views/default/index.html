@@ -3,18 +3,14 @@
 {{block head}}
 <script src="{{=URL('static', 'js/vue.min.js')}}"></script>
 <script>
-
-
     var get_announcements_url = "{{=URL('api', 'get_announcements')}}";
     var add_announcement_url = "{{=URL('api', 'add_announcement', user_signature=True)}}";
     var get_my_announcements_url = "{{=URL('api', 'get_my_announcements')}}";
-
     var get_users_announcements_url = "{{=URL('api', 'get_users_announcements')}}";
     var get_only_urgent_url = "{{=URL('api', 'get_only_urgent')}}";
     var get_only_event_url = "{{=URL('api', 'get_only_event')}}";
     var get_only_shutdown_url = "{{=URL('api', 'get_only_shutdown')}}";
     var get_search_url = "{{=URL('api', 'get_search')}}";
-
 </script>
 
 {{end}}
@@ -37,12 +33,6 @@ function mOver(obj) {
 
 <div class="main_content">
 
-
-
-<script src="{{=URL('static', 'js/ourmap.js')}}"></script>
-
-
-
     <div id="vue-div" class="display:none">
 
         <div id="mapid" >
@@ -60,11 +50,13 @@ function mOver(obj) {
 
         </div>
 
-     <!-------------- Left Navigation Bar --------------------->
-     <nav class="vertical_menu navbar navbar-default" role="navigation">
-      <div class="container-fluid">
-            <ul class="nav navbar-nav">
-                 <li class="dropdown" data-w2pmenulevel="l0">
+
+        <!-------------- Left Navigation Bar --------------------->
+        <nav class="vertical_menu navbar navbar-default" role="navigation">
+        <div class="container-fluid">
+            <ul class="nav navbar-nav navbar-list">
+
+                <li class="dropdown navlist-item" data-w2pmenulevel="l0">
                   search
                      <form action="#" v-on:submit.prevent="" class="form-horizontal" enctype="multipart/form-data" method="post">
                                 <div class="form-group">
@@ -79,8 +71,9 @@ function mOver(obj) {
                                     </div>
                                 </div>
                      </form>
-                 </li>
-              <li class="dropdown" data-w2pmenulevel="l0">
+                </li>
+
+                <li class="dropdown navlist-item" data-w2pmenulevel="l0">
                   <a href="#" class="dropdown-toggle" data-toggle="dropdown">View</a>
                   <ul class="dropdown-menu">
                     <li><a v-on:click="change_view('crown')" class="menu_links">Crown</a></li>
@@ -94,23 +87,55 @@ function mOver(obj) {
                     <li><a v-on:click="change_view('stevenson')" class="menu_links">Stevenson</a></li>
                     <li><a v-on:click="change_view('oakes')" class="menu_links">Oakes</a></li>
                   </ul>
-              </li>
-              <li class="dropdown" data-w2pmenulevel="l0">
-                  <a href="#" class="dropdown-toggle" data-toggle="dropdown">Filter</a>
-                  <ul class="dropdown-menu">
-                    <li><a v-if="'{{=auth.user_id}}' > 0" v-on:click="get_users_announcements()"> Show my announcements </a></li>
-                    <li><a v-on:click="show_every_announcement()" class="menu_links">All Announcements </a></li>
-                    <li><a v-on:click="get_urgent_announcements()" class="menu_links">Show only Urgent</a></li>
-                    <li><a v-on:click="get_event_announcements()" class="menu_links">Show only Event</a></li>
-                    <li><a v-on:click="get_shutdown_announcements()" class="menu_links">Show only Shutdown</a></li>
-                  </ul>
-              </li>
-          </ul>
+                </li>
 
-        <button class="btn btn-warning btn-sm"
-            v-on:click="re_populate_map()">
-            re-populate map
-        </button>
+
+                <li class="navlist-item">
+                    <div class="filter-form-wrapper">
+                    <button v-on:click="toggle_filter_show()" class="filter-dropdown-toggle">Filter</button>
+
+
+                    <ul v-if="filter_form.show" class="filter-list" v-transition>
+
+                        <li><p>name <input type="checkbox" v-model="filter_form.name"></p></li>
+                        <li><p>age <input type="checkbox" v-model="filter_form.age"></p></li>
+                        <li>
+                            Category
+                        <!-- radio buttons -->
+                        <ul>
+                            <li>
+                                <input  type="radio" name="category" value="urgent" v-model="filter_form.category">
+                                urgent
+                            </li>
+                            <li>
+                                <input  type="radio" name="category" value="event" v-model="filter_form.category">
+                                event
+                            </li>
+                            <li>
+                              <input  type="radio" name="category" value="shutdown" v-model="filter_form.category">
+                                shut down
+                            </li>
+                            <li>
+                              <input  type="radio" name="category" value="all" v-model="filter_form.category">
+                                all
+                            </li>
+                        </ul>
+                        </li>
+                        <li>
+                            <button class="btn btn-warning btn-sm"
+                                v-on:click="filter_submit_button()">
+                                submit filter
+                            </button>
+                        </li>
+
+                    </ul>
+
+                    </div>
+                </li>
+
+
+            </ul>
+
 
         </div>
         </nav>
@@ -129,28 +154,7 @@ function mOver(obj) {
                 </p>
 
                 <div v-if="'{{=auth.user_id}}' > 0" class="logged-in-left-user-tools">
-                <ul class="nav navbar-nav">
-                   <!--- <li class="web2py-menu-first"><a href="/project/default/index">Home</a></li> --->
-<!--                   <li v-if="logged_in" class="dropdown" data-w2pmenulevel="l0">
-                      <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                            Create Event
-                      </a>
-                      <ul class="dropdown-menu">
-                          <li>
-                              <a v-on:click="set_next_announcement('urgent')" id="set_announcement_urgent" class="menu_links">
-                                Urgent
-                              </a>
-                          </li>
-                          <li><a v-on:click="set_next_announcement('event')" id="set_announcement_event" class="menu_links">
-                              Event
-                          </a></li>
-                          <li><a v-on:click="set_next_announcement('shutdown')" id="set_announcement_shutdown" class="menu_links">
-                              Shut Down
-                          </a></li>
-                      </ul>
-                  </li>
-               </ul>
--->
+
                 <!-- create announcement buttons -->
                 <div class="button-bar-create-announcement">
                     <button v-if="!map_clickable" class="btn btn-danger btn-sm"
@@ -174,24 +178,24 @@ function mOver(obj) {
                       method="post">
                     <!-- text -->
 
-            <!-- radio buttons -->
-                <ul>
-                    <li>
-                        <input v-on:click="update_marker('urgent')" type="radio" name="category" value="Urgent" v-model="announcement_form.category">
-                        urgent
-                    </li>
-                    <li>
-                        <input v-on:click="update_marker('event')" type="radio" name="category" value="Event" v-model="announcement_form.category">
-                        event
-                    </li>
-                    <li>
-                      <input v-on:click="update_marker('shutdown')" type="radio" name="category" value="Shut Down" v-model="announcement_form.category">
-                        shut down
-                    </li>
-                    <li>
-                      ${announcement_form.category}
-                    </li>
-                </ul>
+                <!-- radio buttons -->
+                    <ul>
+                        <li>
+                            <input v-on:click="update_marker('urgent')" type="radio" name="category" value="Urgent" v-model="announcement_form.category">
+                            urgent
+                        </li>
+                        <li>
+                            <input v-on:click="update_marker('event')" type="radio" name="category" value="Event" v-model="announcement_form.category">
+                            event
+                        </li>
+                        <li>
+                          <input v-on:click="update_marker('shutdown')" type="radio" name="category" value="Shut Down" v-model="announcement_form.category">
+                            shut down
+                        </li>
+                        <li>
+                          ${announcement_form.category}
+                        </li>
+                    </ul>
                 </form></div>
 
             </div>
@@ -200,6 +204,7 @@ function mOver(obj) {
         </nav>
 
         <!-- Div for the history of annoucements-->
+<!--
           <div class="history">
               <div v-if="show_all_announcements == true">
                    <div v-if="names.length == 0">
@@ -278,6 +283,7 @@ function mOver(obj) {
                   </div>
               </div>
           </div>
+-->
 
     </div> <!-- end vue-div -->
 
