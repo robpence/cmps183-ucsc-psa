@@ -1,50 +1,24 @@
 /*Layout of map displayed on screen */
-/*
-.map_content {
-    position: relative;
-    margin: 40px 40px 40px 40px;
-
-
-    #mapid {
-      //position: relative;
-      //margin: auto;
-      width:800px;
-      height:800px;
-
-      //height: 80%;
-      //width: 80%;
-    }
-
-  }
-*/
+body{
+    padding-top: 0px;
+    margin-top: 0px;
+    margin-bottom: 0px;
+    padding-bottom: 0px;
+    padding-left: 0px;
+    padding-right: 0px;
+    margin-right: 0px;
+    margin-left: 0px;
+}
 /* line 23, ../sass/_main.scss */
 .main_content {
-  /*Side menu layout */
-  /*
-    .history {
-      position: fixed;
-      left: 0;
-      bottom: 0;
-      height: 50%;
-      width: 200px;
-      border-color: #00c4ff;
-      border-style: solid;
-      border-width: 5px;
-      @include border-radius(16px);
-      overflow-y: scroll;
-       .ann {
-          //background-color: #A2A2A2;
-          border-color: #000000;
-          border-style: solid;
-          border-width: 5px;
-          cursor: pointer;
-       }
-       .ann:hover {
-         background-color: #A2A2A2;
-       }
-    }
-
-  */
+    padding-top: 0px;
+    margin-top: 0px;
+    margin-bottom: 0px;
+    padding-bottom: 0px;
+    padding-left: 0px;
+    padding-right: 0px;
+    margin-right: 0px;
+    margin-left: 0px;
 }
 /* line 25, ../sass/_main.scss */
 .main_content .vertical_menu {
@@ -86,6 +60,32 @@
   width: 200px;
   height: 100%;
 }
+/* line 46, ../sass/_main.scss */
+.main_content .history {
+  position: fixed;
+  left: 0;
+  bottom: 0;
+  height: 50%;
+  width: 200px;
+  /*border-color: #00c4ff;*/
+  border-style: solid;
+  border-width: 5px;
+  -moz-border-radius: 16px;
+  -webkit-border-radius: 16px;
+  border-radius: 16px;
+  overflow-y: scroll;
+}
+/* line 57, ../sass/_main.scss */
+.main_content .history .ann {
+  border-color: #000000;
+  border-style: solid;
+  border-width: 5px;
+  cursor: pointer;
+}
+/* line 64, ../sass/_main.scss */
+.main_content .history .ann:hover {
+  background-color: #A2A2A2;
+}
 
 /* line 111, ../sass/_main.scss */
 .create-announcement-wrapper {
@@ -95,17 +95,17 @@
 /* position of log in menu*/
 /* line 116, ../sass/_main.scss */
 .main-container {
-  position: relative;
-  margin: auto;
-  top: 0;
-  right: 0;
-  bottom: 20px;
-  left: 0;
-  width: 800px;
-  height: 850px;
+  position: static;
+    margin-bottom: 0px;
+    margin-top: 0px;
+    margin-right: 0px;
+    margin-left: 0px;
+    padding-right: 0px; /*changing this does nothing*/
+    padding-left: 185px;
+
 }
 
-/* line 128, ../sass/_main.scss */
+/* line 87, ../sass/_main.scss */
 a.menu_links {
   padding-right: 5px;
   cursor: pointer;

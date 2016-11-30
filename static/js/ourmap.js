@@ -120,7 +120,8 @@ var New_Map = function (onClick) {
         if (self.marker.latlng == null) {
             self.marker.latlng = e.latlng;
         }
-        self.most_recent = new L.marker(self.marker.latlng, {icon: self.marker.icon});
+        self.most_recent = new L.marker(self.marker.latlng, {icon: self.marker.icon}).addTo(self.map).on('click', openwindow);
+        self.most_recent._icon.id = self.marker.id;
         self.map.addLayer(self.most_recent);
         self.marker.drawn = true;
     };
