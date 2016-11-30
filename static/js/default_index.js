@@ -220,6 +220,20 @@ var app = function() {
         }
     };
 
+    self.hide_history = function() {
+
+        $(".divIDClass").hide();
+         if (self.vue.is_history_showing == true) {
+             self.vue.is_history_showing = !self.vue.is_history_showing;
+             console.log(self.vue.is_history_showing);
+             $("#history").hide();
+         }
+         else{
+             self.vue.is_history_showing = !self.vue.is_history_showing;
+             console.log(self.vue.is_history_showing);
+             $("#history").show();
+         }
+    };
 
     self.call = function() {
         self.campus_map.clear_for_search_announcements();
@@ -246,12 +260,13 @@ var app = function() {
             logged_in: false,
             search_content: null,
             isCreatingAnnouncement: false,
+            show_users_announcements: true,
+            is_history_showing: true,
             announcement_form: _announcement_form,
             filter_form: _filter_form,
-
             all_announcements: [],
+            users_announcements: [],
             announcements_to_show: [],
-
             search_announcements: [],
             map_clickable: false,
             show_search: false
@@ -267,6 +282,7 @@ var app = function() {
             add_announcement: self.add_announcement,
             change_view: self.change_view,
             view_announcement: self.view_announcement,
+            hide_history: self.hide_history,
 
             create_announcement_button: self.create_announcement_button,
             update_marker: self.update_marker,

@@ -65,33 +65,35 @@ body{
   height: 100%;
 }
 /* line 46, ../sass/_main.scss */
-.main_content .history {
+.main_content #history {
   position: fixed;
-  left: 0;
+  background-color: white;
+  right: 0;
   bottom: 0;
-  height: 50%;
   width: 200px;
-  /*border-color: #00c4ff;*/
+  border-color: #d9534f;
   border-style: solid;
   border-width: 5px;
-  -moz-border-radius: 16px;
-  -webkit-border-radius: 16px;
-  border-radius: 16px;
+  height: 50%;
   overflow-y: scroll;
 }
-/* line 57, ../sass/_main.scss */
-.main_content .history .ann {
+/* line 58, ../sass/_main.scss */
+.main_content #history .ann {
   border-color: #000000;
   border-style: solid;
   border-width: 5px;
   cursor: pointer;
 }
-/* line 64, ../sass/_main.scss */
-.main_content .history .ann:hover {
+/* line 65, ../sass/_main.scss */
+.main_content #history .ann:hover {
   background-color: #A2A2A2;
 }
-
 /* line 70, ../sass/_main.scss */
+.main_content .history_button {
+  margin-top: 20px;
+}
+
+/* line 76, ../sass/_main.scss */
 .create-announcement-wrapper {
   color: #aaa;
 }

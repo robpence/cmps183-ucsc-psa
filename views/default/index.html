@@ -167,6 +167,12 @@ function mOver(obj) {
                         Create Announcement
                     </button>
 
+                    <div class="history_button">
+                    <button   v-if="!map_clickable" class="btn btn-danger btn-sm" v-on:click="hide_history()">
+                            Show my history
+                    </button>
+                </div>
+
                     <button v-if="map_clickable" class="btn btn-warning btn-sm"
                             v-on:click="cancel_announcement_button()">
                         Cancel
@@ -204,7 +210,36 @@ function mOver(obj) {
                 </div>
                 </div>
             </div>
+          </div>
 
+            <!-- Div for the history of annoucements-->
+          <div id="history">
+              <div v-if="show_users_announcements == true">
+                   <div v-if="users_announcements.length == 0">
+                      You have not yet created an announcements
+                  </div>
+                  <div v-else>
+                      <div class="ann" v-for="ann in all_announcements" v-on:click="view_announcement_in_history(ann.latitude, ann.longitude)">
+                          Title: ${ann.name} <br>
+                         Description: ${ann.description} <br>
+                         Category: ${ann.category} <br>
+                         <i class="fa fa-trash-o"></i>
+                         <i class="fa fa-pencil"></i>
+                      </div>
+                  </div>
+              </div>
+               <div v-if="show_search == true">
+                  <div v-if="search_announcements.length == 0">
+                    No results matched your search
+                  </div>
+                  <div v-else>
+                      <div class="ann" v-for="ann in search_announcements" v-on:click="view_announcement_in_history(ann.latitude, ann.longitude)">
+                         Title: ${ann.name} <br>
+                         Description: ${ann.description} <br>
+                         Category: ${ann.category} <br>
+                      </div>
+                  </div>
+              </div>
           </div>
         </nav>
 
