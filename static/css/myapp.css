@@ -50,6 +50,9 @@ body{
   height: 50%;
   width: 200px;
 }
+.navlist-item{
+    color: white;
+}
 /* line 36, ../sass/_main.scss */
 .main_content .right_menu {
   /*position: fixed;*/

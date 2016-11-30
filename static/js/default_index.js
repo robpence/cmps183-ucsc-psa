@@ -44,9 +44,9 @@ var app = function() {
                 category: self.next_announcement.category
             },
             function (data) {
-                self.vue.names.unshift(data.announcement.name);
-                self.vue.description.unshift(data.announcement.description);
-                self.vue.category.unshift(data.announcement.category);
+                //self.vue.names.unshift(data.announcement.name);
+                //self.vue.description.unshift(data.announcement.description);
+                //self.vue.category.unshift(data.announcement.category);
 
                 $.web2py.enableElement($("#add_announcement_submit"));
                 $('#CreateAnnouncementModal').modal('hide');
@@ -254,8 +254,7 @@ var app = function() {
 
             search_announcements: [],
             map_clickable: false,
-            show_search: false,
-            call:self.call
+            show_search: false
         },
 
         methods: {
@@ -278,6 +277,7 @@ var app = function() {
             update_history: self.update_history,
             view_announcement_in_history: self.view_announcement_in_history,
             search: self.search,
+            call:self.call,
             draw_search_announcements: self.draw_search_announcements,
             announcement_Detail: self.announcement_Detail
         }
