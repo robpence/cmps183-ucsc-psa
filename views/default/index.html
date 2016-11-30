@@ -171,119 +171,38 @@ function mOver(obj) {
 
                 <!-- create announcement Form -->
                 <div class="create-announcement-wrapper" v-if="map_clickable" >
-                <form id="create_announcement_form"
-                      action="#"
-                      v-on:submit.prevent="add_announcement"
-                      enctype="multipart/form-data"
-                      method="post">
-                    <!-- text -->
+                    <form id="create_announcement_form"
+                          action="#"
+                        v-on:submit.prevent="add_announcement"
+                        enctype="multipart/form-data"
+                         method="post">
+                        <!-- text -->
 
-                <!-- radio buttons -->
-                    <ul>
-                        <li>
-                            <input v-on:click="update_marker('urgent')" type="radio" name="category" value="Urgent" v-model="announcement_form.category">
-                            urgent
-                        </li>
-                        <li>
-                            <input v-on:click="update_marker('event')" type="radio" name="category" value="Event" v-model="announcement_form.category">
-                            event
-                        </li>
-                        <li>
-                          <input v-on:click="update_marker('shutdown')" type="radio" name="category" value="Shut Down" v-model="announcement_form.category">
-                            shut down
-                        </li>
-                        <li>
-                          ${announcement_form.category}
-                        </li>
-                    </ul>
-                </form></div>
+                        <!-- radio buttons -->
+                        <ul>
+                            <li>
+                                <input v-on:click="update_marker('urgent')" type="radio" name="category" value="Urgent" v-model="announcement_form.category">
+                                urgent
+                            </li>
+                            <li>
+                                <input v-on:click="update_marker('event')" type="radio" name="category" value="Event" v-model="announcement_form.category">
+                                event
+                            </li>
+                            <li>
+                            <input v-on:click="update_marker('shutdown')" type="radio" name="category" value="Shut Down" v-model="announcement_form.category">
+                                shut down
+                            </li>
+                            <li>
+                                ${announcement_form.category}
+                            </li>
+                        </ul>
+                    </form>
+                </div>
+                </div>
+            </div>
 
-            </div>
-            </div>
           </div>
         </nav>
-
-        <!-- Div for the history of annoucements-->
-<!--
-          <div class="history">
-              <div v-if="show_all_announcements == true">
-                   <div v-if="names.length == 0">
-                      No announcements have been posted yet
-                  </div>
-                  <div v-else>
-                      <div class="ann" v-for="(name,index) in names" v-on:click="view_announcement(coordinates[index])">
-                             Title: ${names[index]} <br>
-                             Description: ${description[index]} <br>
-                             Category: ${category[index]}
-                             <i class="fa fa-thumbs-up" aria-hidden="true"></i>
-                             <i class="fa fa-thumbs-down" aria-hidden="true"></i>
-                       </div>
-                   </div>
-              </div>
-              <div v-if="show_users_announcements == true">
-                   <div v-if="users_announcements.length == 0">
-                      You have not yet created an announcements
-                  </div>
-                  <div v-else>
-                      <div class="ann" v-for="ann in users_announcements" v-on:click="view_announcement_in_history(ann.latitude, ann.longitude)">
-                          Title: ${ann.name} <br>
-                         Description: ${ann.description} <br>
-                         Category: ${ann.category} <br>
-                         <i class="fa fa-trash-o"></i>
-                         <i class="fa fa-pencil"></i>
-                      </div>
-                  </div>
-              </div>
-              <div v-if="show_only_urgent == true">
-                  <div v-if="urgent_announcements.length == 0">
-                      No urgent announcements have been posted yet
-                  </div>
-                  <div v-else>
-                      <div class="ann" v-for="ann in urgent_announcements" v-on:click="view_announcement_in_history(ann.latitude, ann.longitude)">
-                         Title: ${ann.name} <br>
-                         Description: ${ann.description} <br>
-                         Category: ${ann.category} <br>
-                      </div>
-                  </div>
-              </div>
-              <div v-if="show_only_shutdown == true">
-                  <div v-if="shutdown_announcements.length == 0">
-                     No shutdown announcements have been posted yet
-                  </div>
-                  <div v-else>
-                      <div class="ann" v-for="ann in shutdown_announcements" v-on:click="view_announcement_in_history(ann.latitude, ann.longitude)">
-                         Title: ${ann.name} <br>
-                         Description: ${ann.description} <br>
-                         Category: ${ann.category} <br>
-                      </div>
-                  </div>
-              </div>
-              <div v-if="show_only_event == true">
-                  <div v-if="event_announcements.length == 0">
-                    No event announcements have been posted yet
-                  </div>
-                  <div v-else>
-                      <div class="ann" v-for="ann in event_announcements" v-on:click="view_announcement_in_history(ann.latitude, ann.longitude)">
-                         Title: ${ann.name} <br>
-                         Description: ${ann.description} <br>
-                         Category: ${ann.category} <br>
-                      </div>
-                  </div>
-              </div>
-               <div v-if="show_search == true">
-                  <div v-if="search_announcements.length == 0">
-                    No results matched your search
-                  </div>
-                  <div v-else>
-                      <div class="ann" v-for="ann in search_announcements" v-on:click="view_announcement_in_history(ann.latitude, ann.longitude)">
-                         Title: ${ann.name} <br>
-                         Description: ${ann.description} <br>
-                         Category: ${ann.category} <br>
-                      </div>
-                  </div>
-              </div>
-          </div>
--->
 
     </div> <!-- end vue-div -->
 
