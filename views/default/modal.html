@@ -43,7 +43,7 @@
                     <div class="form-group" id="no_table_name__row">
                         <div>
                             <input class="form-control string"  id="no_table_name"  v-model="announcement_form.name" placeholder="announcement name" type="text" />
-                            <span class="help-block"></span>
+
                         </div>
                     </div>
 
@@ -57,11 +57,13 @@
 
                     <div class="form-group" id="submit_announcement_row">
                         <div>
-                            <input class="btn btn-primary" id="add_announcement_submit" type="submit" value="Submit" />
+                            <input class="btn btn-primary" id="add_announcement_submit" type="submit" value="Create" />
                         </div>
-                        <button  class="btn btn-warning btn-sm" data-dismiss="modal"> Cancel </button>
+                        <button  class="btn btn-warning btn-sm" data-dismiss="modal" id="add_announcement_cancel"> Cancel </button>
                     </div>
+
                 </form>
+
             </div>
         </div>
     </div>

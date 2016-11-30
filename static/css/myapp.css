@@ -28,7 +28,27 @@ body{
   margin: 0;
   padding: 0;
   width: 200px;
+  height: 100%;
+}
+/* line 37, ../sass/_main.scss */
+.main_content .container-fluid .navbar-list {
+  display: table-row;
+  padding: 0;
+}
+/* line 42, ../sass/_main.scss */
+.main_content .container-fluid .navbar-list .navlist-item {
+  list-style-type: none;
+  vertical-align: middle;
+  padding: 5px 5px 5px 5px;
+  margin: 10px 0 10px 0;
+  width: 185px;
+}
+/* line 56, ../sass/_main.scss */
+.main_content .container-fluid .navbar-list .filter-form-wrapper .filter-list {
+  list-style-type: none;
+  color: #4f80d2;
   height: 50%;
+  width: 200px;
 }
 /* line 36, ../sass/_main.scss */
 .main_content .right_menu {

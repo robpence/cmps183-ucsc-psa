@@ -26,11 +26,50 @@
 
     position: fixed;
     top: 0;
-    left:0;
+    left: 0;
     margin: 0;
     padding: 0;
-    width: 150px;
-    height: 50%;
+    width: 200px;
+    height: 100%;
+  }
+
+  .container-fluid {
+    .navbar-list {
+
+      display: table-row;
+      padding: 0;
+
+      .navlist-item {
+        list-style-type: none;
+        vertical-align: middle;
+        //  background-color:$clrIdentical;
+        //display: inline-block;
+        padding: 5px 5px 5px 5px;
+        margin: 10px 0 10px 0;
+        width: 185px;
+        //left:0;
+        //position:
+
+      }
+
+      .filter-form-wrapper {
+        .filter-list {
+          list-style-type: none;
+          color: $clrLogoSimil;
+          //background-color:$clrIdentical;
+          //position: fixed;
+          //left: 200px;
+          //bottom: 0;
+          height: 50%;
+          width: 200px;
+          //border-color: #00c4ff;
+          //border-style: solid;
+          //border-width: 5px;
+          //@include border-radius(16px);
+          //overflow-y: scroll;
+        }
+      }
+    }
   }
 
   .right_menu {
@@ -65,29 +104,31 @@ input[type=text]:focus {
     width: 100%;
 }
 
-  .history {
-    position: fixed;
-    left: 0;
-    bottom: 0;
-    height: 50%;
-    width: 200px;
-    border-color: #00c4ff;
-    border-style: solid;
-    border-width: 5px;
-    @include border-radius(16px);
-    overflow-y: scroll;
-     .ann {
-        //background-color: #A2A2A2;
-        border-color: #000000;
-        border-style: solid;
-        border-width: 5px;
-        cursor: pointer;
-     }
-     .ann:hover {
-       background-color: #A2A2A2;
-     }
-  }
+  /*
+    .history {
+      position: fixed;
+      left: 0;
+      bottom: 0;
+      height: 50%;
+      width: 200px;
+      border-color: #00c4ff;
+      border-style: solid;
+      border-width: 5px;
+      @include border-radius(16px);
+      overflow-y: scroll;
+       .ann {
+          //background-color: #A2A2A2;
+          border-color: #000000;
+          border-style: solid;
+          border-width: 5px;
+          cursor: pointer;
+       }
+       .ann:hover {
+         background-color: #A2A2A2;
+       }
+    }
 
+  */
 }
   .create-announcement-wrapper{
     color: $clrMainSplash;
