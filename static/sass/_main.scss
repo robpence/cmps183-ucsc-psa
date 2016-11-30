@@ -30,7 +30,7 @@
     margin: 0;
     padding: 0;
     width: 150px;
-    height: 50%;
+    height: 100%;
   }
 
   .right_menu {
@@ -43,16 +43,17 @@
     height: 100%;
   }
 
-  .history {
+  #history {
     position: fixed;
-    left: 0;
+    background-color: white;
+    //top:30%;
+    right: 0;
     bottom: 0;
-    height: 50%;
     width: 200px;
     border-color: #00c4ff;
     border-style: solid;
     border-width: 5px;
-    @include border-radius(16px);
+    height:50%;
     overflow-y: scroll;
      .ann {
         //background-color: #A2A2A2;
@@ -66,7 +67,12 @@
      }
   }
 
+  .history_button {
+    margin-top:20px;
+  }
+
 }
+
   .create-announcement-wrapper{
     color: $clrMainSplash;
   }

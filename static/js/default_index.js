@@ -428,6 +428,11 @@ var app = function() {
         self.campus_map.clear_for_search_announcements();
     };
 
+    self.hide_history = function() {
+
+        $(".divIDClass").hide();
+    };
+
     // Complete as needed.
     self.vue = new Vue({
         el: "#vue-div",
@@ -458,6 +463,7 @@ var app = function() {
             map_clickable: false,
             show_search: false,
             call:self.call,
+            hide_history: self.hide_history
         },
 
         methods: {

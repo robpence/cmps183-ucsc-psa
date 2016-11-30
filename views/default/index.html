@@ -46,15 +46,16 @@ function mOver(obj) {
     <div id="vue-div" class="display:none">
 
         <div id="mapid" >
-            <script>
-                //this re-sizes the window automattically. Just change the numbers after height and width.
-                //If you want to reserve part of the screen for a menu, like the vertical menu we have on the left,
-                //You have to change the padding in the css file.
-                $(window).on("resize", function() {
-                    $("#mapid").height($(window).height() * 1.00).width($(window).width() * 1.00 - 400);
-                    //New_Map.map.invalidateSize();
-                }).trigger("resize");
-            </script>
+
+            <!--<script>-->
+                <!--//this re-sizes the window automattically. Just change the numbers after height and width.-->
+                <!--//If you want to reserve part of the screen for a menu, like the vertical menu we have on the left,-->
+                <!--//You have to change the padding in the css file.-->
+                <!--$(window).on("resize", function() {-->
+                    <!--$("#mapid").height($(window).height() * 1.00).width($(window).width() * 1.00 - 400);-->
+                    <!--//New_Map.map.invalidateSize();-->
+                <!--}).trigger("resize");-->
+            <!--</script>-->
 
             {{ include "default/modal.html" }}
 
@@ -131,7 +132,7 @@ function mOver(obj) {
                 <div v-if="'{{=auth.user_id}}' > 0" class="logged-in-left-user-tools">
                 <ul class="nav navbar-nav">
                    <!--- <li class="web2py-menu-first"><a href="/project/default/index">Home</a></li> --->
-<!--                   <li v-if="logged_in" class="dropdown" data-w2pmenulevel="l0">
+<!--                  <li v-if="logged_in" class="dropdown" data-w2pmenulevel="l0">
                       <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                             Create Event
                       </a>
@@ -158,6 +159,12 @@ function mOver(obj) {
                             <!-- v-bind:class="{'disabled': !logged_in}"-->
                         Create Announcement
                     </button>
+
+                    <div class="history_button">
+                    <button   v-if="!map_clickable" class="btn btn-danger btn-sm" v-on:click="hide_history()">
+                            Show my history
+                    </button>
+                </div>
 
                     <button v-if="map_clickable" class="btn btn-warning btn-sm"
                             v-on:click="cancel_announcement_button()">
@@ -197,10 +204,16 @@ function mOver(obj) {
             </div>
             </div>
           </div>
-        </nav>
+          <!--<div class="">-->
+             <!--<button v-if="!map_clickable" class="btn btn-danger btn-sm"-->
+                 <!--v-on:click="" >-->
+                 <!--Show my history-->
+             <!--</button>-->
+          <!--</div>-->
 
-        <!-- Div for the history of annoucements-->
-          <div class="history">
+
+            <!-- Div for the history of annoucements-->
+          <div id="history">
               <div v-if="show_all_announcements == true">
                    <div v-if="names.length == 0">
                       No announcements have been posted yet
@@ -278,6 +291,10 @@ function mOver(obj) {
                   </div>
               </div>
           </div>
+
+
+        </nav>
+
 
     </div> <!-- end vue-div -->
 
