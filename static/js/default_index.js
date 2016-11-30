@@ -429,8 +429,16 @@ var app = function() {
     };
 
     self.hide_history = function() {
-
-        $(".divIDClass").hide();
+        if (self.vue.is_history_showing == true) {
+            self.vue.is_history_showing = !self.vue.is_history_showing;
+            console.log(self.vue.is_history_showing);
+            $("#history").hide();
+        }
+        else{
+            self.vue.is_history_showing = !self.vue.is_history_showing;
+            console.log(self.vue.is_history_showing);
+            $("#history").show();
+        }
     };
 
     // Complete as needed.
@@ -440,6 +448,7 @@ var app = function() {
         unsafeDelimiters: ['!{', '}'],
 
         data: {
+            is_history_showing: true,
             search_content: null,
             logged_in: false,
             isCreatingAnnouncement: false,
