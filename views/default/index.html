@@ -65,19 +65,21 @@ function mOver(obj) {
       <div class="container-fluid">
             <ul class="nav navbar-nav">
                  <li class="dropdown" data-w2pmenulevel="l0">
-                  search
+                  <!-- search -->
                      <form action="#" v-on:submit.prevent="" class="form-horizontal" enctype="multipart/form-data" method="post">
                                 <div class="form-group">
                                     <div>
-                                      <input class="form-control string" id="editing_post" v-model="search_content"/>
+                                      <!-- <input class="form-control string" id="editing_post" v-model="search_content"/> -->
+									  <input class="search_bar" id = "editing_post" v-model="search_content" type="text" name="search" placeholder="Search..">
+									  <input style="font-family:Arial, FontAwesome" class="search_button" type="submit" value="&#xF002;" v-on:click="call"/>
                                       <span class="help-block"></span>
                                     </div>
                                 </div>
-                                <div class="form-group">
+<!--                                 <div class="form-group">
                                     <div>
-                                    <input class="" type="submit" value="search" v-on:click="call"/>
+                                    <input style="font-family:Arial, FontAwesome" class="search_button" type="submit" value="&#xF002; Search" v-on:click="call"/>
                                     </div>
-                                </div>
+                                </div> -->
                      </form>
                  </li>
               <li class="dropdown" data-w2pmenulevel="l0">
