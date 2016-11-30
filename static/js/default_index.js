@@ -27,6 +27,8 @@ var app = function() {
     }
 
 
+
+
     Vue.config.silent = false; // show all warnings
     /*
     self.get_announcements = function() {
@@ -82,15 +84,13 @@ var app = function() {
 
         for(var i=0; i < marker_list.length; i++){
             var ann = marker_list[i];
-            for (req in requirments){
 
-                if (req in ann && ann[req] == requirments[req]){
-                    self.campus_map.set_marker(ann);
-                    self.campus_map.add_marker(ann);
-                    self.vue.announcements_to_show.push(ann);
-                    self.campus_map.finalize_marker();
-                    break;
-                }
+
+            if (ann.category == requirments.category || requirments.category == 'all'){
+                self.campus_map.set_marker(ann);
+                self.campus_map.add_marker(ann);
+                self.vue.announcements_to_show.push(ann);
+                self.campus_map.finalize_marker();
             }
         }
     };
@@ -250,6 +250,7 @@ var app = function() {
 
 
     self.toggle_filter_show = function(){
+
         self.vue.filter_form.show = !self.vue.filter_form.show;
     };
 

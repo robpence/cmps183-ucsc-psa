@@ -48,12 +48,17 @@
 
     <div id="vue-div" class="display:none">
         <nav class="vertical_menu navbar navbar-default" role="navigation">
+
+
+        <!-- left side bar -->
         <div class="container-fluid">
-            <ul class="nav navbar-nav">
-                 <li class="dropdown" data-w2pmenulevel="l0">
-                  <a href="#" class="dropdown-toggle" data-toggle="dropdown">search</a>
-                 </li>
-              <li class="dropdown" data-w2pmenulevel="l0">
+            <ul class="nav navbar-nav navbar-list">
+
+                <li class="dropdown navlist-item" data-w2pmenulevel="l0">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">search</a>
+                </li>
+
+                <li class="dropdown navlist-item" data-w2pmenulevel="l0">
                   <a href="#" class="dropdown-toggle" data-toggle="dropdown">View</a>
                   <ul class="dropdown-menu">
                     <li><a v-on:click="change_view('crown')" class="menu_links">Crown</a></li>
@@ -67,67 +72,65 @@
                     <li><a v-on:click="change_view('stevenson')" class="menu_links">Stevenson</a></li>
                     <li><a v-on:click="change_view('oakes')" class="menu_links">Oakes</a></li>
                   </ul>
-              </li>
-
-            <li class="dropdown" data-w2pmenulevel="l0">
-                  <a href="#" class="dropdown-toggle" data-toggle="dropdown">Filter</a>
-                  <ul class="dropdown-menu">
-                    <li><a v-if="'{{=auth.user_id}}' > 0" v-on:click="get_my_announcements()"> Show my announcements </a></li>
-                    <li><a v-on:click="show_every_announcement()" class="menu_links">All Announcements </a></li>
-                    <li><a v-on:click="get_urgent_announcements()" class="menu_links">Show only Urgent</a></li>
-                    <li><a v-on:click="get_event_announcements()" class="menu_links">Show only Event</a></li>
-                    <li><a v-on:click="get_shutdown_announcements()" class="menu_links">Show only Shutdown</a></li>
-                  </ul>
-              </li>
-
-          </ul>
-
-
-
-        <button class="btn btn-warning btn-sm"
-            v-on:click="re_populate_map()">
-            re-populate map
-        </button>
-
-
-<script src="https://cdnjs.cloudflare.com/ajax/libs/velocity/1.2.3/velocity.min.js"></script>
-
-          <div class="filter-form-wrapper">
-              <button v-on:click="toggle_filter_show()" class="filter-dropdown-toggle">Filter</button>
-
-
-              <ul v-if="filter_form.show" class="filter-list" v-transition>
-
-                <li><p>name <input type="checkbox" v-model="filter_form.name"></p></li>
-                <li><p>age <input type="checkbox" v-model="filter_form.age"></p></li>
-                <li>
-                    Category
-            <!-- radio buttons -->
-                <ul>
-                    <li>
-                        <input  type="radio" name="category" value="urgent" v-model="filter_form.category">
-                        urgent
-                    </li>
-                    <li>
-                        <input  type="radio" name="category" value="event" v-model="filter_form.category">
-                        event
-                    </li>
-                    <li>
-                      <input  type="radio" name="category" value="shutdown" v-model="filter_form.category">
-                        shut down
-                    </li>
-                </ul>
-                </li>
-                <li>
-                    <button class="btn btn-warning btn-sm"
-                        v-on:click="filter_submit_button()">
-                        submit filter
-                    </button>
                 </li>
 
-              </ul>
+                <li class="dropdown navlist-item" data-w2pmenulevel="l0">
+                      <a href="#" class="dropdown-toggle" data-toggle="dropdown">Filter</a>
+                      <ul class="dropdown-menu">
+                        <li><a v-if="'{{=auth.user_id}}' > 0" v-on:click="get_my_announcements()"> Show my announcements </a></li>
+                        <li><a v-on:click="show_every_announcement()" class="menu_links">All Announcements </a></li>
+                        <li><a v-on:click="get_urgent_announcements()" class="menu_links">Show only Urgent</a></li>
+                        <li><a v-on:click="get_event_announcements()" class="menu_links">Show only Event</a></li>
+                        <li><a v-on:click="get_shutdown_announcements()" class="menu_links">Show only Shutdown</a></li>
+                      </ul>
+                </li>
 
-        </div>
+
+                <li class="navlist-item">
+                    <div class="filter-form-wrapper">
+                    <button v-on:click="toggle_filter_show()" class="filter-dropdown-toggle">Filter</button>
+
+
+                    <ul v-if="filter_form.show" class="filter-list" v-transition>
+
+                        <li><p>name <input type="checkbox" v-model="filter_form.name"></p></li>
+                        <li><p>age <input type="checkbox" v-model="filter_form.age"></p></li>
+                        <li>
+                            Category
+                        <!-- radio buttons -->
+                        <ul>
+                            <li>
+                                <input  type="radio" name="category" value="urgent" v-model="filter_form.category">
+                                urgent
+                            </li>
+                            <li>
+                                <input  type="radio" name="category" value="event" v-model="filter_form.category">
+                                event
+                            </li>
+                            <li>
+                              <input  type="radio" name="category" value="shutdown" v-model="filter_form.category">
+                                shut down
+                            </li>
+                            <li>
+                              <input  type="radio" name="category" value="all" v-model="filter_form.category">
+                                all
+                            </li>
+                        </ul>
+                        </li>
+                        <li>
+                            <button class="btn btn-warning btn-sm"
+                                v-on:click="filter_submit_button()">
+                                submit filter
+                            </button>
+                        </li>
+
+                    </ul>
+
+                    </div>
+                </li>
+
+            </ul>
+
 
 
         </div>

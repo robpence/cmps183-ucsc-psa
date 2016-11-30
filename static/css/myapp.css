@@ -20,6 +20,30 @@
 /* line 23, ../sass/_main.scss */
 .main_content {
   /*Side menu layout */
+  /*
+  .history {
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    height: 50%;
+    width: 200px;
+    border-color: #00c4ff;
+    border-style: solid;
+    border-width: 5px;
+    @include border-radius(16px);
+    overflow-y: scroll;
+     .ann {
+        //background-color: #A2A2A2;
+        border-color: #000000;
+        border-style: solid;
+        border-width: 5px;
+        cursor: pointer;
+     }
+     .ann:hover {
+       background-color: #A2A2A2;
+     }
+  }
+  */
 }
 /* line 25, ../sass/_main.scss */
 .main_content .vertical_menu {
@@ -31,24 +55,27 @@
   width: 200px;
   height: 100%;
 }
-/* line 38, ../sass/_main.scss */
-.main_content .vertical_menu .container-fluid .filter-form-wrapper .filter-list {
+/* line 37, ../sass/_main.scss */
+.main_content .vertical_menu .container-fluid .navbar-list {
+  display: table-row;
+  padding: 0;
+}
+/* line 42, ../sass/_main.scss */
+.main_content .vertical_menu .container-fluid .navbar-list .navlist-item {
+  list-style-type: none;
+  vertical-align: middle;
+  padding: 5px 5px 5px 5px;
+  margin: 10px 0 10px 0;
+  width: 185px;
+}
+/* line 56, ../sass/_main.scss */
+.main_content .vertical_menu .container-fluid .navbar-list .filter-form-wrapper .filter-list {
+  list-style-type: none;
   color: #4f80d2;
-  background-color: #c0d8ff;
-  position: fixed;
-  left: 200px;
-  bottom: 0;
   height: 50%;
   width: 200px;
-  border-color: #00c4ff;
-  border-style: solid;
-  border-width: 5px;
-  -moz-border-radius: 16px;
-  -webkit-border-radius: 16px;
-  border-radius: 16px;
-  overflow-y: scroll;
 }
-/* line 60, ../sass/_main.scss */
+/* line 80, ../sass/_main.scss */
 .main_content .right_menu {
   position: fixed;
   top: 0;
@@ -58,45 +85,19 @@
   width: 200px;
   height: 100%;
 }
-/* line 70, ../sass/_main.scss */
-.main_content .history {
-  position: fixed;
-  left: 0;
-  bottom: 0;
-  height: 50%;
-  width: 200px;
-  border-color: #00c4ff;
-  border-style: solid;
-  border-width: 5px;
-  -moz-border-radius: 16px;
-  -webkit-border-radius: 16px;
-  border-radius: 16px;
-  overflow-y: scroll;
-}
-/* line 81, ../sass/_main.scss */
-.main_content .history .ann {
-  border-color: #000000;
-  border-style: solid;
-  border-width: 5px;
-  cursor: pointer;
-}
-/* line 88, ../sass/_main.scss */
-.main_content .history .ann:hover {
-  background-color: #A2A2A2;
-}
 
-/* line 96, ../sass/_main.scss */
+/* line 118, ../sass/_main.scss */
 .create-announcement-wrapper {
   color: #aaa;
 }
 
-/* line 101, ../sass/_main.scss */
+/* line 123, ../sass/_main.scss */
 .filter-form-wrapper {
   color: #aaa;
 }
 
 /* position of log in menu*/
-/* line 107, ../sass/_main.scss */
+/* line 129, ../sass/_main.scss */
 .main-container {
   position: relative;
   margin: auto;
@@ -108,13 +109,13 @@
   height: 850px;
 }
 
-/* line 119, ../sass/_main.scss */
+/* line 141, ../sass/_main.scss */
 a.menu_links {
   padding-right: 5px;
   cursor: pointer;
 }
 
-/* line 133, ../sass/_main.scss */
+/* line 155, ../sass/_main.scss */
 .new_announcement_wrapper {
   float: right;
   position: relative;
@@ -130,18 +131,17 @@ a.menu_links {
   border-radius: 16px;
 }
 
-/* line 158, ../sass/_main.scss */
+/*
 .filter-list {
-  transition: all .3s ease;
-  height: 30px;
-  padding: 10px;
-  background-color: #eee;
-  overflow: hidden;
+    transition: all .3s ease;
+    height: 30px;
+    padding: 10px;
+    background-color: #eee;
+    overflow: hidden;
 }
-
-/* line 165, ../sass/_main.scss */
 .filter-list.v-enter, .msg.v-leave {
-  height: 0;
-  padding: 0 10px;
-  opacity: 0;
+    height: 0;
+    padding: 0 10px;
+    opacity: 0;
 }
+*/
