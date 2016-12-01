@@ -84,6 +84,7 @@ def get_search():
     return response.json(dict(search_announcements=search_announcements))
 
 def delete_announcement():
+
     ann = request.vars.announcement_id
     db(db.Announcements.id == ann).delete()
     logger.info("deleted announcement with id %r" % ann)
