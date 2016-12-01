@@ -1,11 +1,15 @@
 __author__ = 'diesel'
 
+import datetime
 
 def _setup_announcement(a):
     return a
 
 
 def get_announcements():
+
+    check_announcements_date()
+
     logger.info("====> api:get_announcements(): request.vars= %r " % request.vars)
 
     # We just generate a lot of of data.
@@ -31,6 +35,21 @@ def get_announcements():
         logged_in=logged_in,
         #has_more=has_more,
     ))
+
+#checks the date and deletes it if it older than 3 days i think.
+def check_announcements_date():
+    announcements = db(db.Announcements).select(orderby=~db.Announcements.created_on)
+    for announcement in announcements:
+        past = datetime.datetime.strptime(announcement.created_on, "%Y-%m-%d %H:%M:%S.%f")
+        present = datetime.datetime.utcnow()
+        #we can set three to a variable held in the database that is the endtime for the event, or whatever
+        if (present - past).days > 3:
+            #calc = (present - past).days
+            #print(calc)
+            #print("deleted: " + str(announcement))
+            db(db.Announcements.id == announcement.id).delete()
+            db.commit()
+    return 'success'
 
 
 # Note that we need the URL to be signed, as this changes the db.
