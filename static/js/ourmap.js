@@ -137,7 +137,7 @@ var New_Map = function (onClick) {
         //var vuearrayid = (e.target._icon.id - APP.vue.all_announcements.length) * -1;
 
         //let's just pass the icon's id directly
-        var vuearrayid = e.target._icon.id;
+        var vuearrayid = e.target._icon.id; //add_marker must be created first
         APP.announcement_Detail(vuearrayid);
     }
 
