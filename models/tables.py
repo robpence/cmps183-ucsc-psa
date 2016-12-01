@@ -26,6 +26,7 @@ db.define_table('Announcements',
                 Field('solved', 'boolean', default=False),
                 Field('edited_on', default=datetime.datetime.utcnow()),
                 Field('created_on', default=datetime.datetime.utcnow()),
+                #Field('event_time', default=datetime.datetime.utcnow()),
                 )
 
 

@@ -40,15 +40,28 @@ def get_announcements():
 def check_announcements_date():
     announcements = db(db.Announcements).select(orderby=~db.Announcements.created_on)
     for announcement in announcements:
-        past = datetime.datetime.strptime(announcement.created_on, "%Y-%m-%d %H:%M:%S.%f")
-        present = datetime.datetime.utcnow()
-        #we can set three to a variable held in the database that is the endtime for the event, or whatever
-        if (present - past).days > 3:
-            #calc = (present - past).days
-            #print(calc)
-            #print("deleted: " + str(announcement))
-            db(db.Announcements.id == announcement.id).delete()
-            db.commit()
+        #if the announcement is in the urgent or shutdown category
+        if announcement.category == "event":
+            past = datetime.datetime.strptime(announcement.created_on, "%Y-%m-%d %H:%M:%S.%f")
+            present = datetime.datetime.utcnow()
+            #we can set three to a variable held in the database that is the endtime for the event, or whatever
+            if (present - past).days > 5:
+                #calc = (present - past).days
+                #print(calc)
+                #print("deleted: " + str(announcement))
+                db(db.Announcements.id == announcement.id).delete()
+                db.commit()
+        else:
+            past = datetime.datetime.strptime(announcement.created_on, "%Y-%m-%d %H:%M:%S.%f")
+            present = datetime.datetime.utcnow()
+            # we can set three to a variable held in the database that is the endtime for the event, or whatever
+            if (present - past).days > 1:
+                # calc = (present - past).days
+                # print(calc)
+                # print("deleted: " + str(announcement))
+                db(db.Announcements.id == announcement.id).delete()
+                db.commit()
+
     return 'success'
 
 
