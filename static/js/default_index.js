@@ -47,9 +47,10 @@ var app = function() {
                 //self.vue.names.unshift(data.announcement.name);
                 //self.vue.description.unshift(data.announcement.description);
                 //self.vue.category.unshift(data.announcement.category);
-
                 $.web2py.enableElement($("#add_announcement_submit"));
                 $('#CreateAnnouncementModal').modal('hide');
+
+                //need to update front-end all_announcements somehow
 
                 self.vue.isCreatingAnnouncement = false;
                 clear_announcement_form();
@@ -153,9 +154,23 @@ var app = function() {
     };
 
 
-    self.announcement_Detail = function(index) {
-        announcement = self.vue.all_announcements[index];
-        //announcement = self.vue.names[index];
+    self.announcement_Detail = function(ann_id) {
+
+        alert('announcement id' + ann_id);
+
+        //find and delete the corresponding icon in the list
+        for (var i = 0; i < self.vue.all_announcements.length; i++)
+        {
+            if (ann_id = self.vue.all_announcements[i].id) {
+                var announcement = self.vue.all_announcements[i];
+                self.vue.id_for_deleted_announcement = announcement.id;
+                self.vue.index_to_be_deleted = i;
+                break;
+            }
+        }
+
+        alert('announcement' + announcement );
+        //var announcement = self.vue.all_announcements[index];
         $('#announcementDetailTitle').html(announcement.name);
         $('#announcementDetailDescription').html(announcement.description);
         $('#announcementDetailAuthor').html(announcement.author);
@@ -164,6 +179,8 @@ var app = function() {
         $('#announcementDetailScore').html(announcement.score);
 
         $('#AnnouncementModal').modal('show');
+
+        //self.delete_announcement();
     };
 
 
@@ -249,6 +266,17 @@ var app = function() {
         self.re_populate_map();
     };
 
+    self.delete_announcement = function() {
+
+        $.post(delete_announcement_url, {announcement_id: self.vue.id_for_deleted_announcement}, function() {
+
+            alert('deleted!');
+            self.vue.all_announcements.splice(self.vue.index_to_be_deleted, 1);
+            self.re_populate_map();
+
+        });
+    };
+
 
     // Complete as needed.
     self.vue = new Vue({
@@ -257,6 +285,8 @@ var app = function() {
         unsafeDelimiters: ['!{', '}'],
 
         data: {
+            index_to_be_deleted: null,
+            id_for_deleted_announcement: null,
             logged_in: false,
             search_content: null,
             isCreatingAnnouncement: false,
@@ -295,7 +325,9 @@ var app = function() {
             search: self.search,
             call:self.call,
             draw_search_announcements: self.draw_search_announcements,
-            announcement_Detail: self.announcement_Detail
+            announcement_Detail: self.announcement_Detail,
+
+            delete_announcement: self.delete_announcement,
         }
 
     });
