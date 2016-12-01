@@ -50,12 +50,19 @@ var app = function() {
                 $.web2py.enableElement($("#add_announcement_submit"));
                 $('#CreateAnnouncementModal').modal('hide');
 
-                //need to update front-end all_announcements somehow
-
                 self.vue.isCreatingAnnouncement = false;
                 clear_announcement_form();
+
                 self.campus_map.finalize_marker();
                 self.vue.map_clickable = false;
+
+                // Needed to get the ID of the newly created announcement, does not work without page refresh
+                self.vue.id_for_new_announcement = data.announcement.id;
+
+                //update the list of all announcements
+                 $.getJSON(get_announcements_url, function(data){
+                     self.vue.all_announcements = data.announcements;
+                 });
             });
 
     };
@@ -105,6 +112,7 @@ var app = function() {
                 for(var i=0; i < a.length; i++){
                     var ann = self.vue.all_announcements[i];
                     self.vue.all_announcements[i] = Announcement_from_db(ann);
+                    console.log(JSON.stringify(self.vue.all_announcements[i]));
 
                     self.campus_map.set_marker(
                         self.vue.all_announcements[i]
@@ -154,36 +162,6 @@ var app = function() {
 
     self.view_announcement_in_history = function(latitude, longitude) {
         view_coordinates_of_announcement(latitude,longitude);
-    };
-
-
-     /************************ Can be improved ****************************/
-    self.announcement_Detail = function(ann_id) {
-
-        //Announcements are queried in order of their id (refer to API.py)
-
-        //lets find the corresponding icon in the list
-        for (var i = 0; i < self.vue.all_announcements.length; i++)
-        {
-            if (ann_id == self.vue.all_announcements[i].id) {
-
-                //alert('id number for ' + i + ' th element:' + self.vue.all_announcements[i].id);
-                var announcement = self.vue.all_announcements[i];
-                self.vue.id_for_deleted_announcement = announcement.id;
-                self.vue.index_to_be_deleted = i;
-                break;
-            }
-        }
-
-        //var announcement = self.vue.all_announcements[index];
-        $('#announcementDetailTitle').html(announcement.name);
-        $('#announcementDetailDescription').html(announcement.description);
-        $('#announcementDetailAuthor').html(announcement.author);
-        $('#announcementDetailCreatedon').html(announcement.created_on);
-        $('#announcementDetailCategory').html(announcement.category);
-        $('#announcementDetailScore').html(announcement.score);
-
-        $('#AnnouncementModal').modal('show');
     };
 
 
@@ -285,7 +263,7 @@ var app = function() {
  /************************ Can be improved ****************************/
     self.populate_after_deleting = function(marker_list) {
 
-          self.campus_map.clear_map();
+         self.campus_map.clear_map();
 
           for(var i=0; i < marker_list.length; i++){
 
@@ -295,6 +273,53 @@ var app = function() {
                 self.vue.announcements_to_show.push(ann);
                 self.campus_map.finalize_marker();
           }
+    };
+
+    /************************ Can be improved ****************************/
+    self.announcement_Detail = function(ann_id) {
+
+        alert('ann is ' + ann_id);
+
+        if (ann_id == null)
+        {
+            alert('in the first function');
+             for (var i = 0; i < self.vue.all_announcements.length; i++)
+            {
+                if (self.vue.id_for_new_announcement == self.vue.all_announcements[i].id) {
+
+                    alert('id number for ' + i + ' th element:' + self.vue.all_announcements[i].id);
+                    var announcement = self.vue.all_announcements[i];
+                    self.vue.id_for_deleted_announcement = announcement.id;
+                    self.vue.index_to_be_deleted = i;
+                    break;
+                }
+            }
+        }
+
+        else {
+            //Announcements are queried in order of their id (refer to API.py)
+            //lets find the corresponding icon in the list
+            for (var i = 0; i < self.vue.all_announcements.length; i++) {
+                if (ann_id == self.vue.all_announcements[i].id) {
+
+                    //alert('id number for ' + i + ' th element:' + self.vue.all_announcements[i].id);
+                    var announcement = self.vue.all_announcements[i];
+                    self.vue.id_for_deleted_announcement = announcement.id;
+                    self.vue.index_to_be_deleted = i;
+                    break;
+                }
+            }
+        }
+
+        //var announcement = self.vue.all_announcements[index];
+        $('#announcementDetailTitle').html(announcement.name);
+        $('#announcementDetailDescription').html(announcement.description);
+        $('#announcementDetailAuthor').html(announcement.author);
+        $('#announcementDetailCreatedon').html(announcement.created_on);
+        $('#announcementDetailCategory').html(announcement.category);
+        $('#announcementDetailScore').html(announcement.score);
+
+        $('#AnnouncementModal').modal('show');
     };
 
 
@@ -307,6 +332,7 @@ var app = function() {
         data: {
             index_to_be_deleted: null,
             id_for_deleted_announcement: null,
+            id_for_new_announcement:null,
             logged_in: false,
             search_content: null,
             isCreatingAnnouncement: false,
@@ -319,7 +345,7 @@ var app = function() {
             announcements_to_show: [],
             search_announcements: [],
             map_clickable: false,
-            show_search: false
+            show_search: false,
         },
 
         methods: {
@@ -349,6 +375,7 @@ var app = function() {
 
             delete_announcement: self.delete_announcement,
             populate_after_deleting:self.populate_after_deleting,
+            new_announcement_Detail:self.new_announcement_Detail,
         }
 
     });

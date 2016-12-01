@@ -124,6 +124,7 @@ var New_Map = function (onClick) {
         self.most_recent._icon.id = self.marker.id;
         self.map.addLayer(self.most_recent);
         self.marker.drawn = true;
+        console.log('recently' + self.most_recent);
     };
 
 
@@ -137,10 +138,7 @@ var New_Map = function (onClick) {
 
         //let's just pass the icon's id directly
         var vuearrayid = e.target._icon.id;
-        //var vuearrayid = (e.target._icon.id - APP.vue.all_announcements.length) * -1;
         APP.announcement_Detail(vuearrayid);
-        //APP.announcement_Detail(e.target._icon.id);
-
     }
 
     
