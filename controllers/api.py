@@ -6,13 +6,15 @@ def _setup_announcement(a):
 
 
 def get_announcements():
+    #db.Announcements.truncate('RESTART IDENTITY CASCADE')
     logger.info("====> api:get_announcements(): request.vars= %r " % request.vars)
 
     # We just generate a lot of of data.
     anns = []
     #has_more = False
 
-    rows = db(db.Announcements).select(orderby=~db.Announcements.created_on)
+    #rows = db(db.Announcements).select(orderby=~db.Announcements.created_on)
+    rows = db(db.Announcements).select(orderby=db.Announcements.id)
 
     logger.info("====> api:get_announcements(): numrows = %r" % len(rows) )
 
@@ -61,25 +63,14 @@ def add_announcement():
     return response.json(dict(announcement=ann))
 
 def get_users_announcements():
+
+
     if(auth.user != None):
         users_announcements = db(db.Announcements.author == auth.user).select()
         #users_announcements = db(db.Announcements.author == auth.user.email).select()
         return response.json(dict(users_announcements = users_announcements))
     else:
         return response.json(dict(users_announcements = None))
-
-def get_only_urgent():
-    urgent_announcements = db(db.Announcements.category == 'urgent').select()
-    return response.json(dict(urgent_announcements = urgent_announcements))
-
-def get_only_event():
-    event_announcements = db(db.Announcements.category == 'event').select()
-    return response.json(dict(event_announcements = event_announcements))
-
-def get_only_shutdown():
-    shutdown_announcements = db(db.Announcements.category == 'shutdown').select()
-    logger.info("shutdown %r" % shutdown_announcements)
-    return response.json(dict(shutdown_announcements = shutdown_announcements))
 
 def get_search():
 
@@ -91,3 +82,13 @@ def get_search():
     search_announcements = db(q).select(db.Announcements.ALL)
     logger.info("search %r" % search_announcements)
     return response.json(dict(search_announcements=search_announcements))
+
+def delete_announcement():
+
+    ann = request.vars.announcement_id
+    db(db.Announcements.id == ann).delete()
+    return "ok"
+
+
+
+

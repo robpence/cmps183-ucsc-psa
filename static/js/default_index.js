@@ -156,12 +156,12 @@ var app = function() {
 
     self.announcement_Detail = function(ann_id) {
 
-        alert('announcement id' + ann_id);
-
-        //find and delete the corresponding icon in the list
+        //find the corresponding icon in the list
         for (var i = 0; i < self.vue.all_announcements.length; i++)
         {
-            if (ann_id = self.vue.all_announcements[i].id) {
+            if (ann_id == self.vue.all_announcements[i].id) {
+
+                //alert('id number for ' + i + ' th element:' + self.vue.all_announcements[i].id);
                 var announcement = self.vue.all_announcements[i];
                 self.vue.id_for_deleted_announcement = announcement.id;
                 self.vue.index_to_be_deleted = i;
@@ -179,8 +179,6 @@ var app = function() {
         $('#announcementDetailScore').html(announcement.score);
 
         $('#AnnouncementModal').modal('show');
-
-        //self.delete_announcement();
     };
 
 

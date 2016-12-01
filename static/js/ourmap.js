@@ -129,13 +129,12 @@ var New_Map = function (onClick) {
 
     //Opens the popup for the announcements information.
     function openwindow(e) {
-        //This formula stops working as soon as an icon is deleted.
-        //there is probably a better way of doing this
+        //This formula stops working as soon as an icon is deleted. Needed to come up with something else.
+        //See the newly created announcement_Detail function
+        
         //var vuearrayid = (e.target._icon.id - APP.vue.all_announcements.length) * -1;
         var vuearrayid = e.target._icon.id;
         //var vuearrayid = (e.target._icon.id - APP.vue.all_announcements.length) * -1;
-
-        alert(vuearrayid);
         APP.announcement_Detail(vuearrayid);
         //APP.announcement_Detail(e.target._icon.id);
 
