@@ -92,6 +92,8 @@ var app = function() {
 
     self.initial_populate_map = function (){
 
+        //alert('populating map again');
+
         $.getJSON(get_announcements_url,
             function (data) {
 
@@ -103,6 +105,7 @@ var app = function() {
                 for(var i=0; i < a.length; i++){
                     var ann = self.vue.all_announcements[i];
                     self.vue.all_announcements[i] = Announcement_from_db(ann);
+
                     self.campus_map.set_marker(
                         self.vue.all_announcements[i]
                     );
@@ -154,9 +157,12 @@ var app = function() {
     };
 
 
+     /************************ Can be improved ****************************/
     self.announcement_Detail = function(ann_id) {
 
-        //find the corresponding icon in the list
+        //Announcements are queried in order of their id (refer to API.py)
+
+        //lets find the corresponding icon in the list
         for (var i = 0; i < self.vue.all_announcements.length; i++)
         {
             if (ann_id == self.vue.all_announcements[i].id) {
@@ -169,7 +175,6 @@ var app = function() {
             }
         }
 
-        alert('announcement' + announcement );
         //var announcement = self.vue.all_announcements[index];
         $('#announcementDetailTitle').html(announcement.name);
         $('#announcementDetailDescription').html(announcement.description);
@@ -224,6 +229,7 @@ var app = function() {
          for(var i=0; i <  self.vue.search_announcements.length; i++) {
             var ann = self.vue.search_announcements[i];
              self.vue.search_announcements[i] = Announcement_from_db(ann);
+
             self.campus_map.set_marker(
                 self.vue.search_announcements[i]
             );
@@ -264,15 +270,31 @@ var app = function() {
         self.re_populate_map();
     };
 
+ /************************ Can be improved ****************************/
     self.delete_announcement = function() {
 
         $.post(delete_announcement_url, {announcement_id: self.vue.id_for_deleted_announcement}, function() {
 
-            alert('deleted!');
+            //alert('deleted!');
             self.vue.all_announcements.splice(self.vue.index_to_be_deleted, 1);
-            self.re_populate_map();
-
+            self.populate_after_deleting(self.vue.all_announcements);
+            //self.re_populate_map(self.vue.all_announcements, null); //cant seem to re-use this function
         });
+    };
+
+ /************************ Can be improved ****************************/
+    self.populate_after_deleting = function(marker_list) {
+
+          self.campus_map.clear_map();
+
+          for(var i=0; i < marker_list.length; i++){
+
+                var ann = marker_list[i];
+                self.campus_map.set_marker(ann);
+                self.campus_map.add_marker(ann);
+                self.vue.announcements_to_show.push(ann);
+                self.campus_map.finalize_marker();
+          }
     };
 
 
@@ -326,6 +348,7 @@ var app = function() {
             announcement_Detail: self.announcement_Detail,
 
             delete_announcement: self.delete_announcement,
+            populate_after_deleting:self.populate_after_deleting,
         }
 
     });
