@@ -37,6 +37,21 @@
                 </div>
             </form>
 
+            <div>
+                <ul v-for="comment in announcement_comments">
+                    <li class="history-list-item" v-if="comment.ann_id == id_to_be_deleted">
+                                    ${comment.comment_text}
+                                    <br>
+                                    Author: ${comment.author}
+                                    <br>
+                                    Score: ${comment.score}
+                                    <br>
+                                    <i class="fa fa-trash-o"></i>
+                                    <i class="fa fa-pencil"></i> <br>
+                    </li>
+                </ul>
+            </div>
+
         </div>
     </div>
 </div>

@@ -204,6 +204,8 @@ var app = function() {
         self.vue.id_to_be_deleted = announcement.id;
         console.log(self.vue.id_to_be_deleted);
 
+        self.vue.get_comments_for_announcements();
+
         //probably add something to list all the comments for this post here
 
         $('#AnnouncementModal').modal('show');
@@ -402,8 +404,18 @@ var app = function() {
             });
     };
 
-    self.
-
+    self.get_comments_for_announcements = function(){
+        console.log(self.vue.id_to_be_deleted);
+        $.getJSON(get_comments_for_announcements_url,
+            function (data) {
+                self.vue.announcement_comments = [];
+                self.vue.announcement_comments = data.comments;
+                //for(var i=0; i < self.vue.comments.length; i++){
+                //    var comment = self.vue.comments[i];
+                //}
+            });
+        console.log(self.vue.announcement_comments);
+    };
 
     // Complete as needed.
     self.vue = new Vue({
@@ -430,6 +442,7 @@ var app = function() {
             users_announcements: [],
             announcements_to_show: [],
             search_announcements: [],
+            announcement_comments: [],
 
             map_clickable: false,
             show_search: false,
@@ -444,7 +457,7 @@ var app = function() {
             /* comment functions*/
             add_comment: self.add_comment,
             //delete_comment: self.delete_comment,
-            //get_comments_for_announcement: self.get_comments_for_announcement,
+            get_comments_for_announcements: self.get_comments_for_announcements,
 
 
             /* announcement edit functions */

@@ -5,6 +5,9 @@ import datetime
 def _setup_announcement(a):
     return a
 
+def _setup_comment(c):
+    return c
+
 
 def get_announcements():
 
@@ -175,6 +178,37 @@ def add_comment_to_announcement():
     logger.info("api:add_comment_to_announcement ==> comment= %r" % (comment))
 
     return response.json(comment)
+
+def get_comments_for_announcements():
+
+    logger.info("====> api:get_comments_for_announcement(): request.vars= %r " % request.vars)
+
+    # We just generate a lot of of data.
+    comments = []
+    #has_more = False
+
+    rows = db(db.Comments).select(orderby=~db.Comments.ann_id)
+
+    logger.info("====> api:get_comments_for_announcement(): numrows = %r" % len(rows) )
+
+    for i, r in enumerate(rows):
+
+        c = _setup_comment(r)  #I don't know what this does
+        comments.append(c)
+        logger.info("====> api:get_comments_for_announcement(): a = %r" % c )
+
+    logged_in = auth.user_id is not None
+    if auth.user:
+        user = auth.user
+    else:
+        user = False
+
+    return response.json(dict(
+        comments=comments,
+        logged_in=logged_in,
+        user=user
+        #has_more=has_more,
+    ))
 
 
 

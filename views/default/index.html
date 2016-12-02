@@ -12,7 +12,8 @@
     var delete_announcement_url = "{{=URL('api', 'delete_announcement')}}";
     var check_announcements_url = "{{=URL('api', 'check_announcements_date')}}";
     var edit_announcement_url = "{{=URL('api', 'edit_announcement', user_signature=True)}}";
-    var add_comment_url = "{{=URL('api', 'add_comment_to_announcement', user_signature=True)}}"
+    var add_comment_url = "{{=URL('api', 'add_comment_to_announcement', user_signature=True)}}";
+    var get_comments_for_announcements_url = "{{=URL('api', 'get_comments_for_announcements')}}";
 
 </script>
 
@@ -242,10 +243,12 @@ function mOver(obj) {
                         <!-- Div for the history of annoucements-->
                         <ul v-if="right_nav_options.show_history" id="history" class="my-history-wrapper">
                             <li class="history-list-item" v-for="ann in users_announcements">
-                                    Title:  <br> ${ann.name} <br>
-                                    Description:  <br>
-                                    ${ann.description}  <br>
-                                    Category: ${ann.category}   <br>
+                                    Title: ${ann.name}
+                                    <br>
+                                    Description: ${ann.description}
+                                    <br>
+                                    Category: ${ann.category}
+                                    <br>
                                     <i class="fa fa-trash-o"></i>
                                     <i class="fa fa-pencil"></i> <br>
                             </li>
