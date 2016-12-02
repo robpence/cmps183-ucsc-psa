@@ -230,9 +230,16 @@ function mOver(obj) {
 
                     <li class="navlist-item">
                         <div class="history_button">
-                            <button  class="btn btn-danger btn-sm" v-on:click="toggle_history_show()">
-                                Show my history
-                            </button>
+                           <div v-if="right_nav_options.show_history == false">
+                                <button  class="btn btn-danger btn-sm" v-on:click="toggle_history_show()">
+                                    Show my history
+                                </button>
+                           </div>
+                           <div v-if="right_nav_options.show_history == true">
+                                <button  class="btn btn-danger btn-sm" v-on:click="toggle_history_show()">
+                                    Hide my history
+                                </button>
+                           </div>
                         </div>
 
                         <!-- Div for the history of annoucements-->

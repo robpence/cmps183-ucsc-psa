@@ -401,7 +401,7 @@ var app = function() {
             // this holds the query string that the user enters
             search_content: null,
             isCreatingAnnouncement: false,
-            is_history_showing: true,
+            is_history_showing: null,
             announcement_form: _announcement_form,
             filter_form: _filter_form,
             all_announcements: [],
