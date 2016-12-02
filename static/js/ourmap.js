@@ -116,6 +116,7 @@ var New_Map = function (onClick) {
 
     self.add_marker = function (e) {
 
+        console.log(e);
         // if this marker came from our db then it
         if (self.marker.latlng == null) {
             self.marker.latlng = e.latlng;
@@ -154,9 +155,22 @@ var New_Map = function (onClick) {
 
 
     self.clear_map = function(){
+        console.log(self.all_markers);
+        console.log("mr" + self.most_recent);
+        console.log("marker" + JSON.stringify(self.marker));
+        self.map.removeLayer(self.marker);
+
         for(var i = 0; i < self.all_markers.length; i++){
+            console.log(self.all_markers[i]);
             self.map.removeLayer(self.all_markers[i]);
         }
+    };
+
+    self.clear_marker = function(index) {
+
+        console.log('index ' + index);
+        self.map.removeLayer(self.all_markers[index]);
+
     };
 
 

@@ -52,13 +52,18 @@ var app = function() {
 
                 self.vue.isCreatingAnnouncement = false;
                 clear_announcement_form();
+                //alert(data.announcement.category);
 
-                //self.campus_map.finalize_marker();
+                self.vue.all_announcements.push(data.announcement);
+
+                var ann = Announcement_from_db(data.announcement);
+                self.campus_map.set_marker(ann);
+                self.campus_map.add_marker(ann);
+                //self.vue.announcements_to_show.push(ann);
+                self.campus_map.finalize_marker();
+
                 self.vue.map_clickable = false;
 
-                 /***** Could be improved ****/
-                //update the state of the newly created marker so that it's information is accessible
-                self.initial_populate_map();
             });
 
     };
@@ -247,6 +252,7 @@ var app = function() {
 
         $.post(delete_announcement_url, {announcement_id: self.vue.id_for_deleted_announcement}, function() {
             self.vue.all_announcements.splice(self.vue.index_to_be_deleted, 1);
+            console.log('delete post request');
             self.populate_after_deleting(self.vue.all_announcements);
             //self.re_populate_map(self.vue.all_announcements, null); //cant seem to re-use this function
         });
@@ -255,15 +261,20 @@ var app = function() {
  /************************ Can be improved ****************************/
     self.populate_after_deleting = function(marker_list) {
 
-         self.campus_map.clear_map();
+        console.log('populate after deleting');
+        console.log('index of marker ' + self.vue.index_to_be_deleted);
 
-          for(var i=0; i < marker_list.length; i++){
-                var ann = marker_list[i];
-                self.campus_map.set_marker(ann);
-                self.campus_map.add_marker(ann);
-                self.vue.announcements_to_show.push(ann);
-                self.campus_map.finalize_marker();
-          }
+        self.campus_map.clear_map();
+        self.campus_map.delete_most_recent();
+        //self.campus_map.clear_marker(self.vue.index_to_be_deleted);
+
+        // for(var i=0; i < marker_list.length; i++){
+        //         var ann = marker_list[i];
+        //         self.campus_map.set_marker(ann);
+        //         self.campus_map.add_marker(ann);
+        //         //self.vue.announcements_to_show.push(ann);
+        //         self.campus_map.finalize_marker();
+        //   }
     };
 
     /************************ Can be improved ****************************/
