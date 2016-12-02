@@ -59,7 +59,8 @@ var app = function() {
                 clear_announcement_form();
                 self.campus_map.finalize_marker(data['id']);
                 self.vue.map_clickable = false;
-                self.initial_populate_map();
+                console.log(self.vue.map_clickable);
+                //self.initial_populate_map();
             });
 
     };
