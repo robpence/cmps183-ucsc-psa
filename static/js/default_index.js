@@ -60,7 +60,7 @@ var app = function() {
                 clear_announcement_form();
                 self.campus_map.finalize_marker(data['id']);
                 self.vue.map_clickable = false;
-                //self.initial_populate_map();
+                self.initial_populate_map();
             });
 
     };
@@ -91,7 +91,7 @@ var app = function() {
         if(ann_list == null)
             ann_list = self.vue.all_announcements;
         if (requirments == null)
-            requirments = self.vue.filter_form
+            requirments = self.vue.filter_form;
         self.campus_map.clear_map();
         self.populate_map(ann_list, requirments);
     };
@@ -189,6 +189,9 @@ var app = function() {
         $('#announcementDetailCategory').html(announcement.category);
         $('#announcementDetailScore').html(announcement.score);
 
+        self.id_to_be_deleted = announcement.id;
+        console.log(self.id_to_be_deleted);
+
         $('#AnnouncementModal').modal('show');
     };
 
@@ -212,6 +215,7 @@ var app = function() {
 
             if (ann.id == m._ann_id ){
                 console.log('found ann = ', ann);
+                self.announcement_Detail(i);
             }
         }
     });
@@ -282,11 +286,15 @@ var app = function() {
  /************************ Can be improved ****************************/
     self.delete_announcement = function() {
 
-        $.post(delete_announcement_url, {announcement_id: self.vue.id_for_deleted_announcement}, function() {
+        $.post(delete_announcement_url, {
+            announcement_id: self.id_to_be_deleted
+        }, function() {
+            console.log(self.vue.index_to_be_deleted);
             self.vue.all_announcements.splice(self.vue.index_to_be_deleted, 1);
             console.log('delete post request');
             self.populate_after_deleting(self.vue.all_announcements);
             //self.re_populate_map(self.vue.all_announcements, null); //cant seem to re-use this function
+            //self.initial_populate_map();
         });
     };
 
@@ -305,33 +313,10 @@ var app = function() {
                 self.campus_map.set_marker(ann);
                 self.campus_map.add_marker(ann);
                 //self.vue.announcements_to_show.push(ann);
-                self.campus_map.finalize_marker();
+
+                //the ann.id might be wrong
+                self.campus_map.finalize_marker(ann.id);
           }
-    };
-
-    /************************ Can be improved ****************************/
-    self.announcement_Detail = function(ann_id) {
-        //Announcements are queried in order of their id (refer to API.py)
-        //lets find the corresponding icon in the list
-        for (var i = 0; i < self.vue.all_announcements.length; i++) {
-            if (ann_id == self.vue.all_announcements[i].id) {
-                //alert('id number for ' + i + ' th element:' + self.vue.all_announcements[i].id);
-                var announcement = self.vue.all_announcements[i];
-                self.vue.id_for_deleted_announcement = announcement.id;
-                self.vue.index_to_be_deleted = i;
-                break;
-                }
-            }
-
-        //var announcement = self.vue.all_announcements[index];
-        $('#announcementDetailTitle').html(announcement.name);
-        $('#announcementDetailDescription').html(announcement.description);
-        $('#announcementDetailAuthor').html(announcement.author);
-        $('#announcementDetailCreatedon').html(announcement.created_on);
-        $('#announcementDetailCategory').html(announcement.category);
-        $('#announcementDetailScore').html(announcement.score);
-
-        $('#AnnouncementModal').modal('show');
     };
 
 
@@ -363,6 +348,7 @@ var app = function() {
 
         data: {
             index_to_be_deleted: null,
+            id_to_be_deleted: null,
             id_for_deleted_announcement: null,
             id_for_new_announcement:null,
             logged_in: false,
