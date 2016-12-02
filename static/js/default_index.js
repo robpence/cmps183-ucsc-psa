@@ -79,7 +79,6 @@ var app = function() {
         for(var i=0; i < marker_list.length; i++){
             var ann = marker_list[i];
 
-
             if (ann.category == requirments.category || requirments.category == 'all'){
                 self.campus_map.set_marker(ann);
                 self.campus_map.add_marker(ann);
@@ -90,11 +89,13 @@ var app = function() {
     };
 
 
-    self.re_populate_map = function(){
+    self.re_populate_map = function(ann_list, requirments){
+        if(ann_list == null)
+            ann_list = self.vue.all_announcements;
+        if (requirments == null)
+            requirments = self.vue.filter_form
         self.campus_map.clear_map();
-        self.populate_map(
-            self.vue.all_announcements,
-            self.vue.filter_form);
+        self.populate_map(ann_list, requirments);
     };
 
 
@@ -215,50 +216,39 @@ var app = function() {
     };
 
 
-    self.search = function() {
 
-         self.vue.show_search = true;
+    /* ------------     SEARCH  FUNCTIONS    ----------------------------------------*/
+    /*
+        search is case sensitive and searches through announcement name, description,
+        and author.
+     */
+    self.execute_search = function() {
+        console.log('execute_search');
 
-        $.post(get_search_url,
-            {
-                search_content: self.vue.search_content
-            },
-            function (data) {
-                self.vue.search_announcements = data.search_announcements;
-                self.draw_search_announcements();
-            });
-    };
+        var query_str = self.vue.search_content;
+        var a = self.vue.all_announcements;
 
-     self.draw_search_announcements = function() {
+        var found_list = [];
+        for(var i=0; i < a.length; i++){
+            var ann = a[i];
 
-         for(var i=0; i <  self.vue.search_announcements.length; i++) {
-            var ann = self.vue.search_announcements[i];
-             self.vue.search_announcements[i] = Announcement_from_db(ann);
-            self.campus_map.set_marker(
-                self.vue.search_announcements[i]
-            );
+            if (0 <= ann.description.search(query_str)){
+                found_list.push(ann);
 
-            //adding to search layer
-            self.campus_map.create_search_layer(
-                self.vue.search_announcements[i]
-            );
+            }else if (0 <= ann.name.search(query_str)){
+                found_list.push(ann);
+
+            }else if (0 <= ann.author.search(query_str)){
+                found_list.push(ann);
+            }
         }
+
+        console.log('found_list.length=', found_list.length);
+        self.re_populate_map(found_list, {category:'all'});
+
     };
 
-    self.hide_history = function() {
 
-        $(".divIDClass").hide();
-         if (self.vue.is_history_showing == true) {
-             self.vue.is_history_showing = !self.vue.is_history_showing;
-             console.log(self.vue.is_history_showing);
-             $("#history").hide();
-         }
-         else{
-             self.vue.is_history_showing = !self.vue.is_history_showing;
-             console.log(self.vue.is_history_showing);
-             $("#history").show();
-         }
-    };
 
     self.call = function() {
         self.campus_map.clear_for_search_announcements();
@@ -303,6 +293,8 @@ var app = function() {
 
         data: {
             logged_in: false,
+
+            // this holds the query string that the user enters
             search_content: null,
             isCreatingAnnouncement: false,
             is_history_showing: true,
@@ -338,6 +330,9 @@ var app = function() {
             add_announcement: self.add_announcement,
             create_announcement_button: self.create_announcement_button,
 
+            /* search functions */
+            execute_search: self.execute_search,
+
 
             change_view: self.change_view,
             view_announcement: self.view_announcement,
@@ -351,10 +346,10 @@ var app = function() {
 
             update_history: self.update_history,
             view_announcement_in_history: self.view_announcement_in_history,
-            search: self.search,
+
             call:self.call,
-            draw_search_announcements: self.draw_search_announcements,
             announcement_Detail: self.announcement_Detail
+
         }
 
     });

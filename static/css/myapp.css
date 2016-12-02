@@ -167,13 +167,19 @@ input[type=text]:focus {
     width: 130px;
 }
 
-input.search_button{
-	width: 20px;
-	vertical-align: top;
-	margin-right: 0px;
-	display: inline-block;
+
+.search-input-wrapper {
+    margin: 5px;
+    padding: 1px;
+}
+
+
+.search_button{
+    float: left;
 	color: yellow;
 }
+
+
 .form-group {
     margin-bottom: 15px;
 	width: 200px;
