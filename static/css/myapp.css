@@ -83,8 +83,6 @@ body{
     height: 50%;
     width: 200px;
 }
-
-
 .navlist-item{
     margin: 10px;
     color: white;
@@ -178,8 +176,6 @@ input[type=text]:focus {
     float: left;
 	color: yellow;
 }
-
-
 .form-group {
     margin-bottom: 15px;
 	width: 200px;
@@ -198,4 +194,10 @@ input[type=text]:focus {
 
 .history-list-item{
     margin: 10px;
+}
+
+/*Remove bullet points next to the filter options*/
+ul {
+  list-style-type: none;
+  padding: 0px;
 }
