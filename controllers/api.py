@@ -50,19 +50,16 @@ def check_announcements_date():
     for announcement in announcements:
         #if the announcement is an event
         if announcement.category == "event":
-            past = datetime.datetime.strptime(announcement.created_on, "%Y-%m-%d %H:%M:%S.%f")
+            past = datetime.datetime.strptime(announcement.end_date, "%Y-%m-%d")
             present = datetime.datetime.utcnow()
-            #we can set three to a variable held in the database that is the endtime for the event, or whatever
-            if (present - past).days > 5:
-                #calc = (present - past).days
-                #print(calc)
-                #print("deleted: " + str(announcement))
+            #if the event is one day over its end date then it will delete.
+            if (present - past).days > 1:
                 db(db.Announcements.id == announcement.id).delete()
                 db.commit()
         else:
             past = datetime.datetime.strptime(announcement.created_on, "%Y-%m-%d %H:%M:%S.%f")
             present = datetime.datetime.utcnow()
-            # we can set three to a variable held in the database that is the endtime for the event, or whatever
+            # everything that not a event gets deleted after a day.
             if (present - past).days > 1:
                 # calc = (present - past).days
                 # print(calc)
@@ -91,12 +88,14 @@ def add_announcement():
     else:
 
         vars = request.vars
+        logger.info("vars.end_date: %r" % (vars.end_date))
         ann_id = db.Announcements.insert(
             name = vars.name,
             latitude = vars.latitude,
             longitude = vars.longitude,
             description = vars.description,
-            category = vars.category
+            category = vars.category,
+            end_date = vars.end_date
         )
         ann = db.Announcements(ann_id)
 

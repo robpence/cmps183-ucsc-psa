@@ -47,6 +47,7 @@ var app = function() {
             {
                 name: self.vue.announcement_form.name,
                 description: self.vue.announcement_form.description,
+                end_date: self.vue.announcement_form.end_date,
                 latitude: self.next_announcement.lat,
                 longitude: self.next_announcement.lng,
                 category: self.next_announcement.category
