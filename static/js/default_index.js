@@ -17,6 +17,12 @@ var _filter_form = {
 };
 
 
+var _right_side_nav_options = {
+    show_history: false,
+    create_announcement: false
+};
+
+
 var app = function() {
 
     var self = {};
@@ -35,27 +41,35 @@ var app = function() {
 
     self.add_announcement = function () {
         // The submit button to add a post has been pressed.
-        $.post(add_announcement_url,
-            {
-                name: self.vue.announcement_form.name,
-                description: self.vue.announcement_form.description,
-                 latitude: self.next_announcement.lat,
-                longitude: self.next_announcement.lng,
-                category: self.next_announcement.category
-            },
-            function (data) {
-                //self.vue.names.unshift(data.announcement.name);
-                //self.vue.description.unshift(data.announcement.description);
-                //self.vue.category.unshift(data.announcement.category);
+        if (self.next_announcement.category in Categories) {
+            $.post(add_announcement_url,
+                {
+                    name: self.vue.announcement_form.name,
+                    description: self.vue.announcement_form.description,
+                    latitude: self.next_announcement.lat,
+                    longitude: self.next_announcement.lng,
+                    category: self.next_announcement.category
+                },
+                function (data) {
+                    //self.vue.names.unshift(data.announcement.name);
+                    //self.vue.description.unshift(data.announcement.description);
+                    //self.vue.category.unshift(data.announcement.category);
 
-                $.web2py.enableElement($("#add_announcement_submit"));
-                $('#CreateAnnouncementModal').modal('hide');
+                    $.web2py.enableElement($("#add_announcement_submit"));
+                    $('#CreateAnnouncementModal').modal('hide');
 
-                self.vue.isCreatingAnnouncement = false;
-                clear_announcement_form();
-                self.campus_map.finalize_marker();
-                self.vue.map_clickable = false;
-            });
+                    self.vue.isCreatingAnnouncement = false;
+                    clear_announcement_form();
+                    self.campus_map.finalize_marker();
+                    self.vue.map_clickable = false;
+                });
+        }else{
+            // stub
+            // user must input category
+            self.cancel_announcement_button();
+            $.web2py.enableElement($("#add_announcement_submit"));
+            $('#CreateAnnouncementModal').modal('hide');
+        }
 
     };
 
@@ -89,27 +103,43 @@ var app = function() {
     };
 
 
+    /* This function retrieves all of the announcements
+        from the server, draws the icons on the map, and
+        fills the lists of announcements such as
+        vue.users_announcements
+     */
     self.initial_populate_map = function (){
 
         $.getJSON(get_announcements_url,
             function (data) {
 
                 self.vue.logged_in = data.logged_in;
+                self.this_user = data.user;
                 //console.log('callback: populate_map');
 
                 self.vue.all_announcements = data.announcements;
                 var a = self.vue.all_announcements;
                 for(var i=0; i < a.length; i++){
                     var ann = self.vue.all_announcements[i];
+
+                    // prepare the marker to be drawn
                     self.vue.all_announcements[i] = Announcement_from_db(ann);
                     self.campus_map.set_marker(
                         self.vue.all_announcements[i]
                     );
 
-                    self.campus_map.add_marker(
-                        self.vue.all_announcements[i]
-                    );
+                    // draw marker
+                    self.campus_map.add_marker(self.vue.all_announcements[i]);
                     self.campus_map.finalize_marker();
+
+                    // add marker to appropriate lists
+                    if( data.logged_in &&
+                        data.user.email == self.vue.all_announcements[i].author){
+                        console.log(self.vue.all_announcements[i]);
+                        self.vue.users_announcements.push(
+                            self.vue.all_announcements[i]
+                        );
+                    }
                 }
 
             });
@@ -239,7 +269,7 @@ var app = function() {
         self.campus_map.clear_for_search_announcements();
     };
 
-
+    /* ------------     FILTER FUNCTIONS    ----------------------------------------*/
     self.toggle_filter_show = function(){
         self.vue.filter_form.show = !self.vue.filter_form.show;
     };
@@ -247,6 +277,12 @@ var app = function() {
 
     self.filter_submit_button = function(){
         self.re_populate_map();
+    };
+
+
+    /* ------------    History FUNCTIONS    ----------------------------------------*/
+    self.toggle_history_show = function(){
+        self.vue.right_nav_options.show_history = !self.vue.right_nav_options.show_history;
     };
 
 
@@ -260,7 +296,6 @@ var app = function() {
             logged_in: false,
             search_content: null,
             isCreatingAnnouncement: false,
-            show_users_announcements: true,
             is_history_showing: true,
             announcement_form: _announcement_form,
             filter_form: _filter_form,
@@ -268,23 +303,35 @@ var app = function() {
             users_announcements: [],
             announcements_to_show: [],
             search_announcements: [],
+
             map_clickable: false,
-            show_search: false
+            show_search: false,
+
+            right_nav_options: _right_side_nav_options,
+
+            this_user:null
         },
 
         methods: {
+            /* history functions */
+            toggle_history_show: self.toggle_history_show,
+
+            /* filter functions */
             toggle_filter_show: self.toggle_filter_show,
-            cancel_announcement_button: self.cancel_announcement_button,
             filter_submit_button: self.filter_submit_button,
 
-
+            /* creating announcement functions */
+            cancel_announcement_button: self.cancel_announcement_button,
             set_next_announcement: self.set_next_announcement,
             add_announcement: self.add_announcement,
+            create_announcement_button: self.create_announcement_button,
+
+
             change_view: self.change_view,
             view_announcement: self.view_announcement,
-            hide_history: self.hide_history,
 
-            create_announcement_button: self.create_announcement_button,
+
+
             update_marker: self.update_marker,
             re_populate_map: self.re_populate_map,
             initial_populate_map: self.initial_populate_map,

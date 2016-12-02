@@ -32,25 +32,29 @@ body{
 }
 /* line 37, ../sass/_main.scss */
 .main_content .container-fluid .navbar-list {
-  display: table-row;
   padding: 0;
+  list-style-type: none;
 }
 /* line 42, ../sass/_main.scss */
 .main_content .container-fluid .navbar-list .navlist-item {
-  list-style-type: none;
-  vertical-align: middle;
+  list-style: none;
   padding: 5px 5px 5px 5px;
   margin: 10px 0 10px 0;
   width: 185px;
 }
 /* line 56, ../sass/_main.scss */
 .main_content .container-fluid .navbar-list .filter-form-wrapper .filter-list {
-  list-style-type: none;
-  color: #4f80d2;
-  height: 50%;
-  width: 200px;
+    position: relative;
+    float:left;
+    list-style: none;
+    color: #4f80d2;
+    height: 50%;
+    width: 200px;
 }
+
+
 .navlist-item{
+    margin: 10px;
     color: white;
 }
 /* line 36, ../sass/_main.scss */
@@ -66,23 +70,20 @@ body{
 }
 /* line 46, ../sass/_main.scss */
 .main_content #history {
-  position: fixed;
-  background-color: white;
-  right: 0;
-  bottom: 0;
-  width: 200px;
-  border-color: #d9534f;
-  border-style: solid;
-  border-width: 5px;
-  height: 50%;
-  overflow-y: scroll;
+    float:left;
+    list-style: none;
+    padding: 0;
+    /*
+    overflow-y: scroll;
+    background-color: white;
+    */
 }
 /* line 58, ../sass/_main.scss */
 .main_content #history .ann {
   border-color: #000000;
   border-style: solid;
   border-width: 5px;
-  cursor: pointer;
+
 }
 /* line 65, ../sass/_main.scss */
 .main_content #history .ann:hover {
@@ -144,4 +145,19 @@ input.search_button{
 .form-group {
     margin-bottom: 15px;
 	width: 200px;
+}
+
+
+.logged-in-left-user-tools{
+    padding: 0;
+    margin: 0;
+}
+
+.my-history-wrapper{
+    padding: 0;
+    margin: 0;
+}
+
+.history-list-item{
+    margin: 10px;
 }

@@ -18,17 +18,33 @@ def get_announcements():
 
     for i, r in enumerate(rows):
 
+        '''
+        #if r['category'] == None  :
+        if r['category'] not in ['urgent', 'event', "shutdown"]:
+            logger.info("====> api:get_announcements(): r=%r" % r)
+            db(db.Announcements.id == r['id']).delete()
+            continue
+        '''
+
         a = _setup_announcement(r)
         anns.append(a)
         logger.info("====> api:get_announcements(): a = %r" % a )
 
 
+    logger.info("====> api:get_announcements(): auth = %r" % auth.user )
+
     logged_in = auth.user_id is not None
+    if auth.user:
+        user = auth.user
+    else:
+        user = False
+
     #logger.info("====> api:get_announcements(): len-anns = %r" % len(anns) )
 
     return response.json(dict(
         announcements=anns,
         logged_in=logged_in,
+        user=user
         #has_more=has_more,
     ))
 
@@ -44,42 +60,28 @@ def add_announcement():
     '''
 
     logger.info("category: %r" % (request.vars.category))
-    vars = request.vars
-    ann_id = db.Announcements.insert(
-        name = vars.name,
-        latitude = vars.latitude,
-        longitude = vars.longitude,
-        description = vars.description,
-        category = vars.category
-    )
-    ann = db.Announcements(ann_id)
 
-    #logger.info("api:add_announcement ==> ann= %r" % (ann))
-    #logger.info("api:add_announcement_category ==> ann= %r" % (ann.category))
+    if request.vars.category not in ['urgent', 'event', "shutdown"]:
+        return response.json({})
 
-
-    return response.json(dict(announcement=ann))
-
-def get_users_announcements():
-    if(auth.user != None):
-        users_announcements = db(db.Announcements.author == auth.user).select()
-        #users_announcements = db(db.Announcements.author == auth.user.email).select()
-        return response.json(dict(users_announcements = users_announcements))
     else:
-        return response.json(dict(users_announcements = None))
 
-def get_only_urgent():
-    urgent_announcements = db(db.Announcements.category == 'urgent').select()
-    return response.json(dict(urgent_announcements = urgent_announcements))
+        vars = request.vars
+        ann_id = db.Announcements.insert(
+            name = vars.name,
+            latitude = vars.latitude,
+            longitude = vars.longitude,
+            description = vars.description,
+            category = vars.category
+        )
+        ann = db.Announcements(ann_id)
 
-def get_only_event():
-    event_announcements = db(db.Announcements.category == 'event').select()
-    return response.json(dict(event_announcements = event_announcements))
+        #logger.info("api:add_announcement ==> ann= %r" % (ann))
+        #logger.info("api:add_announcement_category ==> ann= %r" % (ann.category))
 
-def get_only_shutdown():
-    shutdown_announcements = db(db.Announcements.category == 'shutdown').select()
-    logger.info("shutdown %r" % shutdown_announcements)
-    return response.json(dict(shutdown_announcements = shutdown_announcements))
+
+        return response.json(dict(announcement=ann))
+
 
 def get_search():
 
