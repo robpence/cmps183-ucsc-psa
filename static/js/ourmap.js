@@ -37,6 +37,14 @@ var New_Map = function (onClick) {
         attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
     }).addTo(map);
 
+    //this re-sizes the window automattically. Just change the numbers after height and width.
+    //If you want to reserve part of the screen for a menu, like the vertical menu we have on the left,
+    //You have to change the padding in the css file.
+    /*$(window).on("resize", function() {
+        $("#mapid").height($(window).height() * 1.00).width($(window).width() * 1.00 - 420);
+        //New_Map.map.invalidateSize();
+    }).trigger("resize");
+    */
 
     var self = {};
     self.map = map;

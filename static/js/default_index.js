@@ -283,6 +283,16 @@ var app = function() {
     /* ------------     Right Navbar Toggle ------------------------------------*/
     self.toggle_right_navbar_show = function(){
         self.vue.right_nav_options.hide_tools = !self.vue.right_nav_options.hide_tools;
+
+        // we need to re-size the map take up the space previously covered by the
+        // right side nav bar
+        var w = null;
+        if (self.vue.right_nav_options.hide_tools){
+            w = 220;
+        }else{
+            w = 420;
+        }
+        $("#mapid").height($(window).height() * 1.00).width($(window).width() * 1.0 - w);
     };
 
     // Complete as needed.
