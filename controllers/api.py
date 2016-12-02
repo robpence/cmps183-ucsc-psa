@@ -40,7 +40,7 @@ def get_announcements():
 def check_announcements_date():
     announcements = db(db.Announcements).select(orderby=~db.Announcements.created_on)
     for announcement in announcements:
-        #if the announcement is in the urgent or shutdown category
+        #if the announcement is an event
         if announcement.category == "event":
             past = datetime.datetime.strptime(announcement.created_on, "%Y-%m-%d %H:%M:%S.%f")
             present = datetime.datetime.utcnow()

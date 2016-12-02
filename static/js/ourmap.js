@@ -129,11 +129,13 @@ var New_Map = function (onClick) {
 
     //Opens the popup for the announcements information.
     function openwindow(e) {
-        //there is probably a better way of doing this
-        var vuearrayid = (e.target._icon.id - APP.vue.all_announcements.length) * -1;
-       APP.announcement_Detail(vuearrayid);
-        //APP.announcement_Detail(e.target._icon.id);
-
+        console.log(e.target._icon.id);
+        //gets the correct id for the announcement in the vue list.
+        for (var i = 0; i < APP.vue.all_announcements.length; i++){
+            if (e.target._icon.id == APP.vue.all_announcements[i].id){
+                APP.announcement_Detail(i);
+            }
+        }
     }
 
     
