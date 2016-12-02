@@ -174,6 +174,13 @@ var New_Map = function (onMapClick, onIconClick) {
         }
     };
 
+    self.clear_marker = function(index) {
+
+        console.log('index ' + index);
+        self.map.removeLayer(self.all_markers[index]);
+
+    };
+
 
     self.finalize_marker = function(id){
         self.most_recent._ann_id = id;
