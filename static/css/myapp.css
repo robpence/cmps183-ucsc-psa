@@ -145,3 +145,9 @@ input.search_button{
     margin-bottom: 15px;
 	width: 200px;
 }
+
+/*Remove bullet points next to the filter options*/
+ul {
+  list-style-type: none;
+  padding: 0px;
+}
