@@ -126,11 +126,7 @@ var New_Map = function (onMapClick, onIconClick) {
 
         // if from clicking on map
         if (self.marker.latlng == null) {
-            console.log("it was null");
-            if(e.latlng != null){
-                self.marker.latlng = e.latlng;
-            }
-            return;
+            self.marker.latlng = e.latlng;
         }
         self.most_recent = new L.marker(
             self.marker.latlng,
@@ -184,6 +180,7 @@ var New_Map = function (onMapClick, onIconClick) {
 
 
     self.finalize_marker = function(id){
+        console.log(id);
         self.most_recent._ann_id = id;
         self.all_markers.push(self.most_recent);
         self.most_recent = null;

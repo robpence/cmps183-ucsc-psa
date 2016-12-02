@@ -56,10 +56,10 @@ var app = function() {
                 $('#CreateAnnouncementModal').modal('hide');
 
                 self.vue.isCreatingAnnouncement = false;
-                clear_announcement_form();
-                self.campus_map.finalize_marker(data['id']);
                 self.vue.map_clickable = false;
                 console.log(self.vue.map_clickable);
+                clear_announcement_form();
+                self.campus_map.finalize_marker(data['id']);
                 //self.initial_populate_map();
             });
 
