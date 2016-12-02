@@ -199,3 +199,11 @@ input[type=text]:focus {
 .history-list-item{
     margin: 10px;
 }
+
+.edit-submit-btn{
+    color: green;
+}
+
+.announcement-input-text{
+    color: black;
+}

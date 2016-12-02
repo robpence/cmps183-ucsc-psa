@@ -83,6 +83,40 @@ def add_announcement():
         return response.json(ann)
 
 
+
+def get_announcement(p_id, u_email):
+    # A announcement is specified.  We need to check that it exists, and that the user is the author.
+    # We use .first() to get either the first element or None, rather than an iterator.
+    q = ((db.Announcements.author == u_email) &
+         (db.Announcements.id == p_id))
+    return db(q).select().first()
+
+
+# Note that we need the URL to be signed, as this changes the db.
+@auth.requires_signature()
+def edit_announcement():
+    """Here you get a new announcement and add it.  Return what you want."""
+    # Implement me!
+
+    logger.info("api:edit_announcement ==> request= %r, %r ,%r" % (
+        request.vars.name, request.vars.description, request.vars.announcement_id))
+    announcement = get_announcement(request.vars.announcement_id, auth.user.email)
+
+    logger.info("api:edit_announcement ==> ann= %r" % (announcement))
+    logger.info("api:edit_announcement ==> 1")
+    announcement.description = request.vars.description
+    logger.info("api:edit_announcement ==> 2")
+    announcement.name = request.vars.name
+    logger.info("api:edit_announcement ==> 3")
+    announcement.updated_on = datetime.datetime.utcnow()
+    logger.info("api:edit_announcement ==> 4")
+    announcement.update_record()
+
+    logger.info("api:edit_announcement ==> 5")
+    logger.info("api:edit_announcement ==> ann= %r" % (announcement))
+    return response.json(announcement)
+
+
 def get_search():
 
     t = request.vars.search_content
