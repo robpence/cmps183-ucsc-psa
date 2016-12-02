@@ -76,11 +76,11 @@ def add_announcement():
         )
         ann = db.Announcements(ann_id)
 
-        #logger.info("api:add_announcement ==> ann= %r" % (ann))
+        logger.info("api:add_announcement ==> ann= %r" % (ann))
         #logger.info("api:add_announcement_category ==> ann= %r" % (ann.category))
 
 
-        return response.json(dict(announcement=ann))
+        return response.json(ann)
 
 
 def get_search():

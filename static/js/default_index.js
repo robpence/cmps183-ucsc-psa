@@ -61,7 +61,7 @@ var app = function() {
 
                 self.vue.isCreatingAnnouncement = false;
                 clear_announcement_form();
-                self.campus_map.finalize_marker();
+                self.campus_map.finalize_marker(data['id']);
                 self.vue.map_clickable = false;
             });
 
@@ -83,7 +83,7 @@ var app = function() {
                 self.campus_map.set_marker(ann);
                 self.campus_map.add_marker(ann);
                 self.vue.announcements_to_show.push(ann);
-                self.campus_map.finalize_marker();
+                self.campus_map.finalize_marker(ann['id']);
             }
         }
     };
@@ -126,7 +126,7 @@ var app = function() {
 
                     // draw marker
                     self.campus_map.add_marker(self.vue.all_announcements[i]);
-                    self.campus_map.finalize_marker();
+                    self.campus_map.finalize_marker(ann['id']);
 
                     // add marker to appropriate lists
                     if( data.logged_in &&
@@ -180,7 +180,7 @@ var app = function() {
 
 
     self.announcement_Detail = function(index) {
-        announcement = self.vue.all_announcements[index];
+        var announcement = self.vue.all_announcements[index];
         //announcement = self.vue.names[index];
         $('#announcementDetailTitle').html(announcement.name);
         $('#announcementDetailDescription').html(announcement.description);
@@ -193,12 +193,30 @@ var app = function() {
     };
 
 
-    self.campus_map = New_Map(function(lat, lng){
+    self.campus_map = New_Map(function(lat, lng, e){
         // this function gets called when the map is clicked
+
+        //console.log('mapclick e=', e);
+
         self.next_announcement.lat = lat;
         self.next_announcement.lng = lng;
         self.vue.announcement_form.active = false;
         return self.vue.isCreatingAnnouncement;
+    },
+    function(e){
+        // this function gets called when a map icon is clicked
+        //console.log('iconclick e=', e);
+
+        //console.log('e=', e);
+        var m = self.campus_map.find_marker(e.target);
+
+        for(var i=0; i < self.vue.all_announcements.length; i++){
+            var ann = self.vue.all_announcements[i];
+
+            if (ann.id == m._ann_id ){
+                console.log('found ann = ', ann);
+            }
+        }
     });
 
 
