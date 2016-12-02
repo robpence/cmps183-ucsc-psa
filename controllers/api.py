@@ -158,7 +158,23 @@ def delete_announcement():
     logger.info("deleted announcement with id %r" % ann)
     return "ok"
 
+# Note that we need the URL to be signed, as this changes the db.
+@auth.requires_signature()
+@auth.requires_login()
+def add_comment_to_announcement():
+    """Here you get a new comment and add it.  Return what you want."""
+    vars = request.vars
+    logger.info("vars.comment_text: %r" % (vars.comment_text))
+    comment_id = db.Comments.insert(
+        comment_text = vars.comment_text,
+        score = 1,
+        ann_id= vars.ann_id,
+    )
+    comment = db.Announcements(comment_id)
 
+    logger.info("api:add_comment_to_announcement ==> comment= %r" % (comment))
+
+    return response.json(comment)
 
 
 

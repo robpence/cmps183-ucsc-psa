@@ -25,6 +25,18 @@
                 <button type="button" class="btn btn-default" id="announcement_cancel" data-dismiss="modal">Cancel</button>
                 <button v-on:click="delete_announcement()" type="button" class="btn btn-primary" id="announcement_submit" data-dismiss="modal">Delete</button>
             </div>
+
+            <form action="#" v-on:submit.prevent="add_comment" class="form-horizontal" enctype="multipart/form-data" method="post">
+                <div class="form-group" id="no_table_name__row">
+                    <div>
+                        <input class="form-control string"  id="no_table_name"  v-model="comment_form.comment_text" placeholder="Comment..." type="text" />
+                    </div>
+                </div>
+                <div>
+                    <input class="btn btn-primary" id="add_comment_submit" type="submit" value="Post Comment" />
+                </div>
+            </form>
+
         </div>
     </div>
 </div>

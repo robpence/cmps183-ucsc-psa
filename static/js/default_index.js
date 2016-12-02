@@ -9,6 +9,13 @@ var _announcement_form = {
     id: null
 };
 
+//probably needs changing
+var _comment_form = {
+    comment_text: null,
+    active: false,
+    id: null
+};
+
 
 var _filter_form = {
     category: null,
@@ -35,6 +42,11 @@ var app = function() {
         self.vue.announcement_form.description = null;
         self.vue.announcement_form.name = null;
         self.vue.announcement_form.active = false;
+    }
+
+    function clear_comment_form(){
+        self.vue.comment_form.comment_text = null;
+        self.vue.comment_form.active = false;
     }
 
 
@@ -189,8 +201,10 @@ var app = function() {
         $('#announcementDetailCategory').html(announcement.category);
         $('#announcementDetailScore').html(announcement.score);
 
-        self.id_to_be_deleted = announcement.id;
-        console.log(self.id_to_be_deleted);
+        self.vue.id_to_be_deleted = announcement.id;
+        console.log(self.vue.id_to_be_deleted);
+
+        //probably add something to list all the comments for this post here
 
         $('#AnnouncementModal').modal('show');
     };
@@ -216,7 +230,7 @@ var app = function() {
             if (ann.id == m._ann_id ){
                 if(ann.author == self.this_user.email) {
                     self.edit_announcement(ann);
-                    //self.announcement_Detail(i);
+                    self.announcement_Detail(i);
                 }
                 break;
             }
@@ -371,6 +385,25 @@ var app = function() {
         self.vue.edditing_announcemnt = false;
     };
 
+    self.add_comment = function () {
+        // The submit button to add a post has been pressed.
+        console.log(self.vue.id_to_be_deleted);
+        $.post(add_comment_url,
+            {
+                comment_text: self.vue.comment_form.comment_text,
+                score: self.vue.comment_form.score,
+                //id_to_be_deleted is currently set when the user opens the window to view the ann
+                ann_id: self.vue.id_to_be_deleted
+            },
+            function (data) {
+                $.web2py.enableElement($("#add_comment_submit"));
+                clear_comment_form();
+                //insert function call to get all comments for a ann here
+            });
+    };
+
+    self.
+
 
     // Complete as needed.
     self.vue = new Vue({
@@ -391,6 +424,7 @@ var app = function() {
             isCreatingAnnouncement: false,
             is_history_showing: true,
             announcement_form: _announcement_form,
+            comment_form: _comment_form,
             filter_form: _filter_form,
             all_announcements: [],
             users_announcements: [],
@@ -406,6 +440,12 @@ var app = function() {
         },
 
         methods: {
+
+            /* comment functions*/
+            add_comment: self.add_comment,
+            //delete_comment: self.delete_comment,
+            //get_comments_for_announcement: self.get_comments_for_announcement,
+
 
             /* announcement edit functions */
             announcement_edit_submit_button: self.announcement_edit_submit_button,
