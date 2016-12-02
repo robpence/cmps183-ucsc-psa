@@ -9,7 +9,6 @@ var Announcement = function (announcement_type){
 
     //console.log("Announcement: ann_type = ", announcement_type);
 
-
     var Marker = function (){
         return {
             spin: true,
@@ -96,7 +95,6 @@ var Announcement = function (announcement_type){
 
 var Announcement_from_db = function (ann){
     //console.log('Announcement_from_db', ann);
-    //alert(ann.category);
     var ann_marker = Announcement(ann.category);
     ann_marker.set_latlng(ann.latitude, ann.longitude);
     ann.latlng = ann_marker.latlng;

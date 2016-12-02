@@ -18,14 +18,6 @@ def get_announcements():
 
     for i, r in enumerate(rows):
 
-        '''
-        #if r['category'] == None  :
-        if r['category'] not in ['urgent', 'event', "shutdown"]:
-            logger.info("====> api:get_announcements(): r=%r" % r)
-            db(db.Announcements.id == r['id']).delete()
-            continue
-        '''
-
         a = _setup_announcement(r)
         anns.append(a)
         logger.info("====> api:get_announcements(): a = %r" % a )
@@ -82,6 +74,26 @@ def add_announcement():
 
         return response.json(ann)
 
+def get_users_announcements():
+    if(auth.user != None):
+        users_announcements = db(db.Announcements.author == auth.user).select()
+        #users_announcements = db(db.Announcements.author == auth.user.email).select()
+        return response.json(dict(users_announcements = users_announcements))
+    else:
+        return response.json(dict(users_announcements = None))
+
+def get_only_urgent():
+    urgent_announcements = db(db.Announcements.category == 'urgent').select()
+    return response.json(dict(urgent_announcements = urgent_announcements))
+
+def get_only_event():
+    event_announcements = db(db.Announcements.category == 'event').select()
+    return response.json(dict(event_announcements = event_announcements))
+
+def get_only_shutdown():
+    shutdown_announcements = db(db.Announcements.category == 'shutdown').select()
+    logger.info("shutdown %r" % shutdown_announcements)
+    return response.json(dict(shutdown_announcements = shutdown_announcements))
 
 
 def get_announcement(p_id, u_email):
@@ -92,27 +104,30 @@ def get_announcement(p_id, u_email):
     return db(q).select().first()
 
 
+
 # Note that we need the URL to be signed, as this changes the db.
 @auth.requires_signature()
 def edit_announcement():
     """Here you get a new announcement and add it.  Return what you want."""
     # Implement me!
 
-    logger.info("api:edit_announcement ==> request= %r, %r ,%r" % (
-        request.vars.name, request.vars.description, request.vars.announcement_id))
     announcement = get_announcement(request.vars.announcement_id, auth.user.email)
 
-    logger.info("api:edit_announcement ==> ann= %r" % (announcement))
-    logger.info("api:edit_announcement ==> 1")
     announcement.description = request.vars.description
-    logger.info("api:edit_announcement ==> 2")
     announcement.name = request.vars.name
-    logger.info("api:edit_announcement ==> 3")
     announcement.updated_on = datetime.datetime.utcnow()
-    logger.info("api:edit_announcement ==> 4")
     announcement.update_record()
-
-    logger.info("api:edit_announcement ==> 5")
-    logger.info("api:edit_announcement ==> ann= %r" % (announcement))
     return response.json(announcement)
+
+
+def delete_announcement():
+
+    ann = request.vars.announcement_id
+    db(db.Announcements.id == ann).delete()
+    logger.info("deleted announcement with id %r" % ann)
+    return "ok"
+
+
+
+
 
