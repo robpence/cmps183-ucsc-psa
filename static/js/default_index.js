@@ -305,7 +305,7 @@ var app = function() {
     self.delete_announcement = function() {
 
         $.post(delete_announcement_url, {
-            announcement_id: self.id_to_be_deleted
+            announcement_id: self.vue.id_to_be_deleted
         }, function() {
             console.log(self.vue.index_to_be_deleted);
             self.vue.all_announcements.splice(self.vue.index_to_be_deleted, 1);
@@ -387,8 +387,9 @@ var app = function() {
         self.vue.edditing_announcemnt = false;
     };
 
+
+    /* ------------     Announcement Edit functions  ----------------------------*/
     self.add_comment = function () {
-        // The submit button to add a post has been pressed.
         console.log(self.vue.id_to_be_deleted);
         $.post(add_comment_url,
             {
@@ -401,7 +402,6 @@ var app = function() {
                 $.web2py.enableElement($("#add_comment_submit"));
                 clear_comment_form();
                 self.vue.get_comments_for_announcements();
-                //insert function call to get all comments for a ann here
             });
     };
 
@@ -411,9 +411,6 @@ var app = function() {
             function (data) {
                 self.vue.announcement_comments = [];
                 self.vue.announcement_comments = data.comments;
-                //for(var i=0; i < self.vue.comments.length; i++){
-                //    var comment = self.vue.comments[i];
-                //}
             });
         console.log(self.vue.announcement_comments);
     };
