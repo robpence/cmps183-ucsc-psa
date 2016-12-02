@@ -67,12 +67,6 @@ var app = function() {
 
     };
 
-    /*
-    $.getJSON(get_users_announcements_url, function(data) {
-        self.vue.users_announcements = data.users_announcements;
-    });
-    */
-
     self.populate_map = function(marker_list, requirments){
 
         for(var i=0; i < marker_list.length; i++){
@@ -162,7 +156,7 @@ var app = function() {
 
 
     self.change_view = function(location) {
-
+       self.campus_map.change_map_view(location);
     };
 
 

@@ -62,9 +62,10 @@ var New_Map = function (onMapClick, onIconClick) {
     };
 
 
-    self.change_map_view = function(){
+    self.change_map_view = function(location){
         switch (location) {
             case "kresge":
+                alert('kresge');
                 self.set_coordinates(kresge_college);
                 break;
             case "merrill":
@@ -96,7 +97,7 @@ var New_Map = function (onMapClick, onIconClick) {
                 self.set_coordinates(stevenson_college);
                 break;
             default:
-                self.set_coordinates(central_campus);
+                self.map.setView(central_campus, 15, {animation: true});
                 break;
         }
     };
