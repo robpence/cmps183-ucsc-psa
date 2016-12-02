@@ -422,7 +422,7 @@ var app = function() {
             view_announcement_in_history: self.view_announcement_in_history,
 
             call:self.call,
-            announcement_Detail: self.announcement_Detail
+            announcement_Detail: self.announcement_Detail,
             delete_announcement: self.delete_announcement,
             populate_after_deleting:self.populate_after_deleting,
             new_announcement_Detail:self.new_announcement_Detail,
