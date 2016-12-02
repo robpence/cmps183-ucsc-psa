@@ -132,7 +132,6 @@ var app = function() {
                     // add marker to appropriate lists
                     if( data.logged_in &&
                         data.user.email == self.vue.all_announcements[i].author){
-                        console.log(self.vue.all_announcements[i]);
                         self.vue.users_announcements.push(
                             self.vue.all_announcements[i]
                         );
@@ -180,18 +179,7 @@ var app = function() {
     };
 
 
-    self.announcement_Detail = function(index) {
-        var announcement = self.vue.all_announcements[index];
-        //announcement = self.vue.names[index];
-        $('#announcementDetailTitle').html(announcement.name);
-        $('#announcementDetailDescription').html(announcement.description);
-        $('#announcementDetailAuthor').html(announcement.author);
-        $('#announcementDetailCreatedon').html(announcement.created_on);
-        $('#announcementDetailCategory').html(announcement.category);
-        $('#announcementDetailScore').html(announcement.score);
 
-        $('#AnnouncementModal').modal('show');
-    };
 
 
     self.campus_map = New_Map(function(lat, lng, e){
@@ -215,8 +203,6 @@ var app = function() {
             var ann = self.vue.all_announcements[i];
 
             if (ann.id == m._ann_id ){
-                console.log('ann= ', ann);
-                //console.log('this_user= ', self.this_user);
                 if(ann.author == self.this_user.email) {
                     self.edit_announcement(ann);
                 }
@@ -268,7 +254,6 @@ var app = function() {
             }
         }
 
-        console.log('found_list.length=', found_list.length);
         self.re_populate_map(found_list, {category:'all'});
 
     };
@@ -317,7 +302,6 @@ var app = function() {
         self.vue.announcement_form.description = ann.description;
         self.vue.announcement_form.name = ann.name;
         self.vue.announcement_form.id = ann.id;
-        console.log('form = ', self.vue.announcement_form);
         self.vue.edditing_announcemnt = true;
     };
 

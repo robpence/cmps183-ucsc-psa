@@ -116,14 +116,3 @@ def edit_announcement():
     logger.info("api:edit_announcement ==> ann= %r" % (announcement))
     return response.json(announcement)
 
-
-def get_search():
-
-    t = request.vars.search_content
-
-    q = ((db.Announcements.name.contains(t)) |
-         (db.Announcements.description.contains(t)))
-
-    search_announcements = db(q).select(db.Announcements.ALL)
-    logger.info("search %r" % search_announcements)
-    return response.json(dict(search_announcements=search_announcements))

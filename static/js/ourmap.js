@@ -133,8 +133,6 @@ var New_Map = function (onMapClick, onIconClick) {
             {icon: self.marker.icon}
         ).addTo(self.map).on('click', onIconClick);
 
-        //console.log('add_marker, marker=', self.most_recent);
-
         self.most_recent._icon.id = self.marker.id;
         self.map.addLayer(self.most_recent);
         self.marker.drawn = true;
@@ -153,19 +151,6 @@ var New_Map = function (onMapClick, onIconClick) {
         return null;
     };
 
-    
-    /* this layer is created when a user enters a search query. They can be of all categories, so switch statement is no good */
-    self.create_search_layer = function() {
-        var store_marker = L.marker(
-            self.marker.latlng,
-            {icon:self.marker.icon}
-        ).addTo(self.map).on('click', onIconClick);
-
-        //this isn't doing anything for some reason
-        store_marker._icon.id = self.marker.id;
-        store_marker.addTo(search_layer);
-        search_layer.addTo(self.map);
-    };
 
 
     self.clear_map = function(){
@@ -204,19 +189,6 @@ var New_Map = function (onMapClick, onIconClick) {
         self.map.panInsideBounds(bounds, { animate: false });
     });
 
-
-    self.clear_map2 = function() {
-        self.map.removeLayer(search_layer);
-        start_fresh_layer = new L.FeatureGroup(); //this is needed, since search_layer would just continue to add on itself
-        search_layer = start_fresh_layer;
-    };
-
-
-    self.clear_for_search_announcements = function() {
-        self.clear_map2(); //clear the map, and the old search layer
-        APP.search(); //get a new series of icons which match search query, and update layer
-        search_layer.addTo(self.map); //add new layer
-    };
 
     return  self;
 };
