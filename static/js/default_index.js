@@ -265,16 +265,16 @@ var app = function() {
         console.log('index of marker ' + self.vue.index_to_be_deleted);
 
         self.campus_map.clear_map();
-        self.campus_map.delete_most_recent();
+        //self.campus_map.delete_most_recent();
         //self.campus_map.clear_marker(self.vue.index_to_be_deleted);
 
-        // for(var i=0; i < marker_list.length; i++){
-        //         var ann = marker_list[i];
-        //         self.campus_map.set_marker(ann);
-        //         self.campus_map.add_marker(ann);
-        //         //self.vue.announcements_to_show.push(ann);
-        //         self.campus_map.finalize_marker();
-        //   }
+        for(var i=0; i < marker_list.length; i++){
+                var ann = marker_list[i];
+                self.campus_map.set_marker(ann);
+                self.campus_map.add_marker(ann);
+                //self.vue.announcements_to_show.push(ann);
+                self.campus_map.finalize_marker();
+          }
     };
 
     /************************ Can be improved ****************************/
