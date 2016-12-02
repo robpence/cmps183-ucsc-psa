@@ -95,16 +95,30 @@ def get_only_shutdown():
     logger.info("shutdown %r" % shutdown_announcements)
     return response.json(dict(shutdown_announcements = shutdown_announcements))
 
-def get_search():
 
-    t = request.vars.search_content
+def get_announcement(p_id, u_email):
+    # A announcement is specified.  We need to check that it exists, and that the user is the author.
+    # We use .first() to get either the first element or None, rather than an iterator.
+    q = ((db.Announcements.author == u_email) &
+         (db.Announcements.id == p_id))
+    return db(q).select().first()
 
-    q = ((db.Announcements.name.contains(t)) |
-         (db.Announcements.description.contains(t)))
 
-    search_announcements = db(q).select(db.Announcements.ALL)
-    logger.info("search %r" % search_announcements)
-    return response.json(dict(search_announcements=search_announcements))
+
+# Note that we need the URL to be signed, as this changes the db.
+@auth.requires_signature()
+def edit_announcement():
+    """Here you get a new announcement and add it.  Return what you want."""
+    # Implement me!
+
+    announcement = get_announcement(request.vars.announcement_id, auth.user.email)
+
+    announcement.description = request.vars.description
+    announcement.name = request.vars.name
+    announcement.updated_on = datetime.datetime.utcnow()
+    announcement.update_record()
+    return response.json(announcement)
+
 
 def delete_announcement():
 
@@ -112,6 +126,7 @@ def delete_announcement():
     db(db.Announcements.id == ann).delete()
     logger.info("deleted announcement with id %r" % ann)
     return "ok"
+
 
 
 
