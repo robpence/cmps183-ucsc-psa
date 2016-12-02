@@ -48,7 +48,7 @@ var New_Map = function (onMapClick, onIconClick) {
 
     var self = {};
     self.map = map;
-    self.marker = null;
+    self.next_marker = null;
     self.most_recent = null;
     self.all_markers = [];
 
@@ -105,38 +105,32 @@ var New_Map = function (onMapClick, onIconClick) {
         self.map.setView(coordinates, 17, {animation: true});
     };
 
-    self.set_marker = function(marker){
-        self.marker = marker;
+    self.set_next_marker = function(marker){
+        self.next_marker = marker;
     };
 
 
-    self.update_marker = function(new_marker){
-        self.delete_most_recent();
-        //var latlng = self.marker.latlng;
-        //self.marker = new_marker;
-        //self.marker.latlng = latlng;
-        self.marker.icon = new_marker.icon;
-        self.marker.category = new_marker.category;
-        self.marker.drawn = false;
-        self.add_marker(self.marker);
-    };
-
-
-    self.add_marker = function (e) {
-
-        // if this marker came from our db then it
-        if (self.marker.latlng == null) {
-            self.marker.latlng = e.latlng;
+    self.update_most_recent = function(new_marker){
+        self.set_next_marker(new_marker);
+        if(self.most_recent != null) {
+            self.next_marker.latlng = self.most_recent.latlng;
+            self.delete_most_recent();
+            self.draw_marker(self.next_marker.latlng, new_marker.icon);
         }
-        self.most_recent = new L.marker(
-            self.marker.latlng,
-            {icon: self.marker.icon}
-        ).addTo(self.map).on('click', onIconClick);
 
-        self.most_recent._icon.id = self.marker.id;
-        self.map.addLayer(self.most_recent);
-        self.marker.drawn = true;
     };
+
+
+    self.draw_marker = function (location, icon) {
+        // create a marker to be drawn on the map
+        self.most_recent = new L.marker(
+            location,
+            {icon: icon}
+        ).on('click', onIconClick);
+        self.most_recent.addTo(self.map);
+
+    };
+
 
 
     self.find_marker = function (target){
@@ -160,8 +154,6 @@ var New_Map = function (onMapClick, onIconClick) {
     };
 
     self.clear_marker = function(index) {
-
-        console.log('index ' + index);
         self.map.removeLayer(self.all_markers[index]);
 
     };
@@ -175,7 +167,6 @@ var New_Map = function (onMapClick, onIconClick) {
 
 
     self.delete_most_recent = function(){
-        console.log('delete_most_recent');
         if(self.most_recent != null) {
             self.map.removeLayer(self.most_recent);
             self.most_recent = null;
@@ -184,9 +175,8 @@ var New_Map = function (onMapClick, onIconClick) {
 
 
     self.map.on('click', function(e) {
-        if(APP.vue.map_clickable == true){
-            self.add_marker(e);
-            onMapClick(e.latlng.lat, e.latlng.lng, e);
+        if(onMapClick(e.latlng.lat, e.latlng.lng, e)){
+            self.draw_marker(e.latlng, self.next_marker.icon);
             $('#CreateAnnouncementModal').modal('show');
         }
     });

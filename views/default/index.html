@@ -230,29 +230,33 @@ function mOver(obj) {
 
                     <li class="navlist-item">
                         <div class="history_button">
-                           <div v-if="right_nav_options.show_history == false">
+                           <div v-if="!right_nav_options.show_history">
                                 <button  class="btn btn-danger btn-sm" v-on:click="toggle_history_show()">
                                     Show my history
                                 </button>
                            </div>
-                           <div v-if="right_nav_options.show_history == true">
+
+                            <div v-else>
+                                <!-- We are showing the user's announcement history     -->
                                 <button  class="btn btn-danger btn-sm" v-on:click="toggle_history_show()">
                                     Hide my history
                                 </button>
+
+                               <!-- Div for the history of annoucements-->
+                                <ul id="history" class="my-history-wrapper">
+                                    <li class="history-list-item" v-for="ann in users_announcements">
+                                            Title:  <br> ${ann.name} <br>
+                                            Description:  <br>
+                                            ${ann.description}  <br>
+                                            Category: ${ann.category}   <br>
+                                            <i class="fa fa-trash-o"></i>
+                                            <i class="fa fa-pencil"></i> <br>
+                                    </li>
+                                </ul>
                            </div>
+
                         </div>
 
-                        <!-- Div for the history of annoucements-->
-                        <ul v-if="right_nav_options.show_history" id="history" class="my-history-wrapper">
-                            <li class="history-list-item" v-for="ann in users_announcements">
-                                    Title:  <br> ${ann.name} <br>
-                                    Description:  <br>
-                                    ${ann.description}  <br>
-                                    Category: ${ann.category}   <br>
-                                    <i class="fa fa-trash-o"></i>
-                                    <i class="fa fa-pencil"></i> <br>
-                            </li>
-                        </ul>
                     </li>
 
             </ul><!-- end left side nav list -->
