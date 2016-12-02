@@ -400,6 +400,7 @@ var app = function() {
             function (data) {
                 $.web2py.enableElement($("#add_comment_submit"));
                 clear_comment_form();
+                self.vue.get_comments_for_announcements();
                 //insert function call to get all comments for a ann here
             });
     };
