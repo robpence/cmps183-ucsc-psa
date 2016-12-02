@@ -23,7 +23,7 @@ var bounds = [
 
 
 
-var New_Map = function (onClick) {
+var New_Map = function (onMapClick, onIconClick) {
 
 
     var map = L.map('mapid', {
@@ -37,6 +37,14 @@ var New_Map = function (onClick) {
         attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
     }).addTo(map);
 
+    //this re-sizes the window automattically. Just change the numbers after height and width.
+    //If you want to reserve part of the screen for a menu, like the vertical menu we have on the left,
+    //You have to change the padding in the css file.
+    /*$(window).on("resize", function() {
+        $("#mapid").height($(window).height() * 1.00).width($(window).width() * 1.00 - 420);
+        //New_Map.map.invalidateSize();
+    }).trigger("resize");
+    */
 
     var self = {};
     self.map = map;
@@ -110,14 +118,7 @@ var New_Map = function (onClick) {
         self.marker.icon = new_marker.icon;
         self.marker.category = new_marker.category;
         self.marker.drawn = false;
-        console.log(new_marker);
-        console.log(self.marker);
-
         self.add_marker(self.marker);
-
-        console.log(self.most_recent);
-        console.log(self.all_markers);
-
     };
 
 
@@ -131,9 +132,15 @@ var New_Map = function (onClick) {
             }
             return;
         }
-        self.most_recent = new L.marker(self.marker.latlng, {icon: self.marker.icon}).addTo(self.map).on('click', openwindow);
+        self.most_recent = new L.marker(
+            self.marker.latlng,
+            {icon: self.marker.icon}
+        ).addTo(self.map).on('click', onIconClick);
+
+        //console.log('add_marker, marker=', self.most_recent);
+
         self.most_recent._icon.id = self.marker.id;
-        //self.map.addLayer(self.most_recent);
+        self.map.addLayer(self.most_recent);
         self.marker.drawn = true;
     };
 
@@ -149,11 +156,26 @@ var New_Map = function (onClick) {
             }
         }
     }
+    
+    self.find_marker = function (target){
+        for(var i = 0; i < self.all_markers.length; i++){
+            var m = self.all_markers[i];
+            if(m._leaflet_id == target._leaflet_id){
+                return m;
+            }
+        }
+        // could not find marker
+        console.log('ourmap.find_marker: could not find target');
+        return null;
+    };
 
     
     /* this layer is created when a user enters a search query. They can be of all categories, so switch statement is no good */
     self.create_search_layer = function() {
-        var store_marker = L.marker(self.marker.latlng, {icon:self.marker.icon}).addTo(self.map).on('click', openwindow);
+        var store_marker = L.marker(
+            self.marker.latlng,
+            {icon:self.marker.icon}
+        ).addTo(self.map).on('click', onIconClick);
 
         //this isn't doing anything for some reason
         store_marker._icon.id = self.marker.id;
@@ -168,8 +190,16 @@ var New_Map = function (onClick) {
         }
     };
 
+    self.clear_marker = function(index) {
 
-    self.finalize_marker = function(){
+        console.log('index ' + index);
+        self.map.removeLayer(self.all_markers[index]);
+
+    };
+
+
+    self.finalize_marker = function(id){
+        self.most_recent._ann_id = id;
         self.all_markers.push(self.most_recent);
         self.most_recent = null;
     };
@@ -186,7 +216,7 @@ var New_Map = function (onClick) {
     self.map.on('click', function(e) {
         if(APP.vue.map_clickable == true){
             self.add_marker(e);
-            onClick(e.latlng.lat, e.latlng.lng);
+            onMapClick(e.latlng.lat, e.latlng.lng, e);
             $('#CreateAnnouncementModal').modal('show');
         }
     });
