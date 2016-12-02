@@ -196,8 +196,18 @@ input[type=text]:focus {
     margin: 10px;
 }
 
+
+.edit-submit-btn{
+    color: green;
+}
+
+.announcement-input-text{
+    color: black;
+}
+
 /*Remove bullet points next to the filter options*/
 ul {
   list-style-type: none;
   padding: 0px;
 }
+

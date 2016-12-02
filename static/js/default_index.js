@@ -5,7 +5,8 @@ var _announcement_form = {
     description: null,
     name: null,
     active: false,
-    category: null
+    category: null,
+    id: null
 };
 
 
@@ -42,8 +43,6 @@ var app = function() {
 
     self.add_announcement = function () {
         // The submit button to add a post has been pressed.
-        // or the website started up?
-        console.log("add_announcement was called");
         $.post(add_announcement_url,
             {
                 name: self.vue.announcement_form.name,
@@ -131,7 +130,6 @@ var app = function() {
                     // add marker to appropriate lists
                     if( data.logged_in &&
                         data.user.email == self.vue.all_announcements[i].author){
-                        console.log(self.vue.all_announcements[i]);
                         self.vue.users_announcements.push(
                             self.vue.all_announcements[i]
                         );
@@ -214,8 +212,11 @@ var app = function() {
             var ann = self.vue.all_announcements[i];
 
             if (ann.id == m._ann_id ){
-                console.log('found ann = ', ann);
-                self.announcement_Detail(i);
+                if(ann.author == self.this_user.email) {
+                    self.edit_announcement(ann);
+                    //self.announcement_Detail(i);
+                }
+                break;
             }
         }
     });
@@ -262,7 +263,6 @@ var app = function() {
             }
         }
 
-        console.log('found_list.length=', found_list.length);
         self.re_populate_map(found_list, {category:'all'});
 
     };
@@ -294,7 +294,6 @@ var app = function() {
             console.log('delete post request');
             self.populate_after_deleting(self.vue.all_announcements);
             //self.re_populate_map(self.vue.all_announcements, null); //cant seem to re-use this function
-            //self.initial_populate_map();
         });
     };
 
@@ -340,6 +339,37 @@ var app = function() {
         $("#mapid").height($(window).height() * 1.00).width($(window).width() * 1.0 - w);
     };
 
+
+    /* ------------     Announcement Edit functions  ----------------------------*/
+
+    self.edit_announcement = function(ann){
+        self.vue.announcement_form.description = ann.description;
+        self.vue.announcement_form.name = ann.name;
+        self.vue.announcement_form.id = ann.id;
+        self.vue.edditing_announcemnt = true;
+    };
+
+
+    self.announcement_edit_submit_button = function(){
+        // The submit button to edit an announcement has been pressed.
+        $.post(edit_announcement_url,
+            {
+                name: self.vue.announcement_form.name,
+                description: self.vue.announcement_form.description,
+                announcement_id: self.vue.announcement_form.id
+            },
+            function (data) {
+                clear_announcement_form();
+                self.vue.edditing_announcemnt = false;
+            });
+    };
+
+
+    self.announcement_edit_cancel_button = function(){
+        self.vue.edditing_announcemnt = false;
+    };
+
+
     // Complete as needed.
     self.vue = new Vue({
         el: "#vue-div",
@@ -353,6 +383,7 @@ var app = function() {
             id_for_new_announcement:null,
             logged_in: false,
 
+            edditing_announcemnt: false,
             // this holds the query string that the user enters
             search_content: null,
             isCreatingAnnouncement: false,
@@ -373,6 +404,11 @@ var app = function() {
         },
 
         methods: {
+
+            /* announcement edit functions */
+            announcement_edit_submit_button: self.announcement_edit_submit_button,
+            announcement_edit_cancel_button: self.announcement_edit_cancel_button,
+
             /* navbar display functions */
             toggle_right_navbar_show: self.toggle_right_navbar_show,
 
