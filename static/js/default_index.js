@@ -41,35 +41,29 @@ var app = function() {
 
     self.add_announcement = function () {
         // The submit button to add a post has been pressed.
-        if (self.next_announcement.category in Categories) {
-            $.post(add_announcement_url,
-                {
-                    name: self.vue.announcement_form.name,
-                    description: self.vue.announcement_form.description,
-                    latitude: self.next_announcement.lat,
-                    longitude: self.next_announcement.lng,
-                    category: self.next_announcement.category
-                },
-                function (data) {
-                    //self.vue.names.unshift(data.announcement.name);
-                    //self.vue.description.unshift(data.announcement.description);
-                    //self.vue.category.unshift(data.announcement.category);
 
-                    $.web2py.enableElement($("#add_announcement_submit"));
-                    $('#CreateAnnouncementModal').modal('hide');
+        $.post(add_announcement_url,
+            {
+                name: self.vue.announcement_form.name,
+                description: self.vue.announcement_form.description,
+                latitude: self.next_announcement.lat,
+                longitude: self.next_announcement.lng,
+                category: self.next_announcement.category
+            },
+            function (data) {
+                //self.vue.names.unshift(data.announcement.name);
+                //self.vue.description.unshift(data.announcement.description);
+                //self.vue.category.unshift(data.announcement.category);
 
-                    self.vue.isCreatingAnnouncement = false;
-                    clear_announcement_form();
-                    self.campus_map.finalize_marker();
-                    self.vue.map_clickable = false;
-                });
-        }else{
-            // stub
-            // user must input category
-            self.cancel_announcement_button();
-            $.web2py.enableElement($("#add_announcement_submit"));
-            $('#CreateAnnouncementModal').modal('hide');
-        }
+                $.web2py.enableElement($("#add_announcement_submit"));
+                $('#CreateAnnouncementModal').modal('hide');
+
+                self.vue.isCreatingAnnouncement = false;
+                clear_announcement_form();
+                self.campus_map.finalize_marker();
+                self.vue.map_clickable = false;
+            });
+
 
     };
 
