@@ -65,13 +65,12 @@ var New_Map = function (onMapClick, onIconClick) {
     self.change_map_view = function(location){
         switch (location) {
             case "kresge":
-                alert('kresge');
                 self.set_coordinates(kresge_college);
                 break;
             case "merrill":
                 self.set_coordinates(merrill_college);
                 break;
-            case "rachael_carson":
+            case "rachel_carson":
                 self.set_coordinates(college_8);
                 break;
             case "oakes":
