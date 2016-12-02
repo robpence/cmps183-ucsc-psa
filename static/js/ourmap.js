@@ -110,25 +110,37 @@ var New_Map = function (onClick) {
         self.marker.icon = new_marker.icon;
         self.marker.category = new_marker.category;
         self.marker.drawn = false;
+        console.log(new_marker);
+        console.log(self.marker);
+
         self.add_marker(self.marker);
+
+        console.log(self.most_recent);
+        console.log(self.all_markers);
+
     };
 
 
     self.add_marker = function (e) {
 
-        // if this marker came from our db then it
+        // if from clicking on map
         if (self.marker.latlng == null) {
-            self.marker.latlng = e.latlng;
+            console.log("it was null");
+            if(e.latlng != null){
+                self.marker.latlng = e.latlng;
+            }
+            return;
         }
         self.most_recent = new L.marker(self.marker.latlng, {icon: self.marker.icon}).addTo(self.map).on('click', openwindow);
         self.most_recent._icon.id = self.marker.id;
-        self.map.addLayer(self.most_recent);
+        //self.map.addLayer(self.most_recent);
         self.marker.drawn = true;
     };
 
 
     //Opens the popup for the announcements information.
     function openwindow(e) {
+        console.log(e);
         console.log(e.target._icon.id);
         //gets the correct id for the announcement in the vue list.
         for (var i = 0; i < APP.vue.all_announcements.length; i++){
@@ -164,7 +176,6 @@ var New_Map = function (onClick) {
 
 
     self.delete_most_recent = function(){
-        console.log('delete_most_recent');
         if(self.most_recent != null) {
             self.map.removeLayer(self.most_recent);
             self.most_recent = null;

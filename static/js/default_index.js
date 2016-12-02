@@ -35,6 +35,8 @@ var app = function() {
 
     self.add_announcement = function () {
         // The submit button to add a post has been pressed.
+        // or the website started up?
+        console.log("add_announcement was called");
         $.post(add_announcement_url,
             {
                 name: self.vue.announcement_form.name,
@@ -44,10 +46,6 @@ var app = function() {
                 category: self.next_announcement.category
             },
             function (data) {
-                //self.vue.names.unshift(data.announcement.name);
-                //self.vue.description.unshift(data.announcement.description);
-                //self.vue.category.unshift(data.announcement.category);
-
                 $.web2py.enableElement($("#add_announcement_submit"));
                 $('#CreateAnnouncementModal').modal('hide');
 
@@ -55,6 +53,7 @@ var app = function() {
                 clear_announcement_form();
                 self.campus_map.finalize_marker();
                 self.vue.map_clickable = false;
+                self.initial_populate_map();
             });
 
     };
@@ -74,7 +73,7 @@ var app = function() {
             if (ann.category == requirments.category || requirments.category == 'all'){
                 self.campus_map.set_marker(ann);
                 self.campus_map.add_marker(ann);
-                self.vue.announcements_to_show.push(ann);
+                //self.vue.announcements_to_show.push(ann);
                 self.campus_map.finalize_marker();
             }
         }
