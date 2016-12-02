@@ -30,6 +30,38 @@ body{
   width: 200px;
   height: 100%;
 }
+
+
+/* right side navbar slideout button */
+.show-right-navbar{
+  position: fixed;
+  top: 0;
+  right: 200px;
+  margin: 0;
+  padding: 0;
+  width: 20px;
+  height: 100%;
+  background-color: darkslategray;
+}
+
+.hide-right-navbar{
+  position: fixed;
+  top: 0;
+  right: 0;
+  margin: 0;
+  padding: 0;
+  width: 20px;
+  height: 100%;
+  background-color: darkslategray;
+}
+
+.navbar-show-toggle-icon{
+    position: relative;
+    height: 48%;
+    color:white;
+}
+
+
 /* line 37, ../sass/_main.scss */
 .main_content .container-fluid .navbar-list {
   padding: 0;

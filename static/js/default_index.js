@@ -19,7 +19,8 @@ var _filter_form = {
 
 var _right_side_nav_options = {
     show_history: false,
-    create_announcement: false
+    create_announcement: false,
+    hide_tools: false
 };
 
 
@@ -279,6 +280,10 @@ var app = function() {
         self.vue.right_nav_options.show_history = !self.vue.right_nav_options.show_history;
     };
 
+    /* ------------     Right Navbar Toggle ------------------------------------*/
+    self.toggle_right_navbar_show = function(){
+        self.vue.right_nav_options.hide_tools = !self.vue.right_nav_options.hide_tools;
+    };
 
     // Complete as needed.
     self.vue = new Vue({
@@ -307,6 +312,9 @@ var app = function() {
         },
 
         methods: {
+            /* navbar display functions */
+            toggle_right_navbar_show: self.toggle_right_navbar_show,
+
             /* history functions */
             toggle_history_show: self.toggle_history_show,
 
