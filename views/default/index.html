@@ -47,9 +47,11 @@ function mOver(obj) {
                 //If you want to reserve part of the screen for a menu, like the vertical menu we have on the left,
                 //You have to change the padding in the css file.
                 $(window).on("resize", function() {
-                    $("#mapid").height($(window).height() * 1.00).width($(window).width() * 1.00 - 400);
+                    $("#mapid").height($(window).height() * 1.00).width($(window).width() * 1.00 - 420);
                     //New_Map.map.invalidateSize();
                 }).trigger("resize");
+
+
             </script>
 
             {{ include "default/modal.html" }}
@@ -60,23 +62,14 @@ function mOver(obj) {
      <nav class="vertical_menu navbar navbar-default" role="navigation">
       <div class="container-fluid">
             <ul class="nav navbar-nav">
-                 <li class="dropdown" data-w2pmenulevel="l0">
-                  <!-- search -->
-                     <form action="#" v-on:submit.prevent="" class="form-horizontal" enctype="multipart/form-data" method="post">
-                                <div class="form-group">
-                                    <div>
-                                      <!-- <input class="form-control string" id="editing_post" v-model="search_content"/> -->
-									  <input class="search_bar" id = "editing_post" v-model="search_content" type="text" name="search" placeholder="Search..">
-									  <input style="font-family:Arial, FontAwesome" class="search_button" type="submit" value="&#xF002;" v-on:click="call"/>
-                                      <span class="help-block"></span>
-                                    </div>
-                                </div>
-<!--                                 <div class="form-group">
-                                    <div>
-                                    <input style="font-family:Arial, FontAwesome" class="search_button" type="submit" value="&#xF002; Search" v-on:click="call"/>
-                                    </div>
-                                </div> -->
-                     </form>
+                <li class="dropdown" data-w2pmenulevel="l0">
+                    <!-- search -->
+                    <div class="search-input-wrapper" >
+                        <button class="search_button" v-on:click="execute_search()">
+                            <i class="fa fa-search fa-2x" aria-hidden="true"></i>
+                        </button>
+                        <input v-model="search_content" placeholder="Search">
+                    </div>
                 </li>
 
                 <li class="dropdown navlist-item" data-w2pmenulevel="l0">
@@ -95,7 +88,7 @@ function mOver(obj) {
                   </ul>
                 </li>
 
-
+     <!--------------   Filter    --------------------->
                 <li class="navlist-item">
                     <div class="filter-form-wrapper">
                     <button v-on:click="toggle_filter_show()" class="filter-dropdown-toggle">Filter</button>
@@ -103,8 +96,6 @@ function mOver(obj) {
 
                     <ul v-if="filter_form.show" class="filter-list" v-transition>
 
-                        <li><p>name <input type="checkbox" v-model="filter_form.name"></p></li>
-                        <li><p>age <input type="checkbox" v-model="filter_form.age"></p></li>
                         <li>
                             Category
                         <!-- radio buttons -->
@@ -140,104 +131,134 @@ function mOver(obj) {
         </div>
         </nav>
 
-        <!---- Right Nav Bar ----->
+
+        <!---- Right Nav Bar  ----->
+        <div v-if="!right_nav_options.hide_tools" >
+        <div class="show-right-navbar navbar navbar-default "
+             v-on:click="toggle_right_navbar_show()">
+            <div class="navbar-show-toggle-icon"></div>
+            <div class="navbar-show-toggle-icon">
+                <i class="fa fa-angle-double-right fa-2x" aria-hidden="true"></i>
+                <i class="fa fa-angle-double-left fa-2x" aria-hidden="true"></i>
+            </div>
+        </div>
+
         <nav class="right_menu navbar navbar-default" role="navigation">
-          <div class="container-fluid">
+        <div class="container-fluid">
+            <div class="navbar-header navbar-brand">
+                Public Service Announcement
+            </div>
 
-            <div class="navbar-header navbar-brand"> Public Service Announcement </div>
 
-            <div  class="collapse navbar-collapse navbar-ex1-collapse">
-                 <p class="collapse navbar-collapse navbar-ex1-collapse">
-                     <ul class="nav navbar-nav">
-                        {{='auth' in globals() and auth.navbar('Welcome',mode='dropdown') or ''}}
-                     </ul>
-                </p>
 
-                <div v-if="'{{=auth.user_id}}' > 0" class="logged-in-left-user-tools">
+                <div  class="collapse navbar-collapse navbar-ex1-collapse">
+                     <p class="collapse navbar-collapse navbar-ex1-collapse">
+                         <ul class="nav navbar-nav">
+                            {{='auth' in globals() and auth.navbar('Welcome',mode='dropdown') or ''}}
+                         </ul>
 
-                <!-- create announcement buttons -->
-                <div class="button-bar-create-announcement">
-                    <button v-if="!map_clickable" class="btn btn-danger btn-sm"
-                            v-on:click="create_announcement_button()" >
-                            <!-- v-bind:class="{'disabled': !logged_in}"-->
-                        Create Announcement
-                    </button>
-
-                    <div class="history_button">
-                    <button   v-if="!map_clickable" class="btn btn-danger btn-sm" v-on:click="hide_history()">
-                            Show my history
-                    </button>
+                    </p>
                 </div>
 
-                    <button v-if="map_clickable" class="btn btn-warning btn-sm"
-                            v-on:click="cancel_announcement_button()">
-                        Cancel
-                    </button>
-                </div>
+                <ul v-if="'{{=auth.user_id}}' > 0" class="logged-in-left-user-tools">
 
-                <!-- create announcement Form -->
-                <div class="create-announcement-wrapper" v-if="map_clickable" >
-                    <form id="create_announcement_form"
-                          action="#"
-                        v-on:submit.prevent="add_announcement"
-                        enctype="multipart/form-data"
-                         method="post">
-                        <!-- text -->
+                    <li class="navlist-item">
+                        <!-- create announcement buttons -->
+                        <div class="button-bar-create-announcement">
+                            <button v-if="!map_clickable" class="btn btn-danger btn-sm"
+                                    v-on:click="create_announcement_button()" >
+                                    <!-- v-bind:class="{'disabled': !logged_in}"-->
+                                Create Announcement
+                            </button>
 
-                        <!-- radio buttons -->
-                        <ul>
-                            <li>
-                                <input v-on:click="update_marker('urgent')" type="radio" name="category" value="Urgent" v-model="announcement_form.category">
-                                urgent
-                            </li>
-                            <li>
-                                <input v-on:click="update_marker('event')" type="radio" name="category" value="Event" v-model="announcement_form.category">
-                                event
-                            </li>
-                            <li>
-                            <input v-on:click="update_marker('shutdown')" type="radio" name="category" value="Shut Down" v-model="announcement_form.category">
-                                shut down
-                            </li>
-                            <li>
-                                ${announcement_form.category}
+                        </div>
+
+
+
+                        <button v-if="map_clickable" class="btn btn-warning btn-sm"
+                                v-on:click="cancel_announcement_button()">
+                            Cancel
+                        </button>
+
+
+                        <!-- create announcement Form -->
+                        <div class="create-announcement-wrapper" v-if="map_clickable" >
+                            <form id="create_announcement_form"
+                                  action="#"
+                                v-on:submit.prevent="add_announcement"
+                                enctype="multipart/form-data"
+                                 method="post">
+                                <!-- text -->
+
+                                <!-- radio buttons -->
+                                <ul>
+                                    <li>
+                                        <input v-on:click="update_marker('urgent')" type="radio" name="category" value="Urgent" v-model="announcement_form.category">
+                                        urgent
+                                    </li>
+                                    <li>
+                                        <input v-on:click="update_marker('event')" type="radio" name="category" value="Event" v-model="announcement_form.category">
+                                        event
+                                    </li>
+                                    <li>
+                                    <input v-on:click="update_marker('shutdown')" type="radio" name="category" value="Shut Down" v-model="announcement_form.category">
+                                        shut down
+                                    </li>
+                                </ul>
+                            </form>
+                        </div>
+                    </li>
+
+                    <li class="navlist-item">
+                        <div class="history_button">
+                            <button  class="btn btn-danger btn-sm" v-on:click="toggle_history_show()">
+                                Show my history
+                            </button>
+                        </div>
+
+                        <!-- Div for the history of annoucements-->
+                        <ul v-if="right_nav_options.show_history" id="history" class="my-history-wrapper">
+                            <li class="history-list-item" v-for="ann in users_announcements">
+                                    Title:  <br> ${ann.name} <br>
+                                    Description:  <br>
+                                    ${ann.description}  <br>
+                                    Category: ${ann.category}   <br>
+                                    <i class="fa fa-trash-o"></i>
+                                    <i class="fa fa-pencil"></i> <br>
                             </li>
                         </ul>
-                    </form>
-                </div>
-                </div>
-            </div>
-          </div>
+                    </li>
 
-            <!-- Div for the history of annoucements-->
-          <div id="history">
-              <div v-if="show_users_announcements == true">
-                   <div v-if="users_announcements.length == 0">
-                      You have not yet created an announcements
-                  </div>
-                  <div v-else>
-                      <div class="ann" v-for="ann in all_announcements" v-on:click="view_announcement_in_history(ann.latitude, ann.longitude)">
-                          Title: ${ann.name} <br>
-                         Description: ${ann.description} <br>
-                         Category: ${ann.category} <br>
-                         <i class="fa fa-trash-o"></i>
-                         <i class="fa fa-pencil"></i>
-                      </div>
+            </ul><!-- end left side nav list -->
+
+            <div v-if="show_search == true">
+              <div v-if="search_announcements.length == 0">
+                No results matched your search
+              </div>
+              <div v-else>
+                  <div class="ann" v-for="ann in search_announcements" v-on:click="view_announcement_in_history(ann.latitude, ann.longitude)">
+                     Title: ${ann.name} <br>
+                     Description: ${ann.description} <br>
+                     Category: ${ann.category} <br>
                   </div>
               </div>
-               <div v-if="show_search == true">
-                  <div v-if="search_announcements.length == 0">
-                    No results matched your search
-                  </div>
-                  <div v-else>
-                      <div class="ann" v-for="ann in search_announcements" v-on:click="view_announcement_in_history(ann.latitude, ann.longitude)">
-                         Title: ${ann.name} <br>
-                         Description: ${ann.description} <br>
-                         Category: ${ann.category} <br>
-                      </div>
-                  </div>
-              </div>
-          </div>
-        </nav>
+            </div>
+
+
+
+
+        </div>
+        </nav></div>
+
+        <div v-else class="hide-right-navbar">
+        <div class="hide-right-navbar navbar navbar-default "
+            v-on:click="toggle_right_navbar_show()">
+            <div class="navbar-show-toggle-icon"></div>
+            <div class="navbar-show-toggle-icon">
+                <i class="fa fa-angle-double-right fa-2x" aria-hidden="true"></i>
+                <i class="fa fa-angle-double-left fa-2x" aria-hidden="true"></i>
+            </div>
+        </div>
 
     </div> <!-- end vue-div -->
 
@@ -245,4 +266,5 @@ function mOver(obj) {
 </div> <!-- end main-content -->
 
 
-<script src="{{=URL('static', 'js/default_index.js')}}">    </script>
+<script src="{{=URL('static', 'js/default_index.js')}}">
+</script>

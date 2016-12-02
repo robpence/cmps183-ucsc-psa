@@ -23,7 +23,7 @@ var bounds = [
 
 
 
-var New_Map = function (onClick) {
+var New_Map = function (onMapClick, onIconClick) {
 
 
     var map = L.map('mapid', {
@@ -37,6 +37,14 @@ var New_Map = function (onClick) {
         attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
     }).addTo(map);
 
+    //this re-sizes the window automattically. Just change the numbers after height and width.
+    //If you want to reserve part of the screen for a menu, like the vertical menu we have on the left,
+    //You have to change the padding in the css file.
+    /*$(window).on("resize", function() {
+        $("#mapid").height($(window).height() * 1.00).width($(window).width() * 1.00 - 420);
+        //New_Map.map.invalidateSize();
+    }).trigger("resize");
+    */
 
     var self = {};
     self.map = map;
@@ -116,36 +124,42 @@ var New_Map = function (onClick) {
 
     self.add_marker = function (e) {
 
-        console.log(e);
         // if this marker came from our db then it
         if (self.marker.latlng == null) {
             self.marker.latlng = e.latlng;
         }
-        self.most_recent = new L.marker(self.marker.latlng, {icon: self.marker.icon}).addTo(self.map).on('click', openwindow);
+        self.most_recent = new L.marker(
+            self.marker.latlng,
+            {icon: self.marker.icon}
+        ).addTo(self.map).on('click', onIconClick);
+
+        //console.log('add_marker, marker=', self.most_recent);
+
         self.most_recent._icon.id = self.marker.id;
         self.map.addLayer(self.most_recent);
         self.marker.drawn = true;
-        console.log('recently' + self.most_recent);
     };
 
 
-    //Opens the popup for the announcements information.
-    function openwindow(e) {
-        //This formula stops working as soon as an icon is deleted. .
-        //See the newly created announcement_Detail function
-
-         //This formula below stops working as soon as an icon is deleted.
-        //var vuearrayid = (e.target._icon.id - APP.vue.all_announcements.length) * -1;
-
-        //let's just pass the icon's id directly
-        var vuearrayid = e.target._icon.id; //add_marker must be created first
-        APP.announcement_Detail(vuearrayid);
-    }
+    self.find_marker = function (target){
+        for(var i = 0; i < self.all_markers.length; i++){
+            var m = self.all_markers[i];
+            if(m._leaflet_id == target._leaflet_id){
+                return m;
+            }
+        }
+        // could not find marker
+        console.log('ourmap.find_marker: could not find target');
+        return null;
+    };
 
     
     /* this layer is created when a user enters a search query. They can be of all categories, so switch statement is no good */
     self.create_search_layer = function() {
-        var store_marker = L.marker(self.marker.latlng, {icon:self.marker.icon}).addTo(self.map).on('click', openwindow);
+        var store_marker = L.marker(
+            self.marker.latlng,
+            {icon:self.marker.icon}
+        ).addTo(self.map).on('click', onIconClick);
 
         //this isn't doing anything for some reason
         store_marker._icon.id = self.marker.id;
@@ -156,7 +170,6 @@ var New_Map = function (onClick) {
 
     self.clear_map = function(){
         for(var i = 0; i < self.all_markers.length; i++){
-            console.log(self.all_markers[i]);
             self.map.removeLayer(self.all_markers[i]);
         }
     };
@@ -169,7 +182,8 @@ var New_Map = function (onClick) {
     };
 
 
-    self.finalize_marker = function(){
+    self.finalize_marker = function(id){
+        self.most_recent._ann_id = id;
         self.all_markers.push(self.most_recent);
         self.most_recent = null;
     };
@@ -187,7 +201,7 @@ var New_Map = function (onClick) {
     self.map.on('click', function(e) {
         if(APP.vue.map_clickable == true){
             self.add_marker(e);
-            onClick(e.latlng.lat, e.latlng.lng);
+            onMapClick(e.latlng.lat, e.latlng.lng, e);
             $('#CreateAnnouncementModal').modal('show');
         }
     });

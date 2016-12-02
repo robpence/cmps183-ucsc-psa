@@ -2,6 +2,9 @@
  * Created by diesel on 11/18/16.
  */
 
+
+var Categories = ['urgent', 'event', "shutdown"];
+
 var Announcement = function (announcement_type){
 
     //console.log("Announcement: ann_type = ", announcement_type);
