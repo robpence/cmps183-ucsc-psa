@@ -74,26 +74,6 @@ def add_announcement():
 
         return response.json(ann)
 
-def get_users_announcements():
-    if(auth.user != None):
-        users_announcements = db(db.Announcements.author == auth.user).select()
-        #users_announcements = db(db.Announcements.author == auth.user.email).select()
-        return response.json(dict(users_announcements = users_announcements))
-    else:
-        return response.json(dict(users_announcements = None))
-
-def get_only_urgent():
-    urgent_announcements = db(db.Announcements.category == 'urgent').select()
-    return response.json(dict(urgent_announcements = urgent_announcements))
-
-def get_only_event():
-    event_announcements = db(db.Announcements.category == 'event').select()
-    return response.json(dict(event_announcements = event_announcements))
-
-def get_only_shutdown():
-    shutdown_announcements = db(db.Announcements.category == 'shutdown').select()
-    logger.info("shutdown %r" % shutdown_announcements)
-    return response.json(dict(shutdown_announcements = shutdown_announcements))
 
 
 def get_announcement(p_id, u_email):
@@ -120,8 +100,8 @@ def edit_announcement():
     return response.json(announcement)
 
 
+@auth.requires_signature()
 def delete_announcement():
-
     ann = request.vars.announcement_id
     db(db.Announcements.id == ann).delete()
     logger.info("deleted announcement with id %r" % ann)

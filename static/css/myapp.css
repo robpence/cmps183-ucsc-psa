@@ -1,7 +1,7 @@
 /*Layout of map displayed on screen */
 body{
     padding-top: 0px;
-    margin-top: 0px;
+    margin-top: 65px;
     margin-bottom: 0px;
     padding-bottom: 0px;
     padding-left: 0px;
@@ -9,10 +9,16 @@ body{
     margin-right: 0px;
     margin-left: 0px;
 }
+
+#mapid {
+
+
+}
+
 /* line 23, ../sass/_main.scss */
 .main_content {
     padding-top: 0px;
-    margin-top: 0px;
+    margin-top: 65px;
     margin-bottom: 0px;
     padding-bottom: 0px;
     padding-left: 0px;
@@ -21,38 +27,42 @@ body{
     margin-left: 0px;
 }
 /* line 25, ../sass/_main.scss */
-.main_content .vertical_menu {
+.main_content .left-navbar {
   position: fixed;
-  top: 0;
+  top: 65px;
   left: 0;
   margin: 0;
   padding: 0;
   width: 200px;
   height: 100%;
+    border-radius: 0;
+    overflow-y: scroll;
 }
 
 
 /* right side navbar slideout button */
 .show-right-navbar{
-  position: fixed;
-  top: 0;
-  right: 200px;
-  margin: 0;
-  padding: 0;
-  width: 20px;
-  height: 100%;
-  background-color: darkslategray;
+    position: fixed;
+    top: 65px;
+    right: 200px;
+    margin: 0;
+    padding: 0;
+    width: 20px;
+    height: 100%;
+    background-color: darkslategray;
+    border-radius: 0;
 }
 
 .hide-right-navbar{
-  position: fixed;
-  top: 0;
-  right: 0;
-  margin: 0;
-  padding: 0;
-  width: 20px;
-  height: 100%;
-  background-color: darkslategray;
+    position: fixed;
+    top: 65px;
+    right: 0;
+    margin: 0;
+    padding: 0;
+    width: 20px;
+    height: 100%;
+    background-color: darkslategray;
+    border-radius: 0;
 }
 
 .navbar-show-toggle-icon{
@@ -88,15 +98,16 @@ body{
     color: white;
 }
 /* line 36, ../sass/_main.scss */
-.main_content .right_menu {
-  /*position: fixed;*/
-  position: fixed;
-  top: 0;
-  right: 0;
-  margin: 0;
-  padding: 0;
-  width: 200px;
-  height: 100%;
+.main_content .right-navbar {
+    /*position: fixed;*/
+    position: fixed;
+    top: 65px;
+    right: 0;
+    margin: 0;
+    padding: 0;
+    width: 200px;
+    height: 100%;
+    border-radius: 0;
 }
 /* line 46, ../sass/_main.scss */
 .main_content #history {
@@ -167,8 +178,11 @@ input[type=text]:focus {
 
 
 .search-input-wrapper {
-    margin: 5px;
+
+    float: left;
+    margin: 20px;
     padding: 1px;
+
 }
 
 
@@ -194,12 +208,22 @@ input[type=text]:focus {
 
 .history-list-item{
     margin: 10px;
+    padding: 10px;
+    background-color: lightgrey;
+    border-radius: 5px;
+    border-color: dimgray;
+    color: whitesmoke;
 }
 
 
 .edit-submit-btn{
     color: green;
 }
+
+.edit-delete-btn{
+    color: red;
+}
+
 
 .announcement-input-text{
     color: black;
@@ -211,3 +235,50 @@ ul {
   padding: 0px;
 }
 
+.navbar-fixed-top {
+    height: 65px;
+}
+
+.top-navbar-list-item{
+    float: left;
+}
+
+.navbar-brand{
+    margin: 0;
+    padding: 0;
+}
+
+
+.display-post-title{
+    color: black;
+    text-transform: uppercase;
+    letter-spacing: 0.1rem;
+    font-size: 1.2rem;
+}
+
+.display-post-description{
+    padding-top: 10px;
+    color: #777;
+    font-size: 0.9rem;
+}
+
+
+.leftside-ann-details{
+}
+
+.btn-close-ann-detail{
+    color: red;
+
+}
+
+.minimized-announcements-list {
+    left: 200px;
+    bottom: 0;
+    position: fixed;
+}
+
+.minimized-announcement-item {
+    margin: 5px;
+    padding: 5px;
+    float:left;
+}
