@@ -146,6 +146,19 @@ var New_Map = function (onMapClick, onIconClick) {
     };
 
 
+    self.delete_marker = function(target){
+         for(var i = 0; i < self.all_markers.length; i++){
+            var m = self.all_markers[i];
+            if(m._leaflet_id == target._leaflet_id){
+                self.map.removeLayer(m);
+                self.all_markers.splice(i, 1);
+            }
+        }
+        // could not find marker
+        console.log('ourmap.delete_marker: could not find target');
+        return null;
+    };
+
 
     self.clear_map = function(){
         for(var i = 0; i < self.all_markers.length; i++){

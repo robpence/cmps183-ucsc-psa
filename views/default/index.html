@@ -8,6 +8,7 @@
     var get_announcements_url = "{{=URL('api', 'get_announcements')}}";
     var add_announcement_url = "{{=URL('api', 'add_announcement', user_signature=True)}}";
     var edit_announcement_url = "{{=URL('api', 'edit_announcement', user_signature=True)}}";
+    var delete_announcement_url = "{{=URL('api', 'delete_announcement', user_signature=True)}}";
 
 </script>
 
@@ -178,6 +179,11 @@ function mOver(obj) {
                         <button class="btn btn-sm edit-submit-btn"
                             v-on:click="announcement_edit_cancel_button()">
                             cancel
+                        </button>
+
+                        <button class="btn btn-sm edit-delete-btn"
+                            v-on:click="announcement_edit_delete_button(announcement_form.id)">
+                            <i class="fa fa-trash-o"></i>
                         </button>
                     </li>
 

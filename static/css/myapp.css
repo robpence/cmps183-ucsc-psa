@@ -201,6 +201,11 @@ input[type=text]:focus {
     color: green;
 }
 
+.edit-delete-btn{
+    color: red;
+}
+
+
 .announcement-input-text{
     color: black;
 }
