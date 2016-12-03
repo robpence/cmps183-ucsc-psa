@@ -38,7 +38,7 @@
             </form>
 
             <div>
-                <ul v-for="comment in announcement_comments">
+                <ul v-for="(comment, index) in announcement_comments">
                     <li class="history-list-item" v-if="comment.ann_id == id_to_be_deleted">
                                     ${comment.comment_text}
                                     <br>
@@ -46,8 +46,10 @@
                                     <br>
                                     Score: ${comment.score}
                                     <br>
-                                    <i class="fa fa-trash-o"></i>
-                                    <i class="fa fa-pencil"></i> <br>
+                                    <i class="fa fa-trash-o" v-on:click="delete_comment(index)"></i>
+                                    <i class="fa fa-pencil" v-on:click="edit_comment(index)"></i>
+                                    <i class="fa fa-thumbs-o-up" v-on:click="up_vote_comment(index)"></i>
+                                    <i class="fa fa-thumbs-o-down" v-on:click="down_vote_comment(index)"></i>
                                     <!-- ran outa time but upvote and downvote buttons go here-->
                     </li>
                 </ul>

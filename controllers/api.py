@@ -210,5 +210,21 @@ def get_comments_for_announcements():
         #has_more=has_more,
     ))
 
+def delete_comment():
+    logger.info("deleted comment with id %r" % request.vars.comment_id)
+    db(db.Comments.id == request.vars.comment_id).delete()
+    logger.info("comment with id: %r" % db(db.Comments.id == request.vars.comment_id))
+    db.commit()
+    return "ok"
 
+def up_vote_comment():
+    comment_id = request.vars.commit_id
+    logger.info("comment: %r" % comment_id)
+    db(db.Comments.id == request.vars.comment_id).update(score= db.Comments.score + 1)
+    return "ok"
 
+def down_vote_comment():
+    comment_id = request.vars.commit_id
+    logger.info("comment: %r" % comment_id)
+    db(db.Comments.id == request.vars.comment_id).update(score=db.Comments.score - 1)
+    return "ok"

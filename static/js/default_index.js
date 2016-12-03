@@ -388,7 +388,7 @@ var app = function() {
     };
 
 
-    /* ------------     Announcement Edit functions  ----------------------------*/
+    /* ------------     Comment functions  ----------------------------*/
     self.add_comment = function () {
         console.log(self.vue.id_to_be_deleted);
         $.post(add_comment_url,
@@ -413,6 +413,39 @@ var app = function() {
                 self.vue.announcement_comments = data.comments;
             });
         console.log(self.vue.announcement_comments);
+    };
+
+    self.delete_comment = function(comment_idx){
+      console.log("delete_comment_called");
+        $.post(delete_comment_url,
+            { comment_id: self.vue.announcement_comments[comment_idx].id },
+            function () {
+                self.vue.get_comments_for_announcements();
+                console.log(comment_idx)
+            }
+        )
+    };
+
+    self.up_vote_comment = function(comment_idx){
+        console.log("up_vote_comment_called");
+            $.post(up_vote_comment_url,
+                { comment_id: self.vue.announcement_comments[comment_idx].id },
+                function () {
+                    self.vue.get_comments_for_announcements();
+                    console.log(comment_idx)
+                }
+            );
+    };
+
+    self.down_vote_comment = function(comment_idx){
+        console.log("down_vote_comment_called");
+            $.post(down_vote_comment_url,
+                { comment_id: self.vue.announcement_comments[comment_idx].id },
+                function () {
+                    self.vue.get_comments_for_announcements();
+                    console.log(comment_idx)
+                }
+            );
     };
 
     // Complete as needed.
@@ -454,8 +487,10 @@ var app = function() {
 
             /* comment functions*/
             add_comment: self.add_comment,
-            //delete_comment: self.delete_comment,
+            delete_comment: self.delete_comment,
             get_comments_for_announcements: self.get_comments_for_announcements,
+            up_vote_comment: self.up_vote_comment,
+            down_vote_comment: self.up_vote_comment,
 
 
             /* announcement edit functions */
