@@ -228,3 +228,19 @@ def down_vote_comment():
     logger.info("comment: %r" % comment_id)
     db(db.Comments.id == request.vars.comment_id).update(score=db.Comments.score - 1)
     return "ok"
+
+def edit_comment():
+    """Here you get a new announcement and add it.  Return what you want."""
+    # Implement me!
+
+    logger.info("vars: %r" % request.vars)
+    logger.info("vars_comment_text: %r" % request.vars.comment_text)
+    logger.info("vars id: %r" % request.vars.comment_id)
+    logger.info("comment_text: %r" % db(db.Comments.id == request.vars.comment_id))
+
+    #comment.comment_text = request.vars.comment_text
+    #comment.edited_on = datetime.datetime.utcnow()
+    db(db.Comments.id == request.vars.comment_id).update(comment_text=request.vars.comment_text, edited_on=datetime.datetime.utcnow())
+    db.commit()
+    logger.info("comment_text: %r" % db(db.Comments.id == request.vars.comment_id))
+    return "ok"

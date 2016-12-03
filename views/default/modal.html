@@ -26,16 +26,33 @@
                 <button v-on:click="delete_announcement()" type="button" class="btn btn-primary" id="announcement_submit" data-dismiss="modal">Delete</button>
             </div>
 
-            <form action="#" v-on:submit.prevent="add_comment" class="form-horizontal" enctype="multipart/form-data" method="post">
-                <div class="form-group" id="no_table_name__row">
-                    <div>
-                        <input class="form-control string"  id="no_table_name"  v-model="comment_form.comment_text" placeholder="Comment..." type="text" />
+            <li class="navlist-item" v-if="editing_comment">
+
+                        <input v-model="comment_form.comment_text" class="announcement-input-text"> <br>
+
+                        <button class="btn btn-sm edit-submit-btn"
+                                v-on:click="comment_edit_submit_button()">
+                                done
+                        </button>
+
+                        <button class="btn btn-sm edit-submit-btn"
+                            v-on:click="comment_edit_cancel_button()">
+                            cancel
+                        </button>
+            </li>
+
+            <div v-if="!editing_comment">
+                <form action="#" v-on:submit.prevent="add_comment" class="form-horizontal" enctype="multipart/form-data" method="post">
+                    <div class="form-group" id="no_table_name__row">
+                        <div>
+                            <input class="form-control string"  id="no_table_name"  v-model="comment_form.comment_text" placeholder="Comment..." type="text" />
+                        </div>
                     </div>
-                </div>
-                <div>
-                    <input class="btn btn-primary" id="add_comment_submit" type="submit" value="Post Comment" />
-                </div>
-            </form>
+                    <div>
+                        <input class="btn btn-primary" id="add_comment_submit" type="submit" value="Post Comment" />
+                    </div>
+                </form>\
+            </div>
 
             <div>
                 <ul v-for="(comment, index) in announcement_comments">

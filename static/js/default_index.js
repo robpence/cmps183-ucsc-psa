@@ -448,6 +448,36 @@ var app = function() {
             );
     };
 
+    self.edit_comment = function(comment_idx){
+        self.vue.comment_form.comment_text = self.vue.announcement_comments[comment_idx].comment_text;
+        self.vue.comment_form.id = self.vue.announcement_comments[comment_idx].id;
+        self.vue.editing_comment_id = self.vue.announcement_comments[comment_idx].id;
+        console.log(self.vue.editing_comment_id);
+        self.vue.editing_comment = true;
+        console.log("edit comment called");
+    };
+
+    self.comment_edit_submit_button = function(){
+        // The submit button to edit an announcement has been pressed.
+        console.log("edit submit button called");
+        $.post(edit_comment_url,
+            {
+                comment_text: self.vue.comment_form.comment_text,
+                comment_id:  self.vue.editing_comment_id
+            },
+            function (data) {
+                clear_comment_form();
+                self.vue.editing_comment = false;
+                //this can probably be changed to get comments for a specific announcement but oh well.
+                self.vue.get_comments_for_announcements();
+            });
+    };
+
+
+    self.comment_edit_cancel_button = function(){
+        self.vue.editing_comment = false;
+    };
+
     // Complete as needed.
     self.vue = new Vue({
         el: "#vue-div",
@@ -455,6 +485,7 @@ var app = function() {
         unsafeDelimiters: ['!{', '}'],
 
         data: {
+            editing_comment_id: null,
             index_to_be_deleted: null,
             id_to_be_deleted: null,
             id_for_deleted_announcement: null,
@@ -462,6 +493,7 @@ var app = function() {
             logged_in: false,
 
             edditing_announcemnt: false,
+            editing_comment: false,
             // this holds the query string that the user enters
             search_content: null,
             isCreatingAnnouncement: false,
@@ -490,7 +522,10 @@ var app = function() {
             delete_comment: self.delete_comment,
             get_comments_for_announcements: self.get_comments_for_announcements,
             up_vote_comment: self.up_vote_comment,
-            down_vote_comment: self.up_vote_comment,
+            down_vote_comment: self.down_vote_comment,
+            edit_comment: self.edit_comment,
+            comment_edit_submit_button: self.comment_edit_submit_button,
+            comment_edit_cancel_button: self.comment_edit_cancel_button,
 
 
             /* announcement edit functions */
