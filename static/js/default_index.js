@@ -25,6 +25,9 @@ var _right_side_nav_options = {
 };
 
 
+var _left_side_nav_options = {
+    show_ann_detail: false
+};
 
 
 var app = function() {
@@ -64,6 +67,8 @@ var app = function() {
                 clear_announcement_form();
                 self.campus_map.finalize_marker(added_announcement['id']);
                 self.vue.all_announcements.push(added_announcement);
+                self.vue.announcements_to_show.push(added_announcement);
+
                 //self.vue.users_announcements.push(added_announcement);
 
                 self.vue.users_announcements.unshift(added_announcement);
@@ -124,6 +129,7 @@ var app = function() {
 
                     // draw marker
                     self.campus_map.draw_marker(ann.latlng, ann.icon);
+                    self.vue.announcements_to_show.push(ann);
                     self.campus_map.finalize_marker(ann['id']);
 
                     // add marker to appropriate lists
@@ -459,6 +465,50 @@ var app = function() {
     };
 
 
+    self.show_announcement_details = function(ann){
+        console.log('show_announcement_details, ann=', ann);
+        self.vue.left_nav_options.show_ann_detail = true;
+        self.vue.show_this_announcement = ann;
+    };
+
+
+    self.close_announcement_details = function(){
+        self.vue.left_nav_options.show_ann_detail = false;
+    };
+
+
+    self.minimize_announcement = function(ann){
+        console.log('enter minimize_announcement');
+        self.vue.left_nav_options.show_ann_detail = false;
+        self.vue.minimized_announcements.push(ann);
+        console.log('end minimize_announcement');
+    };
+
+    self.close_minimized_announcement = function(target){
+         console.log("close_minimized_announcements");
+         // remove from all_announcements
+
+        for(var i=0; i < self.vue.minimized_announcements.length; i++){
+            var ann = self.vue.minimized_announcements[i];
+            if (ann.id == target.id ){
+                self.vue.minimized_announcements.splice(i, 1);
+                break;
+            }
+        }
+
+        console.log("close_minimized_announcements, mini_anns=",self.vue.minimized_announcements);
+
+    };
+
+
+    self.restore_minimized_announcement = function(ann){
+        console.log("resotore_minimized_announcements");
+        self.close_minimized_announcement(ann);
+        self.vue.left_nav_options.show_ann_detail = true;
+        self.vue.show_this_announcement = ann;
+    };
+
+
     // Complete as needed.
     self.vue = new Vue({
         el: "#vue-div",
@@ -466,6 +516,8 @@ var app = function() {
         unsafeDelimiters: ['!{', '}'],
 
         data: {
+            show_this_announcement: null,
+
             index_to_be_deleted: null,
             id_for_deleted_announcement: null,
             id_for_new_announcement:null,
@@ -482,16 +534,25 @@ var app = function() {
             users_announcements: [],
             announcements_to_show: [],
             search_announcements: [],
+            minimized_announcements: [],
 
             map_clickable: false,
             show_search: false,
 
             right_nav_options: _right_side_nav_options,
+            left_nav_options: _left_side_nav_options,
 
             this_user:null
         },
 
         methods: {
+
+            /* left side announcement display functions */
+            show_announcement_details: self.show_announcement_details,
+            close_announcement_details: self.close_announcement_details,
+            minimize_announcement: self.minimize_announcement,
+            restore_minimized_announcement: self.restore_minimized_announcement,
+            close_minimized_announcement: self.close_minimized_announcement,
 
             /* announcement edit functions */
             announcement_edit_submit_button: self.announcement_edit_submit_button,
