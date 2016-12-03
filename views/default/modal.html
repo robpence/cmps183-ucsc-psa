@@ -43,9 +43,9 @@
 
             <div v-if="!editing_comment">
                 <form action="#" v-on:submit.prevent="add_comment" class="form-horizontal" enctype="multipart/form-data" method="post">
-                    <div class="form-group" id="no_table_name__row">
+                    <div class="form-group" id="comment">
                         <div>
-                            <input class="form-control string"  id="comment"  v-model="comment_form.comment_text" placeholder="Comment..." type="text" />
+                            <input class="form-control string" v-model="comment_form.comment_text" placeholder="Comment..." type="text" />
                         </div>
                     </div>
                     <div>

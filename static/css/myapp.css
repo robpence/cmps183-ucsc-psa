@@ -62,11 +62,14 @@ body{
 }
 
 .modal-content #comment {
-
-    border-style:solid;
-    border-width: 2px;
-    border-color: #00d95a;
-    float: left;
+    /*border-style:solid;*/
+    /*border-width: 2px;*/
+    /*border-color: #00d95a;*/
+    float: right;
+    position: relative;
+    left: -69%; /* or right 50% */
+    text-align: left;
+    bottom: 65px;
 }
 
 
