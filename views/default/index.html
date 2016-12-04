@@ -303,6 +303,10 @@ function mOver(obj) {
                         <textarea v-model="announcement_form.description" class="announcement-input-text">
                         </textarea>
 
+                        <input class="form-control string" id="no_table_description" v-model="announcement_form.end_date" type="date" />
+                        <span class="help-block"></span>
+
+
                         <button class="btn btn-sm edit-submit-btn"
                                 v-on:click="add_announcement()">
                                 done
