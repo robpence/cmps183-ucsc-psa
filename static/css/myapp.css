@@ -173,7 +173,7 @@ input.search_bar{
 
 /* When the input field gets focus, change its width to 100% */
 input[type=text]:focus {
-    width: 130px;
+    width: 100%;
 }
 
 
@@ -192,7 +192,8 @@ input[type=text]:focus {
 }
 .form-group {
     margin-bottom: 15px;
-	width: 200px;
+	width: 100%;
+	resize: none;
 }
 
 
