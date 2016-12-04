@@ -1,3 +1,20 @@
+
+
+
+
+
+# for my pycharm project
+.idea/
+
+# for sass
+.sass-cache/
+static/.sass-cache/
+
+
+
+
+
+
 # for web2py
 cache
 databases
