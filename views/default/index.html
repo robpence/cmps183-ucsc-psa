@@ -7,8 +7,19 @@
 
     var get_announcements_url = "{{=URL('api', 'get_announcements')}}";
     var add_announcement_url = "{{=URL('api', 'add_announcement', user_signature=True)}}";
-    var edit_announcement_url = "{{=URL('api', 'edit_announcement', user_signature=True)}}";
+    var get_users_announcements_url = "{{=URL('api', 'get_users_announcements')}}";
+    var get_search_url = "{{=URL('api', 'get_search')}}";
     var delete_announcement_url = "{{=URL('api', 'delete_announcement', user_signature=True)}}";
+    var check_announcements_url = "{{=URL('api', 'check_announcements_date')}}";
+    var edit_announcement_url = "{{=URL('api', 'edit_announcement', user_signature=True)}}";
+    var add_comment_url = "{{=URL('api', 'add_comment_to_announcement', user_signature=True)}}";
+    var get_comments_for_announcements_url = "{{=URL('api', 'get_comments_for_announcements')}}";
+    var delete_comment_url = "{{=URL('api', 'delete_comment')}}";
+    var up_vote_comment_url = "{{=URL('api', 'up_vote_comment')}}";
+    var down_vote_comment_url = "{{=URL('api', 'down_vote_comment')}}";
+    var edit_comment_url = "{{=URL('api', 'edit_comment')}}";
+    var up_vote_announcement_url = "{{=URL('api', 'up_vote_announcement')}}";
+    var down_vote_announcement_url = "{{=URL('api', 'down_vote_announcement')}}";
 
 </script>
 
@@ -106,7 +117,7 @@ function mOver(obj) {
 
                 <li class="top-navbar-list-item">
                     <div  class="collapse navbar-collapse navbar-ex1-collapse">
-                         <p class="collapse navbar-collapse navbar-ex1-collapse">
+                         <!-- <p class="collapse navbar-collapse navbar-ex1-collapse"> -->
                              <ul class="nav navbar-nav">
                                 {{='auth' in globals() and auth.navbar('Welcome',mode='dropdown') or ''}}
                              </ul>
@@ -185,7 +196,6 @@ function mOver(obj) {
                 <li class="dropdown navlist-item" data-w2pmenulevel="l0">
                   <a href="#" class="dropdown-toggle" data-toggle="dropdown">View</a>
                   <ul class="dropdown-menu">
-                    <li><a v-on:click="change_view('reset')" class="menu_links">Reset View</a></li>
                     <li><a v-on:click="change_view('crown')" class="menu_links">Crown</a></li>
                     <li><a v-on:click="change_view('merrill')" class="menu_links">Merrill</a></li>
                     <li><a v-on:click="change_view('rachael_carson')" class="menu_links">Rachael Carson</a></li>
@@ -198,7 +208,6 @@ function mOver(obj) {
                     <li><a v-on:click="change_view('oakes')" class="menu_links">Oakes</a></li>
                   </ul>
                 </li>
-        -->
 
                 <!--------------   Filter    --------------------->
     <!--
@@ -211,7 +220,6 @@ function mOver(obj) {
 
                         <li>
                             Category
-    -->
                         <!-- radio buttons -->
     <!--                    <ul>
                             <li>
@@ -241,7 +249,6 @@ function mOver(obj) {
                     </ul>
                     </div>
                 </li>
-        -->
             </ul>
         </div>
         </nav>
@@ -377,7 +384,7 @@ function mOver(obj) {
 
                                <!-- Div for the history of annoucements-->
                                 <ul id="history" class="my-history-wrapper">
-                                    <li class="history-list-item" v-for="ann in users_announcements">
+                                    <li class="history-list-item" v-for="ann in users_announcements" v-on:click="view_history_announcement(ann.latlng)">
                                             Title:  <br> ${ann.name} <br>
                                             Description:  <br>
                                             ${ann.description}  <br>

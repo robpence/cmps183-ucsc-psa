@@ -133,6 +133,18 @@ var New_Map = function (onMapClick, onIconClick) {
 
 
 
+    //Opens the popup for the announcements information.
+    function openwindow(e) {
+        console.log(e);
+        console.log(e.target._icon.id);
+        //gets the correct id for the announcement in the vue list.
+        for (var i = 0; i < APP.vue.all_announcements.length; i++){
+            if (e.target._icon.id == APP.vue.all_announcements[i].id){
+                APP.announcement_Detail(i);
+            }
+        }
+    }
+    
     self.find_marker = function (target){
         for(var i = 0; i < self.all_markers.length; i++){
             var m = self.all_markers[i];

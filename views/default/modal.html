@@ -25,6 +25,53 @@
                 <button type="button" class="btn btn-default" id="announcement_cancel" data-dismiss="modal">Cancel</button>
                 <button v-on:click="delete_announcement()" type="button" class="btn btn-primary" id="announcement_submit" data-dismiss="modal">Delete</button>
             </div>
+
+            <li class="navlist-item" v-if="editing_comment">
+
+                        <input v-model="comment_form.comment_text" class="announcement-input-text"> <br>
+
+                        <button class="btn btn-sm edit-submit-btn"
+                                v-on:click="comment_edit_submit_button()">
+                                done
+                        </button>
+
+                        <button class="btn btn-sm edit-submit-btn"
+                            v-on:click="comment_edit_cancel_button()">
+                            cancel
+                        </button>
+            </li>
+
+            <div v-if="!editing_comment">
+                <form action="#" v-on:submit.prevent="add_comment" class="form-horizontal" enctype="multipart/form-data" method="post">
+                    <div class="form-group" id="comment">
+                        <div>
+                            <input class="form-control string" v-model="comment_form.comment_text" placeholder="Comment..." type="text" />
+                        </div>
+                    </div>
+                    <div>
+                        <input class="btn btn-primary" id="add_comment_submit" type="submit" value="Post Comment" />
+                    </div>
+                </form>
+            </div>
+
+            <div>
+                <ul v-for="(comment, index) in announcement_comments">
+                    <li class="history-list-item" v-if="comment.ann_id == id_to_be_deleted">
+                                    ${comment.comment_text}
+                                    <br>
+                                    Author: ${comment.author}
+                                    <br>
+                                    Score: ${comment.score}
+                                    <br>
+                                    <i class="fa fa-trash-o" v-on:click="delete_comment(index)"></i>
+                                    <i class="fa fa-pencil" v-on:click="edit_comment(index)"></i>
+                                    <i class="fa fa-thumbs-o-up" v-on:click="up_vote_comment(index)"></i>
+                                    <i class="fa fa-thumbs-o-down" v-on:click="down_vote_comment(index)"></i>
+                                    <!-- ran outa time but upvote and downvote buttons go here-->
+                    </li>
+                </ul>
+            </div>
+
         </div>
     </div>
 </div>
@@ -51,6 +98,13 @@
                     <div class="form-group" id="no_table_description__row">
                         <div>
                             <input class="form-control string" id="no_table_description" v-model="announcement_form.description" placeholder="description" type="text" />
+                          <span class="help-block"></span>
+                        </div>
+                    </div>
+
+                    <div class="form-group" id="no_table_description__row">
+                        <div>
+                            <input class="form-control string" id="no_table_description" v-model="announcement_form.end_date" type="date" />
                           <span class="help-block"></span>
                         </div>
                     </div>
