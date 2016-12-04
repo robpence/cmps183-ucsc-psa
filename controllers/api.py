@@ -2,16 +2,25 @@ __author__ = 'diesel'
 
 import datetime
 
+
+
+
+
+""" -----------------------------------------------------------------------------------
+                    Announcements Functions
+-----------------------------------------------------------------------------------"""
+
 def _setup_announcement(a):
     return a
 
-def _setup_comment(c):
-    return c
 
 
 def get_announcements():
 
-    check_announcements_date()
+    try:
+        check_announcements_date()
+    except TypeError as e:
+        logger.info("====> api:get_announcements():  %r " % e)
 
     logger.info("====> api:get_announcements(): request.vars= %r " % request.vars)
 
@@ -47,14 +56,21 @@ def get_announcements():
         #has_more=has_more,
     ))
 
+
 #checks the date and deletes it if it older than 3 days i think.
 def check_announcements_date():
     announcements = db(db.Announcements).select(orderby=~db.Announcements.created_on)
+
     for announcement in announcements:
+
         #if the announcement is an event
         if announcement.category == "event":
-            past = datetime.datetime.strptime(announcement.end_date, "%Y-%m-%d")
+            past = datetime.datetime.strptime(
+                announcement.end_date,
+                "%Y-%m-%d")
+
             present = datetime.datetime.utcnow()
+
             #if the event is one day over its end date then it will delete.
             if (present - past).days > 1:
                 db(db.Announcements.id == announcement.id).delete()
@@ -62,9 +78,11 @@ def check_announcements_date():
         else:
             past = datetime.datetime.strptime(announcement.created_on, "%Y-%m-%d %H:%M:%S.%f")
             present = datetime.datetime.utcnow()
+
             # everything that not a event gets deleted after a day.
             if (present - past).days > 1:
                 # calc = (present - past).days
+
                 # print(calc)
                 # print("deleted: " + str(announcement))
                 db(db.Announcements.id == announcement.id).delete()
@@ -141,6 +159,9 @@ def delete_announcement():
     logger.info("deleted announcement with id %r" % ann)
     return "ok"
 
+
+
+
 # Note that we need the URL to be signed, as this changes the db.
 @auth.requires_signature()
 @auth.requires_login()
@@ -159,8 +180,18 @@ def add_comment_to_announcement():
 
     return response.json(comment)
 
-def get_comments_for_announcements():
 
+
+""" -----------------------------------------------------------------------------------
+                    Comments Functions
+-----------------------------------------------------------------------------------"""
+
+def _setup_comment(c):
+    return c
+
+
+
+def get_comments_for_announcements():
     logger.info("====> api:get_comments_for_announcement(): request.vars= %r " % request.vars)
 
     # We just generate a lot of of data.
@@ -190,6 +221,9 @@ def get_comments_for_announcements():
         #has_more=has_more,
     ))
 
+
+
+
 def delete_comment():
     logger.info("deleted comment with id %r" % request.vars.comment_id)
     db(db.Comments.id == request.vars.comment_id).delete()
@@ -197,17 +231,20 @@ def delete_comment():
     db.commit()
     return "ok"
 
+
 def up_vote_comment():
     comment_id = request.vars.commit_id
     logger.info("comment: %r" % comment_id)
     db(db.Comments.id == request.vars.comment_id).update(score= db.Comments.score + 1)
     return "ok"
 
+
 def down_vote_comment():
     comment_id = request.vars.commit_id
     logger.info("comment: %r" % comment_id)
     db(db.Comments.id == request.vars.comment_id).update(score=db.Comments.score - 1)
     return "ok"
+
 
 def edit_comment():
     """Here you get a new announcement and add it.  Return what you want."""
