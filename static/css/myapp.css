@@ -243,22 +243,22 @@ input[type=text]:focus {
     /*color: whitesmoke;*/
 }
 
-.comment-list-item{
-    margin: 0px;
-    padding-bottom: 1px;
-    background-color: white;
-    border-radius: 2px;
-    border-color: grey;
-    color: whitesmoke;
-}
+
 
 div.announcement_title_div{
     border-bottom: solid;
     border-bottom-color: darkgray;
     border-bottom-width: 1px;
     text-transform: uppercase;
+    font-size:16px;
     /*background-color: #d9534f;*/
 }
+
+div.announcement_text_div{
+   font-size:14px;
+    text-wrap: normal;
+}
+
 div.announce_text_div{
     border-bottom: solid;
     border-bottom-color: darkgray;
@@ -339,8 +339,13 @@ ul {
     height: 65px;
 }
 
+.top-navbar-list{
+    height: 65px;
+
+}
 .top-navbar-list-item{
     float: left;
+    height: 65px;
 }
 
 .navbar-brand{
@@ -349,11 +354,13 @@ ul {
 }
 
 
-.display-post-title{
+.minimized-post-title{
+    float: left;
     color: black;
     text-transform: uppercase;
     letter-spacing: 0.1rem;
     font-size: 1.2rem;
+    padding: 2px;
 }
 
 .display-announcements-list{
@@ -372,22 +379,32 @@ ul {
 }
 
 .btn-close-ann-detail{
-    color: red;
+    float: left;
+    color: #004488;
 }
 
 .btn-restore-ann-detail{
+    float: left;
+    color: #004488;
+}
+
+.btn-minimize-ann-detail{
     color: #004488;
 }
 
 
 .minimized-announcements-list {
-
+    margin-bottom: 2px;
 }
 
 .minimized-announcement-item {
-    /*margin: 5px;
-    padding: 5px;*/
+    margin: 2px;
+    padding: 5px;
     float:left;
+    background-color:  white;
+
+    border-top-left-radius: 2px;
+    border-top-right-radius: 2px;
 }
 
 .top-container-fluid{
@@ -403,8 +420,45 @@ ul {
     min-height: 30px;
     height: 30px;
     margin: 0;
+    border-radius: 0;
+    padding: 1px;
 }
 
 .bot-container-fluid{
     height: 30px;
+    margin: 0;
+    padding: 0;
+}
+
+.announcement-display-wrapper{
+    margin: 0px;
+    padding-top: 5px;
+    padding-right: 5px;
+    padding-left: 5px;
+    padding-bottom: 5px;
+    background-color: white;
+    border-radius: 2px;
+    border-color: grey;
+    color: whitesmoke;
+}
+
+.display-ann-btn-bar{
+    float: right;
+    font-size: 0.9rem;
+}
+
+.announcement-details-wrapper{
+    padding: 0px 0px 0 0px;
+    margin: 0px;
+}
+
+.announcement-display-content{
+    padding: 0px 5px 0 5px;
+    margin: 0px;
+}
+
+.btn-ann-detail{
+    font-size: 0.9rem;
+    padding: 1px 1px 1px 1px;
+    margin: 1px 1px 1px 1px;
 }

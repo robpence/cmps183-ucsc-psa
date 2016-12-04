@@ -157,26 +157,44 @@ function mOver(obj) {
             </li>
         </ul>
         <div v-else class="leftside-ann-details" >
-            <div class="comment-list-item" >
+            <div class="announcement-display-wrapper" >
 
-                <div class="announcement_title_div" style="font-size:16px;">
-                    <p style="color:black;">${show_this_announcement.name}</p>
+                <div class="announcement-details-wrapper">
+
+                    <div class="display-ann-btn-bar">
+
+                        <button v-on:click="close_announcement_details()"
+                                class="btn-close-ann-detail btn-ann-detail">
+                            <i class="fa fa-times" aria-hidden="true"></i>
+                        </button>
+
+
+                        <button v-on:click="minimize_announcement(show_this_announcement)"
+                                class="btn-minimize-ann-detail btn-ann-detail">
+                            <i class="fa fa-window-minimize" aria-hidden="true"></i>
+                        </button>
+                    </div>
+
+
+                    <div class="announcement-display-content">
+                        <div class="announcement_title_div" style="font-size:16px;">
+                            <p style="color:black;">${show_this_announcement.name}</p>
+                        </div>
+
+                        <div class="announcement_text_div">
+                            <p style="font-size:14px" style="text-wrap: normal"
+                               class="announcement_text">${show_this_announcement.description}</p>
+                        </div>
+
+                        <p style="font-size:10px" class="announcement_text">
+                            ${show_this_announcement.score} ${show_this_announcement.author} ${show_this_announcement.created_on}
+                        </p>
+
+                    </div>
+
+
                 </div>
 
-                <div class="announcement_text_div">
-                    <p style="font-size:14px" style="text-wrap: normal" class="announcement_text">${show_this_announcement.description}</p>
-                </div>
-
-                <p style="font-size:10px" class="announcement_text">${show_this_announcement.score} ${show_this_announcement.author} ${show_this_announcement.created_on}</p>
-
-                <button v-on:click="close_announcement_details()" class="btn-close-ann-detail">
-                    <i class="fa fa-times" aria-hidden="true"></i>
-                </button>
-
-
-                <button v-on:click="minimize_announcement(show_this_announcement)" class="btn-close-ann-detail">
-                    <i class="fa fa-window-minimize" aria-hidden="true"></i>
-                </button>
 
                 <div class="comment-form-div" v-if="'{{=auth.user_id}}'">
                     <li v-if="editing_comment">
@@ -228,50 +246,6 @@ function mOver(obj) {
         </div>
       </div></nav>
 
-                <!--------------   Filter    --------------------->
-    <!--
-                <li class="navlist-item">
-                    <div class="filter-form-wrapper">
-                    <button v-on:click="toggle_filter_show()" class="filter-dropdown-toggle">Filter</button>
-
-
-                    <ul v-if="filter_form.show" class="filter-list" v-transition>
-
-                        <li>
-                            Category
-                        <!-- radio buttons -->
-    <!--                    <ul>
-                            <li>
-                                <input  type="radio" name="category" value="urgent" v-model="filter_form.category">
-                                urgent
-                            </li>
-                            <li>
-                                <input  type="radio" name="category" value="event" v-model="filter_form.category">
-                                event
-                            </li>
-                            <li>
-                              <input  type="radio" name="category" value="shutdown" v-model="filter_form.category">
-                                shut down
-                            </li>
-                            <li>
-                              <input  type="radio" name="category" value="all" v-model="filter_form.category">
-                                all
-                            </li>
-                        </ul>
-                        </li>
-                        <li>
-                            <button class="btn btn-warning btn-sm"
-                                v-on:click="filter_submit_button()">
-                                submit filter
-                            </button>
-                        </li>
-                    </ul>
-                    </div>
-                </li>
-
-            </ul> -->
-
-
 
 
         <!-- bottom stuff --->
@@ -281,16 +255,18 @@ function mOver(obj) {
 
                 <li class="minimized-announcement-item"
                     v-for="ann in minimized_announcements">
-                    <div class="display-post-title" >
+                    <div class="minimized-post-title" >
                         ${ann.name}
                     </div>
 
-                    <button v-on:click="close_minimized_announcement(ann)" class="btn-close-ann-detail">
+                    <button v-on:click="close_minimized_announcement(ann)"
+                            class="btn-close-ann-detail btn-ann-detail">
                         <i class="fa fa-times" aria-hidden="true"></i>
 
                     </button>
 
-                    <button v-on:click="restore_minimized_announcement(ann)"  class="btn-restore-ann-detail">
+                    <button v-on:click="restore_minimized_announcement(ann)"
+                            class="btn-restore-ann-detail btn-ann-detail">
                         <i class="fa fa-window-restore" aria-hidden="true"></i>
                    </button>
                 </li>
@@ -298,6 +274,10 @@ function mOver(obj) {
             </ul>
           </div>
         </nav>
+
+
+
+
 
 
         <!---- Right Nav Bar  ----->
