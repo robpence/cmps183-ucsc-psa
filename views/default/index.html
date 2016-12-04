@@ -402,8 +402,8 @@ function mOver(obj) {
                                 <ul id="history" class="my-history-wrapper">
                                     <li class="history-list-item" v-for="ann in users_announcements" v-on:click="view_history_announcement(ann.latlng)">
                                             <div>
-                                                <div id="colored-box" style="background-color: #d9534f;" style="font-size:16px;">${ann.name}</div>
-                                                <div><p style="font-size:14px" style="text-wrap: normal">${ann.description}</p></div>
+                                                <div class="announcement_title_div" style="font-size:16px;">${ann.name}</div>
+                                                <div class="announcement_text_div"><p style="font-size:14px">${ann.description}</p></div>
                                                 <p style="font-size:10px">${ann.score} ${ann.author}</p>
                                                 <p style="font-size:8px">${ann.created_on}</p> <i class="fa fa-trash-o" v-on:click="announcement_edit_delete_button(ann.id)"></i> <i class="fa fa-pencil"></i>
                                             </div>

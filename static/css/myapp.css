@@ -266,10 +266,10 @@ p.announcement_text{
 .comment-item{
     margin: 2px;
     padding: 2px;
-    background-color: #3e3f3a;;
+    background-color: lightgray;
     border-radius: 2px;
-    border-color: white;
-    color: white;
+    border-color: black;
+    color: black;
 }
 
 .comment-form-div{
