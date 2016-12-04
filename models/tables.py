@@ -26,8 +26,16 @@ db.define_table('Announcements',
                 Field('solved', 'boolean', default=False),
                 Field('edited_on', default=datetime.datetime.utcnow()),
                 Field('created_on', default=datetime.datetime.utcnow()),
+                Field('end_date'),
                 )
 
-
+db.define_table('Comments',
+                Field('author', default=get_user_email()),
+                Field('score', 'integer'),
+                Field('created_on', default=datetime.datetime.utcnow()),
+                Field('edited_on', default=datetime.datetime.utcnow()),
+                Field('comment_text'),
+                Field('ann_id', db.Announcements),  #links a comment to a announcement id.
+                )
 # after defining tables, uncomment below to enable auditing
 # auth.enable_record_versioning(db)
