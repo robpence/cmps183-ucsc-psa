@@ -49,28 +49,28 @@ def get_announcements():
 
 #checks the date and deletes it if it older than 3 days i think.
 def check_announcements_date():
-    announcements = db(db.Announcements).select(orderby=~db.Announcements.created_on)
-    for announcement in announcements:
-        #if the announcement is an event
-        if announcement.category == "event":
-            past = datetime.datetime.strptime(announcement.end_date, "%Y-%m-%d")
-            present = datetime.datetime.utcnow()
-            #if the event is one day over its end date then it will delete.
-            if (present - past).days > 1:
-                db(db.Announcements.id == announcement.id).delete()
-                db.commit()
-        else:
-            past = datetime.datetime.strptime(announcement.created_on, "%Y-%m-%d %H:%M:%S.%f")
-            present = datetime.datetime.utcnow()
-            # everything that not a event gets deleted after a day.
-            if (present - past).days > 1:
-                # calc = (present - past).days
-                # print(calc)
-                # print("deleted: " + str(announcement))
-                db(db.Announcements.id == announcement.id).delete()
-                db.commit()
-
-    return 'success'
+#     announcements = db(db.Announcements).select(orderby=~db.Announcements.created_on)
+#     for announcement in announcements:
+#         #if the announcement is an event
+#         if announcement.category == "event":
+#             past = datetime.datetime.strptime(announcement.end_date, "%Y-%m-%d")
+#             present = datetime.datetime.utcnow()
+#             #if the event is one day over its end date then it will delete.
+#             if (present - past).days > 1:
+#                 db(db.Announcements.id == announcement.id).delete()
+#                 db.commit()
+#         else:
+#             past = datetime.datetime.strptime(announcement.created_on, "%Y-%m-%d %H:%M:%S.%f")
+#             present = datetime.datetime.utcnow()
+#             # everything that not a event gets deleted after a day.
+#             if (present - past).days > 1:
+#                 # calc = (present - past).days
+#                 # print(calc)
+#                 # print("deleted: " + str(announcement))
+#                 db(db.Announcements.id == announcement.id).delete()
+#                 db.commit()
+#
+     return 'success'
 
 
 # Note that we need the URL to be signed, as this changes the db.

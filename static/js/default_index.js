@@ -62,6 +62,8 @@ var app = function() {
 
 
     self.add_announcement = function () {
+
+        self.toggle_announcement_form();
         // The submit button to add a post has been pressed.
         $.post(add_announcement_url,
             {
@@ -211,7 +213,6 @@ var app = function() {
         self.vue.get_comments_for_announcements();
 
         //probably add something to list all the comments for this post here
-
         $('#AnnouncementModal').modal('show');
     };
     /********************************************************************************
@@ -621,6 +622,11 @@ var app = function() {
         self.vue.editing_comment = false;
     };
 
+    self.toggle_announcement_form = function() {
+
+        self.vue.is_creating_announcement = !self.vue.is_creating_announcement;
+    };
+
     // Complete as needed.
     self.vue = new Vue({
         el: "#vue-div",
@@ -636,6 +642,7 @@ var app = function() {
             id_for_deleted_announcement: null,
             id_for_new_announcement:null,
             logged_in: false,
+            is_creating_announcement: false,
 
             edditing_announcemnt: false,
             editing_comment: false,
@@ -695,6 +702,7 @@ var app = function() {
 
             /* filter functions */
             toggle_filter_show: self.toggle_filter_show,
+            toggle_announcement_form: self.toggle_announcement_form,
             filter_submit_button: self.filter_submit_button,
 
             /* creating announcement functions */

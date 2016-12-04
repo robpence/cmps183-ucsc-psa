@@ -292,9 +292,27 @@ function mOver(obj) {
         <nav class="right-navbar navbar navbar-default" role="navigation">
         <div class="container-fluid">
 
+            <ul v-if="'{{=auth.user_id}}' > 0" class="logged-in-left-user-tools">
 
+                    <!-- create announcement stuff -->
+                    <li class="navlist-item" v-if="is_creating_announcement">
 
-                <ul v-if="'{{=auth.user_id}}' > 0" class="logged-in-left-user-tools">
+                        Title <input v-model="announcement_form.name" class="announcement-input-text"> <br>
+                        Description: <br>
+
+                        <textarea v-model="announcement_form.description" class="announcement-input-text">
+                        </textarea>
+
+                        <button class="btn btn-sm edit-submit-btn"
+                                v-on:click="add_announcement()">
+                                done
+                        </button>
+
+                        <button class="btn btn-sm edit-submit-btn"
+                            v-on:click="toggle_announcement_form()">
+                            cancel
+                        </button>
+                    </li>
 
                     <!-- edit announcement stuff -->
                     <li class="navlist-item" v-if="edditing_announcemnt">
@@ -342,12 +360,12 @@ function mOver(obj) {
 
                         <!-- create announcement Form -->
                         <div class="create-announcement-wrapper" v-if="map_clickable" >
-                            <form id="create_announcement_form"
-                                  action="#"
-                                v-on:submit.prevent="add_announcement"
-                                enctype="multipart/form-data"
-                                 method="post">
-                                <!-- text -->
+                            <!--<form id="create_announcement_form"-->
+                                  <!--action="#"-->
+                                <!--v-on:submit.prevent="add_announcement"-->
+                                <!--enctype="multipart/form-data"-->
+                                 <!--method="post">-->
+                                 <!--text-->
 
                                 <!-- radio buttons -->
                                 <ul>
@@ -364,7 +382,7 @@ function mOver(obj) {
                                         shut down
                                     </li>
                                 </ul>
-                            </form>
+                            <!--</form>-->
                         </div>
                     </li>
 
