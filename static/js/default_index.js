@@ -121,6 +121,8 @@ var app = function() {
             requirments = self.vue.filter_form;
         self.campus_map.clear_map();
         self.populate_map(ann_list, requirments);
+        self.vue.announcements_to_show = ann_list;
+
     };
 
 
@@ -287,20 +289,20 @@ var app = function() {
     self.execute_search = function() {
         console.log('execute_search');
 
-        var query_str = self.vue.search_content;
+        var query_str = self.vue.search_content.toLowerCase();
         var a = self.vue.all_announcements;
 
         var found_list = [];
         for(var i=0; i < a.length; i++){
             var ann = a[i];
 
-            if (0 <= ann.description.search(query_str)){
+            if (0 <= ann.description.toLowerCase().search(query_str)){
                 found_list.push(ann);
 
-            }else if (0 <= ann.name.search(query_str)){
+            }else if (0 <= ann.name.toLowerCase().search(query_str)){
                 found_list.push(ann);
 
-            }else if (0 <= ann.author.search(query_str)){
+            }else if (0 <= ann.author.toLowerCase().search(query_str)){
                 found_list.push(ann);
             }
         }

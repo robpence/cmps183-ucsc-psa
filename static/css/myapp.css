@@ -74,8 +74,8 @@ body{
 
 .navbar-show-toggle-icon{
     position: relative;
-    height: 48%;
-    color:white;
+    height: 40%;
+    color: white;
 }
 
 .modal-content #comment {
