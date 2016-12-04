@@ -269,8 +269,12 @@ ul {
 
 .btn-close-ann-detail{
     color: red;
-
 }
+
+.btn-restore-ann-detail{
+    color: #004488;
+}
+
 
 .minimized-announcements-list {
     left: 200px;
