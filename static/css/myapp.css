@@ -124,7 +124,6 @@ body{
     float:left;
     list-style: none;
     padding-left: 0px;
-    margin-right: 100px;
     right: 50px;
     /*
     overflow-y: scroll;
@@ -202,6 +201,7 @@ input[type=text]:focus {
 .search_button{
     float: left;
 	color: white;
+    padding-bottom: 5px;
 }
 .form-group {
     margin-bottom: 15px;
@@ -317,6 +317,11 @@ ul {
     text-transform: uppercase;
     letter-spacing: 0.1rem;
     font-size: 1.2rem;
+}
+
+.display-announcements-list{
+    padding-bottom: 70px;
+    margin-top: 10px;
 }
 
 .display-post-description{
