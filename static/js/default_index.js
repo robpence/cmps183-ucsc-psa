@@ -9,6 +9,13 @@ var _announcement_form = {
     id: null
 };
 
+//probably needs changing
+var _comment_form = {
+    comment_text: null,
+    active: false,
+    id: null
+};
+
 
 var _filter_form = {
     category: null,
@@ -45,6 +52,11 @@ var app = function() {
         self.vue.announcement_form.active = false;
     }
 
+    function clear_comment_form(){
+        self.vue.comment_form.comment_text = null;
+        self.vue.comment_form.active = false;
+    }
+
 
     Vue.config.silent = false; // show all warnings
 
@@ -55,6 +67,7 @@ var app = function() {
             {
                 name: self.vue.announcement_form.name,
                 description: self.vue.announcement_form.description,
+                end_date: self.vue.announcement_form.end_date,
                 latitude: self.next_announcement.lat,
                 longitude: self.next_announcement.lng,
                 category: self.next_announcement.category
@@ -75,6 +88,7 @@ var app = function() {
 
                 self.vue.map_clickable = false;
             });
+
     };
 
 
@@ -82,6 +96,7 @@ var app = function() {
 
         for(var i=0; i < marker_list.length; i++){
             var ann = marker_list[i];
+
 
             if (ann.category == requirments.category || requirments.category == 'all'){
                 self.campus_map.draw_marker(ann.latlng, ann.icon);
@@ -180,19 +195,25 @@ var app = function() {
     };
 
 
-
     self.announcement_Detail = function(index) {
-            announcement = self.vue.all_announcements[index];
-            //announcement = self.vue.names[index];
-            $('#announcementDetailTitle').html(announcement.name);
-            $('#announcementDetailDescription').html(announcement.description);
-            $('#announcementDetailAuthor').html(announcement.author);
-            $('#announcementDetailCreatedon').html(announcement.created_on);
-            $('#announcementDetailCategory').html(announcement.category);
-            $('#announcementDetailScore').html(announcement.score);
+        announcement = self.vue.all_announcements[index];
+        //announcement = self.vue.names[index];
+        $('#announcementDetailTitle').html(announcement.name);
+        $('#announcementDetailDescription').html(announcement.description);
+        $('#announcementDetailAuthor').html(announcement.author);
+        $('#announcementDetailCreatedon').html(announcement.created_on);
+        $('#announcementDetailCategory').html(announcement.category);
+        $('#announcementDetailScore').html(announcement.score);
+
+        self.vue.id_to_be_deleted = announcement.id;
+        console.log(self.vue.id_to_be_deleted);
+
+        self.vue.get_comments_for_announcements();
+
+        //probably add something to list all the comments for this post here
+
+        $('#AnnouncementModal').modal('show');
     };
-
-
     /********************************************************************************
      *                      CAMPUS MAP
      ********************************************************************************/
@@ -222,6 +243,9 @@ var app = function() {
     },
     function(e){
         // this function gets called when a map icon is clicked
+        //console.log('iconclick e=', e);
+
+        //console.log('e=', e);
         var m = self.campus_map.find_marker(e.target);
         self.edit_this_marker = e;
         self.visit_announcement(m, self.edit_announcement);
@@ -329,7 +353,6 @@ var app = function() {
         });
     };
 
-
  /************************ Can be improved ****************************/
     self.populate_after_deleting = function(marker_list) {
 
@@ -379,7 +402,6 @@ var app = function() {
     self.toggle_history_show = function(){
         self.vue.right_nav_options.show_history = !self.vue.right_nav_options.show_history;
     };
-
 
     /* ------------     Right Navbar Toggle ------------------------------------*/
     self.toggle_right_navbar_show = function(){
@@ -509,6 +531,96 @@ var app = function() {
     };
 
 
+    /* ------------     Comment functions  ----------------------------*/
+    self.add_comment = function () {
+        console.log(self.vue.id_to_be_deleted);
+        $.post(add_comment_url,
+            {
+                comment_text: self.vue.comment_form.comment_text,
+                score: self.vue.comment_form.score,
+                //id_to_be_deleted is currently set when the user opens the window to view the ann
+                ann_id: self.vue.id_to_be_deleted
+            },
+            function (data) {
+                $.web2py.enableElement($("#add_comment_submit"));
+                clear_comment_form();
+                self.vue.get_comments_for_announcements();
+            });
+    };
+
+    self.get_comments_for_announcements = function(){
+        console.log(self.vue.id_to_be_deleted);
+        $.getJSON(get_comments_for_announcements_url,
+            function (data) {
+                self.vue.announcement_comments = [];
+                self.vue.announcement_comments = data.comments;
+            });
+        console.log(self.vue.announcement_comments);
+    };
+
+    self.delete_comment = function(comment_idx){
+      console.log("delete_comment_called");
+        $.post(delete_comment_url,
+            { comment_id: self.vue.announcement_comments[comment_idx].id },
+            function () {
+                self.vue.get_comments_for_announcements();
+                console.log(comment_idx)
+            }
+        )
+    };
+
+    self.up_vote_comment = function(comment_idx){
+        console.log("up_vote_comment_called");
+            $.post(up_vote_comment_url,
+                { comment_id: self.vue.announcement_comments[comment_idx].id },
+                function () {
+                    self.vue.get_comments_for_announcements();
+                    console.log(comment_idx)
+                }
+            );
+    };
+
+    self.down_vote_comment = function(comment_idx){
+        console.log("down_vote_comment_called");
+            $.post(down_vote_comment_url,
+                { comment_id: self.vue.announcement_comments[comment_idx].id },
+                function () {
+                    self.vue.get_comments_for_announcements();
+                    console.log(comment_idx)
+                }
+            );
+    };
+
+    self.edit_comment = function(comment_idx){
+        self.vue.comment_form.comment_text = self.vue.announcement_comments[comment_idx].comment_text;
+        self.vue.comment_form.id = self.vue.announcement_comments[comment_idx].id;
+        self.vue.editing_comment_id = self.vue.announcement_comments[comment_idx].id;
+        console.log(self.vue.editing_comment_id);
+        self.vue.editing_comment = true;
+        console.log("edit comment called");
+    };
+
+    self.comment_edit_submit_button = function(){
+        // The submit button to edit an announcement has been pressed.
+        console.log("edit submit button called");
+        $.post(edit_comment_url,
+            {
+                comment_text: self.vue.comment_form.comment_text,
+                comment_id:  self.vue.editing_comment_id
+            },
+            function (data) {
+                clear_comment_form();
+                self.vue.editing_comment = false;
+                //this can probably be changed to get comments for a specific announcement but oh well.
+                self.vue.get_comments_for_announcements();
+            });
+    };
+
+
+    self.comment_edit_cancel_button = function(){
+        self.vue.editing_comment = false;
+    };
+
     // Complete as needed.
     self.vue = new Vue({
         el: "#vue-div",
@@ -518,22 +630,27 @@ var app = function() {
         data: {
             show_this_announcement: null,
 
+            editing_comment_id: null,
             index_to_be_deleted: null,
+            id_to_be_deleted: null,
             id_for_deleted_announcement: null,
             id_for_new_announcement:null,
             logged_in: false,
 
             edditing_announcemnt: false,
+            editing_comment: false,
             // this holds the query string that the user enters
             search_content: null,
             isCreatingAnnouncement: false,
             is_history_showing: null,
             announcement_form: _announcement_form,
+            comment_form: _comment_form,
             filter_form: _filter_form,
             all_announcements: [],
             users_announcements: [],
             announcements_to_show: [],
             search_announcements: [],
+            announcement_comments: [],
             minimized_announcements: [],
 
             map_clickable: false,
@@ -546,6 +663,17 @@ var app = function() {
         },
 
         methods: {
+
+            /* comment functions*/
+            add_comment: self.add_comment,
+            delete_comment: self.delete_comment,
+            get_comments_for_announcements: self.get_comments_for_announcements,
+            up_vote_comment: self.up_vote_comment,
+            down_vote_comment: self.down_vote_comment,
+            edit_comment: self.edit_comment,
+            comment_edit_submit_button: self.comment_edit_submit_button,
+            comment_edit_cancel_button: self.comment_edit_cancel_button,
+
 
             /* left side announcement display functions */
             show_announcement_details: self.show_announcement_details,
