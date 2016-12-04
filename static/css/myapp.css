@@ -10,15 +10,14 @@ body{
     margin-left: 0px;
 }
 
+/*should use the javascript function to resize */
 #mapid {
-
-
 }
 
 /* line 23, ../sass/_main.scss */
 .main_content {
     padding-top: 0px;
-    margin-top: 65px;
+    margin-top: 0px;
     margin-bottom: 0px;
     padding-bottom: 0px;
     padding-left: 0px;
@@ -273,8 +272,12 @@ ul {
 
 .btn-close-ann-detail{
     color: red;
-
 }
+
+.btn-restore-ann-detail{
+    color: #004488;
+}
+
 
 .minimized-announcements-list {
     left: 200px;
@@ -286,4 +289,8 @@ ul {
     margin: 5px;
     padding: 5px;
     float:left;
+}
+
+.top-container-fluid{
+    height: 65px;
 }
