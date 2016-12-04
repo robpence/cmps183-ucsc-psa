@@ -17,7 +17,10 @@ def _setup_announcement(a):
 
 def get_announcements():
 
-    check_announcements_date()
+    try:
+        check_announcements_date()
+    except TypeError as e:
+        logger.info("====> api:get_announcements():  %r " % e)
 
     logger.info("====> api:get_announcements(): request.vars= %r " % request.vars)
 
