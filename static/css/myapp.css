@@ -1,8 +1,7 @@
 /*Layout of map displayed on screen */
 body{
-    top: 0px;
     padding-top: 0px;
-    margin-top: 0px;
+    margin-top: 65px;
     margin-bottom: 0px;
     padding-bottom: 0px;
     padding-left: 0px;
@@ -11,15 +10,14 @@ body{
     margin-left: 0px;
 }
 
+/*should use the javascript function to resize */
 #mapid {
-
-
 }
 
 /* line 23, ../sass/_main.scss */
 .main_content {
     padding-top: 0px;
-    margin-top: 65px;
+    margin-top: 0px;
     margin-bottom: 0px;
     padding-bottom: 0px;
     padding-left: 0px;

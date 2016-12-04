@@ -42,7 +42,7 @@ function mOver(obj) {
                 //You have to change the padding in the css file.
                 var top_navbar_width = 65;
                 $(window).on("resize", function() {
-                    $("#mapid").height($(window).height() * 1.00 - top_navbar_width
+                    $("#mapid").height($(window).height() * 1.00 + 65
                     ).width($(window).width() * 1.00 - 420);
                     //New_Map.map.invalidateSize();
                 }).trigger("resize");
