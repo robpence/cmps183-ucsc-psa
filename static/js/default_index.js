@@ -63,6 +63,8 @@ var app = function() {
 
     self.add_announcement = function () {
         // The submit button to add a post has been pressed.
+        self.toggle_announcement_form();
+
         $.post(add_announcement_url,
             {
                 name: self.vue.announcement_form.name,
@@ -74,7 +76,7 @@ var app = function() {
             },
             function (data) {
                 $.web2py.enableElement($("#add_announcement_submit"));
-                $('#CreateAnnouncementModal').modal('hide');
+                //$('#CreateAnnouncementModal').modal('hide');
 
 
                 var added_announcement = Announcement_from_db(data);
@@ -217,7 +219,7 @@ var app = function() {
 
         //probably add something to list all the comments for this post here
 
-        $('#AnnouncementModal').modal('show');
+        //$('#AnnouncementModal').modal('show');
     };
     /********************************************************************************
      *                      CAMPUS MAP
@@ -264,6 +266,9 @@ var app = function() {
         self.vue.map_clickable = false;
         self.vue.isCreatingAnnouncement = false;
         clear_announcement_form();
+        self.vue.is_creating_announcement = false;
+        //self.vue.toggle_announcement_form;
+
     };
 
 
@@ -393,7 +398,7 @@ var app = function() {
         $('#announcementDetailCategory').html(announcement.category);
         $('#announcementDetailScore').html(announcement.score);
 
-        $('#AnnouncementModal').modal('show');
+        //$('#AnnouncementModal').modal('show');
     };
 
 
@@ -629,6 +634,10 @@ var app = function() {
         self.vue.editing_comment = false;
     };
 
+    self.toggle_announcement_form = function() {
+        self.vue.is_creating_announcement = !self.vue.is_creating_announcement;
+    };
+
     // Complete as needed.
     self.vue = new Vue({
         el: "#vue-div",
@@ -644,6 +653,7 @@ var app = function() {
             id_for_deleted_announcement: null,
             id_for_new_announcement:null,
             logged_in: false,
+            is_creating_announcement: false,
 
             edditing_announcement: false,
             editing_comment: false,
@@ -689,6 +699,8 @@ var app = function() {
             minimize_announcement: self.minimize_announcement,
             restore_minimized_announcement: self.restore_minimized_announcement,
             close_minimized_announcement: self.close_minimized_announcement,
+
+            toggle_announcement_form: self.toggle_announcement_form,
 
             /* announcement edit functions */
             announcement_edit_submit_button: self.announcement_edit_submit_button,

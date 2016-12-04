@@ -152,6 +152,12 @@ body{
   color: #aaa;
 }
 
+input.create-announcement-button{
+    background-color: #d9534f;
+}
+
+
+
 /* position of log in menu*/
 /* line 75, ../sass/_main.scss */
 .main-container {
@@ -254,6 +260,10 @@ div.announce_text_div{
     border-bottom-color: darkgray;
     border-bottom-width: 1px;
     color: black;
+}
+
+p.announcement-form{
+    color: white;
 }
 
 p.announcement_text{
