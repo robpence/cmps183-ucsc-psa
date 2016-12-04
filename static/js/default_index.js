@@ -300,12 +300,6 @@ var app = function() {
     };
 
 
-
-    self.call = function() {
-        self.campus_map.clear_for_search_announcements();
-    };
-
-
     self.toggle_filter_show = function(){
         self.vue.filter_form.show = !self.vue.filter_form.show;
     };
@@ -491,6 +485,7 @@ var app = function() {
         console.log('show_announcement_details, ann=', ann);
         self.vue.left_nav_options.show_ann_detail = true;
         self.vue.show_this_announcement = ann;
+        self.campus_map.set_coordinates(ann.latlng);
     };
 
 
@@ -528,6 +523,11 @@ var app = function() {
         self.close_minimized_announcement(ann);
         self.vue.left_nav_options.show_ann_detail = true;
         self.vue.show_this_announcement = ann;
+    };
+
+    /* onclick history function to view the icon */
+    self.view_history_announcement = function(coordinates) {
+        self.campus_map.set_coordinates(coordinates);
     };
 
 
@@ -709,6 +709,7 @@ var app = function() {
 
             change_view: self.change_view,
             view_announcement: self.view_announcement,
+            view_history_announcement: self.view_history_announcement,
 
 
 
