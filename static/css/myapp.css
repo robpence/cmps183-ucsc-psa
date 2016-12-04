@@ -119,6 +119,7 @@ body{
     background-color: white;
     */
 }
+
 /* line 58, ../sass/_main.scss */
 .main_content #history .ann {
   border-color: #000000;
@@ -213,6 +214,10 @@ input[type=text]:focus {
     border-radius: 5px;
     border-color: dimgray;
     color: whitesmoke;
+}
+
+.history-list-item:hover {
+    background-color: #A2A2A2;
 }
 
 
