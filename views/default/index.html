@@ -154,7 +154,7 @@ function mOver(obj) {
             </li>
         </ul>
         <div v-else class="leftside-ann-details" >
-            <di class="comment-list-item" >
+            <div class="comment-list-item" >
 
                 <div class="display-post-title">
                     ${show_this_announcement.name}
@@ -190,7 +190,7 @@ function mOver(obj) {
                             cancel
                         </button>
                     </li>
-                <div>
+                </div>
 
                 <div v-if="!editing_comment">
                     <form action="#" v-on:submit.prevent="add_comment" class="form-horizontal" enctype="multipart/form-data" method="post">
@@ -221,39 +221,13 @@ function mOver(obj) {
                 </div>
 
 
-                </div>
             </div>
+        </div>
+      </div></nav>
 
 
 
-            <ul class="nav navbar-nav">
-    <!--            <li class="dropdown" data-w2pmenulevel="l0">
-                    <!-- search  -->
-    <!--
-                    <div class="search-input-wrapper" >
-                        <button class="search_button" v-on:click="execute_search()">
-                            <i class="fa fa-search fa-2x" aria-hidden="true"></i>
-                        </button>
-                        <input v-model="search_content" placeholder="Search">
-                    </div>
-                </li>
-
-                <li class="dropdown navlist-item" data-w2pmenulevel="l0">
-                  <a href="#" class="dropdown-toggle" data-toggle="dropdown">View</a>
-                  <ul class="dropdown-menu">
-                    <li><a v-on:click="change_view('crown')" class="menu_links">Crown</a></li>
-                    <li><a v-on:click="change_view('merrill')" class="menu_links">Merrill</a></li>
-                    <li><a v-on:click="change_view('rachael_carson')" class="menu_links">Rachael Carson</a></li>
-                    <li><a v-on:click="change_view('college_9')" class="menu_links">College 9</a></li>
-                    <li><a v-on:click="change_view('college_10')"class="menu_links">College 10</a></li>
-                    <li><a v-on:click="change_view('porter')"class="menu_links">Porter</a></li>
-                    <li><a v-on:click="change_view('kresge')" class="menu_links">Kresge</a></li>
-                    <li><a v-on:click="change_view('cowell')" class="menu_links">Cowell</a></li>
-                    <li><a v-on:click="change_view('stevenson')" class="menu_links">Stevenson</a></li>
-                    <li><a v-on:click="change_view('oakes')" class="menu_links">Oakes</a></li>
-                  </ul>
-                </li>
-
+            <ul class="nav navbar-nav"></ul>
                 <!--------------   Filter    --------------------->
     <!--
                 <li class="navlist-item">
@@ -294,9 +268,7 @@ function mOver(obj) {
                     </ul>
                     </div>
                 </li>
-            </ul>
-        </div>
-        </nav>
+            </ul> -->
 
 
 
@@ -447,7 +419,8 @@ function mOver(obj) {
             </ul><!-- end left side nav list -->
 
         </div>
-        </nav></div>
+        </nav>
+        </div>
 
         <div v-else class="hide-right-navbar">
             <div class="hide-right-navbar navbar navbar-default "
