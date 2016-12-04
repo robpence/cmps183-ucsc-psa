@@ -103,6 +103,26 @@ body{
     height: 50%;
     width: 200px;
 }
+
+.filter-form-wrapper {
+    margin-top: 12px;
+}
+
+.filter-container {
+    background: whitesmoke;
+    margin: 0;
+    /*display: inline; /*display list horizontally*/
+    margin-left: -4px; /*dense the links together*/
+    position: relative;
+}
+
+.radio_button_dropdown {
+    width: 200px; /* Adjust as needed.  10% is now 10% of the parent li, so not enough */
+    height: auto;
+    top: 40px; /* adjust to match the height of the parent li */
+
+}
+
 .navlist-item{
     margin: 10px;
     color: white;

@@ -68,7 +68,7 @@ function mOver(obj) {
      <!--------------   Top Navigation Bar --------------------->
         <nav class="navbar navbar-default navbar-fixed-top " role="navigation">
           <div class="container-fluid top-container-fluid">
-            <ul class="top-navbar-list nav navbar-nav">
+            <div class="top-navbar-list nav navbar-nav">
                 <li class="top-navbar-list-item" >
                       <!-- search -->
                     <div class="search-input-wrapper" >
@@ -127,15 +127,24 @@ function mOver(obj) {
 
                 </li>
 
-          </ul>
-          </div>
+
+                <li class="dropdown top-navbar-list-item" data-w2pmenulevel="l0">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">Filter</a>
+                            <ul class="dropdown-menu">
+                                <li> <input type="radio" name="category" value="urgent" v-model="filter_form.category"> Urgent </li>
+                                <li> <input type="radio" name="category" value="event" v-model="filter_form.category"> Event </li>
+                                <li> <input type="radio" name="category" value="shutdown" v-model="filter_form.category"> Shutdown </li>
+                                <li> <input v-on:click="filter_submit_button('all')" type="radio" name="category" value="all" v-model="filter_form.category"> All </li>
+                                <!--<li> <button v-on:click="filter_submit_button()" class="btn btn-warning btn-sm" style="width:100%"> Submit </button></li>-->
+                            </ul>
+                </li>
+
+                </li>
+                </div>
+            </div>
         </nav>
 
-
-
-
-
-     <!-------------- Left Navigation Bar --------------------->
+      <!-------------- Left Navigation Bar --------------------->
      <nav class="left-navbar navbar navbar-default" role="navigation">
       <div class="display-announcements container-fluid">
 
