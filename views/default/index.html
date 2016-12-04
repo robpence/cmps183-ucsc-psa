@@ -69,19 +69,23 @@ function mOver(obj) {
         <nav class="navbar navbar-default navbar-fixed-top " role="navigation">
           <div class="container-fluid top-container-fluid">
             <ul class="top-navbar-list nav navbar-nav">
+
+
                 <li class="top-navbar-list-item" >
                       <!-- search -->
                     <div class="search-input-wrapper" >
+
+                        <input v-model="search_content" placeholder="Search">
+
                         <button class="search_button" v-on:click="execute_search()">
                             <i class="fa fa-search fa-2x" aria-hidden="true"></i>
                         </button>
-                        <input v-model="search_content" placeholder="Search">
                     </div>
                 </li>
 
                 <li class="search-input-wrapper" >
                     <div class="navbar-header navbar-brand ">
-                        Public Service Announcement Website
+                        Public Service Announcement
                     </div>
                 </li>
 
@@ -143,28 +147,26 @@ function mOver(obj) {
             <li class="history-list-item"
                 v-for="ann in announcements_to_show"
                 v-on:click="show_announcement_details(ann)">
-                    <div class="display-post-title">
-                        ${ann.name}
-                    </div>
-                    <div class="display-post-description">
-                        ${ann.description}
-                    </div>
-
-                    Category: ${ann.category}   <br>
+                <div>
+                    <div class="announcement_title_div" style="font-size:16px;">${ann.name}</div>
+                    <div class="announcement_text_div" ><p style="font-size:14px" style="text-wrap: normal">${ann.description}</p></div>
+                    <p style="font-size:10px">${ann.score} ${ann.author}</p>
+                    <p style="font-size:8px">${ann.created_on}</p>
+                </div>
             </li>
         </ul>
         <div v-else class="leftside-ann-details" >
-            <div class="history-list-item" >
+            <div class="comment-list-item" >
 
-                <div class="display-post-title">
-                    ${show_this_announcement.name}
+                <div class="announcement_title_div" style="font-size:16px;">
+                    <p style="color:black;">${show_this_announcement.name}</p>
                 </div>
 
-                <div class="display-post-description">
-                    ${show_this_announcement.description}
+                <div class="announcement_text_div">
+                    <p style="font-size:14px" style="text-wrap: normal" class="announcement_text">${show_this_announcement.description}</p>
                 </div>
 
-                Category: ${show_this_announcement.category}   <br>
+                <p style="font-size:10px" class="announcement_text">${show_this_announcement.score} ${show_this_announcement.author} ${show_this_announcement.created_on}</p>
 
                 <button v-on:click="close_announcement_details()" class="btn-close-ann-detail">
                     <i class="fa fa-times" aria-hidden="true"></i>
@@ -175,39 +177,55 @@ function mOver(obj) {
                     <i class="fa fa-window-minimize" aria-hidden="true"></i>
                 </button>
 
+                <div class="comment-form-div" v-if="'{{=auth.user_id}}'">
+                    <li v-if="editing_comment">
+
+                        <input v-model="comment_form.comment_text" class="comment-edit-input" id="edit_comment"> <br>
+
+                        <button class="btn btn-sm edit-submit-btn"
+                                v-on:click="comment_edit_submit_button()">
+                                done
+                        </button>
+
+                        <button class="btn btn-sm edit-submit-btn"
+                            v-on:click="comment_edit_cancel_button()">
+                            cancel
+                        </button>
+                    </li>
+                </div>
+
+                <div v-if="!editing_comment">
+                    <form action="#" v-on:submit.prevent="add_comment" class="form-horizontal" enctype="multipart/form-data" method="post">
+                        <div class="comment-form-div" id="comment">
+                            <div>
+                                <input class="form-control string" v-model="comment_form.comment_text" placeholder="Comment..." type="text" />
+                            </div>
+                        </div>
+                        <div>
+                            <input class="add_comment_button" id="add_comment_submit" type="submit" value="Post Comment" />
+                        </div>
+                    </form>
+                </div>
+
+                <div class="comment-div">
+                    <ul v-for="(comment, index) in announcement_comments">
+                        <li class="comment-item" v-if="comment.ann_id == id_to_be_deleted">
+                                    ${comment.comment_text}
+                                    <br>
+                                    <p style="font-size:10px">${comment.score} ${comment.author}</p>
+                                    <i class="fa fa-trash-o" v-on:click="delete_comment(index)"></i>
+                                    <i class="fa fa-pencil" v-on:click="edit_comment(index)"></i>
+                                    <i class="fa fa-thumbs-o-up" v-on:click="up_vote_comment(index)"></i>
+                                    <i class="fa fa-thumbs-o-down" v-on:click="down_vote_comment(index)"></i>
+                                    <!-- ran outa time but upvote and downvote buttons go here-->
+                        </li>
+                    </ul>
+                </div>
+
 
             </div>
         </div>
-
-
-
-            <ul class="nav navbar-nav">
-    <!--            <li class="dropdown" data-w2pmenulevel="l0">
-                    <!-- search  -->
-    <!--
-                    <div class="search-input-wrapper" >
-                        <button class="search_button" v-on:click="execute_search()">
-                            <i class="fa fa-search fa-2x" aria-hidden="true"></i>
-                        </button>
-                        <input v-model="search_content" placeholder="Search">
-                    </div>
-                </li>
-
-                <li class="dropdown navlist-item" data-w2pmenulevel="l0">
-                  <a href="#" class="dropdown-toggle" data-toggle="dropdown">View</a>
-                  <ul class="dropdown-menu">
-                    <li><a v-on:click="change_view('crown')" class="menu_links">Crown</a></li>
-                    <li><a v-on:click="change_view('merrill')" class="menu_links">Merrill</a></li>
-                    <li><a v-on:click="change_view('rachael_carson')" class="menu_links">Rachael Carson</a></li>
-                    <li><a v-on:click="change_view('college_9')" class="menu_links">College 9</a></li>
-                    <li><a v-on:click="change_view('college_10')"class="menu_links">College 10</a></li>
-                    <li><a v-on:click="change_view('porter')"class="menu_links">Porter</a></li>
-                    <li><a v-on:click="change_view('kresge')" class="menu_links">Kresge</a></li>
-                    <li><a v-on:click="change_view('cowell')" class="menu_links">Cowell</a></li>
-                    <li><a v-on:click="change_view('stevenson')" class="menu_links">Stevenson</a></li>
-                    <li><a v-on:click="change_view('oakes')" class="menu_links">Oakes</a></li>
-                  </ul>
-                </li>
+      </div></nav>
 
                 <!--------------   Filter    --------------------->
     <!--
@@ -249,9 +267,7 @@ function mOver(obj) {
                     </ul>
                     </div>
                 </li>
-            </ul>
-        </div>
-        </nav>
+            </ul> -->
 
 
 
@@ -385,14 +401,17 @@ function mOver(obj) {
                                <!-- Div for the history of annoucements-->
                                 <ul id="history" class="my-history-wrapper">
                                     <li class="history-list-item" v-for="ann in users_announcements" v-on:click="view_history_announcement(ann.latlng)">
-                                            Title:  <br> ${ann.name} <br>
-                                            Description:  <br>
-                                            ${ann.description}  <br>
-                                            Category: ${ann.category}   <br>
-                                            <i class="fa fa-trash-o"></i>
-                                            <i class="fa fa-pencil"></i> <br>
+                                            <div>
+                                                <div class="announcement_title_div" style="font-size:16px;">${ann.name}</div>
+                                                <div class="announcement_text_div"><p style="font-size:14px">${ann.description}</p></div>
+                                                <p style="font-size:10px">${ann.score} ${ann.author}</p>
+                                                <p style="font-size:8px">${ann.created_on}</p> <i class="fa fa-trash-o" v-on:click="announcement_edit_delete_button(ann.id)"></i> <i class="fa fa-pencil"></i>
+                                            </div>
                                     </li>
                                 </ul>
+
+
+
                            </div>
 
                         </div>
@@ -401,10 +420,9 @@ function mOver(obj) {
 
             </ul><!-- end left side nav list -->
 
-
-
         </div>
-        </nav></div>
+        </nav>
+        </div>
 
         <div v-else class="hide-right-navbar">
             <div class="hide-right-navbar navbar navbar-default "
@@ -422,5 +440,4 @@ function mOver(obj) {
 </div> <!-- end main-content -->
 
 
-<script src="{{=URL('static', 'js/default_index.js')}}">
-</script>
+<script src="{{=URL('static', 'js/default_index.js')}}"></script>

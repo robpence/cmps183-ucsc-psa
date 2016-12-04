@@ -123,7 +123,8 @@ body{
 .main_content #history {
     float:left;
     list-style: none;
-    padding: 0;
+    padding-left: 0px;
+    right: 50px;
     /*
     overflow-y: scroll;
     background-color: white;
@@ -199,7 +200,8 @@ input[type=text]:focus {
 
 .search_button{
     float: left;
-	color: yellow;
+	color: white;
+    padding-bottom: 5px;
 }
 .form-group {
     margin-bottom: 15px;
@@ -214,18 +216,85 @@ input[type=text]:focus {
 }
 
 .my-history-wrapper{
-    padding: 0;
-    margin: 0;
+    padding-left: 100px;
+    margin-top: 10px;
+    overflow-y:scroll;
+    /*Wont let me make the height a %, if we have time someone can look into this*/
+    height: 500px;
 }
 
 .history-list-item{
-    margin: 10px;
-    padding: 10px;
-    background-color: lightgrey;
+    margin: 5px;
+    padding: 5px;
+    background-color: white;
     border-radius: 5px;
-    border-color: dimgray;
+    border-color: d9534f;
+    color: black;
+    /*color: whitesmoke;*/
+}
+
+.comment-list-item{
+    margin: 0px;
+    padding-bottom: 1px;
+    background-color: white;
+    border-radius: 2px;
+    border-color: grey;
     color: whitesmoke;
 }
+
+div.announcement_title_div{
+    border-bottom: solid;
+    border-bottom-color: darkgray;
+    border-bottom-width: 1px;
+    text-transform: uppercase;
+    /*background-color: #d9534f;*/
+}
+div.announce_text_div{
+    border-bottom: solid;
+    border-bottom-color: darkgray;
+    border-bottom-width: 1px;
+    color: black;
+}
+
+p.announcement_text{
+    color: black;
+}
+
+
+
+.comment-div{
+
+}
+
+.comment-item{
+    margin: 2px;
+    padding: 2px;
+    background-color: lightgray;
+    border-radius: 2px;
+    border-color: black;
+    color: black;
+}
+
+.comment-form-div{
+    margin: 2px;
+	width: 96%;
+	resize: none;
+}
+
+.comment-edit-input{
+    margin: 2px;
+	width: 96%;
+	resize: none;
+    color: black;
+}
+
+.add_comment_button{
+    width: 96%;
+    margin: 2px;
+    resize: none;
+    background-color: #d9534f;
+}
+
 
 .history-list-item:hover {
     background-color: #A2A2A2;
@@ -243,6 +312,11 @@ input[type=text]:focus {
 
 .announcement-input-text{
     color: black;
+}
+
+.announcement-box{
+    background-color: #d9534f;
+    font-size:16px;
 }
 
 /*Remove bullet points next to the filter options*/
@@ -270,6 +344,11 @@ ul {
     text-transform: uppercase;
     letter-spacing: 0.1rem;
     font-size: 1.2rem;
+}
+
+.display-announcements-list{
+    padding-bottom: 70px;
+    margin-top: 10px;
 }
 
 .display-post-description{
