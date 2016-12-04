@@ -150,7 +150,7 @@ function mOver(obj) {
                         ${ann.description}
                     </div>
 
-                    Category: ${ann.category}   <br>
+                    Category: ${ann.category}
             </li>
         </ul>
         <div v-else class="leftside-ann-details" >
@@ -175,8 +175,8 @@ function mOver(obj) {
                     <i class="fa fa-window-minimize" aria-hidden="true"></i>
                 </button>
 
-                <div class="comment-form-div" >
-                    <li class="" v-if="editing_comment">
+                <div class="comment-form-div" v-if="'{{=auth.user_id}}'">
+                    <li v-if="editing_comment">
 
                         <input v-model="comment_form.comment_text" class="comment-edit-input" id="edit_comment"> <br>
 
@@ -225,9 +225,6 @@ function mOver(obj) {
         </div>
       </div></nav>
 
-
-
-            <ul class="nav navbar-nav"></ul>
                 <!--------------   Filter    --------------------->
     <!--
                 <li class="navlist-item">
