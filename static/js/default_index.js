@@ -419,7 +419,7 @@ var app = function() {
         self.vue.announcement_form.description = ann.description;
         self.vue.announcement_form.name = ann.name;
         self.vue.announcement_form.id = ann.id;
-        self.vue.edditing_announcemnt = true;
+        self.vue.edditing_announcement = true;
     };
 
 
@@ -433,13 +433,13 @@ var app = function() {
             },
             function (data) {
                 clear_announcement_form();
-                self.vue.edditing_announcemnt = false;
+                self.vue.edditing_announcement = false;
             });
     };
 
 
     self.announcement_edit_cancel_button = function(){
-        self.vue.edditing_announcemnt = false;
+        self.vue.edditing_announcement = false;
         clear_announcement_form();
     };
 
@@ -476,7 +476,7 @@ var app = function() {
                 self.edit_this_marker = null;
 
                 clear_announcement_form();
-                self.vue.edditing_announcemnt = false;
+                self.vue.edditing_announcement = false;
         });
     };
 
@@ -637,7 +637,7 @@ var app = function() {
             id_for_new_announcement:null,
             logged_in: false,
 
-            edditing_announcemnt: false,
+            edditing_announcement: false,
             editing_comment: false,
             // this holds the query string that the user enters
             search_content: null,
