@@ -486,6 +486,9 @@ var app = function() {
         self.vue.left_nav_options.show_ann_detail = true;
         self.vue.show_this_announcement = ann;
         self.campus_map.set_coordinates(ann.latlng);
+        self.vue.id_to_be_deleted = ann.id;
+        console.log(self.vue.id_to_be_deleted);
+        self.vue.get_comments_for_announcements();
     };
 
 

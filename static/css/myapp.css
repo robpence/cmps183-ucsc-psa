@@ -227,6 +227,45 @@ input[type=text]:focus {
     color: whitesmoke;
 }
 
+.comment-list-item{
+    margin: 0px;
+    padding-bottom: 1px;
+    background-color: lightgray;
+    border-radius: 2px;
+    border-color: grey;
+    color: whitesmoke;
+}
+
+.comment-item{
+    margin: 2px;
+    padding: 2px;
+    background-color: #3e3f3a;;
+    border-radius: 2px;
+    border-color: white;
+    color: white;
+}
+
+.comment-form-div{
+    margin: 2px;
+	width: 96%;
+	resize: none;
+}
+
+.comment-edit-input{
+    margin: 2px;
+	width: 96%;
+	resize: none;
+    color: black;
+}
+
+.add_comment_button{
+    width: 96%;
+    margin: 2px;
+    resize: none;
+    background-color: #d9534f;
+}
+
+
 .history-list-item:hover {
     background-color: #A2A2A2;
 }

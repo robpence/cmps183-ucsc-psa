@@ -154,7 +154,7 @@ function mOver(obj) {
             </li>
         </ul>
         <div v-else class="leftside-ann-details" >
-            <div class="history-list-item" >
+            <div class="comment-list-item" >
 
                 <div class="display-post-title">
                     ${show_this_announcement.name}
@@ -175,9 +175,54 @@ function mOver(obj) {
                     <i class="fa fa-window-minimize" aria-hidden="true"></i>
                 </button>
 
+                <div class="comment-form-div" >
+                    <li class="" v-if="editing_comment">
 
+                        <input v-model="comment_form.comment_text" class="comment-edit-input"> <br>
+
+                        <button class="btn btn-sm edit-submit-btn"
+                                v-on:click="comment_edit_submit_button()">
+                                done
+                        </button>
+
+                        <button class="btn btn-sm edit-submit-btn"
+                            v-on:click="comment_edit_cancel_button()">
+                            cancel
+                        </button>
+                    </li>
+                <div>
+
+                <div v-if="!editing_comment">
+                    <form action="#" v-on:submit.prevent="add_comment" class="form-horizontal" enctype="multipart/form-data" method="post">
+                        <div class="comment-form-div" id="comment">
+                            <div>
+                                <input class="form-control string" v-model="comment_form.comment_text" placeholder="Comment..." type="text" />
+                            </div>
+                        </div>
+                        <div>
+                            <input class="add_comment_button" id="add_comment_submit" type="submit" value="Post Comment" />
+                        </div>
+                    </form>
+                </div>
+
+                <div>
+                    <ul v-for="(comment, index) in announcement_comments">
+                        <li class="comment-item" v-if="comment.ann_id == id_to_be_deleted">
+                                    ${comment.comment_text}
+                                    <br>
+                                    <p style="font-size:10px">${comment.score} ${comment.author}</p>
+                                    <i class="fa fa-trash-o" v-on:click="delete_comment(index)"></i>
+                                    <i class="fa fa-pencil" v-on:click="edit_comment(index)"></i>
+                                    <i class="fa fa-thumbs-o-up" v-on:click="up_vote_comment(index)"></i>
+                                    <i class="fa fa-thumbs-o-down" v-on:click="down_vote_comment(index)"></i>
+                                    <!-- ran outa time but upvote and downvote buttons go here-->
+                        </li>
+                    </ul>
+                </div>
+
+
+                </div>
             </div>
-        </div>
 
 
 
