@@ -469,6 +469,7 @@ var app = function() {
         console.log('show_announcement_details, ann=', ann);
         self.vue.left_nav_options.show_ann_detail = true;
         self.vue.show_this_announcement = ann;
+        self.campus_map.set_coordinates(ann.latlng);
     };
 
 
