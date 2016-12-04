@@ -11,7 +11,7 @@ var Announcement = function (announcement_type){
 
     var Marker = function (){
         return {
-            spin: true,
+            spin: false,
             shadowSize: [0, 0],
             //alt: self.id
         };
@@ -22,10 +22,11 @@ var Announcement = function (announcement_type){
         return L.AwesomeMarkers.icon(m);
     };
 
+    //marker colors, red, darkred, blue, orange, green, purple, cadetblue?
     var Urgent_Marker = function(){
         var m = Marker();
         m.icon ='glyphicon glyphicon-exclamation-sign';
-        m.markerColor = 'orange';
+        m.markerColor = 'cadetblue';
         return L.AwesomeMarkers.icon(m);
     };
 
@@ -41,7 +42,7 @@ var Announcement = function (announcement_type){
     var Shutdown_Marker = function(){
         var m = Marker();
         m.icon ='glyphicon glyphicon-remove';
-        m.markerColor = 'red';
+        m.markerColor = 'darkred';
         return L.AwesomeMarkers.icon(m);
     };
 

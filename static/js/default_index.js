@@ -425,7 +425,7 @@ var app = function() {
         self.vue.announcement_form.description = ann.description;
         self.vue.announcement_form.name = ann.name;
         self.vue.announcement_form.id = ann.id;
-        self.vue.edditing_announcement = true;
+        self.vue.editing_announcement = true;
     };
 
 
@@ -439,13 +439,13 @@ var app = function() {
             },
             function (data) {
                 clear_announcement_form();
-                self.vue.edditing_announcement = false;
+                self.vue.editing_announcement = false;
             });
     };
 
 
     self.announcement_edit_cancel_button = function(){
-        self.vue.edditing_announcement = false;
+        self.vue.editing_announcement = false;
         clear_announcement_form();
     };
 
@@ -482,7 +482,7 @@ var app = function() {
                 self.edit_this_marker = null;
 
                 clear_announcement_form();
-                self.vue.edditing_announcement = false;
+                self.vue.editing_announcement = false;
         });
     };
 
@@ -492,6 +492,9 @@ var app = function() {
         self.vue.left_nav_options.show_ann_detail = true;
         self.vue.show_this_announcement = ann;
         self.campus_map.set_coordinates(ann.latlng);
+        self.vue.id_to_be_deleted = ann.id;
+        console.log(self.vue.id_to_be_deleted);
+        self.vue.get_comments_for_announcements();
     };
 
 
@@ -643,7 +646,7 @@ var app = function() {
             id_for_new_announcement:null,
             logged_in: false,
 
-            edditing_announcement: false,
+            editing_announcement: false,
             editing_comment: false,
             // this holds the query string that the user enters
             search_content: null,
