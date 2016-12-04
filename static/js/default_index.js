@@ -276,12 +276,6 @@ var app = function() {
     };
 
 
-
-    self.call = function() {
-        self.campus_map.clear_for_search_announcements();
-    };
-
-
     self.toggle_filter_show = function(){
         self.vue.filter_form.show = !self.vue.filter_form.show;
     };
@@ -509,6 +503,11 @@ var app = function() {
         self.vue.show_this_announcement = ann;
     };
 
+    /* onclick history function to view the icon */
+    self.view_history_announcement = function(coordinates) {
+        self.campus_map.set_coordinates(coordinates);
+    };
+
 
     // Complete as needed.
     self.vue = new Vue({
@@ -582,6 +581,7 @@ var app = function() {
 
             change_view: self.change_view,
             view_announcement: self.view_announcement,
+            view_history_announcement: self.view_history_announcement,
 
 
 

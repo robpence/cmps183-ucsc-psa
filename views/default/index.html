@@ -377,7 +377,7 @@ function mOver(obj) {
 
                                <!-- Div for the history of annoucements-->
                                 <ul id="history" class="my-history-wrapper">
-                                    <li class="history-list-item" v-for="ann in users_announcements">
+                                    <li class="history-list-item" v-for="ann in users_announcements" v-on:click="view_history_announcement(ann.latlng)">
                                             Title:  <br> ${ann.name} <br>
                                             Description:  <br>
                                             ${ann.description}  <br>
