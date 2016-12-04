@@ -217,7 +217,10 @@ input[type=text]:focus {
 
 .my-history-wrapper{
     padding-left: 100px;
-    margin: 0;
+    margin-top: 10px;
+    overflow-y:scroll;
+    /*Wont let me make the height a %, if we have time someone can look into this*/
+    height: 500px;
 }
 
 .history-list-item{
