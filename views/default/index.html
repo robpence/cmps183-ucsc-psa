@@ -9,7 +9,7 @@
     var add_announcement_url = "{{=URL('api', 'add_announcement', user_signature=True)}}";
     var get_users_announcements_url = "{{=URL('api', 'get_users_announcements')}}";
     var get_search_url = "{{=URL('api', 'get_search')}}";
-    var delete_announcement_url = "{{=URL('api', 'delete_announcement')}}";
+    var delete_announcement_url = "{{=URL('api', 'delete_announcement', user_signature=True)}}";
     var check_announcements_url = "{{=URL('api', 'check_announcements_date')}}";
     var edit_announcement_url = "{{=URL('api', 'edit_announcement', user_signature=True)}}";
     var add_comment_url = "{{=URL('api', 'add_comment_to_announcement', user_signature=True)}}";
@@ -44,11 +44,6 @@ function mOver(obj) {
 <div class="main_content">
 
 
-
-<script src="{{=URL('static', 'js/ourmap.js')}}"></script>
-
-
-
     <div id="vue-div" class="display:none">
 
         <div id="mapid" >
@@ -56,8 +51,10 @@ function mOver(obj) {
                 //this re-sizes the window automattically. Just change the numbers after height and width.
                 //If you want to reserve part of the screen for a menu, like the vertical menu we have on the left,
                 //You have to change the padding in the css file.
+                var top_navbar_width = 65;
                 $(window).on("resize", function() {
-                    $("#mapid").height($(window).height() * 1.00).width($(window).width() * 1.00 - 420);
+                    $("#mapid").height($(window).height() * 1.00 + 65
+                    ).width($(window).width() * 1.00 - 420);
                     //New_Map.map.invalidateSize();
                 }).trigger("resize");
 
@@ -68,12 +65,126 @@ function mOver(obj) {
 
         </div>
 
+     <!--------------   Top Navigation Bar --------------------->
+        <nav class="navbar navbar-default navbar-fixed-top " role="navigation">
+          <div class="container-fluid top-container-fluid">
+            <ul class="top-navbar-list nav navbar-nav">
+                <li class="top-navbar-list-item" >
+                      <!-- search -->
+                    <div class="search-input-wrapper" >
+                        <button class="search_button" v-on:click="execute_search()">
+                            <i class="fa fa-search fa-2x" aria-hidden="true"></i>
+                        </button>
+                        <input v-model="search_content" placeholder="Search">
+                    </div>
+                </li>
+
+                <li class="search-input-wrapper" >
+                    <div class="navbar-header navbar-brand ">
+                        Public Service Announcement Website
+                    </div>
+                </li>
+
+                <li class="dropdown top-navbar-list-item" data-w2pmenulevel="l0">
+                  <a href="#" class="dropdown-toggle" data-toggle="dropdown">View</a>
+                  <ul class="dropdown-menu">
+                    <li><a v-on:click="change_view('reset')" class="menu_links">Reset View</a></li>
+                    <li><a v-on:click="change_view('crown')" class="menu_links">Crown</a></li>
+                    <li><a v-on:click="change_view('merrill')" class="menu_links">Merrill</a></li>
+                    <li><a v-on:click="change_view('rachael_carson')" class="menu_links">Rachael Carson</a></li>
+                    <li><a v-on:click="change_view('college_9')" class="menu_links">College 9</a></li>
+                    <li><a v-on:click="change_view('college_10')"class="menu_links">College 10</a></li>
+                    <li><a v-on:click="change_view('porter')"class="menu_links">Porter</a></li>
+                    <li><a v-on:click="change_view('kresge')" class="menu_links">Kresge</a></li>
+                    <li><a v-on:click="change_view('cowell')" class="menu_links">Cowell</a></li>
+                    <li><a v-on:click="change_view('stevenson')" class="menu_links">Stevenson</a></li>
+                    <li><a v-on:click="change_view('oakes')" class="menu_links">Oakes</a></li>
+                  </ul>
+                </li>
+
+                <li class="top-navbar-list-item">
+                    <!--
+                    <div class="collapse navbar-collapse navbar-ex1-collapse">
+                      <ul class="nav navbar-nav navbar-right">
+                        {{='auth' in globals() and auth.navbar('Welcome',mode='dropdown') or ''}}
+                      </ul>
+                      {{if response.menu:}}
+                      {{=MENU(response.menu, _class='nav navbar-nav',li_class='dropdown',ul_class='dropdown-menu')}}
+                      {{pass}}
+                    </div>
+                    -->
+                </li>
+
+                <li class="top-navbar-list-item">
+                    <div  class="collapse navbar-collapse navbar-ex1-collapse">
+                         <p class="collapse navbar-collapse navbar-ex1-collapse">
+                             <ul class="nav navbar-nav">
+                                {{='auth' in globals() and auth.navbar('Welcome',mode='dropdown') or ''}}
+                             </ul>
+
+                        </p>
+                    </div>
+
+                </li>
+
+          </ul>
+          </div>
+        </nav>
+
+
+
+
+
      <!-------------- Left Navigation Bar --------------------->
-     <nav class="vertical_menu navbar navbar-default" role="navigation">
-      <div class="container-fluid">
+     <nav class="left-navbar navbar navbar-default" role="navigation">
+      <div class="display-announcements container-fluid">
+
+        <ul v-if="!left_nav_options.show_ann_detail" class="display-announcements-list">
+            <li class="history-list-item"
+                v-for="ann in announcements_to_show"
+                v-on:click="show_announcement_details(ann)">
+                    <div class="display-post-title">
+                        ${ann.name}
+                    </div>
+                    <div class="display-post-description">
+                        ${ann.description}
+                    </div>
+
+                    Category: ${ann.category}   <br>
+            </li>
+        </ul>
+        <div v-else class="leftside-ann-details" >
+            <div class="history-list-item" >
+
+                <div class="display-post-title">
+                    ${show_this_announcement.name}
+                </div>
+
+                <div class="display-post-description">
+                    ${show_this_announcement.description}
+                </div>
+
+                Category: ${show_this_announcement.category}   <br>
+
+                <button v-on:click="close_announcement_details()" class="btn-close-ann-detail">
+                    <i class="fa fa-times" aria-hidden="true"></i>
+                </button>
+
+
+                <button v-on:click="minimize_announcement(show_this_announcement)" class="btn-close-ann-detail">
+                    <i class="fa fa-window-minimize" aria-hidden="true"></i>
+                </button>
+
+
+            </div>
+        </div>
+
+
+
             <ul class="nav navbar-nav">
-                <li class="dropdown" data-w2pmenulevel="l0">
-                    <!-- search -->
+    <!--            <li class="dropdown" data-w2pmenulevel="l0">
+                    <!-- search  -->
+    <!--
                     <div class="search-input-wrapper" >
                         <button class="search_button" v-on:click="execute_search()">
                             <i class="fa fa-search fa-2x" aria-hidden="true"></i>
@@ -98,7 +209,8 @@ function mOver(obj) {
                   </ul>
                 </li>
 
-     <!--------------   Filter    --------------------->
+                <!--------------   Filter    --------------------->
+    <!--
                 <li class="navlist-item">
                     <div class="filter-form-wrapper">
                     <button v-on:click="toggle_filter_show()" class="filter-dropdown-toggle">Filter</button>
@@ -109,7 +221,7 @@ function mOver(obj) {
                         <li>
                             Category
                         <!-- radio buttons -->
-                        <ul>
+    <!--                    <ul>
                             <li>
                                 <input  type="radio" name="category" value="urgent" v-model="filter_form.category">
                                 urgent
@@ -142,6 +254,30 @@ function mOver(obj) {
         </nav>
 
 
+
+        <!-- bottom stuff --->
+        <ul class="minimized-announcements-list" >
+            <li class="minimized-announcement-item"
+                v-for="ann in minimized_announcements">
+                <div class="display-post-title" >
+                    ${ann.name}
+                </div>
+
+                <button v-on:click="close_minimized_announcement(ann)" class="btn-close-ann-detail">
+                    <i class="fa fa-times" aria-hidden="true"></i>
+
+                </button>
+
+
+                <button v-on:click="restore_minimized_announcement(ann)"  class="btn-close-ann-detail">
+                    <i class="fa fa-window-minimize" aria-hidden="true"></i>
+               </button>
+
+            </li>
+        </ul>
+
+
+
         <!---- Right Nav Bar  ----->
         <div v-if="!right_nav_options.hide_tools" >
         <div class="show-right-navbar navbar navbar-default "
@@ -153,22 +289,10 @@ function mOver(obj) {
             </div>
         </div>
 
-        <nav class="right_menu navbar navbar-default" role="navigation">
+        <nav class="right-navbar navbar navbar-default" role="navigation">
         <div class="container-fluid">
-            <div class="navbar-header navbar-brand">
-                Public Service Announcement
-            </div>
 
 
-
-                <div  class="collapse navbar-collapse navbar-ex1-collapse">
-                     <p class="collapse navbar-collapse navbar-ex1-collapse">
-                         <ul class="nav navbar-nav">
-                            {{='auth' in globals() and auth.navbar('Welcome',mode='dropdown') or ''}}
-                         </ul>
-
-                    </p>
-                </div>
 
                 <ul v-if="'{{=auth.user_id}}' > 0" class="logged-in-left-user-tools">
 
@@ -189,6 +313,11 @@ function mOver(obj) {
                         <button class="btn btn-sm edit-submit-btn"
                             v-on:click="announcement_edit_cancel_button()">
                             cancel
+                        </button>
+
+                        <button class="btn btn-sm edit-delete-btn"
+                            v-on:click="announcement_edit_delete_button(announcement_form.id)">
+                            <i class="fa fa-trash-o"></i>
                         </button>
                     </li>
 
@@ -241,24 +370,33 @@ function mOver(obj) {
 
                     <li class="navlist-item">
                         <div class="history_button">
-                            <button  class="btn btn-danger btn-sm" v-on:click="toggle_history_show()">
-                                Show my history
-                            </button>
+                           <div v-if="!right_nav_options.show_history">
+                                <button  class="btn btn-danger btn-sm" v-on:click="toggle_history_show()">
+                                    Show my history
+                                </button>
+                           </div>
+
+                            <div v-else>
+                                <!-- We are showing the user's announcement history     -->
+                                <button  class="btn btn-danger btn-sm" v-on:click="toggle_history_show()">
+                                    Hide my history
+                                </button>
+
+                               <!-- Div for the history of annoucements-->
+                                <ul id="history" class="my-history-wrapper">
+                                    <li class="history-list-item" v-for="ann in users_announcements">
+                                            Title:  <br> ${ann.name} <br>
+                                            Description:  <br>
+                                            ${ann.description}  <br>
+                                            Category: ${ann.category}   <br>
+                                            <i class="fa fa-trash-o"></i>
+                                            <i class="fa fa-pencil"></i> <br>
+                                    </li>
+                                </ul>
+                           </div>
+
                         </div>
 
-                        <!-- Div for the history of annoucements-->
-                        <ul v-if="right_nav_options.show_history" id="history" class="my-history-wrapper">
-                            <li class="history-list-item" v-for="ann in users_announcements">
-                                    Title: ${ann.name}
-                                    <br>
-                                    Description: ${ann.description}
-                                    <br>
-                                    Category: ${ann.category}
-                                    <br>
-                                    <i class="fa fa-trash-o"></i>
-                                    <i class="fa fa-pencil"></i> <br>
-                            </li>
-                        </ul>
                     </li>
 
             </ul><!-- end left side nav list -->

@@ -32,9 +32,17 @@ var _right_side_nav_options = {
 };
 
 
+var _left_side_nav_options = {
+    show_ann_detail: false
+};
+
+
 var app = function() {
 
-    var self = {};
+    var self = {
+        edit_this_marker: null,
+        next_announcement: {}
+    };
 
 
 
@@ -64,25 +72,25 @@ var app = function() {
                 longitude: self.next_announcement.lng,
                 category: self.next_announcement.category
             },
-            function (data) {
+            function (added_announcement) {
                 $.web2py.enableElement($("#add_announcement_submit"));
                 $('#CreateAnnouncementModal').modal('hide');
 
                 self.vue.isCreatingAnnouncement = false;
-                self.vue.map_clickable = false;
-                console.log(self.vue.map_clickable);
                 clear_announcement_form();
-                self.campus_map.finalize_marker(data['id']);
-                //self.initial_populate_map();
+                self.campus_map.finalize_marker(added_announcement['id']);
+                self.vue.all_announcements.push(added_announcement);
+                self.vue.announcements_to_show.push(added_announcement);
+
+                //self.vue.users_announcements.push(added_announcement);
+
+                self.vue.users_announcements.unshift(added_announcement);
+
+                self.vue.map_clickable = false;
             });
 
     };
 
-    /*
-    $.getJSON(get_users_announcements_url, function(data) {
-        self.vue.users_announcements = data.users_announcements;
-    });
-    */
 
     self.populate_map = function(marker_list, requirments){
 
@@ -91,8 +99,7 @@ var app = function() {
 
 
             if (ann.category == requirments.category || requirments.category == 'all'){
-                self.campus_map.set_marker(ann);
-                self.campus_map.add_marker(ann);
+                self.campus_map.draw_marker(ann.latlng, ann.icon);
                 self.vue.announcements_to_show.push(ann);
                 self.campus_map.finalize_marker(ann['id']);
             }
@@ -129,24 +136,21 @@ var app = function() {
                 self.vue.all_announcements = data.announcements;
                 var a = self.vue.all_announcements;
                 for(var i=0; i < a.length; i++){
-                    var ann = self.vue.all_announcements[i];
 
                     // prepare the marker to be drawn
-                    self.vue.all_announcements[i] = Announcement_from_db(ann);
-                    self.campus_map.set_marker(
-                        self.vue.all_announcements[i]
-                    );
+                    var ann = self.vue.all_announcements[i];
+                    ann =  Announcement_from_db(ann);
+                    self.vue.all_announcements[i] = ann;
 
                     // draw marker
-                    self.campus_map.add_marker(self.vue.all_announcements[i]);
+                    self.campus_map.draw_marker(ann.latlng, ann.icon);
+                    self.vue.announcements_to_show.push(ann);
                     self.campus_map.finalize_marker(ann['id']);
 
                     // add marker to appropriate lists
                     if( data.logged_in &&
-                        data.user.email == self.vue.all_announcements[i].author){
-                        self.vue.users_announcements.push(
-                            self.vue.all_announcements[i]
-                        );
+                        data.user.email == ann.author){
+                        self.vue.users_announcements.push(ann);
                     }
                 }
 
@@ -157,7 +161,7 @@ var app = function() {
 
     self.set_next_announcement = function (new_announcement){
         self.next_announcement = Announcement(new_announcement);
-        self.campus_map.set_marker(
+        self.campus_map.set_next_marker(
             self.next_announcement
         );
 
@@ -168,12 +172,12 @@ var app = function() {
 
     self.update_marker = function(cat){
         self.next_announcement = Announcement(cat);
-        self.campus_map.update_marker(self.next_announcement);
+        self.campus_map.update_most_recent(self.next_announcement);
     };
 
 
     self.change_view = function(location) {
-
+       self.campus_map.change_map_view(location);
     };
 
 
@@ -210,14 +214,32 @@ var app = function() {
 
         $('#AnnouncementModal').modal('show');
     };
+    /********************************************************************************
+     *                      CAMPUS MAP
+     ********************************************************************************/
 
 
-    self.campus_map = New_Map(function(lat, lng){
+    self.visit_announcement = function(marker, visit){
+        for(var i=0; i < self.vue.all_announcements.length; i++){
+            var ann = self.vue.all_announcements[i];
+
+            if (ann.id == marker._ann_id ){
+                if(ann.author == self.this_user.email) {
+                    visit(ann);
+                }
+                break;
+            }
+
+        }
+    };
+
+
+
+    self.campus_map = New_Map(function(lat, lng, e){
         // this function gets called when the map is clicked
         self.next_announcement.lat = lat;
         self.next_announcement.lng = lng;
-        self.vue.announcement_form.active = false;
-        return self.vue.isCreatingAnnouncement;
+        return self.vue.map_clickable;
     },
     function(e){
         // this function gets called when a map icon is clicked
@@ -225,20 +247,12 @@ var app = function() {
 
         //console.log('e=', e);
         var m = self.campus_map.find_marker(e.target);
+        self.edit_this_marker = e;
+        self.visit_announcement(m, self.edit_announcement);
 
-        for(var i=0; i < self.vue.all_announcements.length; i++){
-            var ann = self.vue.all_announcements[i];
-
-            if (ann.id == m._ann_id ){
-                if(ann.author == self.this_user.email) {
-                    self.edit_announcement(ann);
-                    self.announcement_Detail(i);
-                }
-                break;
-            }
-        }
     });
 
+    /********************************************************************************/
 
     self.cancel_announcement_button = function (){
         self.campus_map.delete_most_recent();
@@ -301,17 +315,41 @@ var app = function() {
         self.re_populate_map();
     };
 
+
  /************************ Can be improved ****************************/
     self.delete_announcement = function() {
 
-        $.post(delete_announcement_url, {
-            announcement_id: self.vue.id_to_be_deleted
-        }, function() {
-            console.log(self.vue.index_to_be_deleted);
-            self.vue.all_announcements.splice(self.vue.index_to_be_deleted, 1);
-            console.log('delete post request');
-            self.populate_after_deleting(self.vue.all_announcements);
-            //self.re_populate_map(self.vue.all_announcements, null); //cant seem to re-use this function
+        $.post(delete_announcement_url,
+            {
+                announcement_id: self.vue.id_for_deleted_announcement
+            }, function() {
+                self.vue.all_announcements.splice(self.vue.index_to_be_deleted, 1);
+                console.log('delete post request');
+                self.populate_after_deleting(self.vue.all_announcements);
+                //self.re_populate_map(self.vue.all_announcements, null);
+
+                var m = self.campus_map.find_marker(e.target);
+
+                // remove from all_announcements
+                for(var i=0; i < self.vue.all_announcements.length; i++){
+                    var ann = self.vue.all_announcements[i];
+                    if (ann.id == m._ann_id ){
+                        self.vue.all_announcements.splice(i, 1);
+                        break;
+                    }
+                }
+
+                // remove from user_announcements
+                for(var i=0; i < self.vue.users_announcements.length; i++){
+                    var ann = self.vue.users_announcements[i];
+                    if (ann.id == m._ann_id ){
+                        self.vue.users_announcements.splice(i, 1);
+                        break;
+                    }
+                }
+
+                // remove from campus map
+
         });
     };
 
@@ -327,13 +365,36 @@ var app = function() {
 
         for(var i=0; i < marker_list.length; i++){
                 var ann = marker_list[i];
-                self.campus_map.set_marker(ann);
-                self.campus_map.add_marker(ann);
+                self.campus_map.draw_marker(ann.latlng, ann.icon);
                 //self.vue.announcements_to_show.push(ann);
-
-                //the ann.id might be wrong
-                self.campus_map.finalize_marker(ann.id);
+                self.campus_map.finalize_marker();
           }
+    };
+
+
+    /************************ Can be improved ****************************/
+    self.announcement_Detail = function(ann_id) {
+        //Announcements are queried in order of their id (refer to API.py)
+        //lets find the corresponding icon in the list
+        for (var i = 0; i < self.vue.all_announcements.length; i++) {
+            if (ann_id == self.vue.all_announcements[i].id) {
+                //alert('id number for ' + i + ' th element:' + self.vue.all_announcements[i].id);
+                var announcement = self.vue.all_announcements[i];
+                self.vue.id_for_deleted_announcement = announcement.id;
+                self.vue.index_to_be_deleted = i;
+                break;
+                }
+            }
+
+        //var announcement = self.vue.all_announcements[index];
+        $('#announcementDetailTitle').html(announcement.name);
+        $('#announcementDetailDescription').html(announcement.description);
+        $('#announcementDetailAuthor').html(announcement.author);
+        $('#announcementDetailCreatedon').html(announcement.created_on);
+        $('#announcementDetailCategory').html(announcement.category);
+        $('#announcementDetailScore').html(announcement.score);
+
+        $('#AnnouncementModal').modal('show');
     };
 
 
@@ -385,6 +446,88 @@ var app = function() {
 
     self.announcement_edit_cancel_button = function(){
         self.vue.edditing_announcemnt = false;
+        clear_announcement_form();
+    };
+
+
+    self.announcement_edit_delete_button = function(ann_id){
+        $.post(delete_announcement_url,
+            {
+                announcement_id: ann_id
+            }, function() {
+
+                console.log('delete post request');
+                var m = self.campus_map.find_marker(self.edit_this_marker.target);
+
+                // remove from all_announcements
+                for(var i=0; i < self.vue.all_announcements.length; i++){
+                    var ann = self.vue.all_announcements[i];
+                    if (ann.id == m._ann_id ){
+                        self.vue.all_announcements.splice(i, 1);
+                        break;
+                    }
+                }
+
+                // remove from user_announcements
+                for(var i=0; i < self.vue.users_announcements.length; i++){
+                    var ann = self.vue.users_announcements[i];
+                    if (ann.id == m._ann_id ){
+                        self.vue.users_announcements.splice(i, 1);
+                        break;
+                    }
+                }
+
+                // remove from campus map
+                self.campus_map.delete_marker(m);
+                self.edit_this_marker = null;
+
+                clear_announcement_form();
+                self.vue.edditing_announcemnt = false;
+        });
+    };
+
+
+    self.show_announcement_details = function(ann){
+        console.log('show_announcement_details, ann=', ann);
+        self.vue.left_nav_options.show_ann_detail = true;
+        self.vue.show_this_announcement = ann;
+    };
+
+
+    self.close_announcement_details = function(){
+        self.vue.left_nav_options.show_ann_detail = false;
+    };
+
+
+    self.minimize_announcement = function(ann){
+        console.log('enter minimize_announcement');
+        self.vue.left_nav_options.show_ann_detail = false;
+        self.vue.minimized_announcements.push(ann);
+        console.log('end minimize_announcement');
+    };
+
+    self.close_minimized_announcement = function(target){
+         console.log("close_minimized_announcements");
+         // remove from all_announcements
+
+        for(var i=0; i < self.vue.minimized_announcements.length; i++){
+            var ann = self.vue.minimized_announcements[i];
+            if (ann.id == target.id ){
+                self.vue.minimized_announcements.splice(i, 1);
+                break;
+            }
+        }
+
+        console.log("close_minimized_announcements, mini_anns=",self.vue.minimized_announcements);
+
+    };
+
+
+    self.restore_minimized_announcement = function(ann){
+        console.log("resotore_minimized_announcements");
+        self.close_minimized_announcement(ann);
+        self.vue.left_nav_options.show_ann_detail = true;
+        self.vue.show_this_announcement = ann;
     };
 
 
@@ -485,6 +628,8 @@ var app = function() {
         unsafeDelimiters: ['!{', '}'],
 
         data: {
+            show_this_announcement: null,
+
             editing_comment_id: null,
             index_to_be_deleted: null,
             id_to_be_deleted: null,
@@ -497,7 +642,7 @@ var app = function() {
             // this holds the query string that the user enters
             search_content: null,
             isCreatingAnnouncement: false,
-            is_history_showing: true,
+            is_history_showing: null,
             announcement_form: _announcement_form,
             comment_form: _comment_form,
             filter_form: _filter_form,
@@ -506,11 +651,13 @@ var app = function() {
             announcements_to_show: [],
             search_announcements: [],
             announcement_comments: [],
+            minimized_announcements: [],
 
             map_clickable: false,
             show_search: false,
 
             right_nav_options: _right_side_nav_options,
+            left_nav_options: _left_side_nav_options,
 
             this_user:null
         },
@@ -528,9 +675,17 @@ var app = function() {
             comment_edit_cancel_button: self.comment_edit_cancel_button,
 
 
+            /* left side announcement display functions */
+            show_announcement_details: self.show_announcement_details,
+            close_announcement_details: self.close_announcement_details,
+            minimize_announcement: self.minimize_announcement,
+            restore_minimized_announcement: self.restore_minimized_announcement,
+            close_minimized_announcement: self.close_minimized_announcement,
+
             /* announcement edit functions */
             announcement_edit_submit_button: self.announcement_edit_submit_button,
             announcement_edit_cancel_button: self.announcement_edit_cancel_button,
+            announcement_edit_delete_button: self.announcement_edit_delete_button,
 
             /* navbar display functions */
             toggle_right_navbar_show: self.toggle_right_navbar_show,
