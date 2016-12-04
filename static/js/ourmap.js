@@ -202,7 +202,8 @@ var New_Map = function (onMapClick, onIconClick) {
     self.map.on('click', function(e) {
         if(onMapClick(e.latlng.lat, e.latlng.lng, e)){
             self.draw_marker(e.latlng, self.next_marker.icon);
-            $('#CreateAnnouncementModal').modal('show');
+            APP.toggle_announcement_form();
+            //$('#CreateAnnouncementModal').modal('show');
         }
     });
 
