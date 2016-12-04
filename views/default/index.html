@@ -143,14 +143,12 @@ function mOver(obj) {
             <li class="history-list-item"
                 v-for="ann in announcements_to_show"
                 v-on:click="show_announcement_details(ann)">
-                    <div class="display-post-title">
-                        ${ann.name}
-                    </div>
-                    <div class="display-post-description">
-                        ${ann.description}
-                    </div>
-
-                    Category: ${ann.category}
+                <div>
+                    <div style="background-color: #d9534f;" style="font-size:16px;">${ann.name}</div>
+                    <div><p style="font-size:14px" style="text-wrap: normal">${ann.description}</p></div>
+                    <p style="font-size:10px">${ann.score} ${ann.author}</p>
+                    <p style="font-size:8px">${ann.created_on}</p>
+                </div>
             </li>
         </ul>
         <div v-else class="leftside-ann-details" >
@@ -399,12 +397,12 @@ function mOver(obj) {
                                <!-- Div for the history of annoucements-->
                                 <ul id="history" class="my-history-wrapper">
                                     <li class="history-list-item" v-for="ann in users_announcements" v-on:click="view_history_announcement(ann.latlng)">
-                                            Title:  <br> ${ann.name} <br>
-                                            Description:  <br>
-                                            ${ann.description}  <br>
-                                            Category: ${ann.category}   <br>
-                                            <i class="fa fa-trash-o"></i>
-                                            <i class="fa fa-pencil"></i> <br>
+                                            <div>
+                                                <div style="background-color: #d9534f;" style="font-size:16px;">${ann.name}</div>
+                                                <div><p style="font-size:14px" style="text-wrap: normal">${ann.description}</p></div>
+                                                <p style="font-size:10px">${ann.score} ${ann.author}</p>
+                                                <p style="font-size:8px">${ann.created_on}</p> <i class="fa fa-trash-o" v-on:click="announcement_edit_delete_button(ann.id)"></i> <i class="fa fa-pencil"></i>
+                                            </div>
                                     </li>
                                 </ul>
                            </div>
