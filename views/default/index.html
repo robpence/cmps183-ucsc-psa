@@ -154,7 +154,7 @@ function mOver(obj) {
             </li>
         </ul>
         <div v-else class="leftside-ann-details" >
-            <div class="comment-list-item" >
+            <di class="comment-list-item" >
 
                 <div class="display-post-title">
                     ${show_this_announcement.name}
@@ -178,7 +178,7 @@ function mOver(obj) {
                 <div class="comment-form-div" >
                     <li class="" v-if="editing_comment">
 
-                        <input v-model="comment_form.comment_text" class="comment-edit-input"> <br>
+                        <input v-model="comment_form.comment_text" class="comment-edit-input" id="edit_comment"> <br>
 
                         <button class="btn btn-sm edit-submit-btn"
                                 v-on:click="comment_edit_submit_button()">
@@ -446,8 +446,6 @@ function mOver(obj) {
 
             </ul><!-- end left side nav list -->
 
-
-
         </div>
         </nav></div>
 
@@ -467,5 +465,4 @@ function mOver(obj) {
 </div> <!-- end main-content -->
 
 
-<script src="{{=URL('static', 'js/default_index.js')}}">
-</script>
+<script src="{{=URL('static', 'js/default_index.js')}}"></script>
