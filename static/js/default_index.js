@@ -414,7 +414,8 @@ var app = function() {
         }else{
             w = 420;
         }
-        $("#mapid").height($(window).height() * 1.00).width($(window).width() * 1.0 - w);
+
+        $("#mapid").width($(window).width() * 1.0 - w);
     };
 
 

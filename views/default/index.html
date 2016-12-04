@@ -51,9 +51,10 @@ function mOver(obj) {
                 //this re-sizes the window automattically. Just change the numbers after height and width.
                 //If you want to reserve part of the screen for a menu, like the vertical menu we have on the left,
                 //You have to change the padding in the css file.
-                var top_navbar_width = 65;
+                var top_navbar_height = 65;
+                var bot_navbar_height = 30;
                 $(window).on("resize", function() {
-                    $("#mapid").height($(window).height() * 1.00 + 65
+                    $("#mapid").height(($(window).height() * 1.0) - top_navbar_height -bot_navbar_height
                     ).width($(window).width() * 1.00 - 420);
                     //New_Map.map.invalidateSize();
                 }).trigger("resize");
@@ -249,6 +250,7 @@ function mOver(obj) {
                     </ul>
                     </div>
                 </li>
+            -->
             </ul>
         </div>
         </nav>
@@ -256,26 +258,29 @@ function mOver(obj) {
 
 
         <!-- bottom stuff --->
-        <ul class="minimized-announcements-list" >
-            <li class="minimized-announcement-item"
-                v-for="ann in minimized_announcements">
-                <div class="display-post-title" >
-                    ${ann.name}
-                </div>
+        <nav class="navbar navbar-default navbar-fixed-bot " role="navigation">
+          <div class="container-fluid bot-container-fluid">
+            <ul class="minimized-announcements-list" >
 
-                <button v-on:click="close_minimized_announcement(ann)" class="btn-close-ann-detail">
-                    <i class="fa fa-times" aria-hidden="true"></i>
+                <li class="minimized-announcement-item"
+                    v-for="ann in minimized_announcements">
+                    <div class="display-post-title" >
+                        ${ann.name}
+                    </div>
 
-                </button>
+                    <button v-on:click="close_minimized_announcement(ann)" class="btn-close-ann-detail">
+                        <i class="fa fa-times" aria-hidden="true"></i>
 
+                    </button>
 
-                <button v-on:click="restore_minimized_announcement(ann)"  class="btn-restore-ann-detail">
-                    <i class="fa fa-window-restore" aria-hidden="true"></i>
-               </button>
+                    <button v-on:click="restore_minimized_announcement(ann)"  class="btn-restore-ann-detail">
+                        <i class="fa fa-window-restore" aria-hidden="true"></i>
+                   </button>
+                </li>
 
-            </li>
-        </ul>
-
+            </ul>
+          </div>
+        </nav>
 
 
         <!---- Right Nav Bar  ----->
