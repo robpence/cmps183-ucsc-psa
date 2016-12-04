@@ -239,6 +239,30 @@ input[type=text]:focus {
     color: whitesmoke;
 }
 
+div.announcement_title_div{
+    border-bottom: solid;
+    border-bottom-color: darkgray;
+    border-bottom-width: 1px;
+    text-transform: uppercase;
+    /*background-color: #d9534f;*/
+}
+div.announce_text_div{
+    border-bottom: solid;
+    border-bottom-color: darkgray;
+    border-bottom-width: 1px;
+    color: black;
+}
+
+p.announcement_text{
+    color: black;
+}
+
+
+
+.comment-div{
+
+}
+
 .comment-item{
     margin: 2px;
     padding: 2px;

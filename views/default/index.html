@@ -69,19 +69,23 @@ function mOver(obj) {
         <nav class="navbar navbar-default navbar-fixed-top " role="navigation">
           <div class="container-fluid top-container-fluid">
             <ul class="top-navbar-list nav navbar-nav">
+
+
                 <li class="top-navbar-list-item" >
                       <!-- search -->
                     <div class="search-input-wrapper" >
+
+                        <input v-model="search_content" placeholder="Search">
+
                         <button class="search_button" v-on:click="execute_search()">
                             <i class="fa fa-search fa-2x" aria-hidden="true"></i>
                         </button>
-                        <input v-model="search_content" placeholder="Search">
                     </div>
                 </li>
 
                 <li class="search-input-wrapper" >
                     <div class="navbar-header navbar-brand ">
-                        Public Service Announcement Website
+                        Public Service Announcement
                     </div>
                 </li>
 
@@ -144,8 +148,8 @@ function mOver(obj) {
                 v-for="ann in announcements_to_show"
                 v-on:click="show_announcement_details(ann)">
                 <div>
-                    <div style="background-color: #d9534f;" style="font-size:16px;">${ann.name}</div>
-                    <div><p style="font-size:14px" style="text-wrap: normal">${ann.description}</p></div>
+                    <div class="announcement_title_div" style="font-size:16px;">${ann.name}</div>
+                    <div class="announcement_text_div" ><p style="font-size:14px" style="text-wrap: normal">${ann.description}</p></div>
                     <p style="font-size:10px">${ann.score} ${ann.author}</p>
                     <p style="font-size:8px">${ann.created_on}</p>
                 </div>
@@ -154,15 +158,15 @@ function mOver(obj) {
         <div v-else class="leftside-ann-details" >
             <div class="comment-list-item" >
 
-                <div class="display-post-title">
-                    ${show_this_announcement.name}
+                <div class="announcement_title_div" style="font-size:16px;">
+                    <p style="color:black;">${show_this_announcement.name}</p>
                 </div>
 
-                <div class="display-post-description">
-                    ${show_this_announcement.description}
+                <div class="announcement_text_div">
+                    <p style="font-size:14px" style="text-wrap: normal" class="announcement_text">${show_this_announcement.description}</p>
                 </div>
 
-                Category: ${show_this_announcement.category}   <br>
+                <p style="font-size:10px" class="announcement_text">${show_this_announcement.score} ${show_this_announcement.author} ${show_this_announcement.created_on}</p>
 
                 <button v-on:click="close_announcement_details()" class="btn-close-ann-detail">
                     <i class="fa fa-times" aria-hidden="true"></i>
@@ -203,7 +207,7 @@ function mOver(obj) {
                     </form>
                 </div>
 
-                <div>
+                <div class="comment-div">
                     <ul v-for="(comment, index) in announcement_comments">
                         <li class="comment-item" v-if="comment.ann_id == id_to_be_deleted">
                                     ${comment.comment_text}
