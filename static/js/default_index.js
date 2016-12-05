@@ -204,6 +204,7 @@ var app = function() {
     };
 
 
+    //this isn't called anymore, it was for the modal
     self.announcement_Detail = function(index) {
         announcement = self.vue.all_announcements[index];
         //announcement = self.vue.names[index];
@@ -762,6 +763,14 @@ var app = function() {
 
 
 var APP = null;
+
+document.getElementById('box-for-urgent').style.backgroundColor = "rgb(" + 167 + "," + 201 + "," + 240 + ")"; //blueish
+document.getElementById('box-for-shutdown').style.backgroundColor = "rgb(" + 253 + "," + 114 + "," + 123 + ")"; //redish
+document.getElementById('box-for-event').style.backgroundColor = "rgb(" + 135 + "," + 225 + "," + 141 + ")"; //greenish
+
+document.getElementById('his-for-urgent').style.backgroundColor = "rgb(" + 167 + "," + 201 + "," + 240 + ")"; //blueish
+document.getElementById('his-for-shutdown').style.backgroundColor = "rgb(" + 253 + "," + 114 + "," + 123 + ")"; //redish
+document.getElementById('his-for-event').style.backgroundColor = "rgb(" + 135 + "," + 225 + "," + 141 + ")"; //greenish
 
 // This will make everything accessible from the js console;
 // for instance, self.x above would be accessible as APP.x

@@ -148,71 +148,71 @@ function mOver(obj) {
             <li class="history-list-item"
                 v-for="ann in announcements_to_show"
                 v-on:click="show_announcement_details(ann)">
-                <div>
-                    <div class="announcement_title_div" style="font-size:16px;">${ann.name}</div>
-                    <div class="announcement_text_div" ><p style="font-size:14px" style="text-wrap: normal">${ann.description}</p></div>
-                    <p style="font-size:10px">${ann.score} ${ann.author}</p>
-                    <p style="font-size:8px">${ann.created_on}</p>
+                <div v-if="ann.category == 'shutdown'">
+                    <div id="box-for-shutdown">
+                        <div class="announcement_title_div" style="font-size:16px;">${ann.name}</div>
+                        <div class="announcement_text_div" ><p style="font-size:14px" style="text-wrap: normal">${ann.description}</p></div>
+                        <p style="font-size:10px">${ann.score} ${ann.author}</p>
+                        <p style="font-size:8px">${ann.created_on}</p>
+                    </div>
+                </div>
+                <div v-if="ann.category == 'event'">
+                    <div id="box-for-event">
+                        <div class="announcement_title_div" style="font-size:16px;">${ann.name}</div>
+                        <div class="announcement_text_div" ><p style="font-size:14px" style="text-wrap: normal">${ann.description}</p></div>
+                        <p style="font-size:10px">${ann.score} ${ann.author}</p>
+                        <p style="font-size:8px">${ann.created_on}</p>
+                    </div>
+                </div>
+                <div v-if="ann.category == 'urgent'">
+                    <div id="box-for-urgent">
+                        <div class="announcement_title_div" style="font-size:16px;">${ann.name}</div>
+                        <div class="announcement_text_div" ><p style="font-size:14px" style="text-wrap: normal">${ann.description}</p></div>
+                        <p style="font-size:10px">${ann.score} ${ann.author}</p>
+                        <p style="font-size:8px">${ann.created_on}</p>
+                    </div>
                 </div>
             </li>
         </ul>
         <div v-else class="leftside-ann-details" >
-            <div class="announcement-display-wrapper" >
-
+            <div class="announcement-display-wrapper" > <!-- This is the div i would copy and paste to make it colored-->
                 <div class="announcement-details-wrapper">
-
                     <div class="display-ann-btn-bar">
-
                         <button v-on:click="close_announcement_details()"
                                 class="btn-close-ann-detail btn-ann-detail">
                             <i class="fa fa-times" aria-hidden="true"></i>
                         </button>
-
-
                         <button v-on:click="minimize_announcement(show_this_announcement)"
                                 class="btn-minimize-ann-detail btn-ann-detail">
                             <i class="fa fa-window-minimize" aria-hidden="true"></i>
                         </button>
                     </div>
-
-
                     <div class="announcement-display-content">
                         <div class="announcement_title_div" style="font-size:16px;">
                             <p style="color:black;">${show_this_announcement.name}</p>
                         </div>
-
                         <div class="announcement_text_div">
                             <p style="font-size:14px" style="text-wrap: normal"
                                class="announcement_text">${show_this_announcement.description}</p>
                         </div>
-
                         <p style="font-size:10px" class="announcement_text">
                             ${show_this_announcement.score} ${show_this_announcement.author} ${show_this_announcement.created_on}
                         </p>
-
                     </div>
-
-
                 </div>
-
-
                 <div class="comment-form-div" v-if="'{{=auth.user_id}}'">
                     <li v-if="editing_comment">
-
                         <input v-model="comment_form.comment_text" class="comment-edit-input" id="edit_comment"> <br>
-
                         <button class="btn btn-sm edit-submit-btn"
                                 v-on:click="comment_edit_submit_button()">
                                 done
                         </button>
-
                         <button class="btn btn-sm edit-submit-btn"
                             v-on:click="comment_edit_cancel_button()">
                             cancel
                         </button>
                     </li>
                 </div>
-
                 <div v-if="!editing_comment">
                     <form action="#" v-on:submit.prevent="add_comment" class="form-horizontal" enctype="multipart/form-data" method="post">
                         <div class="comment-form-div" id="comment">
@@ -225,7 +225,6 @@ function mOver(obj) {
                         </div>
                     </form>
                 </div>
-
                 <div class="comment-div">
                     <ul v-for="(comment, index) in announcement_comments">
                         <li class="comment-item" v-if="comment.ann_id == id_to_be_deleted">
@@ -236,15 +235,14 @@ function mOver(obj) {
                                     <i class="fa fa-pencil" v-on:click="edit_comment(index)"></i>
                                     <i class="fa fa-thumbs-o-up" v-on:click="up_vote_comment(index)"></i>
                                     <i class="fa fa-thumbs-o-down" v-on:click="down_vote_comment(index)"></i>
-                                    <!-- ran outa time but upvote and downvote buttons go here-->
                         </li>
                     </ul>
                 </div>
-
-
             </div>
+        
         </div>
-      </div></nav>
+      </div>
+     </nav>
 
 
 
@@ -409,7 +407,19 @@ function mOver(obj) {
                                <!-- Div for the history of annoucements-->
                                 <ul id="history" class="my-history-wrapper">
                                     <li class="history-list-item" v-for="ann in users_announcements" v-on:click="view_history_announcement(ann.latlng)">
-                                            <div>
+                                            <div id="his-for-urgent" v-if="ann.category == 'urgent'">
+                                                <div class="announcement_title_div" style="font-size:16px;">${ann.name}</div>
+                                                <div class="announcement_text_div"><p style="font-size:14px">${ann.description}</p></div>
+                                                <p style="font-size:10px">${ann.score} ${ann.author}</p>
+                                                <p style="font-size:8px">${ann.created_on}</p> <i class="fa fa-trash-o" v-on:click="announcement_edit_delete_button(ann.id)"></i> <i class="fa fa-pencil"></i>
+                                            </div>
+                                            <div id="his-for-shutdown" v-if="ann.category == 'shutdown'">
+                                                <div class="announcement_title_div" style="font-size:16px;">${ann.name}</div>
+                                                <div class="announcement_text_div"><p style="font-size:14px">${ann.description}</p></div>
+                                                <p style="font-size:10px">${ann.score} ${ann.author}</p>
+                                                <p style="font-size:8px">${ann.created_on}</p> <i class="fa fa-trash-o" v-on:click="announcement_edit_delete_button(ann.id)"></i> <i class="fa fa-pencil"></i>
+                                            </div>
+                                            <div id="his-for-event" v-if="ann.category == 'event'">
                                                 <div class="announcement_title_div" style="font-size:16px;">${ann.name}</div>
                                                 <div class="announcement_text_div"><p style="font-size:14px">${ann.description}</p></div>
                                                 <p style="font-size:10px">${ann.score} ${ann.author}</p>

@@ -96,13 +96,13 @@ var New_Map = function (onMapClick, onIconClick) {
                 self.set_coordinates(stevenson_college);
                 break;
             default:
-                self.map.setView(central_campus, 15, {animation: true});
+                self.map.setView(central_campus, 20, {animation: true});
                 break;
         }
     };
 
     self.set_coordinates = function(coordinates){
-        self.map.setView(coordinates, 17, {animation: true});
+        self.map.setView(coordinates, 20, {animation: true});
     };
 
     self.set_next_marker = function(marker){
