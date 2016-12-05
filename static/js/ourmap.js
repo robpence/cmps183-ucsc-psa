@@ -13,8 +13,8 @@ var cowell_college = [36.999677, -122.054740];
 var college_9 = [37.001969, -122.057908];
 var college_10 = [37.001575, -122.058938];
 var porter_college = [36.994357, -122.065471];
-var college_8 = [36.991049, -122.064856];
 var oakes_college = [36.989364, -122.063981];
+var rachel_carson = [36.991788, -122.064764];
 var bounds = [
             //south west
             [37.007606, -122.037206],
@@ -71,7 +71,7 @@ var New_Map = function (onMapClick, onIconClick) {
                 self.set_coordinates(merrill_college);
                 break;
             case "rachel_carson":
-                self.set_coordinates(college_8);
+                self.set_coordinates(rachel_carson);
                 break;
             case "oakes":
                 self.set_coordinates(oakes_college);
@@ -102,7 +102,7 @@ var New_Map = function (onMapClick, onIconClick) {
     };
 
     self.set_coordinates = function(coordinates){
-        self.map.setView(coordinates, 20, {animation: true});
+        self.map.setView(coordinates, 22, {animation: true});
     };
 
     self.set_next_marker = function(marker){
