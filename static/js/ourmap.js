@@ -110,6 +110,9 @@ var New_Map = function (onMapClick, onIconClick) {
 
 
     self.update_most_recent = function(new_marker){
+
+        console.log('update_most_recent, most_recent=', self.most_recent);
+
         self.set_next_marker(new_marker);
         if(self.most_recent != null) {
             self.next_marker.latlng = self.most_recent.latlng;
@@ -127,6 +130,8 @@ var New_Map = function (onMapClick, onIconClick) {
             {icon: icon}
         ).on('click', onIconClick);
         self.most_recent.addTo(self.map);
+
+        self.most_recent.latlng = self.most_recent._latlng;
 
     };
 

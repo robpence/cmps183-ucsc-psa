@@ -99,7 +99,7 @@ body{
 .main_content .container-fluid .navbar-list .navlist-item {
   list-style: none;
   padding: 5px 5px 5px 5px;
-  margin: 10px 0 10px 0;
+  margin: 10px 20px 10px 20px;
   width: 185px;
 }
 /* line 56, ../sass/_main.scss */
@@ -112,7 +112,8 @@ body{
     width: 200px;
 }
 .navlist-item{
-    margin: 10px;
+    margin-top: 10px;
+    padding-top: 20px;
     color: white;
 }
 /* line 36, ../sass/_main.scss */
@@ -155,6 +156,7 @@ body{
 /* line 70, ../sass/_main.scss */
 .main_content .history_button {
   margin-top: 20px;
+
 }
 
 /* line 76, ../sass/_main.scss */
@@ -163,11 +165,15 @@ body{
 }
 
 input.create-announcement-button{
-    background-color: #d9534f;
+    background-color: green;
     right: 30px;
+    color: white;
 }
 
-
+.create-annuncement-btn{
+    float: left;
+    margin: 5px;
+}
 
 /* position of log in menu*/
 /* line 75, ../sass/_main.scss */
