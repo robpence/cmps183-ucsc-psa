@@ -467,6 +467,10 @@ var app = function() {
                 clear_announcement_form();
                 self.vue.editing_announcement = false;
             });
+
+        self.vue.announcements_to_show = []; //clears the lists
+        self.vue.users_announcements = [];
+        self.initial_populate_map();    //there is defintely a better way of repopulating the lists.
     };
 
 
