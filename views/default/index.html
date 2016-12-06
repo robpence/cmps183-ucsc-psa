@@ -149,23 +149,23 @@ function mOver(obj) {
                 v-for="ann in announcements_to_show"
                 v-on:click="show_announcement_details(ann)">
                 <div v-if="ann.category == 'shutdown'">
-                    <div id="box-for-shutdown">
+                    <div id="box-for-shutdown" class="shutdown-box">
                         <div class="announcement_title_div" style="font-size:16px;">${ann.name}</div>
                         <div class="announcement_text_div" ><p style="font-size:14px" style="text-wrap: normal">${ann.description}</p></div>
                         <p style="font-size:10px">${ann.score} ${ann.author}</p>
                         <p style="font-size:8px">${ann.created_on}</p>
                     </div>
                 </div>
-                <div v-if="ann.category == 'event'">
-                    <div id="box-for-event">
+                <div v-if="ann.category == 'event'" >
+                    <div id="box-for-event" class="event-box">
                         <div class="announcement_title_div" style="font-size:16px;">${ann.name}</div>
                         <div class="announcement_text_div" ><p style="font-size:14px" style="text-wrap: normal">${ann.description}</p></div>
                         <p style="font-size:10px">${ann.score} ${ann.author}</p>
                         <p style="font-size:8px">${ann.created_on}</p>
                     </div>
                 </div>
-                <div v-if="ann.category == 'urgent'">
-                    <div id="box-for-urgent">
+                <div v-if="ann.category == 'urgent'" >
+                    <div id="box-for-urgent" class="urgent-box">
                         <div class="announcement_title_div" style="font-size:16px;">${ann.name}</div>
                         <div class="announcement_text_div" ><p style="font-size:14px" style="text-wrap: normal">${ann.description}</p></div>
                         <p style="font-size:10px">${ann.score} ${ann.author}</p>

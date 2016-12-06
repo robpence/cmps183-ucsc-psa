@@ -317,9 +317,18 @@ p.announcement_text{
 
 
 .history-list-item:hover {
-    background-color: #A2A2A2;
+    background-color: #A2A2A2 !important; /*this does nothing because its being over*/
 }
 
+.shutdown-box:hover{
+    background-color: lightcoral !important;
+}
+.event-box:hover{
+    background-color: lightgreen !important;
+}
+.urgent-box:hover{
+    background-color: lightblue !important;
+}
 
 .edit-submit-btn{
     color: green;
