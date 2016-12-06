@@ -155,33 +155,38 @@ function mOver(obj) {
       <div class="display-announcements container-fluid">
 
         <ul v-if="!left_nav_options.show_ann_detail" class="display-announcements-list">
-            <li class="history-list-item"
-                v-for="ann in announcements_to_show"
-                v-on:click="show_announcement_details(ann)">
-                <div v-if="ann.category == 'shutdown'" class="announcement-box-2">
-                    <div class="shutdown-box">
-                        <div class="announcement_title_div" id="box-for-shutdown" style="font-size:16px;">${ann.name}</div>
-                        <div class="announcement_text_div" ><p style="font-size:14px" style="text-wrap: normal">${ann.description}</p></div>
-                        <p style="font-size:10px">${ann.score} ${ann.author}</p>
-                        <p style="font-size:8px">${ann.created_on}</p>
+            <li v-if="announcements_to_show.length == 0">
+            <p style="color: white">No announcements posted yet</p>
+            </li>
+            <li v-else>
+                <li class="history-list-item"
+                    v-for="ann in announcements_to_show"
+                    v-on:click="show_announcement_details(ann)">
+                    <div v-if="ann.category == 'shutdown'" class="announcement-box-2">
+                        <div class="shutdown-box">
+                            <div class="announcement_title_div" id="box-for-shutdown" style="font-size:16px;">${ann.name}</div>
+                            <div class="announcement_text_div" ><p style="font-size:14px" style="text-wrap: normal">${ann.description}</p></div>
+                            <p style="font-size:10px">${ann.score} ${ann.author}</p>
+                            <p style="font-size:8px">${ann.created_on}</p>
+                        </div>
                     </div>
-                </div>
-                <div v-if="ann.category == 'event'"  class="announcement-box-2">
-                    <div class="event-box">
-                        <div class="announcement_title_div" id="box-for-event" style="font-size:16px;">${ann.name}</div>
-                        <div class="announcement_text_div" ><p style="font-size:14px" style="text-wrap: normal">${ann.description}</p></div>
-                        <p style="font-size:10px">${ann.score} ${ann.author}</p>
-                        <p style="font-size:8px">${ann.created_on}</p>
+                    <div v-if="ann.category == 'event'"  class="announcement-box-2">
+                        <div class="event-box">
+                            <div class="announcement_title_div" id="box-for-event" style="font-size:16px;">${ann.name}</div>
+                            <div class="announcement_text_div" ><p style="font-size:14px" style="text-wrap: normal">${ann.description}</p></div>
+                            <p style="font-size:10px">${ann.score} ${ann.author}</p>
+                            <p style="font-size:8px">${ann.created_on}</p>
+                        </div>
                     </div>
-                </div>
-                <div v-if="ann.category == 'urgent'" class="announcement-box-2">
-                    <div class="urgent-box" >
-                        <div class="announcement_title_div" id="box-for-urgent" style="font-size:16px;">${ann.name}</div>
-                        <div class="announcement_text_div" ><p style="font-size:14px" style="text-wrap: normal">${ann.description}</p></div>
-                        <p style="font-size:10px">${ann.score} ${ann.author}</p>
-                        <p style="font-size:8px">${ann.created_on}</p>
+                    <div v-if="ann.category == 'urgent'" class="announcement-box-2">
+                        <div class="urgent-box" >
+                            <div class="announcement_title_div" id="box-for-urgent" style="font-size:16px;">${ann.name}</div>
+                            <div class="announcement_text_div" ><p style="font-size:14px" style="text-wrap: normal">${ann.description}</p></div>
+                            <p style="font-size:10px">${ann.score} ${ann.author}</p>
+                            <p style="font-size:8px">${ann.created_on}</p>
+                        </div>
                     </div>
-                </div>
+                </li>
             </li>
         </ul>
         <div v-else class="leftside-ann-details" >
