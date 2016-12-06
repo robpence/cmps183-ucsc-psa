@@ -447,6 +447,7 @@ ul {
 .top-navbar-list-name{
     float: right !important;
     height: 65px;
+	padding-right: 70px;
 }
 .top-navbar-list-filter {
     float: right !important;
