@@ -27,7 +27,7 @@ db.define_table('Announcements',
                 Field('solved', 'boolean', default=False),
                 Field('edited_on', default=datetime.datetime.utcnow()),
                 Field('created_on', default=datetime.datetime.utcnow()),
-                Field('end_date'),
+                Field('end_date', default=datetime.datetime.utcnow()),
                 )
 
 db.define_table('Comments',
