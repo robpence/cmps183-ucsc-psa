@@ -257,6 +257,10 @@ input[type=text]:focus {
     /*color: whitesmoke;*/
 }
 
+.history-list-item:hover{
+    filter: brightness(90%);
+}
+
 
 
 div.announcement_title_div{
@@ -325,7 +329,7 @@ p.announcement_text{
 
 
 .history-list-item:hover {
-    background-color: #A2A2A2 !important; /*this does nothing because its being over*/
+    /*background-color: #A2A2A2 !important; /*this does nothing because its being over*/
 }
 
 .shutdown-box{
@@ -342,14 +346,17 @@ p.announcement_text{
 }
 
 .shutdown-box:hover{
-    background-color: lightcoral !important;
+    /*background-color: lightcoral !important;*/
+    filter: brightness(85%) !important;
 }
 
 .event-box:hover{
-    background-color: lightgreen !important;
+    /*background-color: lightgreen !important;*/
+    filter: brightness(85%) !important;
 }
 .urgent-box:hover{
-    background-color: lightblue !important;
+    /*background-color: lightblue !important;*/
+    filter: brightness(85%) !important;
 }
 
 .edit-submit-btn{
@@ -365,6 +372,9 @@ p.announcement_text{
 .announcement-box-2{
     padding: 3px !important;
     border-radius: 5px !important;
+}
+.announcement-box-2:hover {
+    filter: brightness(85%) !important;
 }
 
 
