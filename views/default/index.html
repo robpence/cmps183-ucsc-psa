@@ -163,6 +163,8 @@ function mOver(obj) {
                         <div class="announcement_text_div" ><p style="font-size:14px" style="text-wrap: normal">${ann.description}</p></div>
                         <p style="font-size:10px">${ann.score} ${ann.author}</p>
                         <p style="font-size:8px">${ann.created_on}</p>
+                        <i class="fa fa-thumbs-o-up" v-on:click="up_vote_comment(index)"></i>
+                        <i class="fa fa-thumbs-o-down" v-on:click="down_vote_comment(index)"></i>
                     </div>
                 </div>
                 <div v-if="ann.category == 'event'" >
