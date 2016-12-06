@@ -823,6 +823,20 @@ document.getElementById('his-for-urgent').style.color = "rgb(" + 31 + "," + 31 +
 document.getElementById('his-for-shutdown').style.color = "rgb(" + 161 + "," + 0 + "," + 0 + ")"; //redish
 document.getElementById('his-for-event').style.color = "rgb(" + 7 + "," + 111 + "," + 3 + ")"; //greenish
 
+var today = new Date();
+var dd = today.getDate();
+var mm = today.getMonth()+1; //January is 0!
+var yyyy = today.getFullYear();
+ if(dd<10){
+        dd='0'+dd
+    }
+    if(mm<10){
+        mm='0'+mm
+    }
+
+today = yyyy+'-'+mm+'-'+dd;
+document.getElementById("datefieldfordate").setAttribute("min", today);
+
 // This will make everything accessible from the js console;
 // for instance, self.x above would be accessible as APP.x
 jQuery(function(){APP = app();});
