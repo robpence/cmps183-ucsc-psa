@@ -166,8 +166,6 @@ input.create-announcement-button{
     background-color: #d9534f;
 }
 
-
-
 /* position of log in menu*/
 /* line 75, ../sass/_main.scss */
 .main-container {
@@ -225,6 +223,11 @@ input[type=text]:focus {
 	resize: none;
 }
 
+.button-group {
+    display:inline-block;
+    height:10px;
+}
+
 
 .logged-in-left-user-tools{
     padding: 0;
@@ -248,8 +251,6 @@ input[type=text]:focus {
     color: black;
     /*color: whitesmoke;*/
 }
-
-
 
 div.announcement_title_div{
     border-bottom: solid;
@@ -336,6 +337,8 @@ p.announcement_text{
 
 .edit-delete-btn{
     color: red;
+    float:right;
+    margin-bottom: 20px;
 }
 
 
