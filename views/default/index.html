@@ -307,20 +307,22 @@ function mOver(obj) {
                         <textarea v-model="announcement_form.description" class="announcement-input-text">
                         </textarea>
 
-                        <button class="btn btn-sm edit-submit-btn"
-                                v-on:click="announcement_edit_submit_button()">
-                                done
-                        </button>
+                        <div class="button-group">
+                            <button class="btn btn-sm edit-submit-btn"
+                                    v-on:click="announcement_edit_submit_button()" style="width:30%">
+                                    done
+                            </button>
 
-                        <button class="btn btn-sm edit-submit-btn"
-                            v-on:click="announcement_edit_cancel_button()">
-                            cancel
-                        </button>
+                            <button class="btn btn-sm edit-submit-btn"
+                                v-on:click="announcement_edit_cancel_button()" style="width:35%">
+                                cancel
+                            </button>
 
-                        <button class="btn btn-sm edit-delete-btn"
-                            v-on:click="announcement_edit_delete_button(announcement_form.id)">
-                            <i class="fa fa-trash-o"></i>
-                        </button>
+                            <button class="btn btn-sm edit-delete-btn"
+                                v-on:click="announcement_edit_delete_button(announcement_form.id)">
+                                <i class="fa fa-trash-o"></i>
+                            </button>
+                        </div>
                     </li>
 
                     <div v-if="is_creating_announcement">
