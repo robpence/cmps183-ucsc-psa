@@ -776,21 +776,21 @@ var app = function() {
 
 var APP = null;
 
-document.getElementById('box-for-urgent').style.backgroundColor = "rgb(" + 63 + "," + 227 + "," + 252 + ")"; //blueish
-document.getElementById('box-for-shutdown').style.backgroundColor = "rgb(" + 253 + "," + 114 + "," + 123 + ")"; //redish
-document.getElementById('box-for-event').style.backgroundColor = "rgb(" + 135 + "," + 225 + "," + 141 + ")"; //greenish
+document.getElementById('box-for-urgent').style.color = "rgb(" + 31 + "," + 31 + "," + 132 + ")"; //blueish
+document.getElementById('box-for-shutdown').style.color = "rgb(" + 161 + "," + 0 + "," + 0 + ")"; //redish
+document.getElementById('box-for-event').style.color = "rgb(" + 7 + "," + 111 + "," + 3 + ")"; //greenish
 
-document.getElementById('urgent-box-2').style.backgroundColor = "rgb(" + 63 + "," + 227 + "," + 252 + ")";  //blueish
-document.getElementById('shutdown-box-2').style.backgroundColor = "rgb(" + 253 + "," + 114 + "," + 123 + ")"; //redish
-document.getElementById('event-box-2').style.backgroundColor = "rgb(" + 135 + "," + 225 + "," + 141 + ")"; //greenish
+document.getElementById('urgent-box-2').style.color = "rgb(" + 31 + "," + 31 + "," + 132 + ")";   //blueish
+document.getElementById('shutdown-box-2').style.color = "rgb(" + 161 + "," + 0 + "," + 0 + ")"; //redish
+document.getElementById('event-box-2').style.color = "rgb(" + 7 + "," + 111 + "," + 3 + ")"; //greenish
 
-document.getElementById('urgent-box-3').style.backgroundColor = "rgb(" + 63 + "," + 227 + "," + 252 + ")";  //blueish
-document.getElementById('shutdown-box-3').style.backgroundColor = "rgb(" + 253 + "," + 114 + "," + 123 + ")"; //redish
-document.getElementById('event-box-3').style.backgroundColor = "rgb(" + 135 + "," + 225 + "," + 141 + ")"; //greenish
+document.getElementById('urgent-box-3').style.color = "rgb(" + 31 + "," + 31 + "," + 132 + ")";   //blueish
+document.getElementById('shutdown-box-3').style.color = "rgb(" + 161 + "," + 0 + "," + 0 + ")"; //redish
+document.getElementById('event-box-3').style.color = "rgb(" + 7 + "," + 111 + "," + 3 + ")"; //greenish
 
-document.getElementById('his-for-urgent').style.backgroundColor = "rgb(" + 63 + "," + 227 + "," + 252 + ")";  //blueish
-document.getElementById('his-for-shutdown').style.backgroundColor = "rgb(" + 253 + "," + 114 + "," + 123 + ")"; //redish
-document.getElementById('his-for-event').style.backgroundColor = "rgb(" + 135 + "," + 225 + "," + 141 + ")"; //greenish
+document.getElementById('his-for-urgent').style.color = "rgb(" + 31 + "," + 31 + "," + 132 + ")";   //blueish
+document.getElementById('his-for-shutdown').style.color = "rgb(" + 161 + "," + 0 + "," + 0 + ")"; //redish
+document.getElementById('his-for-event').style.color = "rgb(" + 7 + "," + 111 + "," + 3 + ")"; //greenish
 
 // This will make everything accessible from the js console;
 // for instance, self.x above would be accessible as APP.x
