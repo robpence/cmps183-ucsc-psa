@@ -102,6 +102,19 @@ function mOver(obj) {
                   </ul>
                 </li>
 
+                <!-------- Filter ---------------->
+                <li class="dropdown top-navbar-list-item" data-w2pmenulevel="l0">
+                  <a href="#" class="dropdown-toggle" data-toggle="dropdown"> Filter </a>
+                  <ul class="dropdown-menu">
+                    <li> <input  type="radio" name="category" value="urgent" v-model="filter_form.category"> Urgent </li>
+                    <li> <input  type="radio" name="category" value="event" v-model="filter_form.category">  Event </li>
+                    <li> <input  type="radio" name="category" value="shutdown" v-model="filter_form.category"> shut down </li>
+                    <li>  <input  type="radio" name="category" value="all" v-model="filter_form.category"> all </li>
+                    <li> <button class="btn btn-warning btn-sm" v-on:click="filter_submit_button()"> submit filter </button></li>
+                  </ul>
+                </li>
+
+
                 <li class="top-navbar-list-item">
                     <!--
                     <div class="collapse navbar-collapse navbar-ex1-collapse">
@@ -130,10 +143,6 @@ function mOver(obj) {
           </ul>
           </div>
         </nav>
-
-
-
-
 
      <!-------------- Left Navigation Bar --------------------->
      <nav class="left-navbar navbar navbar-default" role="navigation">
