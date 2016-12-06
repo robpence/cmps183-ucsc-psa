@@ -207,15 +207,17 @@ input[type=text]:focus {
 
 .search-input-wrapper {
     float: left;
-    margin: 20px;
+    margin-top: 10px;
     padding: 1px;
+	padding-top: 10px;
 
 }
 
 .search_button{
     float: right;
 	color: white;
-    margin-bottom: 10px;
+    top: 150px;
+	margin-top: 15px;
 }
 .form-group {
     margin-bottom: 15px;
@@ -368,7 +370,7 @@ ul {
 
 .navbar-brand{
     margin: 0;
-    padding-left: 23%;
+    padding-left: 26%;
 	padding-right: 18.5%;
 	
 }
