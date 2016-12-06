@@ -138,33 +138,38 @@ function mOver(obj) {
       <div class="display-announcements container-fluid">
 
         <ul v-if="!left_nav_options.show_ann_detail" class="display-announcements-list">
-            <li class="history-list-item"
-                v-for="ann in announcements_to_show"
-                v-on:click="show_announcement_details(ann)">
-                <div v-if="ann.category == 'shutdown'" class="announcement-box-2">
-                    <div class="shutdown-box">
-                        <div class="announcement_title_div" id="box-for-shutdown" style="font-size:16px;">${ann.name}</div>
-                        <div class="announcement_text_div" ><p style="font-size:14px" style="text-wrap: normal">${ann.description}</p></div>
-                        <p style="font-size:10px">${ann.score} ${ann.author}</p>
-                        <p style="font-size:8px">${ann.created_on}</p>
+            <li v-if="announcements_to_show.length == 0">
+            <p style="color: white">No announcements posted yet</p>
+            </li>
+            <li v-else>
+                <li class="history-list-item"
+                    v-for="ann in announcements_to_show"
+                    v-on:click="show_announcement_details(ann)">
+                    <div v-if="ann.category == 'shutdown'" class="announcement-box-2">
+                        <div class="shutdown-box">
+                            <div class="announcement_title_div" id="box-for-shutdown" style="font-size:16px;">${ann.name}</div>
+                            <div class="announcement_text_div" ><p style="font-size:14px" style="text-wrap: normal">${ann.description}</p></div>
+                            <p style="font-size:10px">${ann.score} ${ann.author}</p>
+                            <p style="font-size:8px">${ann.created_on}</p>
+                        </div>
                     </div>
-                </div>
-                <div v-if="ann.category == 'event'"  class="announcement-box-2">
-                    <div class="event-box">
-                        <div class="announcement_title_div" id="box-for-event" style="font-size:16px;">${ann.name}</div>
-                        <div class="announcement_text_div" ><p style="font-size:14px" style="text-wrap: normal">${ann.description}</p></div>
-                        <p style="font-size:10px">${ann.score} ${ann.author}</p>
-                        <p style="font-size:8px">${ann.created_on}</p>
+                    <div v-if="ann.category == 'event'"  class="announcement-box-2">
+                        <div class="event-box">
+                            <div class="announcement_title_div" id="box-for-event" style="font-size:16px;">${ann.name}</div>
+                            <div class="announcement_text_div" ><p style="font-size:14px" style="text-wrap: normal">${ann.description}</p></div>
+                            <p style="font-size:10px">${ann.score} ${ann.author}</p>
+                            <p style="font-size:8px">${ann.created_on}</p>
+                        </div>
                     </div>
-                </div>
-                <div v-if="ann.category == 'urgent'" class="announcement-box-2">
-                    <div class="urgent-box" >
-                        <div class="announcement_title_div" id="box-for-urgent" style="font-size:16px;">${ann.name}</div>
-                        <div class="announcement_text_div" ><p style="font-size:14px" style="text-wrap: normal">${ann.description}</p></div>
-                        <p style="font-size:10px">${ann.score} ${ann.author}</p>
-                        <p style="font-size:8px">${ann.created_on}</p>
+                    <div v-if="ann.category == 'urgent'" class="announcement-box-2">
+                        <div class="urgent-box" >
+                            <div class="announcement_title_div" id="box-for-urgent" style="font-size:16px;">${ann.name}</div>
+                            <div class="announcement_text_div" ><p style="font-size:14px" style="text-wrap: normal">${ann.description}</p></div>
+                            <p style="font-size:10px">${ann.score} ${ann.author}</p>
+                            <p style="font-size:8px">${ann.created_on}</p>
+                        </div>
                     </div>
-                </div>
+                </li>
             </li>
         </ul>
         <div v-else class="leftside-ann-details" >
@@ -428,27 +433,27 @@ function mOver(obj) {
                     <!-- edit announcement stuff -->
                     <li class="navlist-item" v-if="editing_announcement">
 
-                        Title <input v-model="announcement_form.name" class="announcement-input-text"> <br>
+                        Title <input v-model="announcement_form.name" class="announcement-input-text" id="input"> <br>
                         Description: <br>
 
-                        <textarea v-model="announcement_form.description" class="announcement-input-text">
+                        <textarea v-model="announcement_form.description" class="announcement-input-text" id="description">
                         </textarea>
 
                         <div class="button-group">
-                            <button class="btn btn-sm edit-submit-btn"
-                                    v-on:click="announcement_edit_submit_button()" style="width:30%">
+                            <ul>
+                            <button class="edit-submit-btn"
+                                    v-on:click="announcement_edit_submit_button()">
                                     done
                             </button>
-
-                            <button class="btn btn-sm edit-submit-btn"
-                                v-on:click="announcement_edit_cancel_button()" style="width:35%">
+                            <button class="edit-cancel-btn"
+                                v-on:click="announcement_edit_cancel_button()">
                                 cancel
                             </button>
-
-                            <button class="btn btn-sm edit-delete-btn"
+                            <button class="edit-delete-btn"
                                 v-on:click="announcement_edit_delete_button(announcement_form.id)">
                                 <i class="fa fa-trash-o"></i>
                             </button>
+                            </ul>
                         </div>
                     </li>
 
@@ -466,6 +471,7 @@ function mOver(obj) {
                                 <p class="announcement-form">Event End Date</p>
                                 <input id="no_table_description" v-model="announcement_form.end_date" type="date" />
                             </div>
+
 
 
                         <!-- create announcement Form -->
@@ -547,23 +553,23 @@ function mOver(obj) {
                                <!-- Div for the history of annoucements-->
                                 <ul id="history" class="my-history-wrapper">
                                     <li class="history-list-item" v-for="ann in users_announcements" v-on:click="view_history_announcement(ann.latlng)">
-                                            <div class="urgent-box" v-if="ann.category == 'urgent'">
+                                            <div class="urgent-box" v-if="ann.category == 'urgent'" v-on:click="toggle_editing(ann)">
                                                 <div class="announcement_title_div" id="his-for-urgent" style="font-size:16px;">${ann.name}</div>
                                                 <div class="announcement_text_div"><p style="font-size:14px">${ann.description}</p></div>
                                                 <p style="font-size:10px">${ann.score} ${ann.author}</p>
-                                                <p style="font-size:8px">${ann.created_on}</p> <i class="fa fa-trash-o" v-on:click="announcement_edit_delete_button(ann.id)"></i> <i class="fa fa-pencil"></i>
+                                                <p style="font-size:8px">${ann.created_on}</p>
                                             </div>
-                                            <div class="shutdown-box"  v-if="ann.category == 'shutdown'">
+                                            <div class="shutdown-box"  v-if="ann.category == 'shutdown'" v-on:click="toggle_editing(ann)">
                                                 <div class="announcement_title_div" id="his-for-shutdown" style="font-size:16px;">${ann.name}</div>
                                                 <div class="announcement_text_div"><p style="font-size:14px">${ann.description}</p></div>
                                                 <p style="font-size:10px">${ann.score} ${ann.author}</p>
-                                                <p style="font-size:8px">${ann.created_on}</p> <i class="fa fa-trash-o" v-on:click="announcement_edit_delete_button(ann.id)"></i> <i class="fa fa-pencil"></i>
+                                                <p style="font-size:8px">${ann.created_on}</p>
                                             </div>
-                                            <div class="event-box" v-if="ann.category == 'event'">
+                                            <div class="event-box" v-if="ann.category == 'event'"  v-on:click="toggle_editing(ann)">
                                                 <div class="announcement_title_div" id="his-for-event" style="font-size:16px;">${ann.name}</div>
                                                 <div class="announcement_text_div"><p style="font-size:14px">${ann.description}</p></div>
                                                 <p style="font-size:10px">${ann.score} ${ann.author}</p>
-                                                <p style="font-size:8px">${ann.created_on}</p> <i class="fa fa-trash-o" v-on:click="announcement_edit_delete_button(ann.id)"></i> <i class="fa fa-pencil"></i>
+                                                <p style="font-size:8px">${ann.created_on}</p>
                                             </div>
                                     </li>
                                 </ul>
