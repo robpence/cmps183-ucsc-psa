@@ -240,15 +240,13 @@ input[type=text]:focus {
 }
 
 .history-list-item{
-    margin: 1px;
+    margin: 2px;
     padding: 0px; /*if this is 0 there is no white, but then the borders aren't rounded*/
     background-color: white;
     border-radius: 5px;
-    border-color: #d9534f;
     color: black;
     /*color: whitesmoke;*/
 }
-
 
 
 div.announcement_title_div{
@@ -320,9 +318,23 @@ p.announcement_text{
     background-color: #A2A2A2 !important; /*this does nothing because its being over*/
 }
 
+.shutdown-box{
+    padding: 3px !important;
+    border-radius: 5px !important;
+}
+.event-box{
+    padding: 3px !important;
+    border-radius: 5px !important;
+}
+.urgent-box{
+    padding: 3px !important;
+    border-radius: 5px !important;
+}
+
 .shutdown-box:hover{
     background-color: lightcoral !important;
 }
+
 .event-box:hover{
     background-color: lightgreen !important;
 }
@@ -337,6 +349,12 @@ p.announcement_text{
 .edit-delete-btn{
     color: red;
 }
+
+.announcement-box-2{
+    padding: 3px !important;
+    border-radius: 5px !important;
+}
+
 
 
 .announcement-input-text{
