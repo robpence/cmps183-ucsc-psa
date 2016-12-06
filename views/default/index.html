@@ -491,7 +491,7 @@ function mOver(obj) {
                         <form action="#" v-on:submit.prevent="add_announcement" class="form-horizontal" enctype="multipart/form-data" method="post">
                             <div class="create-announcement-name">
                                 <p class="announcement-form">Announcement Name</p>
-                                <input  id="no_table_name"  v-model="announcement_form.name" placeholder="announcement name" type="text" />
+                                <input id="no_table_name"  v-model="announcement_form.name" placeholder="announcement name" type="text" />
                             </div>
                             <div class="create-announcement-description">
                                 <p class="announcement-form">Announcement Description</p>
@@ -504,17 +504,9 @@ function mOver(obj) {
 
 
 
-                        <!-- create announcement Form -->
-                        <div class="create-announcement-wrapper" v-if="map_clickable" >
-                            <form id="create_announcement_form"
-                                  action="#"
-                                v-on:submit.prevent="add_announcement"
-                                enctype="multipart/form-data"
-                                 method="post">
-                                <!-- text -->
 
                                 <!-- radio buttons -->
-                                <ul>
+                                <ul style="color: white">
                                     <li>
                                         <input v-on:click="update_marker('urgent')" type="radio" name="category" value="Urgent" v-model="announcement_form.category">
                                         urgent
@@ -528,8 +520,7 @@ function mOver(obj) {
                                         shut down
                                     </li>
                                 </ul>
-                            </form>
-                        </div>
+
 
 
                         <div class="create-announcement-btn-bar">

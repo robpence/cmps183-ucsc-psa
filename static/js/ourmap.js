@@ -4,7 +4,7 @@
 
 
 var map_var = "hello from ourmap.js!";
-var central_campus = [36.991, -122.060];
+var central_campus = [36.9999, -122.060];
 var kresge_college = [36.999207, -122.064339];
 var stevenson_college = [36.997498, -122.055061];
 var crown_college = [36.999008, -122.055176];
@@ -30,7 +30,7 @@ var New_Map = function (onMapClick, onIconClick) {
         maxZoom: 18,
         minZoom: 14,
         maxBounds: bounds
-    }).setView(central_campus, 15);
+    }).setView(central_campus, 16);
 
 
     L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
@@ -125,6 +125,7 @@ var New_Map = function (onMapClick, onIconClick) {
 
     self.draw_marker = function (location, icon) {
         // create a marker to be drawn on the map
+
         self.most_recent = new L.marker(
             location,
             {icon: icon}
@@ -132,7 +133,7 @@ var New_Map = function (onMapClick, onIconClick) {
         self.most_recent.addTo(self.map);
 
         self.most_recent.latlng = self.most_recent._latlng;
-
+        if(self.next_marker) self.next_marker.drawn = true;
     };
 
 
@@ -204,9 +205,11 @@ var New_Map = function (onMapClick, onIconClick) {
 
 
     self.map.on('click', function(e) {
-        if(onMapClick(e.latlng.lat, e.latlng.lng, e)){
+        if(onMapClick(e.latlng.lat, e.latlng.lng, e) &&
+            !self.next_marker.drawn){
             self.draw_marker(e.latlng, self.next_marker.icon);
-            APP.toggle_announcement_form();
+
+            //APP.toggle_announcement_form();
             //$('#CreateAnnouncementModal').modal('show');
         }
     });
