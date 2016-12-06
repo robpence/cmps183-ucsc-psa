@@ -75,19 +75,20 @@ function mOver(obj) {
                 <li class="top-navbar-list-item" >
                       <!-- search -->
                     <div class="search-input-wrapper" >
-
                         <input v-model="search_content" placeholder="Search">
-
-                        <button class="search_button" v-on:click="execute_search()">
-                            <i class="fa fa-search fa-2x" aria-hidden="true"></i>
-                        </button>
+<!--                             <button class="search_icon" v-on:click="execute_search()">
+                                <i class="fa fa-search fa-2x" aria-hidden="true"></i>
+                            </button> -->
                     </div>
                 </li>
+				<li class="top-navbar-list-item" >
+				    <button class="search_button" v-on:click="execute_search()">
+                        <i class="fa fa-search fa-2x" aria-hidden="true"></i>
+                    </button>
+			    </li>
 
-                <li class="search-input-wrapper" >
-                    <div class="navbar-header navbar-brand ">
+                <li class="navbar-header navbar-brand" >
                         Public Service Announcement
-                    </div>
                 </li>
 
                 <li class="dropdown top-navbar-list-item" data-w2pmenulevel="l0">
@@ -118,9 +119,9 @@ function mOver(obj) {
                             </ul>
                         </li>
                 </li>
-
-                <li class="top-navbar-list-item">
-                    <!--
+<!-- web2py top bar -->
+<!--                 <li class="top-navbar-list-item">
+                    
                     <div class="collapse navbar-collapse navbar-ex1-collapse">
                       <ul class="nav navbar-nav navbar-right">
                         {{='auth' in globals() and auth.navbar('Welcome',mode='dropdown') or ''}}
@@ -129,8 +130,8 @@ function mOver(obj) {
                       {{=MENU(response.menu, _class='nav navbar-nav',li_class='dropdown',ul_class='dropdown-menu')}}
                       {{pass}}
                     </div>
-                    -->
-                </li>
+               
+                </li> -->
 
                 <li class="top-navbar-list-item">
                     <div  class="collapse navbar-collapse navbar-ex1-collapse">
@@ -309,20 +310,22 @@ function mOver(obj) {
                         <textarea v-model="announcement_form.description" class="announcement-input-text">
                         </textarea>
 
-                        <button class="btn btn-sm edit-submit-btn"
-                                v-on:click="announcement_edit_submit_button()">
-                                done
-                        </button>
+                        <div class="button-group">
+                            <button class="btn btn-sm edit-submit-btn"
+                                    v-on:click="announcement_edit_submit_button()" style="width:30%">
+                                    done
+                            </button>
 
-                        <button class="btn btn-sm edit-submit-btn"
-                            v-on:click="announcement_edit_cancel_button()">
-                            cancel
-                        </button>
+                            <button class="btn btn-sm edit-submit-btn"
+                                v-on:click="announcement_edit_cancel_button()" style="width:35%">
+                                cancel
+                            </button>
 
-                        <button class="btn btn-sm edit-delete-btn"
-                            v-on:click="announcement_edit_delete_button(announcement_form.id)">
-                            <i class="fa fa-trash-o"></i>
-                        </button>
+                            <button class="btn btn-sm edit-delete-btn"
+                                v-on:click="announcement_edit_delete_button(announcement_form.id)">
+                                <i class="fa fa-trash-o"></i>
+                            </button>
+                        </div>
                     </li>
 
                     <div v-if="is_creating_announcement">

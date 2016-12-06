@@ -166,8 +166,6 @@ input.create-announcement-button{
     background-color: #d9534f;
 }
 
-
-
 /* position of log in menu*/
 /* line 75, ../sass/_main.scss */
 .main-container {
@@ -206,23 +204,28 @@ input[type=text]:focus {
 
 
 .search-input-wrapper {
-
     float: left;
-    margin: 20px;
+    margin-top: 10px;
     padding: 1px;
+	padding-top: 10px;
 
 }
 
-
 .search_button{
-    float: left;
+    float: right;
 	color: white;
-    padding-bottom: 5px;
+    top: 150px;
+	margin-top: 15px;
 }
 .form-group {
     margin-bottom: 15px;
 	width: 100%;
 	resize: none;
+}
+
+.button-group {
+    display:inline-block;
+    height:10px;
 }
 
 
@@ -248,8 +251,6 @@ input[type=text]:focus {
     color: black;
     /*color: whitesmoke;*/
 }
-
-
 
 div.announcement_title_div{
     border-bottom: solid;
@@ -336,6 +337,8 @@ p.announcement_text{
 
 .edit-delete-btn{
     color: red;
+    float:right;
+    margin-bottom: 20px;
 }
 
 
@@ -352,6 +355,7 @@ p.announcement_text{
 ul {
   list-style-type: none;
   padding: 0px;
+  width: 100%;
 }
 
 .navbar-fixed-top {
@@ -369,7 +373,9 @@ ul {
 
 .navbar-brand{
     margin: 0;
-    padding: 0;
+    padding-left: 26%;
+	padding-right: 18.5%;
+	
 }
 
 
