@@ -76,19 +76,20 @@ function mOver(obj) {
                 <li class="top-navbar-list-item" >
                       <!-- search -->
                     <div class="search-input-wrapper" >
-
                         <input v-model="search_content" placeholder="Search">
-
-                        <button class="search_button" v-on:click="execute_search()">
-                            <i class="fa fa-search fa-2x" aria-hidden="true"></i>
-                        </button>
+<!--                             <button class="search_icon" v-on:click="execute_search()">
+                                <i class="fa fa-search fa-2x" aria-hidden="true"></i>
+                            </button> -->
                     </div>
                 </li>
+				<li class="top-navbar-list-item" >
+				    <button class="search_button" v-on:click="execute_search()">
+                        <i class="fa fa-search fa-2x" aria-hidden="true"></i>
+                    </button>
+			    </li>
 
-                <li class="search-input-wrapper" >
-                    <div class="navbar-header navbar-brand ">
+                <li class="navbar-header navbar-brand" >
                         Public Service Announcement
-                    </div>
                 </li>
 
                 <li class="dropdown top-navbar-list-item" data-w2pmenulevel="l0">
@@ -108,8 +109,20 @@ function mOver(obj) {
                   </ul>
                 </li>
 
-                <li class="top-navbar-list-item">
-                    <!--
+                 <li class="dropdown top-navbar-list-item item5" data-w2pmenulevel="l0">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">Filter</a>
+                            <ul class="dropdown-menu">
+                                <li> <input type="radio" name="category" value="urgent" v-model="filter_form.category"> Urgent </li>
+                                <li> <input type="radio" name="category" value="event" v-model="filter_form.category"> Event </li>
+                                <li> <input type="radio" name="category" value="shutdown" v-model="filter_form.category"> Shutdown </li>
+                                <li> <input type="radio" name="category" value="all" v-model="filter_form.category"> All </li>
+                                <li> <button v-on:click="filter_submit_button()"class="btn btn-warning btn-sm" style="width:100%"> Submit </button></li>
+                            </ul>
+                        </li>
+                </li>
+<!-- web2py top bar -->
+<!--                 <li class="top-navbar-list-item">
+                    
                     <div class="collapse navbar-collapse navbar-ex1-collapse">
                       <ul class="nav navbar-nav navbar-right">
                         {{='auth' in globals() and auth.navbar('Welcome',mode='dropdown') or ''}}
@@ -118,8 +131,8 @@ function mOver(obj) {
                       {{=MENU(response.menu, _class='nav navbar-nav',li_class='dropdown',ul_class='dropdown-menu')}}
                       {{pass}}
                     </div>
-                    -->
-                </li>
+               
+                </li> -->
 
                 <li class="top-navbar-list-item">
                     <div  class="collapse navbar-collapse navbar-ex1-collapse">
@@ -137,11 +150,7 @@ function mOver(obj) {
           </div>
         </nav>
 
-
-
-
-
-     <!-------------- Left Navigation Bar --------------------->
+        <!-------------- Left Navigation Bar --------------------->
      <nav class="left-navbar navbar navbar-default" role="navigation">
       <div class="display-announcements container-fluid">
 
@@ -155,6 +164,8 @@ function mOver(obj) {
                         <div class="announcement_text_div" ><p style="font-size:14px" style="text-wrap: normal">${ann.description}</p></div>
                         <p style="font-size:10px">${ann.score} ${ann.author}</p>
                         <p style="font-size:8px">${ann.created_on}</p>
+                        <i class="fa fa-thumbs-o-up" v-on:click="up_vote_comment(index)"></i>
+                        <i class="fa fa-thumbs-o-down" v-on:click="down_vote_comment(index)"></i>
                     </div>
                 </div>
                 <div v-if="ann.category == 'event'"  id="box-for-event" class="announcement-box-2">
@@ -409,10 +420,6 @@ function mOver(obj) {
         </nav>
 
 
-
-
-
-
         <!---- Right Nav Bar  ----->
         <div v-if="!right_nav_options.hide_tools" >
         <div class="show-right-navbar navbar navbar-default "
@@ -440,20 +447,22 @@ function mOver(obj) {
                         <textarea v-model="announcement_form.description" class="announcement-input-text">
                         </textarea>
 
-                        <button class="btn btn-sm edit-submit-btn"
-                                v-on:click="announcement_edit_submit_button()">
-                                done
-                        </button>
+                        <div class="button-group">
+                            <button class="btn btn-sm edit-submit-btn"
+                                    v-on:click="announcement_edit_submit_button()" style="width:30%">
+                                    done
+                            </button>
 
-                        <button class="btn btn-sm edit-submit-btn"
-                            v-on:click="announcement_edit_cancel_button()">
-                            cancel
-                        </button>
+                            <button class="btn btn-sm edit-submit-btn"
+                                v-on:click="announcement_edit_cancel_button()" style="width:35%">
+                                cancel
+                            </button>
 
-                        <button class="btn btn-sm edit-delete-btn"
-                            v-on:click="announcement_edit_delete_button(announcement_form.id)">
-                            <i class="fa fa-trash-o"></i>
-                        </button>
+                            <button class="btn btn-sm edit-delete-btn"
+                                v-on:click="announcement_edit_delete_button(announcement_form.id)">
+                                <i class="fa fa-trash-o"></i>
+                            </button>
+                        </div>
                     </li>
 
                     <div v-if="is_creating_announcement">

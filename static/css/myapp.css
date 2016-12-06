@@ -167,9 +167,6 @@ input.create-announcement-button{
     right: 30px;
 }
 
-input.desc-input{
-    rows: 2 !important;
-}
 
 
 /* position of log in menu*/
@@ -212,21 +209,28 @@ input[type=text]:focus {
 .search-input-wrapper {
 
     float: left;
-    margin: 20px;
+    margin-top: 10px;
     padding: 1px;
+	padding-top: 10px;
 
 }
 
 
 .search_button{
-    float: left;
+    float: right;
 	color: white;
-    padding-bottom: 5px;
+    top: 150px;
+	margin-top: 15px;
 }
 .form-group {
     margin-bottom: 15px;
 	width: 100%;
 	resize: none;
+}
+
+.button-group {
+    display:inline-block;
+    height:10px;
 }
 
 
@@ -248,9 +252,11 @@ input[type=text]:focus {
     padding: 0px; /*if this is 0 there is no white, but then the borders aren't rounded*/
     background-color: white;
     border-radius: 5px;
+    border-color: #d9534f;
     color: black;
     /*color: whitesmoke;*/
 }
+
 
 
 div.announcement_title_div{
@@ -352,6 +358,8 @@ p.announcement_text{
 
 .edit-delete-btn{
     color: red;
+    float:right;
+    margin-bottom: 20px;
 }
 
 .announcement-box-2{
@@ -374,6 +382,7 @@ p.announcement_text{
 ul {
   list-style-type: none;
   padding: 0px;
+  width: 100%;
 }
 
 .navbar-fixed-top {
@@ -391,7 +400,9 @@ ul {
 
 .navbar-brand{
     margin: 0;
-    padding: 0;
+    padding-left: 26%;
+	padding-right: 18.5%;
+
 }
 
 

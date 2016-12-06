@@ -91,12 +91,11 @@ var New_Map = function (onMapClick, onIconClick) {
             case "cowell":
                 self.set_coordinates(cowell_college);
                 break;
-
             case "stevenson":
                 self.set_coordinates(stevenson_college);
                 break;
             default:
-                self.map.setView(central_campus, 20, {animation: true});
+                self.map.setView(central_campus, 15, {animation: true});
                 break;
         }
     };
