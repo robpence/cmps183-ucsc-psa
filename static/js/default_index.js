@@ -80,23 +80,23 @@ var app = function() {
             function (data) {
                 $.web2py.enableElement($("#add_announcement_submit"));
                 //$('#CreateAnnouncementModal').modal('hide');
+                if(!self.cancelled) {
+                    console.log('add announcemnt2');
 
-                console.log('add announcemnt2');
-
-                var added_announcement = Announcement_from_db(data);
-                self.vue.isCreatingAnnouncement = false;
-                clear_announcement_form();
-                self.campus_map.finalize_marker(added_announcement['id']);
-                self.vue.all_announcements.unshift(added_announcement);
-                self.vue.announcements_to_show.unshift(added_announcement);
+                    var added_announcement = Announcement_from_db(data);
+                    self.vue.isCreatingAnnouncement = false;
+                    clear_announcement_form();
+                    self.campus_map.finalize_marker(added_announcement['id']);
+                    self.vue.all_announcements.unshift(added_announcement);
+                    self.vue.announcements_to_show.unshift(added_announcement);
 
 
-                //console.log('add_annoucement, added_ann=', added_announcement);
+                    //console.log('add_annoucement, added_ann=', added_announcement);
 
-                //self.vue.users_announcements.push(added_announcement);
+                    //self.vue.users_announcements.push(added_announcement);
 
-                self.vue.users_announcements.unshift(added_announcement);
-
+                    self.vue.users_announcements.unshift(added_announcement);
+                }
                 self.vue.map_clickable = false;
                 self.vue.isCreatingAnnouncement = false;
             });
@@ -292,11 +292,13 @@ var app = function() {
         clear_announcement_form();
         self.vue.is_creating_announcement = false;
         //self.vue.toggle_announcement_form;
+        self.cancelled = true;
 
     };
 
 
     self.create_announcement_button = function(){
+        self.cancelled = false;
         self.vue.map_clickable = true;
         self.vue.is_creating_announcement = true;
         self.set_next_announcement('default');
