@@ -164,7 +164,15 @@ body{
 
 input.create-announcement-button{
     background-color: #d9534f;
-    right: 30px;
+    margin-top: 10px;
+    width: 95%;
+}
+
+.create_cancel_button{
+    background-color: #d9534f;
+    margin-top: 5px;
+    padding-left: 20px !important;
+    width: 100%;
 }
 
 
