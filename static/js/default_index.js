@@ -122,9 +122,13 @@ var app = function() {
         self.campus_map.clear_map();
         self.populate_map(ann_list, requirments);
         self.vue.announcements_to_show = ann_list;
-
     };
 
+
+    self.filter_submit_button = function(){
+        self.vue.announcements_to_show = [];
+        self.re_populate_map(self.vue.all_announcements, self.vue.filter_form);
+    };
 
     /* This function retrieves all of the announcements
         from the server, draws the icons on the map, and
@@ -315,11 +319,6 @@ var app = function() {
 
     self.toggle_filter_show = function(){
         self.vue.filter_form.show = !self.vue.filter_form.show;
-    };
-
-
-    self.filter_submit_button = function(){
-        self.re_populate_map();
     };
 
 
