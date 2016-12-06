@@ -109,6 +109,7 @@ var app = function() {
                 self.campus_map.draw_marker(ann.latlng, ann.icon);
                 self.vue.announcements_to_show.push(ann);
                 self.campus_map.finalize_marker(ann['id']);
+
             }
         }
     };
@@ -121,7 +122,6 @@ var app = function() {
             requirments = self.vue.filter_form;
         self.campus_map.clear_map();
         self.populate_map(ann_list, requirments);
-        self.vue.announcements_to_show = ann_list;
     };
 
 
@@ -657,6 +657,7 @@ var app = function() {
             id_for_new_announcement:null,
             logged_in: false,
             is_creating_announcement: false,
+            announcements_in_left_sidebar: false,
 
             editing_announcement: false,
             editing_comment: false,
