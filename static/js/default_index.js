@@ -64,7 +64,9 @@ var app = function() {
 
     self.add_announcement = function () {
         // The submit button to add a post has been pressed.
-        self.toggle_announcement_form();
+        self.vue.is_creating_announcement = false;
+
+        console.log('add announcemnt, next=', self.next_announcement);
 
         $.post(add_announcement_url,
             {
@@ -79,6 +81,7 @@ var app = function() {
                 $.web2py.enableElement($("#add_announcement_submit"));
                 //$('#CreateAnnouncementModal').modal('hide');
 
+                console.log('add announcemnt2');
 
                 var added_announcement = Announcement_from_db(data);
                 self.vue.isCreatingAnnouncement = false;
@@ -95,6 +98,7 @@ var app = function() {
                 self.vue.users_announcements.unshift(added_announcement);
 
                 self.vue.map_clickable = false;
+                self.vue.isCreatingAnnouncement = false;
             });
 
     };
@@ -180,12 +184,24 @@ var app = function() {
         );
 
         //lets you click on the map after selecting which type of announcement you want to make
-        self.vue.map_clickable = true;
+        //self.vue.map_clickable = true;
+        if(self.vue.is_creating_announcement){
+            self.vue.map_clickable = true;
+        }
     };
 
 
     self.update_marker = function(cat){
+        var lat = self.next_announcement.lat;
+        var lng = self.next_announcement.lng;
+
+        console.log('update_marker, next=', self.next_announcement);
+
         self.next_announcement = Announcement(cat);
+
+        self.next_announcement.lat = lat;
+        self.next_announcement.lng = lng;
+
         self.campus_map.update_most_recent(self.next_announcement);
     };
 
@@ -253,6 +269,7 @@ var app = function() {
         // this function gets called when the map is clicked
         self.next_announcement.lat = lat;
         self.next_announcement.lng = lng;
+        //self.vue.is_creating_announcement = true;
         return self.vue.map_clickable;
     },
     function(e){
@@ -281,6 +298,7 @@ var app = function() {
 
     self.create_announcement_button = function(){
         self.vue.map_clickable = true;
+        self.vue.is_creating_announcement = true;
         self.set_next_announcement('default');
     };
 

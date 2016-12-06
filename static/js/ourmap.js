@@ -125,6 +125,7 @@ var New_Map = function (onMapClick, onIconClick) {
 
     self.draw_marker = function (location, icon) {
         // create a marker to be drawn on the map
+
         self.most_recent = new L.marker(
             location,
             {icon: icon}
@@ -132,7 +133,7 @@ var New_Map = function (onMapClick, onIconClick) {
         self.most_recent.addTo(self.map);
 
         self.most_recent.latlng = self.most_recent._latlng;
-
+        if(self.next_marker) self.next_marker.drawn = true;
     };
 
 
@@ -204,9 +205,11 @@ var New_Map = function (onMapClick, onIconClick) {
 
 
     self.map.on('click', function(e) {
-        if(onMapClick(e.latlng.lat, e.latlng.lng, e)){
+        if(onMapClick(e.latlng.lat, e.latlng.lng, e) &&
+            !self.next_marker.drawn){
             self.draw_marker(e.latlng, self.next_marker.icon);
-            APP.toggle_announcement_form();
+
+            //APP.toggle_announcement_form();
             //$('#CreateAnnouncementModal').modal('show');
         }
     });

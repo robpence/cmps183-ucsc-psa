@@ -39,6 +39,12 @@ def get_announcements():
     for i, r in enumerate(rows):
 
         a = _setup_announcement(r)
+
+        logger.info("====> api:get_announcements(): a = %r" % a )
+        if a['name'].lower() == 'SDFSADFSDAF'.lower():
+            delete_announcement_2(a.id)
+            continue
+
         anns.append(a)
         logger.info("====> api:get_announcements(): a = %r" % a )
 
@@ -105,7 +111,7 @@ def add_announcement():
     ann = db.post(ann_id)
     '''
 
-    logger.info("category: %r" % (request.vars.category))
+    logger.info("api:add_announcement ===>>> category: %r" % (request.vars.category))
 
     if request.vars.category not in ['urgent', 'event', "shutdown"]:
         return response.json({})
@@ -163,6 +169,12 @@ def delete_announcement():
     logger.info("deleted announcement with id %r" % ann)
     return "ok"
 
+
+
+def delete_announcement_2(id):
+    db(db.Announcements.id == id).delete()
+    logger.info("deleted announcement with id %r" % id)
+    return "ok"
 
 
 
