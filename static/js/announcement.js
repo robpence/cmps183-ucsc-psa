@@ -26,7 +26,7 @@ var Announcement = function (announcement_type){
     var Urgent_Marker = function(){
         var m = Marker();
         m.icon ='glyphicon glyphicon-exclamation-sign';
-        m.markerColor = 'cadetblue';
+        m.markerColor = 'blue';
         return L.AwesomeMarkers.icon(m);
     };
 

@@ -764,19 +764,19 @@ var app = function() {
 
 var APP = null;
 
-document.getElementById('box-for-urgent').style.backgroundColor = "rgb(" + 167 + "," + 201 + "," + 240 + ")"; //blueish
+document.getElementById('box-for-urgent').style.backgroundColor = "rgb(" + 63 + "," + 227 + "," + 252 + ")"; //blueish
 document.getElementById('box-for-shutdown').style.backgroundColor = "rgb(" + 253 + "," + 114 + "," + 123 + ")"; //redish
 document.getElementById('box-for-event').style.backgroundColor = "rgb(" + 135 + "," + 225 + "," + 141 + ")"; //greenish
 
-document.getElementById('urgent-box-2').style.backgroundColor = "rgb(" + 167 + "," + 201 + "," + 240 + ")"; //blueish
+document.getElementById('urgent-box-2').style.backgroundColor = "rgb(" + 63 + "," + 227 + "," + 252 + ")";  //blueish
 document.getElementById('shutdown-box-2').style.backgroundColor = "rgb(" + 253 + "," + 114 + "," + 123 + ")"; //redish
 document.getElementById('event-box-2').style.backgroundColor = "rgb(" + 135 + "," + 225 + "," + 141 + ")"; //greenish
 
-document.getElementById('urgent-box-3').style.backgroundColor = "rgb(" + 167 + "," + 201 + "," + 240 + ")"; //blueish
+document.getElementById('urgent-box-3').style.backgroundColor = "rgb(" + 63 + "," + 227 + "," + 252 + ")";  //blueish
 document.getElementById('shutdown-box-3').style.backgroundColor = "rgb(" + 253 + "," + 114 + "," + 123 + ")"; //redish
 document.getElementById('event-box-3').style.backgroundColor = "rgb(" + 135 + "," + 225 + "," + 141 + ")"; //greenish
 
-document.getElementById('his-for-urgent').style.backgroundColor = "rgb(" + 167 + "," + 201 + "," + 240 + ")"; //blueish
+document.getElementById('his-for-urgent').style.backgroundColor = "rgb(" + 63 + "," + 227 + "," + 252 + ")";  //blueish
 document.getElementById('his-for-shutdown').style.backgroundColor = "rgb(" + 253 + "," + 114 + "," + 123 + ")"; //redish
 document.getElementById('his-for-event').style.backgroundColor = "rgb(" + 135 + "," + 225 + "," + 141 + ")"; //greenish
 
