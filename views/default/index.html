@@ -561,19 +561,19 @@ function mOver(obj) {
                                <!-- Div for the history of annoucements-->
                                 <ul id="history" class="my-history-wrapper">
                                     <li class="history-list-item" v-for="ann in users_announcements" v-on:click="view_history_announcement(ann.latlng)">
-                                            <div class="urgent-box" v-if="ann.category == 'urgent'" v-on:click="toggle_editing(ann.name,ann.description)">
+                                            <div class="urgent-box" v-if="ann.category == 'urgent'" v-on:click="toggle_editing(ann)">
                                                 <div class="announcement_title_div" id="his-for-urgent" style="font-size:16px;">${ann.name}</div>
                                                 <div class="announcement_text_div"><p style="font-size:14px">${ann.description}</p></div>
                                                 <p style="font-size:10px">${ann.score} ${ann.author}</p>
                                                 <p style="font-size:8px">${ann.created_on}</p>
                                             </div>
-                                            <div class="shutdown-box"  v-if="ann.category == 'shutdown'" v-on:click="toggle_editing(ann.name,ann.description)">
+                                            <div class="shutdown-box"  v-if="ann.category == 'shutdown'" v-on:click="toggle_editing(ann)">
                                                 <div class="announcement_title_div" id="his-for-shutdown" style="font-size:16px;">${ann.name}</div>
                                                 <div class="announcement_text_div"><p style="font-size:14px">${ann.description}</p></div>
                                                 <p style="font-size:10px">${ann.score} ${ann.author}</p>
                                                 <p style="font-size:8px">${ann.created_on}</p>
                                             </div>
-                                            <div class="event-box" v-if="ann.category == 'event'"  v-on:click="toggle_editing(ann.name,ann.description)">
+                                            <div class="event-box" v-if="ann.category == 'event'"  v-on:click="toggle_editing(ann)">
                                                 <div class="announcement_title_div" id="his-for-event" style="font-size:16px;">${ann.name}</div>
                                                 <div class="announcement_text_div"><p style="font-size:14px">${ann.description}</p></div>
                                                 <p style="font-size:10px">${ann.score} ${ann.author}</p>

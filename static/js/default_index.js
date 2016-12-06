@@ -649,10 +649,9 @@ var app = function() {
             });
     };
 
-    self.toggle_editing = function(name, description) {
+    self.toggle_editing = function(ann) {
         self.vue.editing_announcement = !self.vue.editing_announcement;
-        self.vue.announcement_form.name = name;
-        self.vue.announcement_form.description = description;
+        self.edit_announcement(ann);
     };
 
     // Complete as needed.
