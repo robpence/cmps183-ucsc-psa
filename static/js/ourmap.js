@@ -149,7 +149,20 @@ var New_Map = function (onMapClick, onIconClick) {
             }
         }
     }
-    
+
+
+    self.find_marker_from_ann_id = function(id){
+        for(var i = 0; i < self.all_markers.length; i++){
+            var m = self.all_markers[i];
+            if(m._ann_id== id){
+                return m;
+            }
+        }
+        // could not find marker
+        console.log('ourmap.find_marker: could not find target');
+        return null;
+    };
+
     self.find_marker = function (target){
         for(var i = 0; i < self.all_markers.length; i++){
             var m = self.all_markers[i];

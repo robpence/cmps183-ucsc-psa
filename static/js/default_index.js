@@ -281,6 +281,7 @@ var app = function() {
         self.edit_this_marker = e;
         self.visit_announcement(m, self.edit_announcement);
 
+
     });
 
     /********************************************************************************/
@@ -346,38 +347,7 @@ var app = function() {
  /************************ Can be improved ****************************/
     self.delete_announcement = function() {
 
-        $.post(delete_announcement_url,
-            {
-                announcement_id: self.vue.id_for_deleted_announcement
-            }, function() {
-                self.vue.all_announcements.splice(self.vue.index_to_be_deleted, 1);
-                console.log('delete post request');
-                self.populate_after_deleting(self.vue.all_announcements);
-                //self.re_populate_map(self.vue.all_announcements, null);
 
-                var m = self.campus_map.find_marker(e.target);
-
-                // remove from all_announcements
-                for(var i=0; i < self.vue.all_announcements.length; i++){
-                    var ann = self.vue.all_announcements[i];
-                    if (ann.id == m._ann_id ){
-                        self.vue.all_announcements.splice(i, 1);
-                        break;
-                    }
-                }
-
-                // remove from user_announcements
-                for(var i=0; i < self.vue.users_announcements.length; i++){
-                    var ann = self.vue.users_announcements[i];
-                    if (ann.id == m._ann_id ){
-                        self.vue.users_announcements.splice(i, 1);
-                        break;
-                    }
-                }
-
-                // remove from campus map
-
-        });
     };
 
  /************************ Can be improved ****************************/
@@ -454,6 +424,9 @@ var app = function() {
         self.vue.announcement_form.name = ann.name;
         self.vue.announcement_form.id = ann.id;
         self.vue.editing_announcement = true;
+
+        self.vue.left_nav_options.show_ann_detail = true;
+        self.vue.show_this_announcement = ann;
     };
 
 
@@ -489,6 +462,9 @@ var app = function() {
             }, function() {
 
                 console.log('delete post request');
+                if(!self.edit_this_marker){
+                    self.edit_this_marker = self.campus_map.find_marker_from_ann_id(ann_id);
+                }
                 var m = self.campus_map.find_marker(self.edit_this_marker.target);
 
                 // remove from all_announcements
@@ -505,6 +481,15 @@ var app = function() {
                     var ann = self.vue.users_announcements[i];
                     if (ann.id == m._ann_id ){
                         self.vue.users_announcements.splice(i, 1);
+                        break;
+                    }
+                }
+
+                // remove from announcements to show
+                for(var i=0; i < self.vue.announcements_to_show.length; i++){
+                    var ann = self.vue.announcements_to_show[i];
+                    if (ann.id == m._ann_id ){
+                        self.vue.announcements_to_show.splice(i, 1);
                         break;
                     }
                 }
@@ -678,6 +663,7 @@ var app = function() {
     self.toggle_editing = function(ann) {
         self.vue.editing_announcement = !self.vue.editing_announcement;
         self.edit_announcement(ann);
+
     };
 
     // Complete as needed.
@@ -822,6 +808,20 @@ document.getElementById('event-box-3').style.color = "rgb(" + 7 + "," + 111 + ",
 document.getElementById('his-for-urgent').style.color = "rgb(" + 31 + "," + 31 + "," + 132 + ")";   //blueish
 document.getElementById('his-for-shutdown').style.color = "rgb(" + 161 + "," + 0 + "," + 0 + ")"; //redish
 document.getElementById('his-for-event').style.color = "rgb(" + 7 + "," + 111 + "," + 3 + ")"; //greenish
+
+var today = new Date();
+var dd = today.getDate();
+var mm = today.getMonth()+1; //January is 0!
+var yyyy = today.getFullYear();
+ if(dd<10){
+        dd='0'+dd
+    }
+    if(mm<10){
+        mm='0'+mm
+    }
+
+today = yyyy+'-'+mm+'-'+dd;
+document.getElementById("datefieldfordate").setAttribute("min", today);
 
 // This will make everything accessible from the js console;
 // for instance, self.x above would be accessible as APP.x
