@@ -114,7 +114,7 @@ body{
 .navlist-item{
     margin-top: 10px;
     padding-top: 20px;
-    color: white;
+    color: black;
 }
 /* line 36, ../sass/_main.scss */
 .main_content .right-navbar {
@@ -270,7 +270,7 @@ input[type=text]:focus {
     margin-top: 10px;
     overflow-y:scroll;
     /*Wont let me make the height a %, if we have time someone can look into this*/
-    height: 500px;
+    height: 450px;
 }
 
 .history-list-item{

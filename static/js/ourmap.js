@@ -4,7 +4,7 @@
 
 
 var map_var = "hello from ourmap.js!";
-var central_campus = [36.991, -122.060];
+var central_campus = [36.9999, -122.060];
 var kresge_college = [36.999207, -122.064339];
 var stevenson_college = [36.997498, -122.055061];
 var crown_college = [36.999008, -122.055176];
@@ -30,7 +30,7 @@ var New_Map = function (onMapClick, onIconClick) {
         maxZoom: 18,
         minZoom: 14,
         maxBounds: bounds
-    }).setView(central_campus, 15);
+    }).setView(central_campus, 16);
 
 
     L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {

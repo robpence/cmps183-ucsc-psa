@@ -330,6 +330,7 @@ var app = function() {
             }
         }
 
+        self.vue.announcements_to_show = []; //clears the lists
         self.re_populate_map(found_list, {category:'all'});
 
     };
