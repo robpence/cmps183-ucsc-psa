@@ -650,6 +650,12 @@ var app = function() {
             });
     };
 
+    self.toggle_editing = function(name, description) {
+        self.vue.editing_announcement = !self.vue.editing_announcement;
+        self.vue.announcement_form.name = name;
+        self.vue.announcement_form.description = description;
+    };
+
     // Complete as needed.
     self.vue = new Vue({
         el: "#vue-div",
@@ -724,6 +730,7 @@ var app = function() {
 
             /* navbar display functions */
             toggle_right_navbar_show: self.toggle_right_navbar_show,
+            toggle_editing: self.toggle_editing,
 
             /* history functions */
             toggle_history_show: self.toggle_history_show,
