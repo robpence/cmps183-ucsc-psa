@@ -33,7 +33,14 @@
 <script src="{{=URL('static',  'js/L.Control.Window.js')}}"></script>
 
 <div onmouseover="mOver(this)" id="mapid"></div>
-
+<script type="text/javascript">
+  new Vue({
+    el: '#app',
+    data: {
+      show: true
+    }
+  });
+</script>
 <script>
 function mOver(obj) {
     obj.style.cursor = "crosshair"
@@ -88,8 +95,31 @@ function mOver(obj) {
                 <li class="navbar-header navbar-brand" >
                         Public Service Announcement
                 </li>
+				<li class="top-navbar-list-name">
+                    <div  class="collapse navbar-collapse navbar-ex1-collapse">
+                         <!-- <p class="collapse navbar-collapse navbar-ex1-collapse"> -->
+                             <ul class="nav navbar-nav">
+                                {{='auth' in globals() and auth.navbar('Welcome',mode='dropdown') or ''}}
+                             </ul>
 
-                <li class="dropdown top-navbar-list-item" data-w2pmenulevel="l0">
+                        </p>
+                    </div>
+
+                </li>
+				
+                <li class="dropdown top-navbar-list-filter" data-w2pmenulevel="l0">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">Filter</a>
+                            <ul class="dropdown-menu">
+                                <li> <input type="radio" name="category" value="urgent" v-model="filter_form.category"> Urgent </li>
+                                <li> <input type="radio" name="category" value="event" v-model="filter_form.category"> Event </li>
+                                <li> <input type="radio" name="category" value="shutdown" v-model="filter_form.category"> Shutdown </li>
+                                <li> <input type="radio" name="category" value="all" v-model="filter_form.category"> All </li>
+                                <li> <button v-on:click="filter_submit_button()"class="btn btn-warning btn-sm" style="width:100%"> Submit </button></li>
+                            </ul>
+                        </li>
+                </li>
+				
+                <li class="dropdown top-navbar-list-view" data-w2pmenulevel="l0">
                   <a href="#" class="dropdown-toggle" data-toggle="dropdown">View</a>
                   <ul class="dropdown-menu">
                     <li><a v-on:click="change_view('reset')" class="menu_links">Reset View</a></li>
@@ -106,7 +136,7 @@ function mOver(obj) {
                   </ul>
                 </li>
 
-                 <li class="dropdown top-navbar-list-item item5" data-w2pmenulevel="l0">
+<!--                  <li class="dropdown top-navbar-list-filter" data-w2pmenulevel="l0">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown">Filter</a>
                             <ul class="dropdown-menu">
                                 <li> <input type="radio" name="category" value="urgent" v-model="filter_form.category"> Urgent </li>
@@ -116,10 +146,10 @@ function mOver(obj) {
                                 <li> <button v-on:click="filter_submit_button()"class="btn btn-warning btn-sm" style="width:100%"> Submit </button></li>
                             </ul>
                         </li>
-                </li>
-                <li class="top-navbar-list-item">
+                </li> -->
+<!--                 <li class="top-navbar-list-name">
                     <div  class="collapse navbar-collapse navbar-ex1-collapse">
-                         <!-- <p class="collapse navbar-collapse navbar-ex1-collapse"> -->
+                         <!-- <p class="collapse navbar-collapse navbar-ex1-collapse">
                              <ul class="nav navbar-nav">
                                 {{='auth' in globals() and auth.navbar('Welcome',mode='dropdown') or ''}}
                              </ul>
@@ -127,7 +157,7 @@ function mOver(obj) {
                         </p>
                     </div>
 
-                </li>
+                </li> -->
 
           </ul>
           </div>
@@ -540,14 +570,14 @@ function mOver(obj) {
                         <div class="history_button">
                            <div v-if="!right_nav_options.show_history">
                                 <button  class="btn btn-danger btn-sm" v-on:click="toggle_history_show()">
-                                    My Announcements
+                                    Show My Announcements
                                 </button>
                            </div>
 
                             <div v-else>
                                 <!-- We are showing the user's announcement history     -->
                                 <button  class="btn btn-danger btn-sm" v-on:click="toggle_history_show()">
-                                    My Announcements
+                                    Hide My Announcements
                                 </button>
 
                                <!-- Div for the history of annoucements-->
