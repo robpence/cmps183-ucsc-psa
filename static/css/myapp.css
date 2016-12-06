@@ -162,6 +162,9 @@ body{
   color: #aaa;
 }
 
+li.left {text-align: left;}
+li.right {text-align: right;}
+
 input.create-announcement-button{
     background-color: #d9534f;
     margin-top: 10px;
@@ -368,13 +371,23 @@ p.announcement_text{
 }
 
 .edit-submit-btn{
-    color: green;
+    color: white;
+    background-color: #d9534f;
+    width: 50px;
+    padding: 0px;
+}
+.edit-cancel-btn{
+    color: white;
+    background-color: #d9534f;
+    width: 60px;
+    padding: 0px;
 }
 
 .edit-delete-btn{
-    color: red;
+    color: white;
     float:right;
     margin-bottom: 20px;
+    padding: 0px;
 }
 
 .announcement-box-2{

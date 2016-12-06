@@ -457,20 +457,20 @@ function mOver(obj) {
                         </textarea>
 
                         <div class="button-group">
-                            <button class="btn btn-sm edit-submit-btn"
-                                    v-on:click="announcement_edit_submit_button()" style="width:30%">
+                            <ul>
+                            <button class="edit-submit-btn"
+                                    v-on:click="announcement_edit_submit_button()">
                                     done
                             </button>
-
-                            <button class="btn btn-sm edit-submit-btn"
-                                v-on:click="announcement_edit_cancel_button()" style="width:35%">
+                            <button class="edit-cancel-btn"
+                                v-on:click="announcement_edit_cancel_button()">
                                 cancel
                             </button>
-
-                            <button class="btn btn-sm edit-delete-btn"
+                            <button class="edit-delete-btn"
                                 v-on:click="announcement_edit_delete_button(announcement_form.id)">
                                 <i class="fa fa-trash-o"></i>
                             </button>
+                            </ul>
                         </div>
                     </li>
 
