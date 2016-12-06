@@ -20,6 +20,7 @@
     var edit_comment_url = "{{=URL('api', 'edit_comment')}}";
     var up_vote_announcement_url = "{{=URL('api', 'up_vote_announcement')}}";
     var down_vote_announcement_url = "{{=URL('api', 'down_vote_announcement')}}";
+    var get_user_id_url = "{{=URL('api', 'get_user_id')}}";
 
 </script>
 
@@ -157,8 +158,8 @@ function mOver(obj) {
             <li class="history-list-item"
                 v-for="ann in announcements_to_show"
                 v-on:click="show_announcement_details(ann)">
-                <div v-if="ann.category == 'shutdown'">
-                    <div id="box-for-shutdown" class="shutdown-box">
+                <div v-if="ann.category == 'shutdown'" id="box-for-shutdown" class="announcement-box-2">
+                    <div class="shutdown-box">
                         <div class="announcement_title_div" style="font-size:16px;">${ann.name}</div>
                         <div class="announcement_text_div" ><p style="font-size:14px" style="text-wrap: normal">${ann.description}</p></div>
                         <p style="font-size:10px">${ann.score} ${ann.author}</p>
@@ -167,16 +168,16 @@ function mOver(obj) {
                         <i class="fa fa-thumbs-o-down" v-on:click="down_vote_comment(index)"></i>
                     </div>
                 </div>
-                <div v-if="ann.category == 'event'" >
-                    <div id="box-for-event" class="event-box">
+                <div v-if="ann.category == 'event'"  id="box-for-event" class="announcement-box-2">
+                    <div class="event-box">
                         <div class="announcement_title_div" style="font-size:16px;">${ann.name}</div>
                         <div class="announcement_text_div" ><p style="font-size:14px" style="text-wrap: normal">${ann.description}</p></div>
                         <p style="font-size:10px">${ann.score} ${ann.author}</p>
                         <p style="font-size:8px">${ann.created_on}</p>
                     </div>
                 </div>
-                <div v-if="ann.category == 'urgent'" >
-                    <div id="box-for-urgent" class="urgent-box">
+                <div v-if="ann.category == 'urgent'" class="announcement-box-2" id="box-for-urgent">
+                    <div class="urgent-box" >
                         <div class="announcement_title_div" style="font-size:16px;">${ann.name}</div>
                         <div class="announcement_text_div" ><p style="font-size:14px" style="text-wrap: normal">${ann.description}</p></div>
                         <p style="font-size:10px">${ann.score} ${ann.author}</p>
@@ -186,8 +187,72 @@ function mOver(obj) {
             </li>
         </ul>
         <div v-else class="leftside-ann-details" >
-            <div class="announcement-display-wrapper" > <!-- This is the div i would copy and paste to make it colored-->
-                <div class="announcement-details-wrapper">
+            <div v-if="show_this_announcement.category == 'event'" class="announcement-display-wrapper" > <!-- This is the div i would copy and paste to make it colored-->
+                <div id="event-box-2" class="announcement-details-wrapper">
+                    <div class="display-ann-btn-bar">
+                        <button v-on:click="close_announcement_details()"
+                                class="btn-close-ann-detail btn-ann-detail">
+                            <i class="fa fa-times" aria-hidden="true"></i>
+                        </button>
+                        <button v-on:click="minimize_announcement(show_this_announcement)"
+                                class="btn-minimize-ann-detail btn-ann-detail">
+                            <i class="fa fa-window-minimize" aria-hidden="true"></i>
+                        </button>
+                    </div>
+                    <div class="announcement-display-content">
+                        <div class="announcement_title_div" style="font-size:16px;">
+                            <p style="color:black;">${show_this_announcement.name}</p>
+                        </div>
+                        <div class="announcement_text_div">
+                            <p style="font-size:14px" style="text-wrap: normal"
+                               class="announcement_text">${show_this_announcement.description}</p>
+                        </div>
+                        <p style="font-size:10px" class="announcement_text">
+                            ${show_this_announcement.score} ${show_this_announcement.author} ${show_this_announcement.created_on}
+                        </p>
+                    </div>
+                </div>
+                <div class="comment-form-div">
+                    <li v-if="editing_comment">
+                        <input v-model="comment_form.comment_text" class="comment-edit-input" id="edit_comment"> <br>
+                        <button class="btn btn-sm edit-submit-btn"
+                                v-on:click="comment_edit_submit_button()">
+                                done
+                        </button>
+                        <button class="btn btn-sm edit-submit-btn"
+                            v-on:click="comment_edit_cancel_button()">
+                            cancel
+                        </button>
+                    </li>
+                </div>
+                <div v-if="!editing_comment">
+                    <form action="#" v-on:submit.prevent="add_comment" class="form-horizontal" enctype="multipart/form-data" method="post">
+                        <div class="comment-form-div" id="comment">
+                            <div>
+                                <input class="form-control string" v-model="comment_form.comment_text" placeholder="Comment..." type="text" />
+                            </div>
+                        </div>
+                        <div>
+                            <input class="add_comment_button" id="add_comment_submit" type="submit" value="Post Comment" />
+                        </div>
+                    </form>
+                </div>
+                <div class="comment-div">
+                    <ul v-for="(comment, index) in announcement_comments">
+                        <li class="comment-item" v-if="comment.ann_id == id_to_be_deleted">
+                                    ${comment.comment_text}
+                                    <br>
+                                    <p style="font-size:10px">${comment.score} ${comment.author}</p>
+                                    <i v-if="user_id == comment.authorid" class="fa fa-trash-o" v-on:click="delete_comment(index)"></i>
+                                    <i v-if="user_id == comment.authorid" class="fa fa-pencil" v-on:click="edit_comment(index)"></i>
+                                    <i class="fa fa-thumbs-o-up" v-on:click="up_vote_comment(index)"></i>
+                                    <i class="fa fa-thumbs-o-down" v-on:click="down_vote_comment(index)"></i>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div v-if="show_this_announcement.category == 'shutdown'" class="announcement-display-wrapper" > <!-- This is the div i would copy and paste to make it colored-->
+                <div id="shutdown-box-2" class="announcement-details-wrapper">
                     <div class="display-ann-btn-bar">
                         <button v-on:click="close_announcement_details()"
                                 class="btn-close-ann-detail btn-ann-detail">
@@ -242,8 +307,72 @@ function mOver(obj) {
                                     ${comment.comment_text}
                                     <br>
                                     <p style="font-size:10px">${comment.score} ${comment.author}</p>
-                                    <i class="fa fa-trash-o" v-on:click="delete_comment(index)"></i>
-                                    <i class="fa fa-pencil" v-on:click="edit_comment(index)"></i>
+                                    <i v-if="user_id == comment.authorid" class="fa fa-trash-o" v-on:click="delete_comment(index)"></i>
+                                    <i v-if="user_id == comment.authorid" class="fa fa-pencil" v-on:click="edit_comment(index)"></i>
+                                    <i class="fa fa-thumbs-o-up" v-on:click="up_vote_comment(index)"></i>
+                                    <i class="fa fa-thumbs-o-down" v-on:click="down_vote_comment(index)"></i>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div v-if="show_this_announcement.category == 'urgent'" class="announcement-display-wrapper" > <!-- This is the div i would copy and paste to make it colored-->
+                <div id="urgent-box-2" class="announcement-details-wrapper">
+                    <div class="display-ann-btn-bar">
+                        <button v-on:click="close_announcement_details()"
+                                class="btn-close-ann-detail btn-ann-detail">
+                            <i class="fa fa-times" aria-hidden="true"></i>
+                        </button>
+                        <button v-on:click="minimize_announcement(show_this_announcement)"
+                                class="btn-minimize-ann-detail btn-ann-detail">
+                            <i class="fa fa-window-minimize" aria-hidden="true"></i>
+                        </button>
+                    </div>
+                    <div class="announcement-display-content">
+                        <div class="announcement_title_div" style="font-size:16px;">
+                            <p style="color:black;">${show_this_announcement.name}</p>
+                        </div>
+                        <div class="announcement_text_div">
+                            <p style="font-size:14px" style="text-wrap: normal"
+                               class="announcement_text">${show_this_announcement.description}</p>
+                        </div>
+                        <p style="font-size:10px" class="announcement_text">
+                            ${show_this_announcement.score} ${show_this_announcement.author} ${show_this_announcement.created_on}
+                        </p>
+                    </div>
+                </div>
+                <div class="comment-form-div" v-if="'{{=auth.user_id}}'">
+                    <li v-if="editing_comment">
+                        <input v-model="comment_form.comment_text" class="comment-edit-input" id="edit_comment"> <br>
+                        <button class="btn btn-sm edit-submit-btn"
+                                v-on:click="comment_edit_submit_button()">
+                                done
+                        </button>
+                        <button class="btn btn-sm edit-submit-btn"
+                            v-on:click="comment_edit_cancel_button()">
+                            cancel
+                        </button>
+                    </li>
+                </div>
+                <div v-if="!editing_comment">
+                    <form action="#" v-on:submit.prevent="add_comment" class="form-horizontal" enctype="multipart/form-data" method="post">
+                        <div class="comment-form-div" id="comment">
+                            <div>
+                                <input class="form-control string" v-model="comment_form.comment_text" placeholder="Comment..." type="text" />
+                            </div>
+                        </div>
+                        <div>
+                            <input class="add_comment_button" id="add_comment_submit" type="submit" value="Post Comment" />
+                        </div>
+                    </form>
+                </div>
+                <div class="comment-div">
+                    <ul v-for="(comment, index) in announcement_comments">
+                        <li class="comment-item" v-if="comment.ann_id == id_to_be_deleted">
+                                    ${comment.comment_text}
+                                    <br>
+                                    <p style="font-size:10px">${comment.score} ${comment.author}</p>
+                                    <i v-if="user_id == comment.authorid" class="fa fa-trash-o" v-on:click="delete_comment(index)"></i>
+                                    <i v-if="user_id == comment.authorid" class="fa fa-pencil" v-on:click="edit_comment(index)"></i>
                                     <i class="fa fa-thumbs-o-up" v-on:click="up_vote_comment(index)"></i>
                                     <i class="fa fa-thumbs-o-down" v-on:click="down_vote_comment(index)"></i>
                         </li>
@@ -264,7 +393,13 @@ function mOver(obj) {
 
                 <li class="minimized-announcement-item"
                     v-for="ann in minimized_announcements">
-                    <div class="minimized-post-title" >
+                    <div v-if="ann.category == 'urgent'" id="urgent-box-3" class="minimized-post-title" >
+                        ${ann.name}
+                    </div>
+                    <div v-if="ann.category == 'shutdown'" id="shutdown-box-3" class="minimized-post-title" >
+                        ${ann.name}
+                    </div>
+                    <div v-if="ann.category == 'event'" id="event-box-3" class="minimized-post-title" >
                         ${ann.name}
                     </div>
 
@@ -338,15 +473,16 @@ function mOver(obj) {
                             </div>
                             <div class="create-announcement-description">
                                 <p class="announcement-form">Announcement Description</p>
-                                <input id="no_table_description" v-model="announcement_form.description" placeholder="description" type="text" />
+                                <input class="desc-input" id="no_table_description" v-model="announcement_form.description" placeholder="description" type="text" />
                             </div>
                             <div class="create-announcement-date">
                                 <p class="announcement-form">Event End Date</p>
                                 <input id="no_table_description" v-model="announcement_form.end_date" type="date" />
                             </div>
 
-                        <div class="form-group" id="submit_announcement_row">
+                        <div class="create-announcement-button" id="submit_announcement_row">
                             <input class="create-announcement-button" id="add_announcement_submit" type="submit" value="Create" />
+
                         </div>
                     </form>
                 </div>
@@ -416,19 +552,19 @@ function mOver(obj) {
                                <!-- Div for the history of annoucements-->
                                 <ul id="history" class="my-history-wrapper">
                                     <li class="history-list-item" v-for="ann in users_announcements" v-on:click="view_history_announcement(ann.latlng)">
-                                            <div id="his-for-urgent" v-if="ann.category == 'urgent'">
+                                            <div class="urgent-box" id="his-for-urgent" v-if="ann.category == 'urgent'">
                                                 <div class="announcement_title_div" style="font-size:16px;">${ann.name}</div>
                                                 <div class="announcement_text_div"><p style="font-size:14px">${ann.description}</p></div>
                                                 <p style="font-size:10px">${ann.score} ${ann.author}</p>
                                                 <p style="font-size:8px">${ann.created_on}</p> <i class="fa fa-trash-o" v-on:click="announcement_edit_delete_button(ann.id)"></i> <i class="fa fa-pencil"></i>
                                             </div>
-                                            <div id="his-for-shutdown" v-if="ann.category == 'shutdown'">
+                                            <div class="shutdown-box" id="his-for-shutdown" v-if="ann.category == 'shutdown'">
                                                 <div class="announcement_title_div" style="font-size:16px;">${ann.name}</div>
                                                 <div class="announcement_text_div"><p style="font-size:14px">${ann.description}</p></div>
                                                 <p style="font-size:10px">${ann.score} ${ann.author}</p>
                                                 <p style="font-size:8px">${ann.created_on}</p> <i class="fa fa-trash-o" v-on:click="announcement_edit_delete_button(ann.id)"></i> <i class="fa fa-pencil"></i>
                                             </div>
-                                            <div id="his-for-event" v-if="ann.category == 'event'">
+                                            <div class="event-box" id="his-for-event" v-if="ann.category == 'event'">
                                                 <div class="announcement_title_div" style="font-size:16px;">${ann.name}</div>
                                                 <div class="announcement_text_div"><p style="font-size:14px">${ann.description}</p></div>
                                                 <p style="font-size:10px">${ann.score} ${ann.author}</p>

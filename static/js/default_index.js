@@ -641,6 +641,15 @@ var app = function() {
         self.vue.is_creating_announcement = !self.vue.is_creating_announcement;
     };
 
+    self.get_user_id = function(){
+        //get the users id so i can check it?
+        $.get(get_user_id_url,
+            function (data) {
+                console.log(data);
+                self.vue.user_id = data;
+            });
+    };
+
     // Complete as needed.
     self.vue = new Vue({
         el: "#vue-div",
@@ -649,6 +658,7 @@ var app = function() {
 
         data: {
             show_this_announcement: null,
+            user_id: null,
 
             editing_comment_id: null,
             index_to_be_deleted: null,
@@ -695,6 +705,7 @@ var app = function() {
             edit_comment: self.edit_comment,
             comment_edit_submit_button: self.comment_edit_submit_button,
             comment_edit_cancel_button: self.comment_edit_cancel_button,
+            get_user_id: self.get_user_id,
 
 
             /* left side announcement display functions */
@@ -755,8 +766,9 @@ var app = function() {
     });
 
     self.initial_populate_map();
+    self.get_user_id();
 
-    console.log("map_var:", map_var);
+    console.log();
     $("#vue-div").show();
     return self;
 };
@@ -764,11 +776,19 @@ var app = function() {
 
 var APP = null;
 
-document.getElementById('box-for-urgent').style.backgroundColor = "rgb(" + 167 + "," + 201 + "," + 240 + ")"; //blueish
+document.getElementById('box-for-urgent').style.backgroundColor = "rgb(" + 63 + "," + 227 + "," + 252 + ")"; //blueish
 document.getElementById('box-for-shutdown').style.backgroundColor = "rgb(" + 253 + "," + 114 + "," + 123 + ")"; //redish
 document.getElementById('box-for-event').style.backgroundColor = "rgb(" + 135 + "," + 225 + "," + 141 + ")"; //greenish
 
-document.getElementById('his-for-urgent').style.backgroundColor = "rgb(" + 167 + "," + 201 + "," + 240 + ")"; //blueish
+document.getElementById('urgent-box-2').style.backgroundColor = "rgb(" + 63 + "," + 227 + "," + 252 + ")";  //blueish
+document.getElementById('shutdown-box-2').style.backgroundColor = "rgb(" + 253 + "," + 114 + "," + 123 + ")"; //redish
+document.getElementById('event-box-2').style.backgroundColor = "rgb(" + 135 + "," + 225 + "," + 141 + ")"; //greenish
+
+document.getElementById('urgent-box-3').style.backgroundColor = "rgb(" + 63 + "," + 227 + "," + 252 + ")";  //blueish
+document.getElementById('shutdown-box-3').style.backgroundColor = "rgb(" + 253 + "," + 114 + "," + 123 + ")"; //redish
+document.getElementById('event-box-3').style.backgroundColor = "rgb(" + 135 + "," + 225 + "," + 141 + ")"; //greenish
+
+document.getElementById('his-for-urgent').style.backgroundColor = "rgb(" + 63 + "," + 227 + "," + 252 + ")";  //blueish
 document.getElementById('his-for-shutdown').style.backgroundColor = "rgb(" + 253 + "," + 114 + "," + 123 + ")"; //redish
 document.getElementById('his-for-event').style.backgroundColor = "rgb(" + 135 + "," + 225 + "," + 141 + ")"; //greenish
 

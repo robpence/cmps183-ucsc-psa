@@ -164,7 +164,10 @@ body{
 
 input.create-announcement-button{
     background-color: #d9534f;
+    right: 30px;
 }
+
+
 
 /* position of log in menu*/
 /* line 75, ../sass/_main.scss */
@@ -204,12 +207,14 @@ input[type=text]:focus {
 
 
 .search-input-wrapper {
+
     float: left;
     margin-top: 10px;
     padding: 1px;
 	padding-top: 10px;
 
 }
+
 
 .search_button{
     float: right;
@@ -243,7 +248,7 @@ input[type=text]:focus {
 }
 
 .history-list-item{
-    margin: 1px;
+    margin: 2px;
     padding: 0px; /*if this is 0 there is no white, but then the borders aren't rounded*/
     background-color: white;
     border-radius: 5px;
@@ -252,9 +257,11 @@ input[type=text]:focus {
     /*color: whitesmoke;*/
 }
 
+
+
 div.announcement_title_div{
     border-bottom: solid;
-    border-bottom-color: darkgray;
+    border-bottom-color: darkslategrey;
     border-bottom-width: 1px;
     text-transform: uppercase;
     font-size:16px;
@@ -321,9 +328,23 @@ p.announcement_text{
     background-color: #A2A2A2 !important; /*this does nothing because its being over*/
 }
 
+.shutdown-box{
+    padding: 3px !important;
+    border-radius: 5px !important;
+}
+.event-box{
+    padding: 3px !important;
+    border-radius: 5px !important;
+}
+.urgent-box{
+    padding: 3px !important;
+    border-radius: 5px !important;
+}
+
 .shutdown-box:hover{
     background-color: lightcoral !important;
 }
+
 .event-box:hover{
     background-color: lightgreen !important;
 }
@@ -340,6 +361,12 @@ p.announcement_text{
     float:right;
     margin-bottom: 20px;
 }
+
+.announcement-box-2{
+    padding: 3px !important;
+    border-radius: 5px !important;
+}
+
 
 
 .announcement-input-text{
@@ -374,8 +401,8 @@ ul {
 .navbar-brand{
     margin: 0;
     padding-left: 26%;
-	padding-right: 18.5%;
-	
+	padding-right: 13.5%;
+
 }
 
 
@@ -460,7 +487,8 @@ ul {
     padding-top: 5px;
     padding-right: 5px;
     padding-left: 5px;
-    padding-bottom: 70px;
+    padding-bottom: 5px;
+    margin-bottom: 70px;
     background-color: white;
     border-radius: 2px;
     border-color: grey;
