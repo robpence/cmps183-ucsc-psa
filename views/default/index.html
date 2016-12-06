@@ -469,14 +469,14 @@ function mOver(obj) {
                             </div>
                             <div class="create-announcement-date">
                                 <p class="announcement-form">Event End Date</p>
-                                <input id="no_table_description" v-model="announcement_form.end_date" type="date" />
+                                <input id="datefieldfordate" v-model="announcement_form.end_date" type="date" min='1999-01-01' max='2018-01-01'/>
                             </div>
 
 
 
 
                                 <!-- radio buttons -->
-                                <ul>
+                                <ul style="color: white">
                                     <li>
                                         <input v-on:click="update_marker('urgent')" type="radio" name="category" value="Urgent" v-model="announcement_form.category">
                                         urgent
