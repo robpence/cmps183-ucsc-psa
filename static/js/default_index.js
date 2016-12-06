@@ -50,6 +50,7 @@ var app = function() {
         self.vue.announcement_form.description = null;
         self.vue.announcement_form.name = null;
         self.vue.announcement_form.active = false;
+        self.vue.announcement_form.category = null;
     }
 
     function clear_comment_form(){
@@ -87,7 +88,7 @@ var app = function() {
                 self.vue.announcements_to_show.unshift(added_announcement);
 
 
-                console.log('add_annoucement, added_ann=', added_announcement);
+                //console.log('add_annoucement, added_ann=', added_announcement);
 
                 //self.vue.users_announcements.push(added_announcement);
 
