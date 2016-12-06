@@ -17,6 +17,7 @@ def get_user_email():
 
 db.define_table('Announcements',
                 Field('author', default=get_user_email()),
+                Field('authorid', default=auth.user_id),
                 Field('name'),
                 Field('description'),
                 Field('latitude', 'float'),
@@ -31,6 +32,7 @@ db.define_table('Announcements',
 
 db.define_table('Comments',
                 Field('author', default=get_user_email()),
+                Field('authorid', default=auth.user_id),
                 Field('score', 'integer'),
                 Field('created_on', default=datetime.datetime.utcnow()),
                 Field('edited_on', default=datetime.datetime.utcnow()),

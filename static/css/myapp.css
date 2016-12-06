@@ -164,8 +164,12 @@ body{
 
 input.create-announcement-button{
     background-color: #d9534f;
+    right: 30px;
 }
 
+input.desc-input{
+    rows: 2 !important;
+}
 
 
 /* position of log in menu*/
@@ -251,7 +255,7 @@ input[type=text]:focus {
 
 div.announcement_title_div{
     border-bottom: solid;
-    border-bottom-color: darkgray;
+    border-bottom-color: darkslategrey;
     border-bottom-width: 1px;
     text-transform: uppercase;
     font-size:16px;
@@ -472,7 +476,8 @@ ul {
     padding-top: 5px;
     padding-right: 5px;
     padding-left: 5px;
-    padding-bottom: 70px;
+    padding-bottom: 5px;
+    margin-bottom: 70px;
     background-color: white;
     border-radius: 2px;
     border-color: grey;

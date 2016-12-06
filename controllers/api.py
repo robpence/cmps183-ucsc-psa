@@ -14,6 +14,10 @@ def _setup_announcement(a):
     return a
 
 
+def get_user_id():
+    userid = auth.user_id
+    logger.info("====> userid %r " % userid)
+    return userid
 
 def get_announcements():
 
