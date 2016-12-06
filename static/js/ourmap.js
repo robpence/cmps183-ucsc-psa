@@ -94,8 +94,6 @@ var New_Map = function (onMapClick, onIconClick) {
             case "stevenson":
                 self.set_coordinates(stevenson_college);
                 break;
-            case "reset":
-                self.set_coordinates(central_campus);
             default:
                 self.map.setView(central_campus, 15, {animation: true});
                 break;
